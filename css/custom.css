@@ -28,11 +28,11 @@ custom.css
 }
 
 :root {
-  --primary-color: #ffd500;
-  --white-color: #ffffff;
+  --primary-color: #FF6600;
+  --light-color: #FFF7EB;
   --dark-color: #010101;
-  --menu-bg-color: #212529;
-  --msg-bg-color-1: #d8d8d8;
+  --menu-bg-color: #847975;
+  --msg-bg-color-1: #DACCBF;
   --msg-font-color-1: #010101;
   --msg-bg-color-2: #218aff;
   --msg-font-color-2: #fdfdfd;
@@ -142,7 +142,7 @@ sectio:first{
   background: var(--dark-color);
   border: none;
   border-radius: var(--border-radius-medium);
-  color: var(--white-color);
+  color: var(--light-color);
   letter-spacing: 0.2px;
   padding: 6px 36px 10px 36px;
   font-size: var(--button-font-size);
@@ -209,7 +209,7 @@ a:hover {
 }
 
 .navbar-brand {
-  color: var(--white-color);
+  color: var(--light-color);
   font-weight: var(--font-weight-light);
   font-size: var(--h4-font-size);
 }
@@ -222,7 +222,7 @@ a:hover {
 .contact-form #submit-button:hover,
 .navbar .custom-btn:hover {
   background: var(--dark-color);
-  color: var(--white-color);
+  color: var(--light-color);
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
@@ -286,7 +286,7 @@ a:hover {
 
 
 .navbar-toggler .navbar-toggler-icon {
-  background: var(--white-color);
+  background: var(--light-color);
   transition: background 10ms 300ms ease;
   display: block;
   width: 30px;
@@ -302,7 +302,7 @@ a:hover {
   position: absolute;
   right: 0;
   left: 0;
-  background: var(--white-color);
+  background: var(--light-color);
   width: 30px;
   height: 2px;
   content: '';
@@ -326,7 +326,7 @@ a:hover {
 .email-link {
   background: var(--dark-color);
   border-radius: var(--border-radius-medium);
-  color: var(--white-color);
+  color: var(--light-color);
   display: inline-block;
   margin: 0.5rem 0;
   padding: 0.5rem 2rem 1.5rem 2rem;
@@ -342,7 +342,7 @@ a:hover {
 
 .email-link:hover {
   background: var(--dark-color);
-  color: var(--white-color);
+  color: var(--light-color);
 }
 
 
@@ -352,7 +352,7 @@ a:hover {
   background-color: var(--msg-bg-color-1);
   color: var(--msg-font-color-1);
   /* background: var(--dark-color); */
-  /* color: var(--white-color); */
+  /* color: var(--light-color); */
   display: inline-block;
   margin: 0.5rem 0;
   padding: 0.5rem 2rem 1.5rem 2rem;
