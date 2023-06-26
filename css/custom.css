@@ -119,6 +119,14 @@ sectio:first{
 
 }
 
+.section-alone-in-page:first-of-type{
+  margin: 0;
+}
+
+.section-alone-in-page:last-of-type{
+  height: 100%;
+}
+
 
 .custom-icon {
   font-size: 12px;
