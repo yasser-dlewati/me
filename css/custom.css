@@ -31,7 +31,7 @@ custom.css
   --primary-color: #FF6600;
   --light-color: #FFF7EB;
   --dark-color: #010101;
-  --menu-bg-color: #847975;
+  --menu-bg-color: #2a2726;
   --msg-bg-color-1: #DACCBF;
   --msg-font-color-1: #010101;
   --msg-bg-color-2: #218aff;
@@ -396,12 +396,8 @@ a:hover {
 
 img.circle {
   border-radius: 50%;
-  height: 40vh;
-}
-
-.vertical-center {
-  position: absolute;
-  transform: translateY(calc(50% - 6rem));
+  height: 30vh;
+  width: 30vh;
 }
 
 .title {
@@ -411,10 +407,7 @@ img.circle {
 
 .description {
   padding: 40px 0;
-}
-
-.right {
-  float: right;
+  margin-top: 50%;
 }
 
 /*---------------------------------------
