@@ -108,7 +108,7 @@ p {
   line-height: 2em;
 }
 
-sectio:first{
+sectio:first {
   margin: 0;
 }
 
@@ -119,11 +119,11 @@ sectio:first{
 
 }
 
-.section-alone-in-page:first-of-type{
+.section-alone-in-page:first-of-type {
   margin: 0;
 }
 
-.section-alone-in-page:last-of-type{
+.section-alone-in-page:last-of-type {
   height: 100%;
 }
 
@@ -235,7 +235,7 @@ a:hover {
   color: var(--gray-color);
 }
 
-.nav-item .nav-link.active{
+.nav-item .nav-link.active {
   color: var(--primary-color);
 }
 
@@ -399,16 +399,22 @@ img.circle {
   height: 40vh;
 }
 
-.title{
+.vertical-center {
+  position: absolute;
+  transform: translateY(calc(50% - 6rem));
+}
+
+.title {
   font-size: 3rem;
   margin: 40px 0;
 }
-.description{
+
+.description {
   padding: 40px 0;
 }
 
-.right{
-  float:right;
+.right {
+  float: right;
 }
 
 /*---------------------------------------
