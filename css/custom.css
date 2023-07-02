@@ -128,6 +128,7 @@ section:nth-child(odd){
 
 .section-alone-in-page:last-of-type {
   height: 100%;
+  padding-bottom: 3rem;
 }
 
 .custom-icon {
@@ -590,19 +591,20 @@ img.circle {
   -----------------------------------------*/
 
 .social-links {
-  margin: 40px 0;
-  padding: 0;
+ text-align: center;
+ padding-top: 1rem;
 }
 
 .social-links li {
   display: inline-block;
   list-style: none;
+  font-size: 3rem;
 }
 
 .social-links a {
   display: inline-block;
   color: var(--p-color);
-  font-size: var(--h6-font-size);
+  font-size: 2.5rem;
   margin: 5px 20px 5px 0;
 }
 
