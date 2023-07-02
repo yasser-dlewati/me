@@ -37,6 +37,7 @@ custom.css
   --msg-bg-color-2: #218aff;
   --msg-font-color-2: #fdfdfd;
 
+  --light-gray-color: #ededed;
   --gray-color: #909090;
   --p-color: #7d7a7a;
 
@@ -112,11 +113,13 @@ sectio:first {
   margin: 0;
 }
 
-.section-alone-in-page {
-  padding: 6rem 0;
-  margin: 6rem 0;
+section {
+  padding: 10rem 0;
   height: 100vh;
+}
 
+section:nth-child(odd){
+  background-color: var(--light-gray-color);
 }
 
 .section-alone-in-page:first-of-type {
@@ -126,7 +129,6 @@ sectio:first {
 .section-alone-in-page:last-of-type {
   height: 100%;
 }
-
 
 .custom-icon {
   font-size: 12px;
@@ -348,27 +350,25 @@ a:hover {
 
 .message.sent {
   border-radius: var(--border-radius-medium);
-  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
   background-color: var(--msg-bg-color-1);
   color: var(--msg-font-color-1);
   /* background: var(--dark-color); */
   /* color: var(--light-color); */
   display: inline-block;
-  margin: 0.5rem 0;
+  margin: 1rem 0;
   padding: 0.5rem 2rem 1.5rem 2rem;
-  float: right;
 }
 
 .message.received {
   border-radius: var(--border-radius-medium);
-
-  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   background-color: var(--msg-bg-color-2);
   color: var(--msg-font-color-2);
   display: inline-block;
-  margin: 0.5rem 0;
+  margin: 1rem 0;
   padding: 0.5rem 2rem 1.5rem 2rem;
-
+  float: right;
 }
 
 
@@ -398,16 +398,18 @@ img.circle {
   border-radius: 50%;
   height: 30vh;
   width: 30vh;
+  display: block;
+  margin: 0 auto;
 }
 
 .title {
   font-size: 3rem;
   margin: 40px 0;
+  text-align: center;
 }
 
 .description {
-  padding: 40px 0;
-  margin-top: 50%;
+  margin-top: 12rem;
 }
 
 /*---------------------------------------
