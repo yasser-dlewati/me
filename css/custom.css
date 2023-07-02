@@ -224,8 +224,10 @@ a:hover {
 
 .contact-form #submit-button:hover,
 .navbar .custom-btn:hover {
-  background: var(--dark-color);
-  color: var(--light-color);
+  background: var(--primary-color);
+  color: var(--dark-color);
+  border: none;
+  font-size: 150%;
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
@@ -568,9 +570,8 @@ img.circle {
 }
 
 .contact-form #submit-button {
-  background: var(--primary-color);
-  border: none;
-  border-radius: var(--border-radius-medium);
+  border: 1px solid var(--primary-color);
+  border-radius: var(--border-radius-small);
   color: var(--dark-color);
   cursor: pointer;
   font-size: var(--p-font-size);
@@ -579,6 +580,8 @@ img.circle {
   padding: 1.5rem 1.8rem 1.8rem 1.8rem;
   white-space: nowrap;
   max-width: 190px;
+  display: block;
+  margin: 2.5rem auto;
 }
 
 .copyright-text {
