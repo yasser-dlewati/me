@@ -581,7 +581,7 @@ img.circle {
   white-space: nowrap;
   max-width: 190px;
   display: block;
-  margin: 2.5rem auto;
+  margin: 2.5rem auto 0 auto;
 }
 
 .copyright-text {
