@@ -671,6 +671,7 @@ footer {
 @media screen and (max-width: 991px) {
   .navbar-nav {
     margin: 1rem 0;
+    text-align: center;
   }
 
   .navbar-expand-lg .navbar-nav .nav-link {
