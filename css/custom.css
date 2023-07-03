@@ -32,10 +32,7 @@ custom.css
   --light-color: #FFF7EB;
   --dark-color: #010101;
   --menu-bg-color: #2a2726;
-  --msg-bg-color-1: #DACCBF;
-  --msg-font-color-1: #010101;
-  --msg-bg-color-2: #218aff;
-  --msg-font-color-2: #fdfdfd;
+  --msg-bg-color: #DACCBF;
 
   --light-gray-color: #ededed;
   --gray-color: #909090;
@@ -359,8 +356,8 @@ a:hover {
 .message.sent {
   border-radius: var(--border-radius-medium);
   border-bottom-left-radius: 0px;
-  background-color: var(--msg-bg-color-1);
-  color: var(--msg-font-color-1);
+  background-color: var(--msg-bg-color);
+  color: var(--dark-color);
   /* background: var(--dark-color); */
   /* color: var(--light-color); */
   display: inline-block;
@@ -371,8 +368,8 @@ a:hover {
 .message.received {
   border-radius: var(--border-radius-medium);
   border-bottom-right-radius: 0px;
-  background-color: var(--msg-bg-color-2);
-  color: var(--msg-font-color-2);
+  background-color: var(--primary-color);
+  color: var(--light-color);
   display: inline-block;
   margin: 1rem 0;
   padding: 0.5rem 2rem 1.5rem 2rem;
