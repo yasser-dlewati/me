@@ -235,6 +235,11 @@ a:hover {
   padding: 0;
 }
 
+.navbar-nav{
+  margin-right: 0;
+  margin-left: auto;
+}
+
 .nav-item .nav-link.active,
 .nav-item .nav-link:hover {
   color: var(--gray-color);
