@@ -452,41 +452,35 @@ img.circle {
 
 
 /*---------------------------------------
-     TESTIMONIALS               
+     EXPERIENCE               
   -----------------------------------------*/
+  .item {
+    display: inline-block;
+    position: relative;
+    max-width: 35%;
+    text-wrap: wrap;
+  }
 
-.testimonials-image {
-  margin: 0 1rem 1rem 1rem;
-}
+  .item img {
+    max-height: 150px;
+    max-width: 150px;
+    display: block;
+    margin: 0 auto;
+  }
 
-.testimonials-image img {
-  border-radius: var(--border-radius-medium);
-}
-
-.testimonials-info {
-  width: 100%;
-}
-
-.testimonials .owl-theme .owl-nav.disabled+.owl-dots {
-  margin-top: 2rem;
-}
-
-.testimonials .owl-theme .owl-dots .owl-dot {
-  outline: none;
-}
-
-.testimonials .owl-theme .owl-dots .owl-dot span {
-  width: 30px;
-  height: 3px;
-  margin: 5px;
-}
-
-.testimonials .owl-theme .owl-dots .owl-dot.active span,
-.testimonials .owl-theme .owl-dots .owl-dot:hover span {
-  background: var(--primary-color);
-}
-
-
+  .experience {
+    white-space: nowrap;
+    width: 100%;
+    overflow-x: scroll;
+    height: 100%;
+  }
+  .experience::-webkit-scrollbar {
+    width: 3px;
+  }
+  .experience::-webkit-scrollbar-thumb {
+    background: var(--primary-color); 
+    border-radius: 50px;
+  }
 /*---------------------------------------
      CONTACT               
   -----------------------------------------*/
