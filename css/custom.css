@@ -115,7 +115,7 @@ section {
   height: 100vh;
 }
 
-section:nth-child(odd){
+section:nth-child(odd) {
   background-color: var(--light-gray-color);
 }
 
@@ -232,7 +232,7 @@ a:hover {
   padding: 0;
 }
 
-.navbar-nav{
+.navbar-nav {
   margin-right: 0;
   margin-left: auto;
 }
@@ -454,33 +454,50 @@ img.circle {
 /*---------------------------------------
      EXPERIENCE               
   -----------------------------------------*/
-  .item {
-    display: inline-block;
-    position: relative;
-    max-width: 35%;
-    text-wrap: wrap;
-  }
+.item {
+  display: inline-block;
+  position: relative;
+  max-width: 35%;
+  text-wrap: wrap;
+}
 
-  .item img {
-    max-height: 150px;
-    max-width: 150px;
-    display: block;
-    margin: 0 auto;
-  }
+.item img {
+  max-height: 150px;
+  max-width: 150px;
+  display: block;
+  margin: 0 auto;
+}
 
-  .experience {
-    white-space: nowrap;
-    width: 100%;
-    overflow-x: scroll;
-    height: 100%;
-  }
-  .experience::-webkit-scrollbar {
-    width: 3px;
-  }
-  .experience::-webkit-scrollbar-thumb {
-    background: var(--primary-color); 
-    border-radius: 50px;
-  }
+.experience {
+  white-space: nowrap;
+  width: 100%;
+  overflow-x: scroll;
+  height: 100%;
+  -ms-overflow-style: none;
+  /* Hide scrollbar in IE and Edge */
+  scrollbar-width: none;
+  /* Hide scrollbar in Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.experience::-webkit-scrollbar {
+  display: none;
+}
+
+i.scroll-prev {
+  position: absolute;
+  top: 50%;
+  font-size: 100px;
+  left: 0;
+}
+
+i.scroll-next {
+  position: absolute;
+  top: 50%;
+  font-size: 100px;
+  right: 0;
+}
+
 /*---------------------------------------
      CONTACT               
   -----------------------------------------*/
@@ -545,13 +562,13 @@ img.circle {
 .contact-form .form-control:focus::-webkit-input-placeholder {
   opacity: 0.9;
   padding-left: 1rem;
-  color:#c1c1c1;
+  color: #c1c1c1;
 }
 
 .contact-form .form-control:focus::-moz-placeholder {
   opacity: 0.9;
   padding-left: 1rem;
-  color:#c1c1c1;
+  color: #c1c1c1;
 }
 
 .contact-form .form-control:not(:placeholder-shown)+.webform-label,
@@ -586,8 +603,8 @@ img.circle {
   -----------------------------------------*/
 
 .social-links {
- text-align: center;
- padding-top: 1rem;
+  text-align: center;
+  padding-top: 1rem;
 }
 
 .social-links li {
