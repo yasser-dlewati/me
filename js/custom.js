@@ -60,3 +60,28 @@ $('#scroll-down').click(function () {
         scrollTop: ($("section").next()).offset().top
     }, 500);
 })
+
+$(document).ready(function(){
+    var spanExperienceDuration = $('.experience-duration');
+    if(spanExperienceDuration != undefined){
+        var firstWorkingDate = new Date('2016-06-23');
+        var todayDate = new Date();
+        var workingDurationInYears = todayDate.getFullYear() - firstWorkingDate.getFullYear();
+        var monthsDifference = todayDate.getMonth() - firstWorkingDate.getMonth();
+        var resultText = '';
+        if(monthsDifference < 5){
+            resultText = 'more than ' + workingDurationInYears + ' years';
+        }
+        if(monthsDifference >=5 && monthsDifference < 6){
+            resultText = 'about' + workingDurationInYears + ' years and a half';
+        }
+        else if (monthsDifference >=6 && monthsDifference <= 11){
+            resultText = 'more than ' + workingDurationInYears + ' years and a half';
+        }
+        else{
+            resultText = 'about ' + workingDurationInYears + 1 + ' years';
+        }
+
+        spanExperienceDuration.val(resultText);
+    }
+})
