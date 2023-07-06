@@ -72,16 +72,16 @@ $(document).ready(function(){
         if(monthsDifference < 5){
             resultText = 'more than ' + workingDurationInYears + ' years';
         }
-        if(monthsDifference >=5 && monthsDifference < 6){
+        else if(monthsDifference >=5 && monthsDifference < 6){
             resultText = 'about' + workingDurationInYears + ' years and a half';
         }
         else if (monthsDifference >=6 && monthsDifference <= 11){
             resultText = 'more than ' + workingDurationInYears + ' years and a half';
         }
         else{
-            resultText = 'about ' + workingDurationInYears + 1 + ' years';
+            resultText = 'about ' + (workingDurationInYears + 1) + ' years';
         }
 
-        spanExperienceDuration.val(resultText);
+        spanExperienceDuration.html(resultText);
     }
 })
