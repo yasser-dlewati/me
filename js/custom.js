@@ -61,27 +61,85 @@ $('#scroll-down').click(function () {
     }, 500);
 })
 
-$(document).ready(function(){
+function setExperienceDuration() {
     var spanExperienceDuration = $('.experience-duration');
-    if(spanExperienceDuration != undefined){
+    if (spanExperienceDuration != undefined) {
         var firstWorkingDate = new Date('2016-06-23');
         var todayDate = new Date();
         var workingDurationInYears = todayDate.getFullYear() - firstWorkingDate.getFullYear();
         var monthsDifference = todayDate.getMonth() - firstWorkingDate.getMonth();
         var resultText = '';
-        if(monthsDifference < 5){
+        if (monthsDifference < 5) {
             resultText = 'more than ' + workingDurationInYears + ' years';
         }
-        else if(monthsDifference >=5 && monthsDifference < 6){
+        else if (monthsDifference >= 5 && monthsDifference < 6) {
             resultText = 'about' + workingDurationInYears + ' years and a half';
         }
-        else if (monthsDifference >=6 && monthsDifference <= 11){
+        else if (monthsDifference >= 6 && monthsDifference <= 11) {
             resultText = 'more than ' + workingDurationInYears + ' years and a half';
         }
-        else{
+        else {
             resultText = 'about ' + (workingDurationInYears + 1) + ' years';
         }
 
         spanExperienceDuration.html(resultText);
     }
-})
+}
+
+const divExperience = $('.experience');
+const scrollLeftButton = $('.scroll-prev')
+const scrollRightButton = $('.scroll-next')
+
+function setScrollRightButtonVisibility() {
+    if (divExperience.scrollLeft() >= divExperience.width()) {
+        scrollRightButton.hide();
+    }
+    else {
+        scrollRightButton.show();
+    }
+}
+
+function setScrollLeftButtonVisibility() {
+    if (divExperience.scrollLeft() === 0) {
+        scrollLeftButton.hide();
+    }
+    else {
+        scrollLeftButton.show();
+    }
+}
+
+divExperience.scroll(function(){
+    setScrollRightButtonVisibility();
+    setScrollLeftButtonVisibility();
+});
+
+var scrollPosition = 0;
+
+scrollLeftButton.click(function(){
+    if(scrollPosition > 0)
+    {
+    scrollPosition -= divExperience.width() * 0.3;
+    }
+   
+    divExperience.animate({
+        scrollLeft: scrollPosition
+    })
+
+});
+
+scrollRightButton.click(function() {
+    if(scrollPosition < divExperience.width())
+    {
+        scrollPosition += divExperience.width() * 0.3;
+    }
+
+    divExperience.animate({
+        scrollLeft: scrollPosition
+    })
+});
+
+$(document).ready(function () {
+    setExperienceDuration();
+    setScrollRightButtonVisibility();
+    setScrollLeftButtonVisibility();
+});
