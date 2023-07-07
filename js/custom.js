@@ -111,9 +111,10 @@ function setScrollLeftButtonVisibility() {
 divExperience.scroll(function(){
     setScrollRightButtonVisibility();
     setScrollLeftButtonVisibility();
+    scrollPosition = divExperience.scrollLeft();    
 });
 
-var scrollPosition = 0;
+var scrollPosition = 0
 
 scrollLeftButton.click(function(){
     if(scrollPosition > 0)
