@@ -455,7 +455,7 @@ img.circle {
      EXPERIENCE               
   -----------------------------------------*/
 .item {
-  display: inline-block;
+  display: inline-table;
   position: relative;
   max-width: 35%;
   text-wrap: wrap;
