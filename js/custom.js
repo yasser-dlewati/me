@@ -108,29 +108,27 @@ function setScrollLeftButtonVisibility() {
     }
 }
 
-divExperience.scroll(function(){
+divExperience.scroll(function () {
     setScrollRightButtonVisibility();
     setScrollLeftButtonVisibility();
-    scrollPosition = divExperience.scrollLeft();    
+    scrollPosition = divExperience.scrollLeft();
 });
 
 var scrollPosition = 0
 
-scrollLeftButton.click(function(){
-    if(scrollPosition > 0)
-    {
-    scrollPosition -= divExperience.width() * 0.3;
+scrollLeftButton.click(function () {
+    if (scrollPosition > 0) {
+        scrollPosition -= divExperience.width() * 0.3;
     }
-   
+
     divExperience.animate({
         scrollLeft: scrollPosition
     })
 
 });
 
-scrollRightButton.click(function() {
-    if(scrollPosition < divExperience.width())
-    {
+scrollRightButton.click(function () {
+    if (scrollPosition < divExperience.width()) {
         scrollPosition += divExperience.width() * 0.3;
     }
 
@@ -144,3 +142,15 @@ $(document).ready(function () {
     setScrollRightButtonVisibility();
     setScrollLeftButtonVisibility();
 });
+
+$('#submit-button').click(function () {
+    const txtName = $('#txtName');
+    const txtEmail = $('#txmEmail');
+    const txtMessage = $('#txtMessage');
+    if (txtEmail.val() == '' || txtMessage.val() == '' || txtName.val() == '') {
+        alert('Sorry but I need all the information to respond to you, please make sure you filled them up correctly.');
+        return;
+    }
+
+    alert('Your message is on its way, Thanks and have agreat day!');
+})
