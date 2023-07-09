@@ -500,13 +500,14 @@ i.scroll-next {
   z-index: 2;
 }
 
-.download{
-  float: right;
-  padding: 0 20px;
-}
-
 .download:hover{
   color: var(--primary-color);
+  border-bottom: solid 1px var(--primary-color);
+}
+
+.download-container{
+  margin: 6rem 0 0 0;
+  text-align: center;
 }
 
 /*---------------------------------------
