@@ -467,7 +467,7 @@ img.circle {
   margin: 0 auto;
 }
 
-.item small{
+.item small {
   display: block;
 }
 
@@ -503,12 +503,12 @@ i.scroll-next {
   z-index: 2;
 }
 
-.download:hover{
+.download:hover {
   color: var(--primary-color);
   border-bottom: solid 1px var(--primary-color);
 }
 
-.download-container{
+.download-container {
   margin: 6rem 0 0 0;
   text-align: center;
 }
@@ -611,7 +611,7 @@ i.scroll-next {
 
 .social-links {
   text-align: center;
-  padding-top: 1rem;
+  margin: 3rem 0 0 0;
 }
 
 .social-links li {
