@@ -468,6 +468,10 @@ img.circle {
   margin: 0 auto;
 }
 
+.item small{
+  display: block;
+}
+
 .experience {
   white-space: nowrap;
   width: 100%;
