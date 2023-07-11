@@ -161,7 +161,7 @@ $('#submit-button').click(function () {
             To : 'yasdle@outlook.com',
             From : senderEmail,
             Subject : "New Message from " + txtName.val() + " (" + txtEmail.val() + ")",
-            Body : txtMessage.val()
+            Body : txtMessage.val().replace(/\n/g, "<br />")
         }).then(
         () => alert('Your message is on its way, Thanks and have agreat day!')
         );
