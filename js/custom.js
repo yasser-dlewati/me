@@ -144,13 +144,22 @@ $(document).ready(function () {
 });
 
 $('#submit-button').click(function () {
+    const senderEmail = "yasdle@outlook.com";
     const txtName = $('#txtName');
-    const txtEmail = $('#txmEmail');
+    const txtEmail = $('#txtEmail');
     const txtMessage = $('#txtMessage');
     if (txtEmail.val() == '' || txtMessage.val() == '' || txtName.val() == '') {
         alert('Sorry but I need all the information to respond to you, please make sure you filled them up correctly.');
         return;
     }
 
-    alert('Your message is on its way, Thanks and have agreat day!');
+    Email.send({
+        SecureToken : "8c1ba5c8-5c06-4fba-9abb-cb57b4168999",
+        To : 'yasdle@outlook.com',
+        From : senderEmail,
+        Subject : "New Message from " + txtName.val() + " (" + txtEmail.val() + ")",
+        Body : txtMessage.val()
+    }).then(
+      message => alert('Your message is on its way, Thanks and have agreat day!')
+      );
 })
