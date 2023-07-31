@@ -172,3 +172,13 @@ function tryVerifyEmailAddress(email){
     const regex = "^([A-Z|a-z|0-9](\.|_){0,1})+[A-Z|a-z|0-9]\@([A-Z|a-z|0-9])+((\.){0,1}[A-Z|a-z|0-9]){2}\.[a-z]{2,3}$"
     return(new RegExp(regex).test(email));
 }
+
+$(document).ready(function(){
+    var logo = $('.logo')
+    logo.on('mouseenter', function(){
+        logo.html("Yasser Dlewati");
+    })
+    logo.on('mouseleave', function(){
+        logo.html("Yas Dle");
+    })
+})
