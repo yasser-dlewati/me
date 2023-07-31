@@ -417,7 +417,7 @@ img.circle {
 }
 
 .description {
-  margin-top: 3rem;
+  margin-top: calc(3rem + 80px);
 }
 
 /*---------------------------------------
