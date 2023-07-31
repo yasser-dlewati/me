@@ -406,6 +406,10 @@ img.circle {
   margin: 0 auto;
 }
 
+.img-banner{
+  height: 100vh;
+}
+
 .title {
   font-size: 3rem;
   margin: 40px 0;
