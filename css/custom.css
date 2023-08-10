@@ -332,7 +332,7 @@ img.about-image.circle {
   border-radius: 50%;
 }
 
-.img-banner{
+.img-banner {
   height: 100vh;
 }
 
@@ -505,7 +505,7 @@ label {
   -----------------------------------------*/
 
 .social-links {
-  margin-top: 20px;
+  margin-top: 3rem;
   text-align: center;
 }
 
@@ -529,6 +529,7 @@ footer {
   text-align: center;
 
 }
+
 
 /*---------------------------------------
      RESPONSIVE STYLES              
@@ -564,6 +565,12 @@ footer {
   }
 }
 
+@media screen and (min-width: 779px) {
+  .hide-on-desktop {
+    display: none !important;
+  }
+}
+
 @media screen and (max-width: 768px) {
 
   .hero-text {
@@ -571,27 +578,43 @@ footer {
     top: 1.5rem;
   }
 
-  section{
+  section {
     height: auto;
   }
 
-  .img-banner{
+  .img-banner {
     height: 50vh;
   }
 
-  section:first-of-type{
+  section:first-of-type {
     padding-bottom: 0;
   }
 
-  section{
+  section {
     padding: 40px 0
   }
 
-  .description{
+  section:last-of-type {
+    padding-bottom: 20px !important;
+  }
+
+  .description {
     margin-top: 40px;
   }
 
-  .experience{
+  .experience {
     max-width: 65%;
+  }
+
+  .hide-on-mobile {
+    display: none;
+  }
+
+  .show-on-mobile {
+    display: block;
+  }
+
+  .social-links a {
+    font-size: 2rem;
   }
 }
