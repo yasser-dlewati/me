@@ -106,7 +106,7 @@ p {
   line-height: 2em;
 }
 
-sectio:first {
+section:first {
   margin: 0;
 }
 
@@ -356,14 +356,14 @@ img.about-image.circle {
   text-wrap: wrap;
 }
 
-.item img {
+.experience img {
   max-height: 150px;
   max-width: 150px;
   display: block;
   margin: 0 auto;
 }
 
-.item small {
+.experience small {
   display: block;
 }
 
@@ -390,18 +390,11 @@ i.scroll-horizontly {
   z-index: 2;
 }
 
-i.scroll-horizontly {
-  position: absolute;
-  top: 50%;
-  font-size: 100px;
-  z-index: 2;
-}
-
-i.scroll-horizontly .next {
+i.scroll-horizontly.next {
   right: 0;
 }
 
-i.scroll-horizontly .prev {
+i.scroll-horizontly.prev {
   left: 0;
 }
 
