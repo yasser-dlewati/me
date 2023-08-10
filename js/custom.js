@@ -148,18 +148,37 @@ $('#submit-button').click(function () {
     const txtName = $('#txtName');
     const txtEmail = $('#txtEmail');
     const txtMessage = $('#txtMessage');
+    var isEmailVerified = tryVerifyEmailAddress(txtEmail.val());
+    
     if (txtEmail.val() == '' || txtMessage.val() == '' || txtName.val() == '') {
         alert('Sorry but I need all the information to respond to you, please make sure you filled them up correctly.');
         return;
     }
 
-    Email.send({
-        SecureToken : "8c1ba5c8-5c06-4fba-9abb-cb57b4168999",
-        To : 'yasdle@outlook.com',
-        From : senderEmail,
-        Subject : "New Message from " + txtName.val() + " (" + txtEmail.val() + ")",
-        Body : txtMessage.val()
-    }).then(
-      message => alert('Your message is on its way, Thanks and have agreat day!')
-      );
+    if(isEmailVerified){
+        Email.send({
+            SecureToken : "8c1ba5c8-5c06-4fba-9abb-cb57b4168999",
+            To : 'yasdle@outlook.com',
+            From : senderEmail,
+            Subject : "New Message from " + txtName.val() + " (" + txtEmail.val() + ")",
+            Body : txtMessage.val().replace(/\n/g, "<br />")
+        }).then(
+        () => alert('Your message is on its way, Thanks and have agreat day!')
+        );
+    }
+})
+
+function tryVerifyEmailAddress(email){
+    const regex = "^([A-Z|a-z|0-9](\.|_){0,1})+[A-Z|a-z|0-9]\@([A-Z|a-z|0-9])+((\.){0,1}[A-Z|a-z|0-9]){2}\.[a-z]{2,3}$"
+    return(new RegExp(regex).test(email));
+}
+
+$(document).ready(function(){
+    var logo = $('.logo')
+    logo.on('mouseenter', function(){
+        logo.html("Yasser Dlewati");
+    })
+    logo.on('mouseleave', function(){
+        logo.html("Yas Dle");
+    })
 })
