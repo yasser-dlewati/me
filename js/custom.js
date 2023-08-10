@@ -87,8 +87,8 @@ function setExperienceDuration() {
 }
 
 const divExperience = $('.experience');
-const scrollLeftButton = $('.scroll-prev')
-const scrollRightButton = $('.scroll-next')
+const scrollLeftButton = $('.scroll-horizntaly.prev')
+const scrollRightButton = $('.scroll-horizntaly.next')
 
 function setScrollRightButtonVisibility() {
     if (divExperience.scrollLeft() >= divExperience.width()) {
