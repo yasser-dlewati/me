@@ -505,21 +505,19 @@ label {
   -----------------------------------------*/
 
 .social-links {
+  margin-top: 20px;
   text-align: center;
-  margin: 3rem 0 0 0;
 }
 
-.social-links li {
+.social-links a {
+  color: var(--p-color);
   display: inline-block;
   list-style: none;
   font-size: 3rem;
+  margin: 0 10px;
 }
 
-.social-links li a {
-  color: var(--p-color);
-}
-
-.social-links li a:hover {
+.social-links a:hover {
   color: var(--dark-color);
 }
 
@@ -571,5 +569,29 @@ footer {
   .hero-text {
     position: relative;
     top: 1.5rem;
+  }
+
+  section{
+    height: auto;
+  }
+
+  .img-banner{
+    height: 50vh;
+  }
+
+  section:first-of-type{
+    padding-bottom: 0;
+  }
+
+  section{
+    padding: 40px 0
+  }
+
+  .description{
+    margin-top: 40px;
+  }
+
+  .experience{
+    max-width: 65%;
   }
 }
