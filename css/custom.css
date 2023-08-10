@@ -136,26 +136,6 @@ section:nth-child(odd) {
   transform: rotate(-25deg);
 }
 
-
-/* CUSTOM BUTTON */
-.custom-btn {
-  background: var(--dark-color);
-  border: none;
-  border-radius: var(--border-radius-medium);
-  color: var(--light-color);
-  letter-spacing: 0.2px;
-  padding: 6px 36px 10px 36px;
-  font-size: var(--button-font-size);
-  white-space: nowrap;
-}
-
-.custom-btn:hover,
-.custom-btn:focus {
-  color: var(--dark-color);
-  background: var(--primary-color);
-}
-
-
 /*---------------------------------------
      GENERAL               
   -----------------------------------------*/
@@ -212,18 +192,6 @@ a:hover {
   color: var(--light-color);
   font-weight: var(--font-weight-light);
   font-size: var(--h4-font-size);
-}
-
-.navbar .custom-btn {
-  background: var(--primary-color);
-  color: var(--dark-color);
-}
-
-.contact-form #submit-button:hover,
-.navbar .custom-btn:hover {
-  background-color: var(--menu-bg-color);
-  border-color: var(--menu-bg-color);
-  color: var(--light-color);
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
@@ -290,7 +258,6 @@ a:hover {
   transform: rotate(-45deg);
 }
 
-
 .navbar-toggler .navbar-toggler-icon {
   background: var(--light-color);
   transition: background 10ms 300ms ease;
@@ -322,35 +289,9 @@ a:hover {
   top: 8px;
 }
 
-
-
 /*---------------------------------------
      HERO                
   -----------------------------------------*/
-
-.hero-title,
-.email-link {
-  background: var(--dark-color);
-  border-radius: var(--border-radius-medium);
-  color: var(--light-color);
-  display: inline-block;
-  margin: 0.5rem 0;
-  padding: 0.5rem 2rem 1.5rem 2rem;
-  font-size: 2.2em;
-}
-
-.email-link {
-  background: var(--primary-color);
-  color: var(--dark-color);
-  font-size: var(--h4-font-size);
-  padding: 0.5rem 2rem 1rem 2rem;
-}
-
-.email-link:hover {
-  background: var(--dark-color);
-  color: var(--light-color);
-}
-
 
 .message.sent {
   border-radius: var(--border-radius-medium);
@@ -380,30 +321,15 @@ a:hover {
      ABOUT                
   -----------------------------------------*/
 
-.about-third {
-  margin: 2.2em -0.8em;
-}
-
-.about-image {
-  border-radius: var(--border-radius-small);
-}
-
-.profile-list li {
-  margin: 0.3rem 0;
-}
-
-.profile-list strong {
-  display: inline-block;
-  width: 30%;
-  margin-right: 1rem;
-}
-
-img.circle {
-  border-radius: 50%;
+img.about-image {
   height: 30vh;
   width: 30vh;
   display: block;
   margin: 0 auto;
+}
+
+img.about-image.circle {
+  border-radius: 50%;
 }
 
 .title {
@@ -417,43 +343,9 @@ img.circle {
 }
 
 /*---------------------------------------
-     FAQ                 
-  -----------------------------------------*/
-
-.faq .card-header {
-  padding: 0;
-}
-
-.faq .btn-link {
-  color: var(--dark-color);
-  font-size: var(--h6-font-size);
-  text-align: left;
-  display: block;
-  width: 100%;
-  padding: 1rem 2rem;
-}
-
-.faq .btn-link:focus,
-.faq .btn-link:hover {
-  color: var(--dark-color);
-  text-decoration: none;
-}
-
-.faq .card-body {
-  padding: 2rem;
-}
-
-.faq-info-text {
-  font-size: var(--base-font-size);
-  display: block;
-  margin: 1.5rem 2rem 0 2rem;
-}
-
-
-/*---------------------------------------
      EXPERIENCE               
   -----------------------------------------*/
-.item {
+.experience {
   display: inline-table;
   position: relative;
   max-width: 35%;
@@ -471,7 +363,7 @@ img.circle {
   display: block;
 }
 
-.experience {
+.experience-container {
   white-space: nowrap;
   width: 100%;
   overflow-x: scroll;
@@ -483,24 +375,30 @@ img.circle {
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-.experience::-webkit-scrollbar {
+.experience-container::-webkit-scrollbar {
   display: none;
 }
 
-i.scroll-prev {
+i.scroll-horizontly {
   position: absolute;
   top: 50%;
   font-size: 100px;
-  left: 0;
   z-index: 2;
 }
 
-i.scroll-next {
+i.scroll-horizontly {
   position: absolute;
   top: 50%;
   font-size: 100px;
-  right: 0;
   z-index: 2;
+}
+
+i.scroll-horizontly .next {
+  right: 0;
+}
+
+i.scroll-horizontly .prev {
+  left: 0;
 }
 
 .download:hover {
@@ -532,19 +430,19 @@ i.scroll-next {
 }
 
 .contact-form .form-control,
-.webform-label {
+label {
   transition: all 0.4s;
   touch-action: manipulation;
 }
 
-.webform-label {
+label {
   cursor: text;
   font-size: 12px;
   font-weight: var(--font-weight-light);
   margin-bottom: 5px;
 }
 
-.contact-form .form-control:placeholder-shown+.webform-label {
+.contact-form .form-control:placeholder-shown+label {
   cursor: text;
   max-width: 66.66%;
   white-space: nowrap;
@@ -578,8 +476,8 @@ i.scroll-next {
   color: #c1c1c1;
 }
 
-.contact-form .form-control:not(:placeholder-shown)+.webform-label,
-.contact-form .form-control:focus+.webform-label {
+.contact-form .form-control:not(:placeholder-shown)+label,
+.contact-form .form-control:focus+label {
   transform: translate(0, 0) scale(1);
   cursor: pointer;
   color: var(--gray-color);
@@ -620,14 +518,11 @@ i.scroll-next {
   font-size: 3rem;
 }
 
-.social-links a {
-  display: inline-block;
+.social-links li a {
   color: var(--p-color);
-  font-size: 2.5rem;
-  margin: 5px 20px 5px 0;
 }
 
-.social-links a:hover {
+.social-links li a:hover {
   color: var(--dark-color);
 }
 
@@ -660,23 +555,6 @@ footer {
   h4 {
     font-size: 28px;
   }
-
-  .email-link {
-    font-size: 28px;
-  }
-}
-
-@media screen and (max-width: 992px) {
-
-  .hero-title {
-    font-size: 1.8em;
-    padding-bottom: 1rem;
-  }
-
-  .email-link {
-    font-size: 22px;
-    padding: 0.5rem 2rem 0.7rem 2rem;
-  }
 }
 
 @media screen and (max-width: 991px) {
@@ -696,17 +574,5 @@ footer {
   .hero-text {
     position: relative;
     top: 1.5rem;
-  }
-}
-
-@media screen and (max-width: 480px) {
-
-  .hero-title {
-    font-size: 26px;
-  }
-
-  .email-link {
-    font-size: 20px;
-    padding: 0.3rem 2rem 0.6rem 2rem;
   }
 }
