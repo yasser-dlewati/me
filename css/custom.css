@@ -29,14 +29,9 @@ custom.css
 
 :root {
   --primary-color: #FF6600;
-  --light-color: #FFF7EB;
-  --dark-color: #010101;
-  --menu-bg-color: #2a2726;
-  --msg-bg-color: #DACCBF;
-
-  --light-gray-color: #ededed;
-  --gray-color: #909090;
-  --p-color: #7d7a7a;
+  --light-color: #E9E9E9;
+  --white-color: #FFFFFF;
+  --dark-color: #2a2726;
 
   --base-font-family: "Plain", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-weight-bold: 600;
@@ -94,38 +89,33 @@ h5 {
 }
 
 h6 {
-  font-weight: var(--font-weight-bold);
+  /* font-weight: var(--font-weight-bold); */
   font-size: var(--h6-font-size);
 }
 
 p {
-  color: var(--p-color);
+  color: var(--dark-color);
   font-size: var(--p-font-size);
   font-weight: var(--font-weight-light);
   letter-spacing: 0.3px;
   line-height: 2em;
 }
 
-section:first {
+section:first-of-type {
   margin: 0;
+  padding: 0;
+}
+
+section:last-of-type {
+  padding-bottom: 3rem;
 }
 
 section {
-  padding: 10rem 0;
-  height: 100vh;
+  padding: 6rem 0;
 }
 
 section:nth-child(odd) {
-  background-color: var(--light-gray-color);
-}
-
-.section-alone-in-page:first-of-type {
-  margin: 0;
-}
-
-.section-alone-in-page:last-of-type {
-  height: 100%;
-  padding-bottom: 3rem;
+  background-color: var(--light-color);
 }
 
 .custom-icon {
@@ -182,7 +172,7 @@ a:hover {
 }
 
 .navbar.scroll {
-  background: var(--menu-bg-color);
+  background: var(--dark-color);
   padding: 0.5rem 1rem;
   position: fixed;
   opacity: 1;
@@ -206,7 +196,7 @@ a:hover {
 
 .nav-item .nav-link.active,
 .nav-item .nav-link:hover {
-  color: var(--gray-color);
+  color: var(--light-color);
 }
 
 .nav-item .nav-link.active {
@@ -218,7 +208,7 @@ a:hover {
 }
 
 .nav-link {
-  color: var(--gray-color);
+  color: var(--light-color);
   font-weight: var(--font-weight-light);
   font-size: var(--base-font-size);
   border-bottom: 1px solid transparent;
@@ -296,10 +286,8 @@ a:hover {
 .message.sent {
   border-radius: var(--border-radius-medium);
   border-bottom-left-radius: 0px;
-  background-color: var(--msg-bg-color);
+  background-color: var(--light-color);
   color: var(--dark-color);
-  /* background: var(--dark-color); */
-  /* color: var(--light-color); */
   display: inline-block;
   margin: 1rem 0;
   padding: 0.5rem 2rem 1.5rem 2rem;
@@ -309,7 +297,7 @@ a:hover {
   border-radius: var(--border-radius-medium);
   border-bottom-right-radius: 0px;
   background-color: var(--primary-color);
-  color: var(--light-color);
+  color: var(--white-color);
   display: inline-block;
   margin: 1rem 0;
   padding: 0.5rem 2rem 1.5rem 2rem;
@@ -326,6 +314,7 @@ img.about-image {
   width: 30vh;
   display: block;
   margin: 0 auto;
+  margin-bottom: 1rem;
 }
 
 img.about-image.circle {
@@ -342,13 +331,14 @@ img.about-image.circle {
   text-align: center;
 }
 
-.description {
-  margin-top: calc(3rem + 80px);
-}
-
 /*---------------------------------------
      EXPERIENCE               
   -----------------------------------------*/
+
+#experience {
+  padding-bottom: 1rem;
+}
+
 .experience {
   display: inline-table;
   position: relative;
@@ -363,8 +353,8 @@ img.about-image.circle {
   margin: 0 auto;
 }
 
-.experience small {
-  display: block;
+.experience p {
+  padding: 0 3px;
 }
 
 .experience-container {
@@ -404,13 +394,17 @@ i.scroll-horizontly.prev {
 }
 
 .download-container {
-  margin: 6rem 0 0 0;
+  margin: 3rem 0 0 0;
   text-align: center;
 }
 
 /*---------------------------------------
      CONTACT               
   -----------------------------------------*/
+
+div.contact {
+  margin-bottom: .5rem;
+}
 
 .contact-form .form-control {
   border-radius: 1rem;
@@ -510,7 +504,7 @@ label {
 }
 
 .social-links a {
-  color: var(--p-color);
+  color: var(--dark-color);
   display: inline-block;
   list-style: none;
   font-size: 3rem;
@@ -522,8 +516,8 @@ label {
 }
 
 footer {
-  background-color: #212529;
-  color: #909090;
+  background-color: var(--dark-color);
+  color: var(--light-color);
   padding: 1rem;
   font-size: 0.75rem;
   text-align: center;
@@ -578,16 +572,8 @@ footer {
     top: 1.5rem;
   }
 
-  section {
-    height: auto;
-  }
-
   .img-banner {
     height: 50vh;
-  }
-
-  section:first-of-type {
-    padding-bottom: 0;
   }
 
   section {
@@ -596,10 +582,6 @@ footer {
 
   section:last-of-type {
     padding-bottom: 20px !important;
-  }
-
-  .description {
-    margin-top: 40px;
   }
 
   .experience {
