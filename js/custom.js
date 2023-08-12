@@ -149,36 +149,43 @@ $('#submit-button').click(function () {
     const txtEmail = $('#txtEmail');
     const txtMessage = $('#txtMessage');
     var isEmailVerified = tryVerifyEmailAddress(txtEmail.val());
-    
+
     if (txtEmail.val() == '' || txtMessage.val() == '' || txtName.val() == '') {
         alert('Sorry but I need all the information to respond to you, please make sure you filled them up correctly.');
         return;
     }
 
-    if(isEmailVerified){
+    if (isEmailVerified) {
         Email.send({
-            SecureToken : "8c1ba5c8-5c06-4fba-9abb-cb57b4168999",
-            To : 'yasdle@outlook.com',
-            From : senderEmail,
-            Subject : "New Message from " + txtName.val() + " (" + txtEmail.val() + ")",
-            Body : txtMessage.val().replace(/\n/g, "<br />")
+            SecureToken: "8c1ba5c8-5c06-4fba-9abb-cb57b4168999",
+            To: 'yasdle@outlook.com',
+            From: senderEmail,
+            Subject: "New Message from " + txtName.val() + " (" + txtEmail.val() + ")",
+            Body: txtMessage.val().replace(/\n/g, "<br />")
         }).then(
-        () => alert('Your message is on its way, Thanks and have agreat day!')
+            () => alert('Your message is on its way, Thanks and have agreat day!')
         );
     }
 })
 
-function tryVerifyEmailAddress(email){
+function tryVerifyEmailAddress(email) {
     const regex = "^([A-Z|a-z|0-9](\.|_){0,1})+[A-Z|a-z|0-9]\@([A-Z|a-z|0-9])+((\.){0,1}[A-Z|a-z|0-9]){2}\.[a-z]{2,3}$"
-    return(new RegExp(regex).test(email));
+    return (new RegExp(regex).test(email));
 }
 
-$(document).ready(function(){
+$(document).ready(function () {
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+        var $loader = $(".loader").removeClass("loader");
+        $loader.remove();
+    }, 800);
+
+
     var logo = $('.logo')
-    logo.on('mouseenter', function(){
+    logo.on('mouseenter', function () {
         logo.html("Yasser Dlewati");
     })
-    logo.on('mouseleave', function(){
+    logo.on('mouseleave', function () {
         logo.html("Yas Dle");
     })
 })
