@@ -326,25 +326,23 @@ a:hover {
 /*---------------------------------------
      HERO                
   -----------------------------------------*/
-
-.message.sent {
-  border-radius: var(--border-radius-medium);
-  border-bottom-left-radius: 0px;
-  background-color: var(--light-color);
-  color: var(--dark-color);
+.message{
   display: inline-block;
   margin: 1rem 0;
+  border-radius: var(--border-radius-medium);
   padding: 0.5rem 2rem 1.5rem 2rem;
 }
 
+.message.sent {
+  border-bottom-left-radius: 0px;
+  background-color: var(--light-color);
+  color: var(--dark-color);
+}
+
 .message.received {
-  border-radius: var(--border-radius-medium);
   border-bottom-right-radius: 0px;
   background-color: var(--primary-color);
   color: var(--white-color);
-  display: inline-block;
-  margin: 1rem 0;
-  padding: 0.5rem 2rem 1.5rem 2rem;
   float: right;
 }
 
