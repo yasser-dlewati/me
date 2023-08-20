@@ -143,15 +143,13 @@ $(document).ready(function () {
     setScrollLeftButtonVisibility();
 });
 
-$('#submit-button').click(function () {
+$('#btnSubmit').click(function () {
     const senderEmail = "yasdle@outlook.com";
-    const txtName = $('#txtName');
-    const txtEmail = $('#txtEmail');
-    const txtMessage = $('#txtMessage');
     var isEmailVerified = tryVerifyEmailAddress(txtEmail.val());
-
-    if (txtEmail.val() == '' || txtMessage.val() == '' || txtName.val() == '') {
-        alert('Sorry but I need all the information to respond to you, please make sure you filled them up correctly.');
+    var isAnyInputInValid = invalidatedInput(txtEmail) ||  invalidatedInput(txtName)|| invalidatedInput(txtMessage)
+    if (isAnyInputInValid) {
+        setSubmitButtonAppearance(isAnyInputInValid)
+        showSnackbar(alertClass, alertMessage)
         return;
     }
 
@@ -162,15 +160,76 @@ $('#submit-button').click(function () {
             From: senderEmail,
             Subject: "New Message from " + txtName.val() + " (" + txtEmail.val() + ")",
             Body: txtMessage.val().replace(/\n/g, "<br />")
-        }).then(
-            () => alert('Your message is on its way, Thanks and have agreat day!')
-        );
+        }).then(() => showSnackbar(successClass, successMessage))
+        .catch(err => showSnackbar(failClass, failMessage + '\n ' + err))
+            
     }
 })
+
+const successClass = 'success-snackbar';
+const successMessage = 'Your message is on its way, Thanks and have agreat day!';
+const failClass = 'fail-snackbar';
+const failMessage = 'Something went wrong, please try again later!';
+const alertClass = 'alert-snackbar';
+const alertMessage = 'I need all the information to respond to you, please make sure you filled them up correctly.';
+
+
+function showSnackbar(snackbarClass, snackbarMessage) {
+    var snackbar = $('#snackbar');
+    $('#snackbar-text').html(snackbarMessage);
+    snackbar.addClass('show ' + snackbarClass);
+    var width = snackbar.width()
+    console.log(width)
+    snackbar.css('left', 'calc(50% - '+width/2+'px)')
+    setTimeout(() => {
+        snackbar.removeClass('show');
+    }, 3000);
+}
 
 function tryVerifyEmailAddress(email) {
     const regex = "^([A-Z|a-z|0-9](\.|_){0,1})+[A-Z|a-z|0-9]\@([A-Z|a-z|0-9])+((\.){0,1}[A-Z|a-z|0-9]){2}\.[a-z]{2,3}$"
     return (new RegExp(regex).test(email));
+}
+
+const txtName = $('#txtName')
+const txtEmail = $('#txtEmail')
+const txtMessage = $('#txtMessage')
+
+function invalidatedInput(input) {
+    var invalid = false;
+    if (input === txtName || input == txtMessage) {
+        invalid = $(input).val() === '' || $(input).val() === ' ' || $(input).val().length < 2
+    }
+    else if (input === txtEmail) {
+        invalid = !tryVerifyEmailAddress($(input).val())
+    }
+
+    if (invalid) {
+        $(input.addClass('required'))
+    }
+    else {
+        $(input.removeClass('required'))  
+    }
+
+    return invalid;
+
+}
+
+function validateInputsOnFocusout(input){
+    $(input).focusout(() => {
+        var isAnyInputInValid = invalidatedInput(txtEmail) ||  invalidatedInput(txtName)|| invalidatedInput(txtMessage)
+       setSubmitButtonAppearance(isAnyInputInValid)
+    })
+}
+
+function setSubmitButtonAppearance(toDisable){
+    if(toDisable){
+        $(':submit').addClass('disabled').removeClass('form-control')
+    }
+    else{
+        $(':submit').removeClass('disabled').addClass('form-control')
+    }
+    $(':submit').prop('disabled', toDisable)
 }
 
 $(document).ready(function () {
@@ -188,4 +247,10 @@ $(document).ready(function () {
     logo.on('mouseleave', function () {
         logo.html("Yas Dle");
     })
+
+    validateInputsOnFocusout(txtName)
+    validateInputsOnFocusout(txtEmail)
+    validateInputsOnFocusout(txtMessage)
+
+    $('i#close').click(()=> $('#snackbar').removeClass('show'))
 })
