@@ -99,6 +99,8 @@ p {
   font-weight: var(--font-weight-light);
   letter-spacing: 0.3px;
   line-height: 2em;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 section:first-of-type {
@@ -371,6 +373,10 @@ img.about-image.circle {
   font-size: 3rem;
   margin: 40px 0;
   text-align: center;
+}
+
+.rolling-experience{
+  background: linear-gradient(0.25turn,var(--primary-color),var(--white-color), var(--primary-color)); ;
 }
 
 /*---------------------------------------
