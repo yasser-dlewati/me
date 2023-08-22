@@ -146,7 +146,7 @@ $(document).ready(function () {
 $('#btnSubmit').click(function () {
     const senderEmail = "yasdle@outlook.com";
     var isEmailVerified = tryVerifyEmailAddress(txtEmail.val());
-    var isAnyInputInValid = invalidatedInput(txtEmail) ||  invalidatedInput(txtName)|| invalidatedInput(txtMessage)
+    var isAnyInputInValid = invalidatedInput(txtEmail) || invalidatedInput(txtName) || invalidatedInput(txtMessage)
     if (isAnyInputInValid) {
         setSubmitButtonAppearance(isAnyInputInValid)
         showSnackbar(alertClass, alertMessage)
@@ -161,17 +161,17 @@ $('#btnSubmit').click(function () {
             Subject: "New Message from " + txtName.val() + " (" + txtEmail.val() + ")",
             Body: txtMessage.val().replace(/\n/g, "<br />")
         }).then(() => showSnackbar(successClass, successMessage))
-        .catch(err => showSnackbar(failClass, failMessage + '\n ' + err))
-            
+            .catch(err => showSnackbar(failClass, failMessage + '\n ' + err))
+
     }
 })
 
 const successClass = 'success-snackbar';
-const successMessage = 'Your message is on its way, Thanks and have agreat day!';
+const successMessage = 'Your message is on its way, Thanks!';
 const failClass = 'fail-snackbar';
 const failMessage = 'Something went wrong, please try again later!';
 const alertClass = 'alert-snackbar';
-const alertMessage = 'I need all the information to respond to you, please make sure you filled them up correctly.';
+const alertMessage = 'Please make sure you filled them up correctly.';
 
 
 function showSnackbar(snackbarClass, snackbarMessage) {
@@ -180,7 +180,7 @@ function showSnackbar(snackbarClass, snackbarMessage) {
     snackbar.addClass('show ' + snackbarClass);
     var width = snackbar.width()
     console.log(width)
-    snackbar.css('left', 'calc(50% - '+width/2+'px)')
+    snackbar.css('left', 'calc(50% - ' + width / 2 + 'px)')
     setTimeout(() => {
         snackbar.removeClass('show');
     }, 3000);
@@ -208,28 +208,56 @@ function invalidatedInput(input) {
         $(input.addClass('required'))
     }
     else {
-        $(input.removeClass('required'))  
+        $(input.removeClass('required'))
     }
 
     return invalid;
 
 }
 
-function validateInputsOnFocusout(input){
+function validateInputsOnFocusout(input) {
     $(input).focusout(() => {
-        var isAnyInputInValid = invalidatedInput(txtEmail) ||  invalidatedInput(txtName)|| invalidatedInput(txtMessage)
-       setSubmitButtonAppearance(isAnyInputInValid)
+        var isAnyInputInValid = invalidatedInput(txtEmail) || invalidatedInput(txtName) || invalidatedInput(txtMessage)
+        setSubmitButtonAppearance(isAnyInputInValid)
     })
 }
 
-function setSubmitButtonAppearance(toDisable){
-    if(toDisable){
+function setSubmitButtonAppearance(toDisable) {
+    if (toDisable) {
         $(':submit').addClass('disabled').removeClass('form-control')
     }
-    else{
+    else {
         $(':submit').removeClass('disabled').addClass('form-control')
     }
     $(':submit').prop('disabled', toDisable)
+}
+
+function setExperienceDurationContent() {
+    var spanRollingExperience = $('.rolling-experience')
+    let userAgent = navigator.userAgent;
+    let regexp = /android|iphone|kindle|ipad/i;
+    let isMobileDevice = regexp.test(userAgent);
+    let oldContent = $(spanRollingExperience).html()
+    let newContent = 'who started his journey since 2016'
+    let content = [oldContent, newContent]
+    let i = 0;
+    if (isMobileDevice) {
+        setInterval(() => {
+            if (i === content.length) {
+                i = 0;
+            }
+
+            $(spanRollingExperience).html(content[i])
+            i++
+        }, 3000);
+    }
+    else {
+        $(spanRollingExperience).hover(() => {
+            $(spanRollingExperience).html(content[1])
+        }, () => {
+            $(spanRollingExperience).html(content[0])
+        })
+    }
 }
 
 $(document).ready(function () {
@@ -239,18 +267,11 @@ $(document).ready(function () {
         $loader.remove();
     }, 800);
 
-
-    var logo = $('.logo')
-    logo.on('mouseenter', function () {
-        logo.html("Yasser Dlewati");
-    })
-    logo.on('mouseleave', function () {
-        logo.html("Yas Dle");
-    })
+    setExperienceDurationContent()
 
     validateInputsOnFocusout(txtName)
     validateInputsOnFocusout(txtEmail)
     validateInputsOnFocusout(txtMessage)
 
-    $('i#close').click(()=> $('#snackbar').removeClass('show'))
+    $('i#close').click(() => $('#snackbar').removeClass('show'))
 })
