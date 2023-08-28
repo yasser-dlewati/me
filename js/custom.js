@@ -90,8 +90,9 @@ const divExperience = $('.experience-container');
 const scrollLeftButton = $('.scroll-horizontly.prev')
 const scrollRightButton = $('.scroll-horizontly.next')
 
+let maxDivExperienceWidth = divExperience[0].scrollWidth - divExperience.width()
 function setScrollRightButtonVisibility() {
-    if (divExperience.scrollLeft() >= divExperience.width()) {
+    if (divExperience.scrollLeft() >= maxDivExperienceWidth) {
         scrollRightButton.hide();
     }
     else {
@@ -114,11 +115,15 @@ divExperience.scroll(function () {
     scrollPosition = divExperience.scrollLeft();
 });
 
+let userAgent = navigator.userAgent;
+let regexp = /android|iphone|kindle|ipad/i;
+let isMobileDevice = regexp.test(userAgent);
 var scrollPosition = 0
+const scrollFactor = isMobileDevice ? 0.6 : 0.3;
 
 scrollLeftButton.click(function () {
     if (scrollPosition > 0) {
-        scrollPosition -= divExperience.width() * 0.3;
+        scrollPosition -= divExperience.width() * scrollFactor
     }
 
     divExperience.animate({
@@ -128,8 +133,8 @@ scrollLeftButton.click(function () {
 });
 
 scrollRightButton.click(function () {
-    if (scrollPosition < divExperience.width()) {
-        scrollPosition += divExperience.width() * 0.3;
+    if (scrollPosition < maxDivExperienceWidth) {
+        scrollPosition += divExperience.width() * scrollFactor;
     }
 
     divExperience.animate({
@@ -234,11 +239,8 @@ function setSubmitButtonAppearance(toDisable) {
 
 function setExperienceDurationContent() {
     var spanRollingExperience = $('.rolling-experience')
-    let userAgent = navigator.userAgent;
-    let regexp = /android|iphone|kindle|ipad/i;
-    let isMobileDevice = regexp.test(userAgent);
     let oldContent = $(spanRollingExperience).html()
-    let newContent = 'who started his journey since 2016'
+    let newContent = ' who started his journey since 2016 '
     let content = [oldContent, newContent]
     let i = 0;
     if (isMobileDevice) {

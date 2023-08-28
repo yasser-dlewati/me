@@ -376,7 +376,8 @@ img.about-image.circle {
 }
 
 .rolling-experience{
-  background: linear-gradient(0.25turn,var(--primary-color),var(--white-color), var(--primary-color)); ;
+  background-color:var(--primary-color);
+  color:var(--light-color);
 }
 
 /*---------------------------------------
@@ -394,6 +395,10 @@ img.about-image.circle {
   text-wrap: wrap;
 }
 
+.experience h6 {
+  font-size: 20px;
+}
+
 .experience img {
   max-height: 150px;
   max-width: 150px;
@@ -402,7 +407,7 @@ img.about-image.circle {
 }
 
 .experience p {
-  padding: 0 3px;
+  padding: 0 16px;
 }
 
 .experience-container {
