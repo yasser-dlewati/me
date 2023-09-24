@@ -172,6 +172,9 @@ a:hover {
   animation: zoom-in 1s 1;
 }
 
+img.logo{
+  height: 3rem;
+}
 
 @keyframes zoom-in {
   0% {
