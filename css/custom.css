@@ -173,7 +173,8 @@ a:hover {
 }
 
 img.logo{
-  height: 3rem;
+  height: 2.5rem;
+  display: block;
 }
 
 @keyframes zoom-in {
@@ -378,11 +379,6 @@ img.about-image.circle {
   text-align: center;
 }
 
-.rolling-experience{
-  background-color:var(--primary-color);
-  color:var(--light-color);
-}
-
 /*---------------------------------------
      EXPERIENCE               
   -----------------------------------------*/
@@ -444,12 +440,12 @@ i.scroll-horizontly.prev {
   left: 0;
 }
 
-.download:hover {
+.download {
   color: var(--primary-color);
   border-bottom: solid 1px var(--primary-color);
 }
 
-.download-container {
+.download-container p {
   margin: 3rem 0 0 0;
   text-align: center;
 }

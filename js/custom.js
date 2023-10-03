@@ -119,7 +119,7 @@ let userAgent = navigator.userAgent;
 let regexp = /android|iphone|kindle|ipad/i;
 let isMobileDevice = regexp.test(userAgent);
 var scrollPosition = 0
-const scrollFactor = isMobileDevice ? 0.6 : 0.3;
+const scrollFactor = isMobileDevice ? 0.5 : 0.3;
 
 scrollLeftButton.click(function () {
     if (scrollPosition > 0) {
@@ -237,39 +237,12 @@ function setSubmitButtonAppearance(toDisable) {
     $(':submit').prop('disabled', toDisable)
 }
 
-function setExperienceDurationContent() {
-    var spanRollingExperience = $('.rolling-experience')
-    let oldContent = $(spanRollingExperience).html()
-    let newContent = ' who started his journey since 2016 '
-    let content = [oldContent, newContent]
-    let i = 0;
-    if (isMobileDevice) {
-        setInterval(() => {
-            if (i === content.length) {
-                i = 0;
-            }
-
-            $(spanRollingExperience).html(content[i])
-            i++
-        }, 3000);
-    }
-    else {
-        $(spanRollingExperience).hover(() => {
-            $(spanRollingExperience).html(content[1])
-        }, () => {
-            $(spanRollingExperience).html(content[0])
-        })
-    }
-}
-
 $(document).ready(function () {
     setTimeout(() => {
         window.scrollTo(0, 0);
         var $loader = $(".loader").removeClass("loader");
         $loader.remove();
     }, 800);
-
-    setExperienceDurationContent()
 
     validateInputsOnFocusout(txtName)
     validateInputsOnFocusout(txtEmail)
