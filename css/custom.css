@@ -430,14 +430,19 @@ i.scroll-horizontly {
   top: 50%;
   font-size: 100px;
   z-index: 2;
+  opacity: 0.5;
+}
+
+i.scroll-horizontly:Hover {
+  opacity: 1;
 }
 
 i.scroll-horizontly.next {
-  right: 0;
+  right: -3rem;
 }
 
 i.scroll-horizontly.prev {
-  left: 0;
+  left: -3rem;
 }
 
 .download {
@@ -698,6 +703,8 @@ footer {
 
   .img-banner {
     height: 50vh;
+    display: block;
+    margin: auto;
   }
 
   section {
@@ -709,8 +716,25 @@ footer {
   }
 
   .experience {
-    max-width: 65%;
+    max-width: 100%;
   }
+
+  i.scroll-horizontly {
+    top: 40%;
+  }
+
+  i.scroll-horizontly:hover {
+    opacity: 1;
+  }  
+
+  
+i.scroll-horizontly.next {
+  right: 0;
+}
+
+i.scroll-horizontly.prev {
+  left: 0;
+}
 
   .hide-on-mobile {
     display: none;

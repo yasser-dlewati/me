@@ -119,7 +119,7 @@ let userAgent = navigator.userAgent;
 let regexp = /android|iphone|kindle|ipad/i;
 let isMobileDevice = regexp.test(userAgent);
 var scrollPosition = 0
-const scrollFactor = isMobileDevice ? 0.5 : 0.3;
+const scrollFactor = isMobileDevice ? 1.05 : 0.3;
 
 scrollLeftButton.click(function () {
     if (scrollPosition > 0) {
