@@ -119,7 +119,7 @@ let userAgent = navigator.userAgent;
 let regexp = /android|iphone|kindle|ipad/i;
 let isMobileDevice = regexp.test(userAgent);
 var scrollPosition = 0
-const scrollFactor = isMobileDevice ? 1.05 : 0.3;
+const scrollFactor = isMobileDevice ? 1 : 1/3;
 
 scrollLeftButton.click(function () {
     if (scrollPosition > 0) {
@@ -130,6 +130,7 @@ scrollLeftButton.click(function () {
         scrollLeft: scrollPosition
     })
 
+    setExperienceIndicator(-1);
 });
 
 scrollRightButton.click(function () {
@@ -140,7 +141,34 @@ scrollRightButton.click(function () {
     divExperience.animate({
         scrollLeft: scrollPosition
     })
+
+    setExperienceIndicator(1)
 });
+
+var experienceIndicatorPosition =0;
+
+function setExperienceIndicator(step){
+    step *= isMobileDevice ? 1 : 3; 
+    experienceIndicatorPosition += step;
+    console.log(experienceIndicatorPosition)
+    let lis = $('.experience-indicator li')
+    console.log(lis)
+    lis.each((i)=>{
+        $(lis[i]).removeClass('active')
+    })
+
+    lis.each((i)=>{
+        if(i==experienceIndicatorPosition)
+        $(lis[i]).addClass('active')
+    })
+}
+
+function setActiveexperienceIndictor(arr){
+    arr.each((i)=>{
+        arr(i).removeClass('active')
+    })
+    console.log('xxxx')
+}
 
 $(document).ready(function () {
     setExperienceDuration();
@@ -237,7 +265,23 @@ function setSubmitButtonAppearance(toDisable) {
     $(':submit').prop('disabled', toDisable)
 }
 
+function renderExperienceIndicator(){
+    var count = $('.experience').length;
+    var content = '';
+    for(var i=0;i<count;i++){
+        if((!isMobileDevice && i<3)||(isMobileDevice && i == 0)){
+        content+="<li class='active'></li>";
+        }
+        else{
+            content+='<li></li>';
+        }
+    }
+
+    $('.experience-indicator').html(content);
+}
+
 $(document).ready(function () {
+    renderExperienceIndicator();
     setTimeout(() => {
         window.scrollTo(0, 0);
         var $loader = $(".loader").removeClass("loader");
