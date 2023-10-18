@@ -412,7 +412,7 @@ img.about-image.circle {
 .experience-container {
   white-space: nowrap;
   width: 100%;
-  overflow-x: scroll;
+  overflow-x: hidden;
   height: 100%;
   -ms-overflow-style: none;
   /* Hide scrollbar in IE and Edge */

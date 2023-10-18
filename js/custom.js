@@ -1,7 +1,6 @@
 
+'use strict'
 $(function () {
-    'use strict'
-
     // MENU
     $('.navbar .nav-link').on('click', function () {
         $(".navbar-collapse").collapse('hide');
@@ -109,7 +108,7 @@ function setScrollLeftButtonVisibility() {
     }
 }
 
-divExperience.scroll(function () {
+divExperience.scroll(() => {
     setScrollRightButtonVisibility();
     setScrollLeftButtonVisibility();
     scrollPosition = divExperience.scrollLeft();
@@ -119,55 +118,60 @@ let userAgent = navigator.userAgent;
 let regexp = /android|iphone|kindle|ipad/i;
 let isMobileDevice = regexp.test(userAgent);
 var scrollPosition = 0
-const scrollFactor = isMobileDevice ? 1 : 1/3;
+const scrollFactor = isMobileDevice ? 1 : 1 / 3;
 
 scrollLeftButton.click(function () {
     if (scrollPosition > 0) {
-        scrollPosition -= divExperience.width() * scrollFactor
+        scrollPosition -= divExperience.width() * scrollFactor + 4
     }
 
     divExperience.animate({
         scrollLeft: scrollPosition
     })
 
-    setExperienceIndicator(-1);
+    setExperienceIndicatorByStep(-1);
 });
 
 scrollRightButton.click(function () {
+    $(this).attr("disabled", "disabled")
+
     if (scrollPosition < maxDivExperienceWidth) {
-        scrollPosition += divExperience.width() * scrollFactor;
+        scrollPosition += divExperience.width() * scrollFactor - 4
     }
 
     divExperience.animate({
         scrollLeft: scrollPosition
     })
 
-    setExperienceIndicator(1)
+    setExperienceIndicatorByStep(1)
 });
 
-var experienceIndicatorPosition =0;
+var experienceIndicatorPosition = isMobileDevice ? [0] : [0, 1, 2];
 
-function setExperienceIndicator(step){
-    step *= isMobileDevice ? 1 : 3; 
-    experienceIndicatorPosition += step;
-    console.log(experienceIndicatorPosition)
+function setExperienceIndicatorByStep(step) {
+    let recentlyAdded = experienceIndicatorPosition[experienceIndicatorPosition.length - 1] + step
+    if (step < 0) {
+        if (experienceIndicatorPosition[0] - 1 >= 0) {
+            experienceIndicatorPosition.unshift(experienceIndicatorPosition[0] - 1)
+            experienceIndicatorPosition.pop()
+        }
+    }
+    else {
+        if (recentlyAdded < $('.experience').length) {
+            experienceIndicatorPosition.push(recentlyAdded)
+            experienceIndicatorPosition.shift()
+        }
+    }
+
     let lis = $('.experience-indicator li')
-    console.log(lis)
-    lis.each((i)=>{
-        $(lis[i]).removeClass('active')
+    lis.each((i) => {
+        if (experienceIndicatorPosition.includes(i)) {
+            $(lis[i]).addClass('active');
+        }
+        else {
+            $(lis[i]).removeClass('active');
+        }
     })
-
-    lis.each((i)=>{
-        if(i==experienceIndicatorPosition)
-        $(lis[i]).addClass('active')
-    })
-}
-
-function setActiveexperienceIndictor(arr){
-    arr.each((i)=>{
-        arr(i).removeClass('active')
-    })
-    console.log('xxxx')
 }
 
 $(document).ready(function () {
@@ -265,15 +269,15 @@ function setSubmitButtonAppearance(toDisable) {
     $(':submit').prop('disabled', toDisable)
 }
 
-function renderExperienceIndicator(){
+function renderExperienceIndicator() {
     var count = $('.experience').length;
     var content = '';
-    for(var i=0;i<count;i++){
-        if((!isMobileDevice && i<3)||(isMobileDevice && i == 0)){
-        content+="<li class='active'></li>";
+    for (var i = 0; i < count; i++) {
+        if ((!isMobileDevice && i < 3) || (isMobileDevice && i == 0)) {
+            content += "<li class='active'></li>";
         }
-        else{
-            content+='<li></li>';
+        else {
+            content += '<li></li>';
         }
     }
 
