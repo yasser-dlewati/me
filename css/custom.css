@@ -713,6 +713,19 @@ footer {
   }
 }
 
+@media screen and (max-width:820px) {
+  .img-banner {
+    height: 50vh;
+    display: block;
+    margin: auto;
+  }
+
+  img.about-image {
+    height: 25vh;
+    width: 25vh;
+  }
+}
+
 @media screen and (max-width: 768px) {
 
   .hero-text {
