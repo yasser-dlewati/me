@@ -60,7 +60,7 @@ divExperience.scroll(() => {
 
 scrollLeftButton.click(function () {
     if (scrollPosition > 0) {
-        scrollPosition -= $('.experience').width() + 4
+        scrollPosition -= $('.experience').width()
     }
 
     divExperience.animate({
@@ -72,7 +72,7 @@ scrollLeftButton.click(function () {
 
 scrollRightButton.click(function () {
     if (scrollPosition < maxDivExperienceWidth) {
-        scrollPosition += $('.experience').width() + 4
+        scrollPosition += $('.experience').width()
     }
 
     divExperience.animate({
