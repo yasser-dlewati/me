@@ -65,9 +65,9 @@ scrollLeftButton.click(function () {
 
     divExperience.animate({
         scrollLeft: scrollPosition
-    });
+    })
 
-    setExperienceIndicatorByStep(-1);
+    setExperienceIndicatorByStep(-1)
 });
 
 scrollRightButton.click(function () {
