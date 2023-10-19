@@ -165,14 +165,14 @@ a:hover {
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .loader img {
   animation: zoom-in 1s 1;
+  object-fit: none;
 }
 
-img.logo{
+img.logo {
   height: 2.5rem;
   display: block;
 }
@@ -183,7 +183,7 @@ img.logo{
     opacity: 1;
   }
 
-  70%{
+  70% {
     transform: scale(1, 1);
     opacity: 1;
   }
@@ -194,7 +194,7 @@ img.logo{
   }
 }
 
-.content{
+.content {
   animation: fade-in 1s 1;
   animation-delay: 1s;
 }
@@ -332,17 +332,72 @@ img.logo{
 /*---------------------------------------
      HERO                
   -----------------------------------------*/
-.message{
+  
+.wave {
+  position: relative;
+  top:4px;
+  left: -12px;
+  font-size: 3rem;
+  /* Refers to the name of your @keyframes element below */
+  animation-name: wave-animation;
+  animation-duration: 2.5s;
+  /* Never stop waving :) */
+  animation-iteration-count: infinite;
+  transform-origin: 70% 70%;
+  display: inline-block;
+}
+
+@keyframes wave-animation {
+  0% {
+    transform: rotate(0.0deg)
+  }
+
+  10% {
+    transform: rotate(14.0deg)
+  }
+
+  /* The following five values can be played with to make the waving more or less extreme */
+  20% {
+    transform: rotate(-20.0deg)
+  }
+
+  30% {
+    transform: rotate(14.0deg)
+  }
+
+  40% {
+    transform: rotate(-10.0deg)
+  }
+
+  50% {
+    transform: rotate(20.0deg)
+  }
+
+  60% {
+    transform: rotate(0.0deg)
+  }
+
+  /* Reset for the last half to pause */
+  100% {
+    transform: rotate(0.0deg)
+  }
+}
+
+.message {
   display: inline-block;
   margin: 1rem 0;
   border-radius: var(--border-radius-medium);
-  padding: 0.5rem 2rem 1.5rem 2rem;
+  padding: 1rem 2rem 1.5rem 2rem;
 }
 
 .message.sent {
   border-bottom-left-radius: 0px;
   background-color: var(--light-color);
   color: var(--dark-color);
+}
+
+.message.sent:first-child {
+  padding:0 2rem 1.5rem 2rem
 }
 
 .message.received {
@@ -375,7 +430,7 @@ img.about-image.circle {
 
 .title {
   font-size: 3rem;
-  margin: 40px 0;
+  margin: 0 0 4rem 0;
   text-align: center;
 }
 
@@ -445,12 +500,12 @@ i.scroll-horizontly.prev {
   left: -3rem;
 }
 
-.experience-indicator{
+.experience-indicator {
   display: block;
   margin: auto;
 }
 
-.experience-indicator li{
+.experience-indicator li {
   border: 4px solid var(--dark-color);
   display: inline-block;
   border-radius: 50%;
@@ -459,8 +514,8 @@ i.scroll-horizontly.prev {
   margin: 0 4px;
 }
 
-.experience-indicator li.active{
-  background-color:var(--primary-color);
+.experience-indicator li.active {
+  background-color: var(--primary-color);
   border-color: var(--primary-color);
 }
 
@@ -504,7 +559,7 @@ label {
 
 label {
   cursor: text;
-  font-size: 12px;
+  font-size: var(--p-font-size);
   font-weight: var(--font-weight-light);
   margin-bottom: 5px;
 }
@@ -550,7 +605,7 @@ label {
   color: var(--gray-color);
 }
 
- #btnSubmit {
+#btnSubmit {
   background-color: var(--primary-color);
   border: 1px solid var(--primary-color);
   border-radius: var(--border-radius-small);
@@ -577,7 +632,7 @@ label {
   font-size: var(--base-font-size);
 }
 
-.required{
+.required {
   border-color: var(--primary-color);
 }
 
@@ -620,31 +675,32 @@ footer {
   min-width: 250px;
   text-align: center;
   border-radius: 20px;
-  padding: 1rem 3rem;
+  padding: 1rem 2rem 1rem 3rem;
   position: fixed;
   z-index: 1;
-  left: calc(50% - 250px);
-  bottom: 30px;
-  font-size: var(--h6-font-size);
+  left: calc(50% - 200px);
+  bottom: 2rem;
+  font-size: var(--p-font-size);
 }
 
-#snackbar > i{
-  margin-left: 3rem;
+#snackbar>i {
+  margin-left: 2rem;
 }
 
-.success-snackbar{
+.success-snackbar {
   background-color: var(--primary-color);
   color: var(--white-color);
 }
 
-.fail-snackbar{
+.fail-snackbar {
   background-color: var(--dark-color);
   color: var(--white-color);
 }
 
-.alert-snackbar{
+.alert-snackbar {
   background-color: var(--white-color);
   color: var(--primary-color);
+  border: 2px solid var(--primary-color)
 }
 
 #snackbar.show {
@@ -654,23 +710,51 @@ footer {
 }
 
 @-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;} 
-  to {bottom: 30px; opacity: 1;}
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
 }
 
 @keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
 }
 
 @-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;} 
-  to {bottom: 0; opacity: 0;}
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
 }
 
 @keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
 }
 
 /*---------------------------------------
@@ -724,6 +808,10 @@ footer {
     height: 25vh;
     width: 25vh;
   }
+
+  .experience {
+    max-width: 100%;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -740,7 +828,7 @@ footer {
   }
 
   section {
-    padding: 40px 0
+    padding: 4rem 0
   }
 
   section:last-of-type {
@@ -757,16 +845,16 @@ footer {
 
   i.scroll-horizontly:hover {
     opacity: 1;
-  }  
+  }
 
-  
-i.scroll-horizontly.next {
-  right: 0;
-}
 
-i.scroll-horizontly.prev {
-  left: 0;
-}
+  i.scroll-horizontly.next {
+    right: 0;
+  }
+
+  i.scroll-horizontly.prev {
+    left: 0;
+  }
 
   .hide-on-mobile {
     display: none;

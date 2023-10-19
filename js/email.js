@@ -39,9 +39,9 @@ function showSnackbar(snackbarClass, snackbarMessage) {
     $('#snackbar-text').html(snackbarMessage);
     snackbar.addClass('show ' + snackbarClass);
     var width = snackbar.width()
-    snackbar.css('left', 'calc(50% - ' + width / 2 + 'px)')
     setTimeout(() => {
         snackbar.removeClass('show');
+        snackbar.removeClass(snackbar)
     }, 3000);
 }
 
@@ -76,7 +76,7 @@ $('#btnSubmit').click(function () {
     }
 })
 
-$(document).ready(()=>{
+$(document).ready(() => {
     validateInputsOnFocusout(txtName)
     validateInputsOnFocusout(txtEmail)
     validateInputsOnFocusout(txtMessage)

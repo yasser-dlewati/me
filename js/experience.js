@@ -60,7 +60,7 @@ divExperience.scroll(() => {
 
 scrollLeftButton.click(function () {
     if (scrollPosition > 0) {
-        scrollPosition -=  $('.experience').width() + 4
+        scrollPosition -= $('.experience').width() + 4
     }
 
     divExperience.animate({
@@ -102,7 +102,7 @@ function setExperienceIndicatorByStep(step) {
     updateExperienceIndicator()
 }
 
-function updateExperienceIndicator(){
+function updateExperienceIndicator() {
     let lis = $('.experience-indicator li')
     lis.each((i) => {
         if (experienceIndicatorPosition.includes(i)) {
@@ -129,7 +129,7 @@ function renderExperienceIndicator() {
     $('.experience-indicator').html(content);
 }
 
-$(document).ready(()=>{
+$(document).ready(() => {
     setExperienceDuration();
     renderExperienceIndicator();
     setScrollRightButtonVisibility();
