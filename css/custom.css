@@ -447,6 +447,7 @@ img.about-image.circle {
   position: relative;
   max-width: 33.334%;
   text-wrap: wrap;
+  white-space: initial;
 }
 
 .experience h6 {
