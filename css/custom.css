@@ -28,10 +28,11 @@ custom.css
 }
 
 :root {
-  --primary-color: #FF6600;
-  --light-color: #E9E9E9;
+  --primary-color: #000000;
+  --section-color:#f0f0f0;
+  --light-color: #a8a8a8;
   --white-color: #FFFFFF;
-  --dark-color: #2a2726;
+  --dark-color: #171717;
 
   --base-font-family: "Plain", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-weight-bold: 600;
@@ -56,6 +57,7 @@ custom.css
 
 body {
   font-family: var(--base-font-family);
+  overflow-x: hidden
 }
 
 
@@ -112,12 +114,8 @@ section:last-of-type {
   padding-bottom: 3rem;
 }
 
-section {
-  padding: 6rem 0;
-}
-
 section:nth-child(odd) {
-  background-color: var(--light-color);
+  background-color: var(--section-color);
 }
 
 .custom-icon {
@@ -430,8 +428,31 @@ img.about-image.circle {
 
 .title {
   font-size: 3rem;
-  margin: 0 0 4rem 0;
-  text-align: center;
+  background-color: var(--dark-color);
+  color: var(--white-color);
+  width: 106vw;
+  padding: 4rem 20rem;
+  transform: rotate(-7deg) translateX(-14vw);
+  top: -10rem;
+  position: relative;
+}
+
+.title.flip {
+  transform: rotate(7deg) translateX(-14vw);
+  top: -5rem;
+  padding-right: 0;
+  padding-left: 54rem;
+
+}
+
+.triangle{  
+  border-top: 14rem solid var(--white-color);
+  border-right: 90rem solid transparent;
+}
+
+.triangle-gray{
+  border-bottom: 14rem solid var(--section-color);
+  border-left: 90rem solid transparent;
 }
 
 /*---------------------------------------
@@ -828,9 +849,6 @@ footer {
     margin: auto;
   }
 
-  section {
-    padding: 4rem 0
-  }
 
   section:last-of-type {
     padding-bottom: 20px !important;
