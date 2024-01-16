@@ -92,4 +92,9 @@ $(document).ready(function () {
         }
         console.log(b);
     })
+
+    $('footer img').click(function(){
+        $(window).scrollTop(0, 0);
+        console.log('back to top')
+    });
 })
