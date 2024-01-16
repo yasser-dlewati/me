@@ -34,19 +34,20 @@ function setExperienceDuration() {
 
 function setScrollRightButtonVisibility() {
     if (divExperience.scrollLeft() >= maxDivExperienceWidth) {
-        scrollRightButton.hide()
+        scrollRightButton.css("opacity","0.5")
     }
     else {
-        scrollRightButton.show()
+        scrollRightButton.css("opacity","1")
     }
 }
 
 function setScrollLeftButtonVisibility() {
     if (divExperience.scrollLeft() === 0) {
-        scrollLeftButton.hide()
+        scrollLeftButton.css("opacity","0.5")
     }
     else {
-        scrollLeftButton.show()
+        scrollLeftButton.css("opacity","1")
+
     }
 }
 
