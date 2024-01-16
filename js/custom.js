@@ -43,27 +43,16 @@ $('#scroll-down').click(function () {
 
 function renderScreenIndicator() {
     var count = $('section').length
-    var content = ''
-    for (var i = 0; i < count; i++) {
-        content += '<li></li>'
-    }
-
+    var content = '<li class="active" value="0"><a>Top</a></li><li value="1"><a>About</a></li><li value="2"><a>Experience</a></li><li value="3"><a>Contact</a></li>'
+   
     $('.screen-indicator').html(content)
 }
 
 function setScreenIndicator(index) {
-    if (index === 0) {
-        $('.screen-indicator').html('<li class="active"></li><li></li><li></li><li></li>')
-    }
-    if (index === 1) {
-        $('.screen-indicator').html('<li></li><li class="active"></li><li></li><li></li>')
-    }
-    if (index === 2) {
-        $('.screen-indicator').html('<li></li><li></li><li class="active"></li><li></li>')
-    }
-    if (index === 3) {
-        $('.screen-indicator').html('<li></li><li></li><li></li><li class="active"></li>')
-    }
+    $('.screen-indicator li').each(function () {
+        $(this).removeClass('active')
+    })
+    $($('.screen-indicator li')[index]).addClass('active')
 }
 
 $(document).ready(function () {
@@ -97,4 +86,14 @@ $(document).ready(function () {
         $(window).scrollTop(0, 0);
         console.log('back to top')
     });
+
+
+    $('.screen-indicator li').click(function(){
+        let sections= $('section');
+        let index = $(this).prop('value')
+        let top = $(sections[index]).offset().top
+        $('html').scrollTop(top+1)
+        setScreenIndicator(index)
+       console.log('clicking'+$(this).prop('value'))
+    })
 })
