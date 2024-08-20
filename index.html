@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  
+  <head>
 
   <title>Yas Dle</title>
   <link rel="icon" href="images/logo-2lines.png" type="image/icon type">
@@ -63,8 +63,6 @@
 
     <!-- about -->
     <section class="about" id="about">
-      <div class="triangle"></div>
-
       <h1 class="title">About Me</h1>
       <div class="container">
         <div class="row">
@@ -88,91 +86,11 @@
 
         </div>
       </div>
-      <div class="triangle flip"></div>
 
     </section>
 
     <!-- Experience -->
-    <section class="section-alone-in-page" id="experience">
-      
-      <h1 class="title flip">My Experience</h3>
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
 
-              <div class="scroll-controls">
-                <i class="scroll-horizontly prev fa fa-chevron-circle-left"></i>
-                <i class="scroll-horizontly next fa fa-chevron-circle-right"></i>
-              </div>
-
-              <div class="experience-container">
-
-                <div class="experience">
-                  <img src="images/jotun.png" class="img-fluid" alt="Jotun">
-                  <h5 class="mb-0 text-center">Jotun</h5>
-                  <h6 class="text-center">Sales Representitive</h6>
-                  <p>Served customers by helping picking the best painting option, providing training for the DIY people
-                    and managing the office by restocking and prepare purchase orders.</p>
-                </div>
-
-                <div class="experience">
-                  <img src="images/kidzone.jpg" class="img-fluid" alt="kidzone">
-                  <h5 class="mb-0 text-center">kidzone</h5>
-                  <h6 class="text-center">Little Inventor Couch</h6>
-                  <p>Couch little ones the basic principles of physics, electricity and roboting as simple as possible,
-                    using simple expirments and Lego NXT robot to simplify programming concepts. </p>
-                </div>
-
-                <div class="experience">
-                  <img src="images/robotat.png" class="img-fluid" alt="robotao">
-                  <h5 class="mb-0 text-center">Robotat</h5>
-                  <h6 class="text-center">Junior Web Developer</h6>
-                  <p>First attempt to enter the software development world by getting assigned to test some feature
-                    manually (black box method) then getting enrolled in the development cycle by delivering some simple
-                    models in both front end and back end.</p>
-                </div>
-
-                <div class="experience">
-                  <img src="images/vou.jpeg" class="img-fluid" alt="vou">
-                  <h5 class="mb-0 text-center">VOU (Voice Of Uranus)</h5>
-                  <h6 class="text-center">Senior Web Developer</h6>
-                  <p>ِِA place where I graded from a junior level to a senior. Learning a
-                    lot of the development cycle, collaporate with other departments to learn more, working hard to
-                    proof myself professionally and stepping up to be a team leader to keep the wheel rooling.</p>
-                </div>
-
-                <div class="experience">
-                  <img src="images/boostorder.jpeg" class="img-fluid" alt="boostorder">
-                  <div class="">
-                    <h5 class="mb-0 text-center">Boostorder</h5>
-                    <h6 class="text-center">Senior Software Engineer</h6>
-                    <p>Being the principle software engineer is something very hard but very rewarding at the same time.
-                      During this period of time, I got the chance to meet the brightest minds and not only work with,
-                      but
-                      learn from as well.</p>
-                  </div>
-                </div>
-
-                <div class="experience">
-                  <img src="images/monster.jpeg" class="img-fluid" alt="monster">
-                  <h5 class="mb-0 text-center">Monster</h5>
-                  <h6 class="text-center">Software Engineer</h6>
-                  <p>First experiment working in such a big corporate which is the perfect time to engage and see how
-                    the
-                    collaporation should be done. In addition to feel proud as a working in a such a good reputation
-                    enterprises.</p>
-                </div>
-
-              </div>
-          </div>
-          <div class="experience-indicator">
-          </div>
-          <div class="col-md-12 download-container">
-            <p>Or simply download my resume from
-              <a href="pdf/YasserDlewatiResume.pdf" class="download" download>here</a>
-            </p>
-          </div>
-    </section>
     <section>
 <style>
 
@@ -187,8 +105,8 @@
     .timeline::after {
       content: '';
       position: absolute;
-      width: 6px;
-      background-color: rgb(7, 0, 0);
+      width: 0.25rem;
+      background-color: var(--white-color);
       top: 0;
       bottom: 0;
       left: 50%;
@@ -202,6 +120,31 @@
       background-color: inherit;
       width: 50%;
     }
+
+    .timeline-container .message{
+      display: inline-block;
+  margin: 1rem 0;
+  border-radius: var(--border-radius-small);
+  padding: 2rem;
+  width: 100%;
+  float: none !important;
+    } 
+    
+    .timeline-container.left .message{
+      border-top-right-radius: 0px;
+    }
+
+    .timeline-container.right .message{
+      border-top-left-radius: 0px;
+    }
+
+    .timeline-container .message img{
+      display: block;
+      margin:  2rem auto;
+      filter: grayscale(100%);
+    }
+
+
     
     /* The circles on the timeline */
     .timeline-container::after {
@@ -210,7 +153,7 @@
       width: 25px;
       height: 25px;
       right: -17px;
-      background-color: rgb(0, 0, 0);
+      background-color: (0, 0, 0);
       border: 4px solid #fff;
       top: 15px;
       border-radius: 50%;
@@ -272,65 +215,91 @@
       left: 0%;
       }
     }
+
+    .timeline-container h2{
+      position: absolute;
+     left: calc(50% - 2rem);
+      z-index: 2;
+      background-color: var(--white-color);
+      color: var(--primary-color);
+      padding: 2rem;
+      border-radius: 1rem;
+      top: 2rem;
+    }
+
+    .timeline-container.left h2{
+     left: calc(50% + 19rem);
+     border-top-left-radius: 0;
+    }
+
+    .timeline-container.right h2{
+     left: calc(50% - 29rem);
+     border-top-right-radius: 0;
+
+    }
     </style>
-    </head>
-    <body>
     
     <div class="timeline">
       <div class="timeline-container left">
-        <div class="message sent">
-          <h2>2016</h2>
-          <img src="images/sh3.png" class="img-fluid" alt="Jotun">
-          <h5 class="mb-0 text-center">Jotun</h5>
-          <h6 class="text-center">Sales Representitive</h6>
-          <p>Served customers by helping picking the best painting option, providing training for the DIY people
-            and managing the office by restocking and prepare purchase orders.</p>
-        
+        <h2>2016</h2>
+        <div class="message received">
+          <img src="images/sh3.png" class="img-fluid text-center" alt="Jotun">
+          <h4>Damascus University</h4>
+          <h6>Damascus, Syria</h5>
+          <h5>Optained BS in Electronic and Telecommunication Engineering</h6>
+         
+        </div>
+        <div class="message received">
+          <img src="images/robotat.png" class="img-fluid" alt="Jotun">
+          <h4 >Robotat</h4>
+          <h6>Kuala Lumpur, Malaysia</h5>
+
+          <h5>Started my journey as a Junior Developer</h6>
         </div>
       </div>
       <div class="timeline-container right">
-        <div class="timeline-content">
-          <h2>2014</h2>
-          <p>Couch little ones the basic principles of physics, electricity and roboting as simple as possible,
-            using simple expirments and Lego NXT robot to simplify programming concepts. </p>
+        <h2>2018</h2>
+        <div class="message received">
+          <img src="images/vou.png" class="img-fluid" alt="Jotun">
+          <h4 >Voice of Uranus</h4>
+          <h6>Kuala Lumpur, Malaysia</h5>
+          <h5>Senior Web Developer</h6>
         </div>
       </div>
+      
       <div class="timeline-container left">
-        <div class="timeline-content">
-          <h2>2016</h2>
-          <p>First attempt to enter the software development world by getting assigned to test some feature
-            manually (black box method) then getting enrolled in the development cycle by delivering some simple
-            models in both front end and back end.</p>
-          </div>
-      </div> <div class="timeline-container left">
-        <div class="timeline-content">
-          <h2>2008</h2>
-          <p>Served customers by helping picking the best painting option, providing training for the DIY people
-            and managing the office by restocking and prepare purchase orders.</p>
-        
+        <h2>2020</h2>
+        <div class="message received">
+          <img src="images/boostorder.png" class="img-fluid" alt="boostorder">
+          <h4 >Boostorder</h4>
+          <h6>Kuala Lumpur, Malaysia</h5>
+          <h5>Senior software engineer</h6>
         </div>
       </div>
       <div class="timeline-container right">
-        <div class="timeline-content">
-          <h2>2014</h2>
-          <p>Couch little ones the basic principles of physics, electricity and roboting as simple as possible,
-            using simple expirments and Lego NXT robot to simplify programming concepts. </p>
+        <h2>2022</h2>
+        <div class="message received">
+          <img src="images/monster.png" class="img-fluid" alt="Monster">
+          <h4 >Monster</h4>
+          <h6>Remote, US & Europe</h5>
+          <h5>Software engineer</h6>
         </div>
       </div>
       <div class="timeline-container left">
-        <div class="timeline-content">
-          <h2>2016</h2>
-          <p>First attempt to enter the software development world by getting assigned to test some feature
-            manually (black box method) then getting enrolled in the development cycle by delivering some simple
-            models in both front end and back end.</p>
-          </div>
+        <h2>2024</h2>
+        <div class="message received">
+          <img src="images/Timelog.png" class="img-fluid" alt="Timelog">
+          <h4 >Monster</h4>
+          <h6>Remote, Denmark</h5>
+          <h5>Senior software engineer 1</h6>
+        </div>
       </div>
+    
     </div>
   </section>
 
     <!-- Contact me -->
     <section class="contact section-alone-in-page" id="contact">
-      <div class="triangle"></div>
       <h1 class="title">Let's connect</h1>
 
       <div class="container">
