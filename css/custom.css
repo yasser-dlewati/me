@@ -57,7 +57,8 @@ custom.css
 
 body {
   font-family: var(--base-font-family);
-  overflow-x: hidden
+  overflow-x: hidden;
+  background-color: var(--primary-color);
 }
 
 
@@ -96,7 +97,7 @@ h6 {
 }
 
 p {
-  color: var(--dark-color);
+  color: var(--white-color);
   font-size: var(--p-font-size);
   font-weight: var(--font-weight-light);
   letter-spacing: 0.3px;
@@ -116,10 +117,6 @@ section:last-of-type {
 
 section {
   margin-top: -1rem;
-}
-
-section:nth-child(even) {
-  background-color: var(--section-color);
 }
 
 .custom-icon {
@@ -394,8 +391,8 @@ img.logo {
 
 .message.sent {
   border-bottom-left-radius: 0px;
-  background-color: var(--light-color);
-  color: var(--dark-color);
+  background-color: var(--white-color);
+  color: var(--primary-color);
 }
 
 .message.sent:first-child {
@@ -405,7 +402,8 @@ img.logo {
 .message.received {
   border-bottom-right-radius: 0px;
   background-color: var(--primary-color);
-  color: var(--light-color);
+  color: var(--white-color);
+  border: 0.25rem solid var(--white-color);
   float: right;
 }
 
