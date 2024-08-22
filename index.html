@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-  <head>
+
+<head>
 
   <title>Yas Dle</title>
   <link rel="icon" href="images/logo-2lines.png" type="image/icon type">
@@ -23,6 +23,8 @@
 </head>
 
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+  <img src="images/logo-2lines.png" />
+
   <div class="loader">
     <img src="images/logo-2lines.png" id="logo">
   </div>
@@ -66,10 +68,8 @@
       <h1 class="title">About Me</h1>
       <div class="container">
         <div class="row">
-          <div class="col-md-6">
-            <img class="about-image circle" src="images/me-circle.jpeg" alt="yasser" />
-          </div>
-          <div class="col-md-6">
+
+          <div class="col-md-12">
             <p class="description">
               A self tought software engineer with <span class="experience-duration"></span> of experience, passionate
               about stretching my mind with solving complicated problems, writing code and learning new stuff.
@@ -92,262 +92,252 @@
     <!-- Experience -->
 
     <section>
-<style>
+      <style>
+        /* The actual timeline (the vertical ruler) */
+        .timeline {
+          position: relative;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
 
-    /* The actual timeline (the vertical ruler) */
-    .timeline {
-      position: relative;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    /* The actual timeline (the vertical ruler) */
-    .timeline::after {
-      content: '';
-      position: absolute;
-      width: 0.25rem;
-      background-color: var(--white-color);
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      margin-left: -3px;
-    }
-    
-    /* Container around content */
-    .timeline-container {
-      padding: 10px 40px;
-      position: relative;
-      background-color: inherit;
-      width: 50%;
-    }
+        /* The actual timeline (the vertical ruler) */
+        .timeline::after {
+          content: '';
+          position: absolute;
+          width: 0.25rem;
+          background-color: var(--light-color);
+          top: 0;
+          bottom: 0;
+          left: 50%;
+          margin-left: -3px;
+        }
 
-    .timeline-container .message{
-      display: inline-block;
-  margin: 1rem 0;
-  border-radius: var(--border-radius-small);
-  padding: 2rem;
-  width: 100%;
-  float: none !important;
-    } 
-    
-    .timeline-container.left .message{
-      border-top-right-radius: 0px;
-    }
+        /* Container around content */
+        .timeline-container {
+          padding: 10px 40px;
+          position: relative;
+          background-color: inherit;
+          width: 50%;
+        }
 
-    .timeline-container.right .message{
-      border-top-left-radius: 0px;
-    }
+        .timeline-container .message {
+          display: inline-block;
+          margin: 1rem 0;
+          border-radius: var(--border-radius-small);
+          padding: 2rem;
+          width: 100%;
+          float: none !important;
+        }
 
-    .timeline-container .message img{
-      display: block;
-      margin:  2rem auto;
-      filter: grayscale(100%);
-    }
+        .timeline-container.left .message {
+          border-top-right-radius: 0px;
+        }
+
+        .timeline-container.right .message {
+          border-top-left-radius: 0px;
+        }
+
+        .timeline-container .message img {
+          display: block;
+          margin: 2rem auto;
+          filter: grayscale(100%);
+        }
 
 
-    
-    /* The circles on the timeline */
-    .timeline-container::after {
-      content: '';
-      position: absolute;
-      width: 25px;
-      height: 25px;
-      right: -17px;
-      background-color: (0, 0, 0);
-      border: 4px solid #fff;
-      top: 15px;
-      border-radius: 50%;
-      z-index: 1;
-    }
-    
-    /* Place the container to the left */
-    .left {
-      left: 0;
-    }
-    
-    /* Place the container to the right */
-    .right {
-      left: 50%;
-    }
-    
-    /* Fix the circle for containers on the right side */
-    .right::after {
-      left: -16px;
-    }
-    
-    /* The actual content */
-    .timeline-content {
-      padding: 20px 30px;
-      background-color: white;
-      position: relative;
-      border-radius: 6px;
-    }
-    
-    /* Media queries - Responsive timeline on screens less than 600px wide */
-    @media screen and (max-width: 600px) {
-      /* Place the timelime to the left */
-      .timeline::after {
-      left: 31px;
-      }
-      
-      /* Full-width containers */
-      .timeline-container {
-      width: 100%;
-      padding-left: 70px;
-      padding-right: 25px;
-      }
-      
-      /* Make sure that all arrows are pointing leftwards */
-      .timeline-container::before {
-      left: 60px;
-      border: medium solid white;
-      border-width: 10px 10px 10px 0;
-      border-color: transparent white transparent transparent;
-      }
-    
-      /* Make sure all circles are at the same spot */
-      .left::after, .right::after {
-      left: 15px;
-      }
-      
-      /* Make all right containers behave like the left ones */
-      .right {
-      left: 0%;
-      }
-    }
 
-    .timeline-container h2{
-      position: absolute;
-     left: calc(50% - 2rem);
-      z-index: 2;
-      background-color: var(--white-color);
-      color: var(--primary-color);
-      padding: 2rem;
-      border-radius: 1rem;
-      top: 2rem;
-    }
+        /* The circles on the timeline */
+        .timeline-container::after {
+          content: '';
+          position: absolute;
+          width: 25px;
+          height: 25px;
+          right: -0.75rem;
+          background-color: var(--light-color);
+          border: 4px solid var(--dark-color);
+          top: 15px;
+          border-radius: 50%;
+          z-index: 1;
+        }
 
-    .timeline-container.left h2{
-     left: calc(50% + 19rem);
-     border-top-left-radius: 0;
-    }
+        /* Place the container to the left */
+        .left {
+          left: 0;
+        }
 
-    .timeline-container.right h2{
-     left: calc(50% - 29rem);
-     border-top-right-radius: 0;
+        /* Place the container to the right */
+        .right {
+          left: 50%;
+        }
 
-    }
-    </style>
-    
-    <div class="timeline">
-      <div class="timeline-container left">
-        <h2>2016</h2>
-        <div class="message received">
-          <img src="images/sh3.png" class="img-fluid text-center" alt="Jotun">
-          <h4>Damascus University</h4>
-          <h6>Damascus, Syria</h5>
-          <h5>Optained BS in Electronic and Telecommunication Engineering</h6>
-         
+        /* Fix the circle for containers on the right side */
+        .right::after {
+          left: -16px;
+        }
+
+        /* The actual content */
+        .timeline-content {
+          padding: 20px 30px;
+          background-color: white;
+          position: relative;
+          border-radius: 6px;
+        }
+
+        /* Media queries - Responsive timeline on screens less than 600px wide */
+        @media screen and (max-width: 600px) {
+
+          /* Place the timelime to the left */
+          .timeline::after {
+            left: 31px;
+          }
+
+          /* Full-width containers */
+          .timeline-container {
+            width: 100%;
+            padding-left: 70px;
+            padding-right: 25px;
+          }
+
+          /* Make sure that all arrows are pointing leftwards */
+          .timeline-container::before {
+            left: 60px;
+            border: medium solid white;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent white transparent transparent;
+          }
+
+          /* Make sure all circles are at the same spot */
+          .left::after,
+          .right::after {
+            left: 15px;
+          }
+
+          /* Make all right containers behave like the left ones */
+          .right {
+            left: 0%;
+          }
+        }
+
+        .timeline-container h2 {
+          position: absolute;
+          left: calc(50% - 2rem);
+          z-index: 2;
+          background-color: var(--dark-color);
+          color: var(--primary-color);
+          padding: 1.5rem;
+          border-radius: 1rem;
+          top: 2rem;
+        }
+
+        .timeline-container.left h2 {
+          left: calc(100% + 2rem);
+          border-top-left-radius: 0;
+        }
+
+        .timeline-container.right h2 {
+          left: calc(50% - 31rem);
+          border-top-right-radius: 0;
+
+        }
+      </style>
+
+      <div class="timeline">
+        <div class="timeline-container left">
+          <h2>2016</h2>
+          <div class="message received">
+            <img src="images/sh3.png" class="img-fluid text-center" alt="Jotun" style="filter:invert()">
+            <h4>Damascus University</h4>
+            <h6>Damascus, Syria</h5>
+              <h5>Optained BS in Electronic and Telecommunication Engineering
+            </h6>
+
+          </div>
+          <div class="message received">
+            <img src="images/robotat.png" class="img-fluid" alt="Jotun">
+            <h4>Robotat</h4>
+            <h6>Kuala Lumpur, Malaysia</h5>
+
+              <h5>Started my journey as a Junior Developer
+            </h6>
+          </div>
         </div>
-        <div class="message received">
-          <img src="images/robotat.png" class="img-fluid" alt="Jotun">
-          <h4 >Robotat</h4>
-          <h6>Kuala Lumpur, Malaysia</h5>
-
-          <h5>Started my journey as a Junior Developer</h6>
+        <div class="timeline-container right">
+          <h2>2018</h2>
+          <div class="message received">
+            <img src="images/vou.png" class="img-fluid" alt="Jotun">
+            <h4>Voice of Uranus</h4>
+            <h6>Kuala Lumpur, Malaysia</h5>
+              <h5>Became as senior Web Developer, and promoted later to be a team leader
+            </h6>
+          </div>
         </div>
+
+        <div class="timeline-container left">
+          <h2>2020</h2>
+          <div class="message received">
+            <img src="images/boostorder.png" class="img-fluid" alt="boostorder">
+            <h4>Boostorder</h4>
+            <h6>Kuala Lumpur, Malaysia</h5>
+              <h5>Senior software engineer
+            </h6>
+          </div>
+        </div>
+        <div class="timeline-container right">
+          <h2>2022</h2>
+          <div class="message received">
+            <img src="images/monster.png" class="img-fluid" alt="Monster">
+            <h4>Monster</h4>
+            <h6>Remote, US & Europe</h5>
+              <h5>Software engineer
+            </h6>
+          </div>
+        </div>
+        <div class="timeline-container left">
+          <h2>2024</h2>
+          <div class="message received">
+            <img src="images/Timelog.png" class="img-fluid" alt="Timelog">
+            <h4>Timelog</h4>
+            <h6>Remote, Denmark</h5>
+              <h5>Senior software engineer 1
+            </h6>
+          </div>
+        </div>
+
       </div>
-      <div class="timeline-container right">
-        <h2>2018</h2>
-        <div class="message received">
-          <img src="images/vou.png" class="img-fluid" alt="Jotun">
-          <h4 >Voice of Uranus</h4>
-          <h6>Kuala Lumpur, Malaysia</h5>
-          <h5>Senior Web Developer</h6>
-        </div>
-      </div>
-      
-      <div class="timeline-container left">
-        <h2>2020</h2>
-        <div class="message received">
-          <img src="images/boostorder.png" class="img-fluid" alt="boostorder">
-          <h4 >Boostorder</h4>
-          <h6>Kuala Lumpur, Malaysia</h5>
-          <h5>Senior software engineer</h6>
-        </div>
-      </div>
-      <div class="timeline-container right">
-        <h2>2022</h2>
-        <div class="message received">
-          <img src="images/monster.png" class="img-fluid" alt="Monster">
-          <h4 >Monster</h4>
-          <h6>Remote, US & Europe</h5>
-          <h5>Software engineer</h6>
-        </div>
-      </div>
-      <div class="timeline-container left">
-        <h2>2024</h2>
-        <div class="message received">
-          <img src="images/Timelog.png" class="img-fluid" alt="Timelog">
-          <h4 >Monster</h4>
-          <h6>Remote, Denmark</h5>
-          <h5>Senior software engineer 1</h6>
-        </div>
-      </div>
-    
-    </div>
-  </section>
+      <p class="text-center">Or simply download my resume from
+        <a href="pdf/YasserDlewatiResume.pdf" class="download" download>here</a>
+      </p>
+    </section>
 
     <!-- Contact me -->
     <section class="contact section-alone-in-page" id="contact">
-      <h1 class="title">Let's connect</h1>
+      <h1 class="title">Let's <br /> connect</h1>
 
       <div class="container">
-        <div class="row">
+        
 
-          <div class="col-md-2"></div>
+          <i class="fa fa-envelope"></i>
+          <h1>yasdle@outlook.com</h1>
 
-          <div class="col-md-8 col-sm-12 col-xs-12">
-            <div class="contact-form webform">
 
-              <div class="form-group ">
-                <label>Full Name</label>
-                <input type="text" class="form-control" id="txtName" placeholder="Enter your full name. e.g. John Doe">
-              </div>
-
-              <div class="form-group ">
-                <label>Your Email</label>
-                <input type="email" class="form-control" id="txtEmail"
-                  placeholder="Enter your email address. e.g johnDoe@example.com">
-              </div>
-
-              <div class="form-group ">
-                <label>Message</label>
-                <textarea class="form-control" rows="5" name="cf-message" id="txtMessage"
-                  placeholder="Your Message"></textarea>
-              </div>
-
-              <button type="submit" class="form-control" id="btnSubmit" name="submit">Send</button>
-            </div>
-          </div>
-
-          <div class="col-md-2"></div>
-
-        </div>
-
+          <a href="https://wa.link/2pgf0p" rel="noopener" >
+            <i class="fab fa-whatsapp"></i>
+            <h1>+60 18-280 6353</h1>
+          </a>
+          
+       
         <div class="social-links">
           <a href="tel: +60 18-280-6353" class="fa fa-phone fa-rotate-90 show-on-mobile hide-on-desktop"></a>
           <a href="https://www.facebook.com/y.dlewati" rel="noopener" class="fab fa-facebook"></a>
           <a href="https://www.linkedin.com/in/yasser-dlewati" rel="noopener" class="fab fa-linkedin"></a>
           <a href="https://www.github.com/yasser-dlewati" rel="noopener" class="fab fa-git"></a>
-          <a href="https://wa.link/2pgf0p" rel="noopener" class="fab fa-whatsapp"></a>
+          <a href="" rel="noopener" class="fab fa-whatsapp"></a>
           </ul>
         </div>
-    </section>
-    <div id="snackbar"><span id="snackbar-text"></span><i id='close' class='fa fa-close'></i></div>
-    <footer>
-      <img src="images/logo-2lines.png" />
-      &copy; All right reserved
+        <span>Created by YasDle.</span>
+        <span style="float:right">&copy; All right reserved</span>
+        </div>
+      </section>
+      <footer>
     </footer>
   </div>
   <!-- SCRIPTS -->

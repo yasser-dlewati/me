@@ -29,10 +29,9 @@ custom.css
 
 :root {
   --primary-color: #000000;
-  --section-color:#f0f0f0;
-  --light-color: #a8a8a8;
+  --light-color: #8F8F8F;
+  --dark-color: #5C5C5C;
   --white-color: #FFFFFF;
-  --dark-color: #212121;
 
   --base-font-family: "Plain", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-weight-bold: 600;
@@ -45,7 +44,7 @@ custom.css
   --h4-font-size: 34px;
   --h5-font-size: 30px;
   --h6-font-size: 24px;
-  --p-font-size: 18px;
+  --p-font-size: 20px;
   --base-font-size: 16px;
   --button-font-size: 20px;
 
@@ -59,6 +58,7 @@ body {
   font-family: var(--base-font-family);
   overflow-x: hidden;
   background-color: var(--primary-color);
+  padding: 0 1rem;
 }
 
 
@@ -68,6 +68,7 @@ body {
 
 h1 {
   font-size: var(--h1-font-size);
+  color: var(--light-color);
 }
 
 h1,
@@ -96,7 +97,7 @@ h6 {
   font-size: var(--h6-font-size);
 }
 
-p {
+p.description {
   color: var(--white-color);
   font-size: var(--p-font-size);
   font-weight: var(--font-weight-light);
@@ -104,6 +105,9 @@ p {
   line-height: 2em;
   text-align: justify;
   text-justify: inter-word;
+  border: 0.25rem solid var(--white-color);
+  border-radius: var(--border-radius-medium) 0;
+  padding: 3rem;
 }
 
 section:first-of-type {
@@ -116,7 +120,16 @@ section:last-of-type {
 }
 
 section {
-  margin-top: -1rem;
+  /*margin-top: -1rem;*/
+  padding-bottom: 10rem;
+}
+
+h1.title{
+  height: 40rem;
+  font-size: 10vw;
+  color: var(--white-color);
+  border-top: 0.25rem solid var(--white-color);
+  padding: 10rem;
 }
 
 .custom-icon {
@@ -228,7 +241,7 @@ img.logo {
 }
 
 .navbar-brand {
-  color: var(--light-color);
+  color: var(--dark-color);
   font-weight: var(--font-weight-light);
   font-size: var(--h4-font-size);
 }
@@ -245,7 +258,7 @@ img.logo {
 
 .nav-item .nav-link.active,
 .nav-item .nav-link:hover {
-  color: var(--light-color);
+  color: var(--dark-color);
 }
 
 .nav-item .nav-link.active {
@@ -257,7 +270,7 @@ img.logo {
 }
 
 .nav-link {
-  color: var(--light-color);
+  color: var(--dark-color);
   font-weight: var(--font-weight-light);
   font-size: var(--base-font-size);
   border-bottom: 1px solid transparent;
@@ -298,7 +311,7 @@ img.logo {
 }
 
 .navbar-toggler .navbar-toggler-icon {
-  background: var(--light-color);
+  background: var(--dark-color);
   transition: background 10ms 300ms ease;
   display: block;
   width: 30px;
@@ -314,7 +327,7 @@ img.logo {
   position: absolute;
   right: 0;
   left: 0;
-  background: var(--light-color);
+  background: var(--dark-color);
   width: 30px;
   height: 2px;
   content: '';
@@ -429,19 +442,6 @@ img.about-image.circle {
   margin-bottom: -2.5rem;
 }
 
-.title {
-  font-size: 3rem;
-  background-color: var(--dark-color);
-  color: var(--light-color);
-  width: 106vw;
-  padding: 4rem 0;
-  transform: rotate(-7deg) translateX(-2.5vw);
-  top: -10rem;
-  position: relative;
-  text-align: center;
-  margin: 0;
-}
-
 .title.flip {
   transform: rotate(7deg) translateX(-2.5vw);
 }
@@ -544,7 +544,7 @@ img.about-image.circle {
 }
 
 .screen-indicator li {
-  border: 4px solid var(--light-color);
+  border: 4px solid var(--dark-color);
   display: inline-block;
   border-radius: 50%;
   height: 20px;
@@ -654,7 +654,7 @@ label {
   background-color: var(--dark-color);
   border: 1px solid var(--dark-color);
   border-radius: var(--border-radius-small);
-  color: var(--light-color);
+  color: var(--dark-color);
   cursor: pointer;
   font-size: var(--button-font-size);
   line-height: 0;
@@ -703,11 +703,10 @@ label {
 }
 
 footer {
-  background-color: var(--dark-color);
-  color: var(--light-color);
-  padding: 1rem;
-  font-size: 0.75rem;
-  text-align: center;
+  color: var(--dark-color);
+
+  font-size: 1rem;
+
 }
 
 footer img{
