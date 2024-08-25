@@ -686,7 +686,7 @@ label {
   -----------------------------------------*/
 
 .social-links {
-  margin-top: 3rem;
+  margin-top: 5rem;
   text-align: center;
 }
 
@@ -704,15 +704,9 @@ label {
 
 footer {
   color: var(--dark-color);
-
+  padding: 2rem;
   font-size: 1rem;
 
-}
-
-footer img{
-  width: 4rem;
-  margin: -4rem auto 1rem auto;
-  display: block;
 }
 
 /*---------------------------------------
