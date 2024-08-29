@@ -4,7 +4,6 @@ const isMobileDevice = regexp.test(userAgent)
 const divExperience = $('.experience-container')
 const scrollLeftButton = $('.scroll-horizontly.prev')
 const scrollRightButton = $('.scroll-horizontly.next')
-const maxDivExperienceWidth = divExperience[0].scrollWidth - divExperience.width()
 var scrollPosition = 0
 
 function setExperienceDuration() {

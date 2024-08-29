@@ -25,10 +25,70 @@
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
   <img src="images/logo-2lines.png" class="logo"/>
 
+  <style>
+   /* Style the navigation menu */
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+  position: relative;
+}
+
+/* Hide the links inside the navigation menu (except for logo/home) */
+.topnav .navigation {
+  display: none;
+}
+
+.navigation .links{
+  position: absolute;
+  top: 50%;
+  right:50%;
+}
+
+/* Style navigation menu links */
+.topnav a {
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  display: block;
+}
+
+/* Style the hamburger menu */
+.topnav a.close {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 2rem 1rem;
+}
+
+    </style>
+
+
   <div class="loader">
     <img src="images/logo-2lines.png" id="logo">
   </div>
-  <div class="screen-indicator"></div>
+  <div class="topnav">
+  <div class="navigation">
+    <a href="javascript:void(0);" class="close" >
+      <i class="fa fa-close"></i>
+    </a>
+    <div class="links">
+
+      <a href="#hero">Top</a>
+      <a href="#about">About</a>
+      <a href="#journey">Journey</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+
+</div>
+  <div class="screen-indicator"> 
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+    <i class="fa fa-info-circle"></i>
+    <i class="fa fa-history" aria-hidden="true"></i>
+    <i class="fa fa-globe" aria-hidden="true"></i>
+  </div>
 
   <div class="content">
 
@@ -88,7 +148,7 @@
 
     <!-- Experience -->
 
-    <section>
+    <section id="journey">
       <h1 class="title">My Journey</h1>
       <div class="timeline">
         <div class="timeline-container left">

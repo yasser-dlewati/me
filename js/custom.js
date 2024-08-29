@@ -45,14 +45,14 @@ function renderScreenIndicator() {
     var count = $('section').length
     var content = '<li class="active" value="0"><a>Top</a></li><li value="1"><a>About</a></li><li value="2"><a>Experience</a></li><li value="3"><a>Contact</a></li>'
    
-    $('.screen-indicator').html(content)
+    //$('.screen-indicator').html(content)
 }
 
 function setScreenIndicator(index) {
-    $('.screen-indicator li').each(function () {
+    $('.screen-indicator i').each(function () {
         $(this).removeClass('active')
     })
-    $($('.screen-indicator li')[index]).addClass('active')
+    $($('.screen-indicator i')[index]).addClass('active')
 }
 
 $(document).ready(function () {
@@ -96,4 +96,15 @@ $(document).ready(function () {
         setScreenIndicator(index)
        console.log('clicking'+$(this).prop('value'))
     })
+
+    $('.screen-indicator').click(function(){
+        var x = $(".navigation");
+        if (x.css("display") === "block") {
+          x.css("display", "none");
+        } else {
+            x.css("display", "block");
+            x.css("height", "100vh");
+        }
+      })
+    
 })
