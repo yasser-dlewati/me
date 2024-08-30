@@ -79,7 +79,7 @@ $(document).ready(function () {
         else if (b > $(sections[3]).offset().top) {
             setScreenIndicator(3)
         }
-        console.log(b);
+        //console.log(b);
     })
 
     $('footer img').click(function(){
@@ -88,23 +88,28 @@ $(document).ready(function () {
     });
 
 
-    $('.screen-indicator li').click(function(){
-        let sections= $('section');
-        let index = $(this).prop('value')
-        let top = $(sections[index]).offset().top
-        $('html').scrollTop(top+1)
-        setScreenIndicator(index)
-       console.log('clicking'+$(this).prop('value'))
-    })
+    // $('.screen-indicator li').click(function(){
+    //     let sections= $('section');
+    //     let index = $(this).prop('value')
+    //     let top = $(sections[index]).offset().top
+    //     $('html').scrollTop(top+1)
+    //     setScreenIndicator(index)
+    //    console.log('clicking'+$(this).prop('value'))
+    // })
 
     $('.screen-indicator').click(function(){
         var x = $(".navigation");
-        if (x.css("display") === "block") {
-          x.css("display", "none");
-        } else {
-            x.css("display", "block");
-            x.css("height", "100vh");
-        }
+        if ($(".navigation").is(':hidden')) {
+                   
+            $(".navigation").show('slide',{direction:'right'},1000);
+         } else {
+            
+            $(".navigation").hide('slide',{direction:'right'},1000);
+         }
       })
     
+      $('.navigation .close').click(function(){
+        var x = $(".navigation");
+        $(".navigation").hide('slide',{direction:'right'},1000);
+      })
 })

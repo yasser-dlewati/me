@@ -29,13 +29,17 @@
    /* Style the navigation menu */
 .topnav {
   overflow: hidden;
-  background-color: #333;
-  position: relative;
+  
 }
 
 /* Hide the links inside the navigation menu (except for logo/home) */
 .topnav .navigation {
+  background-color: #333;
+  width: 100%;
   display: none;
+    height: 100vh;
+    position: absolute;
+    z-index:  5;
 }
 
 .navigation .links{
@@ -51,6 +55,7 @@
   text-decoration: none;
   font-size: 17px;
   display: block;
+  
 }
 
 /* Style the hamburger menu */
@@ -68,29 +73,29 @@
   <div class="loader">
     <img src="images/logo-2lines.png" id="logo">
   </div>
-  <div class="topnav">
-  <div class="navigation">
-    <a href="javascript:void(0);" class="close" >
-      <i class="fa fa-close"></i>
-    </a>
-    <div class="links">
-
-      <a href="#hero">Top</a>
-      <a href="#about">About</a>
-      <a href="#journey">Journey</a>
-      <a href="#contact">Contact</a>
+  
+  <div class="content" >
+    <div class="topnav">
+    <div class="navigation">
+      <a href="javascript:void(0);" class="close" >
+        <i class="fa fa-close"></i>
+      </a>
+      <div class="links">
+  
+        <a href="#hero">Top</a>
+        <a href="#about">About</a>
+        <a href="#journey">Journey</a>
+        <a href="#contact">Contact</a>
+      </div>
     </div>
+  
   </div>
-
-</div>
-  <div class="screen-indicator"> 
-    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
-    <i class="fa fa-info-circle"></i>
-    <i class="fa fa-history" aria-hidden="true"></i>
-    <i class="fa fa-globe" aria-hidden="true"></i>
-  </div>
-
-  <div class="content">
+    <div class="screen-indicator"> 
+      <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+      <i class="fa fa-info-circle"></i>
+      <i class="fa fa-history" aria-hidden="true"></i>
+      <i class="fa fa-globe" aria-hidden="true"></i>
+    </div>
 
     <!-- HERO -->
     <section class="hero d-flex flex-column justify-content-center align-items-center section-alone-in-page active"
@@ -260,6 +265,9 @@
   <script src="js/email.js"></script>
   <script src="js/experience.js"></script>
   <script src="js/smtpjs.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+
   </script>
 
 </body>
