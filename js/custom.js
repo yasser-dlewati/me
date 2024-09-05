@@ -102,14 +102,20 @@ $(document).ready(function () {
         if ($(".navigation").is(':hidden')) {
                    
             $(".navigation").show('slide',{direction:'right'},1000);
+            $('body').css('overflow-y', 'hidden');
          } else {
             
             $(".navigation").hide('slide',{direction:'right'},1000);
+        $('body').css('overflow-y', 'auto');
+
          }
+
       })
     
       $('.navigation .close').click(function(){
         var x = $(".navigation");
         $(".navigation").hide('slide',{direction:'right'},1000);
+        $('body').css('overflow-y', 'auto');
+
       })
 })
