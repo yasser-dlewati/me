@@ -650,6 +650,18 @@ TIMELINE
 
 }
 
+.downaload-resume{
+  text-align: center!important;
+  padding-top: 3rem;
+  color: var(--dark-color);
+}
+
+.downaload-resume a{
+  color: var(--light-color);
+  text-decoration: none;
+  
+}
+
 /*---------------------------------------
      CONTACT               
   -----------------------------------------*/
