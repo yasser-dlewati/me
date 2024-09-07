@@ -118,4 +118,26 @@ $(document).ready(function () {
         $('body').css('overflow-y', 'auto');
 
       })
+
+      $(function () {
+        var messages = [],
+            index = 0;
+    
+        messages.push('tech enthusiast');
+        messages.push('car lover');
+        messages.push('dad');
+    
+        function cycle() {
+            $('.adjectives').html(messages[index]);
+            index++;
+    
+            if (index === messages.length) {
+                index = 0;
+            }
+    
+            setTimeout(cycle, 3000);
+        }
+    
+        cycle();
+    });
 })
