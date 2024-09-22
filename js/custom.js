@@ -127,6 +127,7 @@ $(document).ready(function () {
         messages.push('car lover');
         messages.push('Marvel fan');
         messages.push('dad');
+        messages.push('millennium');
     
         function cycle() {
             $('.adjectives').html(messages[index]);
@@ -136,7 +137,7 @@ $(document).ready(function () {
                 index = 0;
             }
     
-            setTimeout(cycle, 3000);
+            setTimeout(cycle, 2000);
         }
     
         cycle();
