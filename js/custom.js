@@ -44,8 +44,6 @@ $('#scroll-down').click(function () {
 function renderScreenIndicator() {
     var count = $('section').length
     var content = '<li class="active" value="0"><a>Top</a></li><li value="1"><a>About</a></li><li value="2"><a>Experience</a></li><li value="3"><a>Contact</a></li>'
-   
-    //$('.screen-indicator').html(content)
 }
 
 function setScreenIndicator(index) {
@@ -79,45 +77,26 @@ $(document).ready(function () {
         else if (b > $(sections[3]).offset().top) {
             setScreenIndicator(3)
         }
-        //console.log(b);
     })
 
     $('footer img').click(function(){
         $(window).scrollTop(0, 0);
         console.log('back to top')
     });
-
-
-    // $('.screen-indicator li').click(function(){
-    //     let sections= $('section');
-    //     let index = $(this).prop('value')
-    //     let top = $(sections[index]).offset().top
-    //     $('html').scrollTop(top+1)
-    //     setScreenIndicator(index)
-    //    console.log('clicking'+$(this).prop('value'))
-    // })
-
-    $('.screen-indicator').click(function(){
-        var x = $(".navigation");
-        if ($(".navigation").is(':hidden')) {
-                   
-            $(".navigation").show('slide',{direction:'right'},1000);
-            $('body').css('overflow-y', 'hidden');
-         } else {
-            
-            $(".navigation").hide('slide',{direction:'right'},1000);
-        $('body').css('overflow-y', 'auto');
-
-         }
-
-      })
     
       $('.navigation .close').click(function(){
-        var x = $(".navigation");
-        $(".navigation").hide('slide',{direction:'right'},1000);
-        $('body').css('overflow-y', 'auto');
-
-      })
+            $('.content').animate({ 'margin-left' : 0 }, 500);
+            $('section').css('filter','')
+        })
+        
+        
+        $('.screen-indicator').click(function() {
+            if($('.content').css('margin-left') === '0px'){
+                $('.content').animate({ 'margin-left' : '-30%' }, 500);
+                $('section').css('filter','blur(8px)')
+            }
+        });
+    
 
       $(function () {
         var messages = [],
