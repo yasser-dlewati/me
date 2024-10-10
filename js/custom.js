@@ -87,6 +87,8 @@ $(document).ready(function () {
       $('.navigation .close').click(function(){
             $('.content').animate({ 'margin-left' : 0 }, 500);
             $('section').css('filter','')
+            $('.screen-indicator i').css('font-size','20px')
+            $('.screen-indicator i').css('padding','')
         })
         
         
@@ -94,6 +96,9 @@ $(document).ready(function () {
             if($('.content').css('margin-left') === '0px'){
                 $('.content').animate({ 'margin-left' : '-30%' }, 500);
                 $('section').css('filter','blur(8px)')
+                $('.screen-indicator i').css('font-size','32px')
+                $('.screen-indicator i').css('padding','20px')
+
             }
         });
     

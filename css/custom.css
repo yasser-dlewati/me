@@ -239,7 +239,7 @@ img.logo {
 
 .navigation .links{
   position: absolute;
-  top: calc(50% - 100px);
+  top: calc(50% - 72px);
   right:50%;
 }
 
@@ -248,7 +248,7 @@ img.logo {
   color: white;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 20px;
   display: block;
   
 }
@@ -259,7 +259,7 @@ img.logo {
   position: absolute;
   right: 0;
   top: 0;
-  margin: 2rem;
+  margin: 2rem 4rem;
 }
 
 /*---------------------------------------
@@ -483,8 +483,6 @@ img.about-image.circle {
 
 .screen-indicator i.active {
   color: var(--white-color);
-  font-size: 20px;
-  /* border-color: var(--primary-color); */
 }
 
 .screen-indicator li a{
