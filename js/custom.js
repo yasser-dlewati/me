@@ -54,11 +54,26 @@ function setScreenIndicator(index) {
 }
 
 $(document).ready(function () {
+    window.scrollTo(0, 0);
     setTimeout(() => {
-        window.scrollTo(0, 0);
         var $loader = $(".loader").removeClass("loader");
         $loader.remove();
-    }, 800);
+    }, 1000);
+
+    $('.img-banner').hide()
+    $('.message').each(function(i)
+    {
+        setTimeout(() => {
+            $('.img-banner').fadeIn(1000)
+        }, 2000);
+        $(this).delay((i+1) * 1000).hide().fadeIn(1000)          
+        
+        
+        
+        
+          
+        
+    });
 
     renderScreenIndicator()
     setScreenIndicator(0)
