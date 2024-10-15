@@ -113,6 +113,7 @@ p.description {
 section:first-of-type {
   margin: 0;
   padding: 0;
+  height: 100vh;
 }
 
 section:last-of-type {
