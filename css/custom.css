@@ -26,6 +26,13 @@ custom.css
   font-weight: bold;
   font-style: normal;
 }
+@font-face {
+  font-family: 'questa';
+  src: url('../webfonts/questa.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 :root {
   --primary-color: #000000;
@@ -126,6 +133,7 @@ section {
 }
 
 h1.title{
+  font-family: "questa";
   font-size: 10vw;
   color: var(--white-color);
   border-top: 0.25rem solid var(--white-color);
