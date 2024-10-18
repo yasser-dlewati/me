@@ -155,4 +155,9 @@ $(document).ready(function () {
 
     cycle();
   });
-});
+
+  $('.links a').click(function(){
+    $(".navigation .close").click()
+  })
+})
+
