@@ -238,7 +238,7 @@ img.logo {
 /* Hide the links inside the navigation menu (except for logo/home) */
 .topnav .navigation {
   margin-left: 100%;
-  background-color: #333;
+  background-color:var(--dark-color);
   width: 30%;
   /* display: none; */
     height: 100vh;
@@ -249,12 +249,18 @@ img.logo {
 .navigation .links{
   position: absolute;
   top: calc(50% - 72px);
-  right:50%;
+  right:30%;
+}
+
+.navigation .links a:hover{
+  font-size: 3rem;
+  color: var(--white-color);
+  border-bottom: 1px solid var(--white-color);
 }
 
 /* Style navigation menu links */
 .topnav a {
-  color: white;
+  color: var(--light-color);
   padding: 14px 16px;
   text-decoration: none;
   font-size: 20px;
@@ -476,8 +482,9 @@ img.about-image.circle {
   transform: rotate(90deg);
   position: fixed;
   right:0;
-  top: 50%;
+  top: calc(50% + 4px);
   z-index: 3;
+  transition: right .58s ease-in-out;
 }
 
 .screen-indicator i {
@@ -488,16 +495,18 @@ img.about-image.circle {
   width: 20px;
   margin: 0 4px;
   transform: rotate(-90deg);
+  padding: 0;
+  color: var(--dark-color);
 }
 
 .screen-indicator i.active {
   color: var(--white-color);
 }
 
-.screen-indicator li a{
-  margin-top: -8px;
-float: right;
-margin-right: 32px;
+.screen-indicator.show-nav i{
+  padding: 1.4rem;
+  font-size: 2rem;
+  color: var(--light-color);
 }
 
 .download {

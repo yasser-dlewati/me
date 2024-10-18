@@ -119,16 +119,16 @@ $(document).ready(function () {
   $(".navigation .close").click(function () {
     $(".content").animate({ "margin-left": 0 }, 500);
     $("section").css("filter", "");
-    $(".screen-indicator i").css("font-size", "20px");
-    $(".screen-indicator i").css("padding", "");
+    $(".screen-indicator").removeClass("show-nav");
+      $(".screen-indicator").css('right','0');
   });
 
   $(".screen-indicator").click(function () {
     if ($(".content").css("margin-left") === "0px") {
       $(".content").animate({ "margin-left": "-30%" }, 500);
       $("section").css("filter", "blur(8px)");
-      $(".screen-indicator i").css("font-size", "32px");
-      $(".screen-indicator i").css("padding", "20px");
+      $(".screen-indicator").addClass("show-nav");
+      $(this).css('right','12.5%');
     }
   });
 
