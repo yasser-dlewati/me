@@ -253,9 +253,7 @@ img.logo {
 }
 
 .navigation .links a:hover{
-  font-size: 3rem;
   color: var(--white-color);
-  border-bottom: 1px solid var(--white-color);
 }
 
 /* Style navigation menu links */
