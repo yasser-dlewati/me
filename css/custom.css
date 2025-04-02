@@ -517,6 +517,11 @@ img.about-image.circle {
   text-align: center;
 }
 
+.message img{
+  max-height: 400px;
+  min-height: 300PX;
+}
+
 /*---------------------------------------
      CONTACT               
   -----------------------------------------*/
