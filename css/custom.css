@@ -103,6 +103,22 @@ p {
   text-justify: inter-word;
 }
 
+#teaser{
+  position:fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+#teaser p{
+  display: inline;
+}
+
+#teaser #close{
+  float: right;
+  display: inline;
+}
+
 section:first-of-type {
   margin: 0;
   padding: 0;
@@ -219,6 +235,7 @@ img.logo {
   right: 0;
   left: 0;
   opacity: 0;
+  margin-top:60px
 }
 
 .navbar.scroll {
