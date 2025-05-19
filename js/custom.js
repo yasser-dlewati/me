@@ -41,6 +41,11 @@ $('#scroll-down').click(function () {
     }, 500);
 })
 
+$('#teaser #close').click(function(){
+    $('#teaser').hide();
+    $('.navbar').css('margin-top','0');
+})
+
 $(document).ready(function () {
     setTimeout(() => {
         window.scrollTo(0, 0);
