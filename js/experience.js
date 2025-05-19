@@ -33,7 +33,7 @@ function setExperienceDuration() {
 }
 
 function setScrollRightButtonVisibility() {
-    if (divExperience.scrollLeft() >= maxDivExperienceWidth) {
+    if (divExperience.scrollLeft() >= maxDivExperienceWidth - 20) {
         scrollRightButton.hide()
     }
     else {
