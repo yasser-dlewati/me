@@ -59,6 +59,11 @@ function setScreenIndicator(index) {
   $($(".screen-indicator i")[index]).addClass("active");
 }
 
+$('#teaser #close').click(function(){
+    $('#teaser').hide();
+    $('.navbar').css('margin-top','0');
+})
+
 $(document).ready(function () {
   window.scrollTo(0, 0);
   setTimeout(() => {
