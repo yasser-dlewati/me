@@ -1,6 +1,12 @@
+:root{
+    --white-color: #fff;
+    --light-grey-color: #e1e1e1;
+    --black-color: #000;
+    --header-font-size:72px;
+}
+
 body {
     margin: 0;
-
     justify-content: center;
     align-items: center;
     flex-direction: column;
