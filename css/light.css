@@ -2,7 +2,11 @@
     --white-color: #fff;
     --light-grey-color: #e1e1e1;
     --black-color: #000;
-    --header-font-size:72px;
+    --header-font-size:5rem;
+}
+
+h1{
+    font-size: var(--header-font-size);
 }
 
 body {
@@ -72,4 +76,22 @@ section {
 section:nth-child(even){
     width: 100%;
     background-color: #e1e1e1;
+}
+
+.right{
+    text-align: right;
+}
+
+.company-logo{
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.companies{
+
+display: flex;
+gap: 10px;
+overflow-x: auto;
+white-space: nowrap;
+max-width: 100%;
 }
