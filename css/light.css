@@ -1,11 +1,11 @@
-:root{
+:root {
     --white-color: #fff;
     --light-grey-color: #e1e1e1;
     --black-color: #000;
-    --header-font-size:5rem;
+    --header-font-size: 5rem;
 }
 
-h1{
+h1 {
     font-size: var(--header-font-size);
 }
 
@@ -39,7 +39,7 @@ section {
     padding: 80px 0;
 }
 
-.menu-icon{
+.menu-icon {
     position: absolute;
     top: 0;
     right: 0;
@@ -73,25 +73,24 @@ section {
     font-size: 32px;
 }
 
-section:nth-child(even){
+section:nth-child(even) {
     width: 100%;
     background-color: #e1e1e1;
 }
 
-.right{
+.right {
     text-align: right;
 }
 
-.company-logo{
-    max-width: 200px;
-    max-height: 200px;
+.companies {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    white-space: nowrap;
+    max-width: 100%;
 }
 
-.companies{
-
-display: flex;
-gap: 10px;
-overflow-x: auto;
-white-space: nowrap;
-max-width: 100%;
+.companies img {
+    width: 200px;
+    height: 200px;
 }
