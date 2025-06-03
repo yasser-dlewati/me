@@ -94,3 +94,19 @@ section:nth-child(even) {
     width: 200px;
     height: 200px;
 }
+
+.services{
+    display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.service .title{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.services .content{
+    flex: 1;
+}
