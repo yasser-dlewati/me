@@ -4,6 +4,7 @@ const isMobileDevice = regexp.test(userAgent)
 const divExperience = $('.experience-container')
 const scrollLeftButton = $('.scroll-horizontly.prev')
 const scrollRightButton = $('.scroll-horizontly.next')
+const maxDivExperienceWidth = divExperience[0].scrollWidth - divExperience.width()
 var scrollPosition = 0
 
 function setExperienceDuration() {
@@ -33,19 +34,19 @@ function setExperienceDuration() {
 
 function setScrollRightButtonVisibility() {
     if (divExperience.scrollLeft() >= maxDivExperienceWidth) {
-        scrollRightButton.css("opacity","0.5")
+        scrollRightButton.css("display","none")
     }
     else {
-        scrollRightButton.css("opacity","1")
+        scrollRightButton.css("display","inline")
     }
 }
 
 function setScrollLeftButtonVisibility() {
     if (divExperience.scrollLeft() === 0) {
-        scrollLeftButton.css("opacity","0.5")
+        scrollLeftButton.css("display","none")
     }
     else {
-        scrollLeftButton.css("opacity","1")
+        scrollLeftButton.css("display","inline")
 
     }
 }
