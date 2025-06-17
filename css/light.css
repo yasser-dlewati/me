@@ -36,9 +36,10 @@ custom.css
   
   :root {
     --primary-color: #FF6600;
-    --light-color: #E9E9E9;
+    --light-color: #D9D9D9;
     --white-color: #FFFFFF;
     --dark-color: #2a2726;
+    --black-color: #000000;
   
     --base-font-family: "Barton", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-weight-bold: 600;
@@ -111,22 +112,6 @@ custom.css
     text-justify: inter-word;
   }
   
-  #teaser{
-    position:fixed;
-    top: 0;
-    z-index: 100;
-    width: 100%;
-  }
-  
-  #teaser p{
-    display: inline;
-  }
-  
-  #teaser #close{
-    float: right;
-    display: inline;
-  }
-  
   section:last-of-type {
     padding-bottom: 3rem;
   }
@@ -166,7 +151,6 @@ custom.css
   }
   
   a {
-    color: var(--dark-color);
     text-decoration: none;
     transition: all 0.4s linear;
   }
@@ -189,6 +173,53 @@ custom.css
       align-items: center;
       flex-direction: column;
       display: flex;
+  }
+
+.settings-container{
+    margin-left:200%;
+    background-color: #000000;
+    width: 75%;
+    height: 100hv;
+    position: fixed;
+}
+
+ .navigation {
+    margin-left: 100%;
+    background-color:var(--light-color);
+    width: 75%;
+      height: 100vh;
+      position: fixed;
+      z-index:  3;
+  }
+  
+  .navigation .links{
+    position: absolute;
+    top: calc(50% - 72px);
+    left:calc(25% - 24px);
+  }
+
+  .navigation a{
+    color: var(--black-color);
+    display: block;
+    margin:auto;
+    font-size: 32px;
+    margin: auto;
+  }
+  
+  .navigation .close{
+    position: absolute;    
+    top: 0;
+    right: 50%;
+    padding: 12px 16px;
+  }
+  
+  .navigation .settings{
+    display: block;
+  position: absolute;
+  right: 50%;
+  bottom: 0;
+  padding: 12px 20px;
+
   }
   
   section {
@@ -247,6 +278,7 @@ custom.css
       right: 0;
       padding: 12px 20px;
       font-size: 32px;
+      z-index: 10;
   }
   
   .scroll {

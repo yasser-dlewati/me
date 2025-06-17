@@ -133,14 +133,15 @@ $(document).ready(function () {
     $("section").css("filter", "");
     $(".screen-indicator").removeClass("show-nav");
     $(".screen-indicator").css("right", "0");
+    $(".menu-icon").show();
   });
 
-  $(".screen-indicator").click(function () {
+  $(".menu-icon").click(function () {
+    console.log('show menu');
     if ($(".content").css("margin-left") === "0px") {
-      $(".content").animate({ "margin-left": "-30%" }, 500);
+      $(".content").animate({ "margin-left": "-75%" }, 500);
       $("section").css("filter", "blur(8px)");
-      $(".screen-indicator").addClass("show-nav");
-      $(this).css("right", "12.5%");
+      $this.hide();
     }
   });
 
