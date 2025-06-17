@@ -129,21 +129,30 @@ $(document).ready(function () {
   });
 
   $(".navigation .close").click(function () {
+    if(document.querySelector('.navigation').style.marginLeft!=='50%'){
     $(".content").animate({ "margin-left": 0 }, 500);
     $("section").css("filter", "");
     $(".screen-indicator").removeClass("show-nav");
     $(".screen-indicator").css("right", "0");
     $(".menu-icon").show();
+    }
   });
 
   $(".menu-icon").click(function () {
     console.log('show menu');
     if ($(".content").css("margin-left") === "0px") {
-      $(".content").animate({ "margin-left": "-75%" }, 500);
+      $(".content").animate({ "margin-left": "-100%" }, 500);
       $("section").css("filter", "blur(8px)");
-      $this.hide();
     }
   });
+
+  $('.settings').click(()=>{
+    console.log('xxxx')
+
+      $(".navigation").animate({ "margin-left": "50%" }, 500);
+      $("section").css("filter", "blur(8px)");
+      $('.navigation > :not(.settings-container)').css("filter", "blur(8px)");
+  })
 
   const messages = [];
   $(function () {
