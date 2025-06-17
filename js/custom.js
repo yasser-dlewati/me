@@ -147,8 +147,8 @@ $(document).ready(function () {
   });
 
   $('.settings').click(()=>{
-    console.log('xxxx')
-
+    console.log('this is coming soon')
+return;
       $(".navigation").animate({ "margin-left": "50%" }, 500);
       $("section").css("filter", "blur(8px)");
       $('.navigation > :not(.settings-container)').css("filter", "blur(8px)");
