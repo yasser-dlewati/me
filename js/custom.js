@@ -46,6 +46,12 @@ $("#scroll-down").click(function () {
   );
 });
 
+const setSectionsZIndex = ()=>{
+  $('section').each((index) => {
+    $(this).css('z-index', index + 1);
+  })
+}
+
 function renderScreenIndicator() {
   var count = $("section").length;
   var content =
@@ -65,6 +71,7 @@ $('#teaser #close').click(function(){
 })
 
 $(document).ready(function () {
+  setSectionsZIndex();
   window.scrollTo(0, 0);
   setTimeout(() => {
     var $loader = $(".loader").removeClass("loader");

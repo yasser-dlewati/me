@@ -118,6 +118,7 @@ custom.css
   
   section {
     padding: 6rem 0;
+    background-color: var(--white-color);
   }
   
   section:nth-child(even) {
@@ -228,7 +229,8 @@ custom.css
       display: flex !important;
       margin: auto;
       padding: 0 8rem;
-      position: relative;
+      position: sticky;
+      top: 0;
       border-radius: 32px 32px 0 0 ;
       box-shadow: 0 -16px 32px;
   }
@@ -538,7 +540,7 @@ custom.css
     padding: 1rem;
     font-size: 0.75rem;
     text-align: center;
-  
+  position: sticky;
   }
   
   /*---------------------------------------
@@ -703,7 +705,8 @@ custom.css
     }
   
     section {
-      padding: 4rem 0
+      padding: 4rem 0;
+      background-color: var(--white-color);
     }
   
     section:last-of-type {
