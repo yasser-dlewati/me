@@ -46,11 +46,13 @@ $("#scroll-down").click(function () {
   );
 });
 
-const setSectionsZIndex = ()=>{
-  $('section').each((index) => {
+const setSectionsStylesForScrolling = () => {
+  $('section').each(function(index) {
     $(this).css('z-index', index + 1);
-  })
-}
+    $(this).css('top', `${index * 8}px`);
+    $(this).height(`calc(100vh - ${index * 8}px)`)
+  });
+};
 
 function renderScreenIndicator() {
   var count = $("section").length;
@@ -71,7 +73,7 @@ $('#teaser #close').click(function(){
 })
 
 $(document).ready(function () {
-  setSectionsZIndex();
+  setSectionsStylesForScrolling();
   window.scrollTo(0, 0);
   setTimeout(() => {
     var $loader = $(".loader").removeClass("loader");
