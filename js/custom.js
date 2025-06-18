@@ -132,7 +132,7 @@ $(document).ready(function () {
     }
   }
 
-  $("footer img").click(function () {
+  $("footer .logo").click(function () {
     $(window).scrollTop(0, 0);
     console.log("back to top");
   });
