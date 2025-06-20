@@ -8,16 +8,30 @@ const setSectionsStylesForScrolling = () => {
   });
 };
 
-function renderScreenIndicator() {
-  var count = $("section").length;
-console.log(count)
+const renderNavigationLinks = ()=>{
+  var content = getSectionsCount(true);
+  $('.links').html(content)
+}
+
+const renderScreenIndicator=()=>{
+  var content = getSectionsCount();
+  $('.screen-indicator').html(content)
+}
+
+function getSectionsCount(withNames) {
+  var sections = $("section");
+
   var content = '';
-  for(let i=0; i<count; i++){
-    content = content.concat('<li></li>')
+  for(let i=0; i<sections.length; i++){
+    if(withNames){
+      let sectionId = $($(sections)[i]).attr('id')
+      content = content.concat('<a href="#'+sectionId+'">'+sectionId+'</a>')
+    }
+    else{
+      content = content.concat('<li></li>')
+    }
   }
-  let screenIndicator = $('.screen-indicator');
-  screenIndicator.html(content)
-  console.log(content)
+  return content;
 }
 
 function setScreenIndicator(index) {
@@ -72,6 +86,7 @@ $(document).ready(function () {
     }
   });
   renderScreenIndicator();
+  renderNavigationLinks();
   $(window).scroll(function () {
       setScreenIndicatorAccordingToScroll();
     });
