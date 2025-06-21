@@ -8,27 +8,28 @@ const setSectionsStylesForScrolling = () => {
   });
 };
 
-const renderNavigationLinks = ()=>{
+const renderNavigationLinks = () => {
   var content = getSectionsCount(true);
-  $('.links').html(content)
-}
+  $(".links").html(content);
+};
 
-const renderScreenIndicator=()=>{
+const renderScreenIndicator = () => {
   var content = getSectionsCount();
-  $('.screen-indicator').html(content)
-}
+  $(".screen-indicator").html(content);
+};
 
 function getSectionsCount(withNames) {
   var sections = $("section");
 
-  var content = '';
-  for(let i=0; i<sections.length; i++){
-    if(withNames){
-      let sectionId = $($(sections)[i]).attr('id')
-      content = content.concat('<a href="#'+sectionId+'">'+sectionId+'</a>')
-    }
-    else{
-      content = content.concat('<li></li>')
+  var content = "";
+  for (let i = 0; i < sections.length; i++) {
+    if (withNames) {
+      let sectionId = $($(sections)[i]).attr("id");
+      content = content.concat(
+        '<a href="#' + sectionId + '">' + sectionId + "</a>"
+      );
+    } else {
+      content = content.concat("<li></li>");
     }
   }
   return content;
@@ -42,25 +43,20 @@ function setScreenIndicator(index) {
 }
 
 function setScreenIndicatorAccordingToScroll() {
-  var b = $(window).scrollTop() + 4;
-  var sections = $("section");
-  if (
-    b > $(sections[0]).offset().top - $(window).height() / 2 &&
-    b < $(sections[1]).offset().top - $(window).height() / 2
-  ) {
-    setScreenIndicator(0);
-  } else if (
-    b > $(sections[1]).offset().top - $(window).height() / 2 &&
-    b < $(sections[2]).offset().top - $(window).height() / 2
-  ) {
-    setScreenIndicator(1);
-  } else if (
-    b > $(sections[2]).offset().top - $(window).height() / 2 &&
-    b < $(sections[3]).offset().top - $(window).height() / 2
-  ) {
-    setScreenIndicator(2);
-  } else if (b > $(sections[3]).offset().top - $(window).height() / 2) {
-    setScreenIndicator(3);
+  const scrollTop = $(window).scrollTop() + 4;
+  const sections = $("section");
+  const windowHeight = $(window).height();
+  
+  for (let i = 0; i < sections.length; i++) {
+    const currentTop = $(sections[i]).offset().top - windowHeight / 2;
+    const nextTop = i + 1 < sections.length
+      ? $(sections[i + 1]).offset().top - windowHeight / 2
+      : Infinity;
+
+    if (scrollTop >= currentTop && scrollTop < nextTop) {
+      setScreenIndicator(i);
+      break;
+    }
   }
 }
 
@@ -88,40 +84,35 @@ $(document).ready(function () {
   renderScreenIndicator();
   renderNavigationLinks();
   $(window).scroll(function () {
-      setScreenIndicatorAccordingToScroll();
-    });
-    setScreenIndicator(0);  
-
-  $("footer .logo").click(function () {
-    $(window).scrollTop(0, 0);
-    console.log("back to top");
+    setScreenIndicatorAccordingToScroll();
   });
+  setScreenIndicator(0);
 
   $(".navigation .close").click(function () {
-    if(document.querySelector('.navigation').style.marginLeft!=='50%'){
-    $(".content").animate({ "margin-left": 0 }, 500);
-    $("section").css("filter", "");
-    $(".screen-indicator").removeClass("show-nav");
-    $(".screen-indicator").css("right", "0");
-    $(".menu-icon").show();
+    if (document.querySelector(".navigation").style.marginLeft !== "50%") {
+      $(".content").animate({ "margin-left": 0 }, 500);
+      $("section").css("filter", "");
+      $(".screen-indicator").removeClass("show-nav");
+      $(".navigation").css("box-shadow", "none");
     }
   });
 
   $(".menu-icon").click(function () {
-    console.log('show menu');
+    console.log("show menu");
     if ($(".content").css("margin-left") === "0px") {
       $(".content").animate({ "margin-left": "-100%" }, 500);
       $("section").css("filter", "blur(8px)");
+      $(".navigation").css("box-shadow", "-8px 0px 32px");
     }
   });
 
-  $('.settings').click(()=>{
-    console.log('this is coming soon')
-return;
-      $(".navigation").animate({ "margin-left": "50%" }, 500);
-      $("section").css("filter", "blur(8px)");
-      $('.navigation > :not(.settings-container)').css("filter", "blur(8px)");
-  })
+  $(".settings").click(() => {
+    console.log("this is coming soon");
+    return;
+    $(".navigation").animate({ "margin-left": "50%" }, 500);
+    $("section").css("filter", "blur(8px)");
+    $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
+  });
 
   const messages = [];
   $(function () {
@@ -151,4 +142,3 @@ return;
     $(".navigation .close").click();
   });
 });
-
