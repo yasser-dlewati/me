@@ -26,7 +26,7 @@ function getSectionsCount(withNames) {
     if (withNames) {
       let sectionId = $($(sections)[i]).attr("id");
       content = content.concat(
-        '<a href="#' + sectionId + '">' + sectionId + "</a>"
+        '<a href="#' + sectionId + '"><h4>' + sectionId + "</h4></a>"
       );
     } else {
       content = content.concat("<li></li>");
@@ -108,7 +108,7 @@ $(document).ready(function () {
 
   $(".settings").click(() => {
     console.log("this is coming soon");
-    return;
+
     $(".navigation").animate({ "margin-left": "50%" }, 500);
     $("section").css("filter", "blur(8px)");
     $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
