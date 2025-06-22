@@ -329,7 +329,7 @@ img.side {
 .experience {
     display: inline-table;
     position: relative;
-    max-width: 33.334%;
+    max-width: calc(100% / 3);
     text-wrap: wrap;
     white-space: initial;
     margin: 0 auto;
@@ -386,10 +386,9 @@ img.side {
 }
 
 .experience-container {
+    margin: 0 0 32px 32px;
     white-space: nowrap;
-    width: 100%;
-    overflow-x: hidden;
-    height: 100%;
+    overflow: hidden;
     -ms-overflow-style: none;
     /* Hide scrollbar in IE and Edge */
     scrollbar-width: none;
@@ -402,9 +401,7 @@ img.side {
 }
 
 i.scroll-horizontly {
-    position: absolute;
-    top: 45%;
-    font-size: 100px;
+    font-size: 40px;
     z-index: 2;
     opacity: 0.5;
     color: var(--text-muted-color);
@@ -414,18 +411,11 @@ i.scroll-horizontly:Hover {
     opacity: 1;
 }
 
-i.scroll-horizontly.next {
-    right: 5%;
-}
-
-i.scroll-horizontly.prev {
-    left: 5%;
-}
-
 .experience-indicator {
     width: auto;
     display: block;
-    margin: auto;
+    margin: 16px auto;
+    text-align: center;
 }
 
 .experience-indicator li {
@@ -434,7 +424,7 @@ i.scroll-horizontly.prev {
     border-radius: var(--border-radius-circle);
     height: 16px;
     width: 16px;
-    margin: 0 4px;
+    margin: 0 6px;
 }
 
 .experience-indicator li.active {
@@ -442,15 +432,14 @@ i.scroll-horizontly.prev {
 }
 
 .download {
-    color: var(--text-color);
-    border-bottom: solid 1px var(--text-color);
-}
-
-.download-container p {
-    position: absolute;
-    bottom:25%;
+    margin-top: 100px;
     text-align: center;
     color: var(--text-muted-color);
+}
+
+.download a {
+    color: var(--text-color);
+    border-bottom: solid 1px var(--text-color);
 }
 
 .button .primary{
