@@ -62,6 +62,7 @@ function setScreenIndicatorAccordingToScroll() {
 
 $(document).ready(function () {
   setSectionsStylesForScrolling();
+  $("body").attr("data-theme","light");
   window.scrollTo(0, 0);
 
   $(".hero-text .message").each(function (i) {
