@@ -8,9 +8,10 @@ custom.css
     --bg-dark-color: hsl(0, 0%, 100%);
     --bg-color:hsl(0, 0%, 95%);
     --bg-light-color:hsl(0, 0%, 90%);
+    --overlay-color: hsla(0, 0%, 90%, 0.5);
 
-    --text-color: hsl(0, 0%, 10%);
-    --text-muted-color: hsl(0, 0%, 30%);
+    --text-color: hsl(0, 0%, 0%);
+    --text-muted-color: hsl(0, 0%, 20%);
     --black-color: hsl(0, 0%, 0%);
     --white-color: hsl(0, 0%, 100%);
 
@@ -38,9 +39,10 @@ custom.css
     --bg-dark-color: hsl(0, 0%, 0%);
     --bg-color:hsl(0, 0%, 5%);
     --bg-light-color:hsl(0, 0%, 10%);
+    --overlay-color: hsla(0, 0%, 10%, 0.5);
 
-    --text-color: hsl(0, 0%, 90%);
-    --text-muted-color: hsl(0, 0%, 70%);
+    --text-color: hsl(0, 0%, 100%);
+    --text-muted-color: hsl(0, 0%, 80%);
 
 }
 
@@ -158,7 +160,7 @@ body {
 
 .settings-container {
     margin-left: 50%;
-    background-color: var(--bg-ligh-color);
+    background-color: var(--bg-light-color);
     width: 100%;
     height: 100vh;
     position: fixed;
@@ -330,6 +332,42 @@ img.side {
     max-width: 33.334%;
     text-wrap: wrap;
     white-space: initial;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: var(--border-radius-large);
+}
+
+.overlay button{
+    display: none;
+}
+
+.overlay:hover{
+    background-color: var(--overlay-color);
+}
+
+.overlay:hover button{
+    display: block;
+    position: absolute;
+    top: calc(50% - 34px);
+    left: calc(50% - 60px);
+     background-color: var(--bg-dark-color);
+     border: none;
+     box-shadow: 0 0 100px;
+    border-radius: var(--border-radius-small);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: var(--button-font-size);
+    line-height: 0;
+    padding: 32px;
+    white-space: nowrap;
 }
 
 .experience h6 {
@@ -337,10 +375,10 @@ img.side {
 }
 
 .experience img {
-    max-height: 150px;
-    max-width: 150px;
+    height: 200px;
+    width: 200px;
     display: block;
-    margin: 0 auto;
+    border-radius: var(--border-radius-large);
 }
 
 .experience p {
@@ -410,9 +448,21 @@ i.scroll-horizontly.prev {
 
 .download-container p {
     position: absolute;
-    bottom:-25%;
+    bottom:25%;
     text-align: center;
     color: var(--text-muted-color);
+}
+
+.button .primary{
+    background-color: var(--bg-dark-color);
+    border-radius: var(--border-radius-small);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: var(--button-font-size);
+    line-height: 0;
+    padding: 1.5rem 1.8rem 1.8rem 1.8rem;
+    white-space: nowrap;
+    display: block;
 }
 
 /*---------------------------------------
