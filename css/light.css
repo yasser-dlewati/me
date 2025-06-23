@@ -454,6 +454,38 @@ i.scroll-horizontly:Hover {
     display: block;
 }
 
+.card {
+    border: none;
+    background-color: var(--bg-color);
+}
+
+.card-header:not([class*="collapsed"]):hover {
+    background-color: var(--bg-dark-color);
+    
+  }
+
+.card:hover{
+    
+}
+
+.card a{
+    text-align: right;
+    position: relative;
+}
+
+.card a i{
+    position: absolute;
+    left: 32px;
+    top:calc(50% - 15px);
+}
+
+.service{
+    font-size: var(--h5-font-size);
+    text-transform: capitalize;
+    background-color: var(--bg-light-color);
+}
+
+
 /*---------------------------------------
        CONTACT               
     -----------------------------------------*/
