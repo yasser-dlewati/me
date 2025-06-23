@@ -177,14 +177,13 @@ body {
 
 .navigation .links {
     position: absolute;
-    top: calc(50% - 72px);
-    left: calc(25% - 24px);
+    top: calc(50% - 100px);
+    left: calc(25% - 80px);
 }
 
 .navigation a {
     color: var(--text-color);
     display: block;
-    margin: auto;
     font-size: 32px;
     margin: auto;
 }
@@ -304,7 +303,6 @@ ul.screen-indicator {
     -----------------------------------------*/
 
 section h2 {
-    margin-bottom: 64px;
     text-align: right;
 }
 
