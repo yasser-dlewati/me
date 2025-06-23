@@ -298,6 +298,9 @@ ul.screen-indicator {
     font-size: 32px;
 }
 
+.vertically-centered {
+    align-content: center;
+}
 /*---------------------------------------
        ABOUT                
     -----------------------------------------*/
