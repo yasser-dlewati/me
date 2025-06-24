@@ -207,13 +207,13 @@
                         </div>
 
                         <div class="row">
-                        <div class="col-2"></div>
+                            <div class="col-2"></div>
                             <div class="col-1">
                                 <i class="scroll-horizontly prev fa-solid fa-chevron-circle-left"></i>
                             </div>
                             <div class="col-6">
                                 <div class="experience-indicator">
-                            
+
                                 </div>
                             </div>
                             <div class="col-1">
@@ -226,9 +226,9 @@
                     </div>
                     <p class="download">
                         Or simply download my resume from
-                            <a href="https://yasser-dlewati.github.io/me/pdf/YasserDlewatiResume.pdf" class="download"
-                                download="">here</a>
-                        
+                        <a href="https://yasser-dlewati.github.io/me/pdf/YasserDlewatiResume.pdf" class="download"
+                            download="">here</a>
+
                     </p>
                 </div>
             </div>
@@ -245,9 +245,9 @@
                         <div id="accordion">
                             <div class="card">
                                 <a class="btn card-header service" data-bs-toggle="collapse" href="#collapseOne">
-                                        <i class="fa-regular fa-square-plus"></i>
-                                        software development
-                                    </a>
+                                    <i class="fa-regular fa-square-plus"></i>
+                                    software development
+                                </a>
 
                                 <div id="collapseOne" class="collapse" data-bs-parent="#accordion">
                                     <div class="card-body">
@@ -260,10 +260,11 @@
                             </div>
                             <div class="card">
 
-                                    <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#collapseTwo">
-                                        <i class="fa-regular fa-square-plus"></i>
-                                        software archetict & design
-                                    </a>
+                                <a class="collapsed btn card-header service" data-bs-toggle="collapse"
+                                    href="#collapseTwo">
+                                    <i class="fa-regular fa-square-plus"></i>
+                                    software archetict & design
+                                </a>
 
                                 <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
                                     <div class="card-body">
@@ -276,10 +277,11 @@
                             </div>
                             <div class="card">
 
-                                    <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#collapseThree">
-                                        
-                                        <i class="fa-regular fa-square-plus"></i>technical consulting
-                                    </a>
+                                <a class="collapsed btn card-header service" data-bs-toggle="collapse"
+                                    href="#collapseThree">
+
+                                    <i class="fa-regular fa-square-plus"></i>technical consulting
+                                </a>
 
                                 <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
                                     <div class="card-body">
@@ -292,10 +294,11 @@
                             </div>
                             <div class="card">
 
-                                    <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#collapseFour">
-                                        
-                                        <i class="fa-regular fa-square-plus"></i>project and team managemant
-                                    </a>
+                                <a class="collapsed btn card-header service" data-bs-toggle="collapse"
+                                    href="#collapseFour">
+
+                                    <i class="fa-regular fa-square-plus"></i>project and team managemant
+                                </a>
 
                                 <div id="collapseFour" class="collapse" data-bs-parent="#accordion">
                                     <div class="card-body">
@@ -308,10 +311,11 @@
                             </div>
                             <div class="card">
 
-                                    <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#collapseFive">
-                                        
-                                        <i class="fa-regular fa-square-plus"></i>quality assurance
-                                    </a>
+                                <a class="collapsed btn card-header service" data-bs-toggle="collapse"
+                                    href="#collapseFive">
+
+                                    <i class="fa-regular fa-square-plus"></i>quality assurance
+                                </a>
 
                                 <div id="collapseFive" class="collapse" data-bs-parent="#accordion">
                                     <div class="card-body">
@@ -324,9 +328,10 @@
                             </div>
                             <div class="card">
 
-                                    <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#collapseSix">
-                                        <i class="fa-regular fa-square-plus"></i>maitainance & support
-                                    </a>
+                                <a class="collapsed btn card-header service" data-bs-toggle="collapse"
+                                    href="#collapseSix">
+                                    <i class="fa-regular fa-square-plus"></i>maitainance & support
+                                </a>
 
                                 <div id="collapseSix" class="collapse" data-bs-parent="#accordion">
                                     <div class="card-body">
@@ -339,9 +344,10 @@
                             </div>
                             <div class="card">
 
-                                    <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#collapseSeven">
-                                        <i class="fa-regular fa-square-plus"></i>coatching & mentoring
-                                    </a>
+                                <a class="collapsed btn card-header service" data-bs-toggle="collapse"
+                                    href="#collapseSeven">
+                                    <i class="fa-regular fa-square-plus"></i>coatching & mentoring
+                                </a>
 
                                 <div id="collapseSeven" class="collapse" data-bs-parent="#accordion">
                                     <div class="card-body">
@@ -356,6 +362,7 @@
                     </div>
                 </div>
             </div>
+
         </section>
 
         <!-- Contact me -->
@@ -441,6 +448,19 @@
     <script src="./js/email.js"></script>
     <script src="./js/experience.js"></script>
     <script src="./js/smtpjs.js"></script>
+            <script>
+                $('.service').click( function() { 
+                    let targetDescription = $(this).next('div'); 
+                    setTimeout(() => {
+                        let isTargetDescriptionOpen = targetDescription.hasClass('show');
+                        if (isTargetDescriptionOpen) {
+                            $(this).find('i').removeClass('fa-square-plus').addClass('fa-square-minus');
+                        } else {
+                            $(this).find('i').removeClass('fa-square-minus').addClass('fa-square-plus');
+                        }
+                    }, 500);
+                });
+            </script>
 </body>
 
 </html>
