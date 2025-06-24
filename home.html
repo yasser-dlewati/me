@@ -450,6 +450,7 @@
     <script src="./js/smtpjs.js"></script>
             <script>
                 $('.service').click( function() { 
+                    $('.service i').removeClass('fa-square-minus').addClass('fa-square-plus');
                     let targetDescription = $(this).next('div'); 
                     setTimeout(() => {
                         let isTargetDescriptionOpen = targetDescription.hasClass('show');
