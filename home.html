@@ -447,21 +447,8 @@
     <script src="./js/custom.js"></script>
     <script src="./js/email.js"></script>
     <script src="./js/experience.js"></script>
-    <script src="./js/smtpjs.js"></script>
-            <script>
-                $('.service').click( function() { 
-                    $('.service i').removeClass('fa-square-minus').addClass('fa-square-plus');
-                    let targetDescription = $(this).next('div'); 
-                    setTimeout(() => {
-                        let isTargetDescriptionOpen = targetDescription.hasClass('show');
-                        if (isTargetDescriptionOpen) {
-                            $(this).find('i').removeClass('fa-square-plus').addClass('fa-square-minus');
-                        } else {
-                            $(this).find('i').removeClass('fa-square-minus').addClass('fa-square-plus');
-                        }
-                    }, 500);
-                });
-            </script>
+    <script src="./js/smtpjs.js"></script>           
+    <script src="./js/services.js"></script>           
 </body>
 
 </html>
