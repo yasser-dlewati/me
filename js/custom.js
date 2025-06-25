@@ -92,7 +92,7 @@ $(document).ready(function () {
   $(".navigation .close").click(function () {
     if (document.querySelector(".navigation").style.marginLeft !== "50%") {
       $(".content").animate({ "margin-left": 0 }, 500);
-      $("section").css("filter", "");
+      $("section, footer").css("filter", "");
       $(".screen-indicator").removeClass("show-nav");
       $(".navigation").css("box-shadow", "none");
     }
@@ -102,16 +102,14 @@ $(document).ready(function () {
     console.log("show menu");
     if ($(".content").css("margin-left") === "0px") {
       $(".content").animate({ "margin-left": "-100%" }, 500);
-      $("section").css("filter", "blur(8px)");
+      $("section, footer").css("filter", "blur(8px)");
       $(".navigation").css("box-shadow", "-8px 0px 32px");
     }
   });
 
   $(".settings").click(() => {
     console.log("this is coming soon");
-
     $(".settings-container").animate({ "margin-left": "8px" }, 500);
-    $("section").css("filter", "blur(8px)");
     $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
   });
 

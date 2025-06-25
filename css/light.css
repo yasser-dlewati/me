@@ -109,7 +109,7 @@ section {
     background-color: var(--bg-light-color);
 }
 
-section:nth-child(even) {
+section:nth-child(odd) {
     background-color: var(--bg-dark-color);
 
 }
