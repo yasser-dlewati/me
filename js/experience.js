@@ -142,3 +142,19 @@ $(document).ready(() => {
   setScrollRightButtonVisibility();
   setScrollLeftButtonVisibility();
 });
+
+$('.overlay button').click(function () {
+  if ($(".content").css("margin-left") === "0px") {
+    $(".service-details").animate({ "margin-left": "50%" }, 500);
+    $("section,footer").css("filter", "blur(8px)");
+    $(".service-details").css("box-shadow", "-8px 0px 32px");
+  }
+})
+
+$(".service-details .close").click(function () {
+  if ($(".content").css("margin-left") !== "0%") {
+    $(".service-details").animate({ "margin-left": "100%" }, 500);
+    $("section,footer").css("filter", "");
+    $(".service-details").css("box-shadow", "none");
+  }
+});
