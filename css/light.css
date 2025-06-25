@@ -262,11 +262,16 @@ ul.screen-indicator {
 
 .logo .bottom h1 {
     position: relative;
+    display: inline-block;
     color: var(--black-color);
     font-size: 200px;
     margin-bottom: 0;
     padding: 40px 0;
     z-index: 2;
+}
+
+.logo .bottom h1:nth-child(2) {
+    z-index: 1;
 }
 
 .logo .bottom {
