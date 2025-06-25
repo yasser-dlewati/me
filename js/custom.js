@@ -64,7 +64,7 @@ $(document).ready(function () {
   setSectionsStylesForScrolling();
   $("body").attr("data-theme","light");
   window.scrollTo(0, 0);
-
+  
   $(".hero-text .message").each(function (i) {
     var $this = $(this);
     if (i >= 3) {
@@ -110,7 +110,7 @@ $(document).ready(function () {
   $(".settings").click(() => {
     console.log("this is coming soon");
 
-    $(".navigation").animate({ "margin-left": "50%" }, 500);
+    $(".settings-container").animate({ "margin-left": "8px" }, 500);
     $("section").css("filter", "blur(8px)");
     $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
   });
