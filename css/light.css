@@ -168,7 +168,7 @@ body {
     box-shadow: -8px 0px 32px;
 }
 
-.navigation,.service-details  {
+.navigation,.experience-details-container  {
     margin-left: 100%;
     background-color: var(--bg-dark-color);
     width: 100%;
@@ -184,7 +184,7 @@ body {
 }
 
 .navigation a,
-.service-details a {
+.experience-details-container a {
     color: var(--text-color);
     display: block;
     font-size: 32px;
@@ -192,7 +192,7 @@ body {
 }
 
 .navigation .close,
-.service-details .close {
+.experience-details-container .close {
     position: absolute;
     top: 0;
     right: 50%;
@@ -394,7 +394,25 @@ img.side {
     font-size: 20px;
 }
 
-.experience img {
+.experience-details-container{
+    align-content: center;
+}
+
+.experience-details{
+    max-width: 50%;
+    padding: 0 32px;
+}
+
+.experience-details h4,
+.experience-details h5{
+   margin:16px 0;
+   text-align: center;
+}
+
+.experience img,
+.experience-details img {
+    display: block;
+    margin: auto;
     height: 200px;
     width: 200px;
     display: block;
