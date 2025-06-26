@@ -55,7 +55,7 @@ divExperience.scroll(() => {
 
 scrollLeftButton.click(function () {
   if (scrollPosition > 0) {
-    scrollPosition -= $(".experience").width();
+    scrollPosition -= $(".experience-item").width();
   }
 
   divExperience.animate({
@@ -74,7 +74,7 @@ scrollLeftButton.click(function () {
 
 scrollRightButton.click(function () {
   if (scrollPosition < maxDivExperienceWidth) {
-    scrollPosition += $(".experience").width();
+    scrollPosition += $(".experience-item").width();
   }
 
   divExperience.animate({
@@ -102,7 +102,7 @@ function setExperienceIndicatorByStep(step) {
       experienceIndicatorPosition.pop();
     }
   } else {
-    if (recentlyAdded < $(".experience").length) {
+    if (recentlyAdded < $(".experience-itm").length) {
       experienceIndicatorPosition.push(recentlyAdded);
       experienceIndicatorPosition.shift();
     }
@@ -123,7 +123,7 @@ function updateExperienceIndicator() {
 }
 
 function renderExperienceIndicator() {
-  var count = $(".experience").length;
+  var count = $(".experience-item").length;
   var content = "";
   for (var i = 0; i < count; i++) {
     if ((!isMobileDevice && i < 3) || (isMobileDevice && i == 0)) {
@@ -164,7 +164,7 @@ const experienceJson = [
   },
   {
     id: 2,
-    company: "Touchelss",
+    company: "Touchless",
     position: "Senior software engineer",
     duration: 2,
     isCurrentCompany: false,
@@ -200,7 +200,11 @@ const experienceJson = [
   },
 ];
 
-$(".overlay button").click(function () {
+$('.experience-item').append('<div class="overlay"></div>')
+
+$('.overlay').append('<button>details</button>');
+
+$(document).on('click', '.overlay button', function() {
   if ($(".content").css("margin-left") === "0px") {
     $(".experience-details-container").animate({ "margin-left": "50%" }, 500);
     $("section,footer").css("filter", "blur(8px)");

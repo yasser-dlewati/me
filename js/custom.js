@@ -101,7 +101,7 @@ $(document).ready(function () {
   $(".menu-icon").click(function () {
     console.log("show menu");
     if ($(".content").css("margin-left") === "0px") {
-      $(".content").animate({ "margin-left": "-100%" }, 500);
+      $(".content").animate({ "margin-left": "-50%" }, 500);
       $("section, footer").css("filter", "blur(8px)");
       $(".navigation").css("box-shadow", "-8px 0px 32px");
     }
