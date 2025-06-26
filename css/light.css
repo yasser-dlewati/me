@@ -492,18 +492,27 @@ i.scroll-horizontly:Hover {
 
 #contact a{
     margin-top:16px;
-}
-
-#contact h5{
-    margin-top:16px;
-}
-
-#contact h5 a{
     cursor: pointer;
+    display: inline-block;
 }
 
+#contact a.copy{
+    margin-left: 16px;
+}
+
+.tooltip {
+    display: inline;
+    border-radius: var(--border-radius-small);
+    background-color: var(--text-dark-color);
+    color: var(--text-light-color);
+    padding: 16px;
+    opacity: 0;
+    z-index: 10;
+    transition: opacity 0.3s;
+  }
+  
 /*---------------------------------------
-       FOOTER              
+FOOTER              
  -----------------------------------------*/
 
 .social-links {

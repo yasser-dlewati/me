@@ -141,3 +141,17 @@ $(document).ready(function () {
     $(".navigation .close").click();
   });
 });
+
+$('.copy').on('click', function (e) {
+  e.preventDefault();
+  const email = $('.email h5').text().trim();
+  navigator.clipboard.writeText(email)
+    .then(() => {
+      const $tooltip = $(this).find('.tooltip');
+      $tooltip.css('opacity', 1);
+      
+      setTimeout(() => {
+        $tooltip.css('opacity', 0);
+      }, 1500);
+    });
+});
