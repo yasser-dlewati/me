@@ -143,18 +143,94 @@ $(document).ready(() => {
   setScrollLeftButtonVisibility();
 });
 
-$('.overlay button').click(function () {
-  if ($(".content").css("margin-left") === "0px") {
-    $(".service-details").animate({ "margin-left": "50%" }, 500);
-    $("section,footer").css("filter", "blur(8px)");
-    $(".service-details").css("box-shadow", "-8px 0px 32px");
-  }
-})
+const experienceJson = [
+  {
+    id: 0,
+    company: "Robotat",
+    position: "Web developer",
+    duration: 18,
+    isCurrentCompany: false,
+    description:
+      "First attempt to enter the software development world by getting assigned to test some feature manually (black box method) then getting enrolled in the development cycle by delivering some simple models in both front end and back end",
+  },
+  {
+    id: 1,
+    company: "Menumiz",
+    position: "Senior web developer",
+    duration: 32,
+    isCurrentCompany: false,
+    description:
+      "A place where I graded from a junior level to a senior. Learning a lot of the development cycle, collaporate with other departments to learn more, working hard to proof myself professionally and stepping up to be a team leader to keep the wheel rooling.",
+  },
+  {
+    id: 2,
+    company: "Touchelss",
+    position: "Senior software engineer",
+    duration: 2,
+    isCurrentCompany: false,
+    description:
+      "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
+  },
+  {
+    id: 3,
+    company: "Boostorder",
+    position: "Senior software engineer",
+    duration: 15,
+    isCurrentCompany: false,
+    description:
+      "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
+  },
+  {
+    id: 4,
+    company: "Monster",
+    position: "Software engineer",
+    duration: 24,
+    isCurrentCompany: false,
+    description:
+      "First experiment working in such a big corporate which is the perfect time to engage and see how the collaporation should be done. In addition to feel proud as a working in a such a good reputation enterprises.",
+  },
+  {
+    id: 5,
+    company: "Timelog",
+    position: "Senior software engineer",
+    duration: 18,
+    isCurrentCompany: true,
+    description:
+      "Woring in a team to delive a first class tier code. paricipating in mind storm sessions to detect the weakness points in the app and workin with task force team to present a solid plan to migrate to the legacy solutions to the latest technology.",
+  },
+];
 
-$(".service-details .close").click(function () {
+$(".overlay button").click(function () {
+  if ($(".content").css("margin-left") === "0px") {
+    $(".experience-details-container").animate({ "margin-left": "50%" }, 500);
+    $("section,footer").css("filter", "blur(8px)");
+    $(".experience-details-container").css("box-shadow", "-8px 0px 32px");
+    let imageSrc = $(this).parent().prev().attr("src");
+    let companyName = $(this).parent().prev().attr("alt");
+    let reltatedExpericence = experienceJson.find(
+      (x) => x.company === companyName
+    );
+    let html = `<div class="container">
+    <div class="row">
+    <div class="col-12">
+    <img src="${imageSrc}" alt="${companyName}" class="company-logo">
+    <h4 class="company-name">${reltatedExpericence.company}</h2>
+    <h5 class="position">${reltatedExpericence.position}</h3>
+    <p class="duration">Duration: ${reltatedExpericence.duration} months</p>
+    <p> ${reltatedExpericence.description}</p>
+    </div>
+    </div>
+    </div>
+    `;
+    $(".experience-details").html(html);
+    console.log(reltatedExpericence.description);
+  }
+});
+
+$(".experience-details-container .close").click(function () {
   if ($(".content").css("margin-left") !== "0%") {
-    $(".service-details").animate({ "margin-left": "100%" }, 500);
+    $(".experience-details-container").animate({ "margin-left": "100%" }, 500);
     $("section,footer").css("filter", "");
-    $(".service-details").css("box-shadow", "none");
+    $(".experience-details-container").css("box-shadow", "none");
   }
 });
