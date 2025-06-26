@@ -92,9 +92,11 @@ $(document).ready(function () {
   $(".navigation .close").click(function () {
     if (document.querySelector(".navigation").style.marginLeft !== "50%") {
       $(".content").animate({ "margin-left": 0 }, 500);
-      $("section, footer").css("filter", "");
-      $(".screen-indicator").removeClass("show-nav");
-      $(".navigation").css("box-shadow", "none");
+      setTimeout(() => {
+        $("section, footer").css("filter", "");
+        $(".screen-indicator").removeClass("show-nav");
+        $(".navigation").css("box-shadow", "none");
+      }, 500);
     }
   });
 

@@ -227,14 +227,15 @@ $(document).on('click', '.overlay button', function() {
     </div>
     `;
     $(".experience-details").html(html);
-    console.log(reltatedExpericence.description);
   }
 });
 
 $(".experience-details-container .close").click(function () {
   if ($(".content").css("margin-left") !== "0%") {
     $(".experience-details-container").animate({ "margin-left": "100%" }, 500);
-    $("section,footer").css("filter", "");
-    $(".experience-details-container").css("box-shadow", "none");
+    setTimeout(() => {
+      $("section,footer").css("filter", "");
+      $(".experience-details-container").css("box-shadow", "none");
+    }, 500);
   }
 });
