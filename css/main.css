@@ -273,6 +273,40 @@ ul.screen-indicator {
     z-index: 1;
 }
 
+#top>img:nth-of-type(1) {
+    position: absolute;
+    max-width: 250px;
+    left: calc(32% - 330px);
+    z-index: 1;
+    top: calc(45% - 300px);
+}
+
+#top>img:nth-of-type(2) {
+    position: absolute;
+    max-width: 250px;
+    right: calc(32% - 300px);
+    z-index: 1;
+    bottom: calc(45% - 330px);
+    transform: scaleX(-1);
+}
+
+#top h5 {
+    position: absolute;
+    top: calc(10% - 100px);
+    left: 0;
+    font-size: var(--h5-font-size);
+    text-align: center;
+    width: 400px;
+}
+
+.traits {
+    position: absolute;
+    bottom: 20%;
+    right: 10%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
 .menu-icon {
     position: fixed;
     top: 32px;
@@ -312,13 +346,11 @@ img.side {
 -----------------------------------------*/
 
 .experience-item {
-    display: inline-table;
+    flex: 0 0 calc(100% / 3);
     position: relative;
-    max-width: calc(100% / 3);
     text-wrap: wrap;
     white-space: initial;
     margin: 0 auto;
-    padding: 16px;
 }
 
 .overlay {
@@ -327,26 +359,36 @@ img.side {
     right: 0;
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border-radius: var(--border-radius-large);
+    transform: translateY(100%);
+    transition: transform 0.4s ease-out;
 }
 
 .overlay button {
     display: none;
 }
 
-.overlay:hover {
-    background-color: var(--overlay-color);
+.experience-item:hover .overlay {
+    transform: translateY(0);
 }
 
-.overlay:hover button {
+.experience-item:hover img {
+    transform: translateY(-64px);
+    border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
+    transition: transform 0.4s ease-in;
+}
+
+.experience-item:hover .overlay button {
     display: block;
     position: absolute;
-    top: calc(50% - 34px);
-    left: calc(50% - 60px);
-    background-color: var(--bg-dark-color);
+    bottom: 0;
+    width: 200px;
+    background-color: var(--text-light-color);
     border: none;
-    box-shadow: 0 0 100px;
-    border-radius: var(--border-radius-small);
+    border-radius: 0 0 var(--border-radius-large) var(--border-radius-large);
     color: var(--text-dark-color);
     cursor: pointer;
     font-size: var(--button-font-size);
@@ -385,6 +427,7 @@ img.side {
     white-space: nowrap;
     overflow: hidden;
     -ms-overflow-style: none;
+    display: flex;
     /* Hide scrollbar in IE and Edge */
     scrollbar-width: none;
     /* Hide scrollbar in Firefox */
@@ -490,13 +533,13 @@ i.scroll-horizontly:Hover {
        CONTACT
 -----------------------------------------*/
 
-#contact a{
-    margin-top:16px;
+#contact a {
+    margin-top: 16px;
     cursor: pointer;
     display: inline-block;
 }
 
-#contact a.copy{
+#contact a.copy {
     margin-left: 16px;
 }
 
@@ -509,8 +552,8 @@ i.scroll-horizontly:Hover {
     opacity: 0;
     z-index: 10;
     transition: opacity 0.3s;
-  }
-  
+}
+
 /*---------------------------------------
 FOOTER              
  -----------------------------------------*/
@@ -572,9 +615,9 @@ footer .logo .bottom {
     border-radius: 0 0 var(--border-radius-small) var(--border-radius-small);
 }
 
-.calendly-overlay .calendly-popup{
-width: 100% !important;
-height: 100% !important;
-max-width: 100% !important;
-max-height: 100%§ !important;
+.calendly-overlay .calendly-popup {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100%§ !important;
 }
