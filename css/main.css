@@ -35,13 +35,14 @@
 }
 
 [data-theme="dark"] {
-    --bg-dark-color: hsl(0, 0%, 0%);
-    --bg-color: hsl(0, 0%, 5%);
+    --bg-dark-color: hsl(0, 0%, 20%);
+    --bg-color: hsl(0, 0%, 35%);
     --bg-light-color: hsl(0, 0%, 10%);
     --overlay-color: hsla(0, 0%, 10%, 0.5);
 
     --text-dark-color: hsl(0, 0%, 100%);
-    --text-light-color: hsl(0, 0%, 80%);
+    --text-medium-color: hsl(0, 0%, 60%);
+    --text-light-color: hsl(0, 0%, 20%);
 }
 
 /*---------------------------------------
@@ -105,13 +106,15 @@ p {
     text-justify: inter-word;
 }
 
+div, p, a{
+    color: var(--text-dark-color);
+}
 section {
     background-color: var(--bg-light-color);
     align-items: center;
     height: 100vh;
     display: flex !important;
     margin: auto;
-    padding: 0 8rem;
     position: sticky;
     top: 0;
     border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
@@ -273,7 +276,28 @@ ul.screen-indicator {
     z-index: 1;
 }
 
+.arrow-left,
+.arrow-right {
+  position: absolute;
+  width: 30%;
+  height: auto;
+  z-index: 0;
+}
+
+.arrow-left {
+  top: 10%;
+  left: -10%;
+  transform: rotate(10deg);
+}
+
+.arrow-right {
+  bottom: 5%;
+  right: -5%;
+  transform: rotate(-15deg);
+}
+
 #top>img:nth-of-type(1) {
+    width:30%;
     position: absolute;
     max-width: 250px;
     left: calc(32% - 330px);
@@ -282,6 +306,7 @@ ul.screen-indicator {
 }
 
 #top>img:nth-of-type(2) {
+    width: 30%;
     position: absolute;
     max-width: 250px;
     right: calc(32% - 300px);
@@ -420,6 +445,7 @@ img.side {
     width: 200px;
     display: block;
     border-radius: var(--border-radius-large);
+    transition: transform 0.4s ease-out;
 }
 
 .experience-container {
@@ -599,8 +625,8 @@ footer .logo {
 }
 
 footer .logo .top {
-    font-size: 20px;
-    padding: 12px 0;
+    font-size: 24px;
+    padding: 8px 0;
     border-radius: var(--border-radius-small) var(--border-radius-small) 0 0;
     color: var(--white-color);
     border: 4px solid var(--black-color);
@@ -610,9 +636,10 @@ footer .logo .top {
 footer .logo .bottom {
     border: 4px solid var(--black-color);
     border-top: none;
-    font-size: 20px;
-    padding: 12px 0;
+    font-size: 24px;
+    padding: 8px 0;
     border-radius: 0 0 var(--border-radius-small) var(--border-radius-small);
+    color: var(--black-color);
 }
 
 .calendly-overlay .calendly-popup {
