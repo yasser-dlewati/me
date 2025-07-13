@@ -101,6 +101,16 @@ $(document).ready(function () {
   $('.content').css('overflow', '');
   });
 
+  $(".settings-container .close").click(function () {
+    if (document.querySelector(".settings-container").style.marginLeft !== "150%") {
+      $(".settings-container").css("margin-left", '150%' );
+      setTimeout(() => {
+        console.log("close settings");
+        $(".navigation > *").css("filter", "");
+      }, 500);
+    }
+  });
+
   $(".menu-icon").click(function () {
     console.log("show menu");
     if ($(".content").css("margin-left") === "0px") {
@@ -112,7 +122,7 @@ $(document).ready(function () {
 
   $(".settings").click(() => {
     console.log("this is coming soon");
-    $(".settings-container").animate({ "margin-left": "8px" }, 500);
+    $(".settings-container").css("margin-left", "calc(100% + 8px)");
     $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
   });
 
