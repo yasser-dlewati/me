@@ -159,7 +159,11 @@ a:hover {
     box-shadow: -8px 0px 32px;
     z-index: 11;
     transition: margin-left 0.5s ease;
-      
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .navigation,
@@ -172,15 +176,28 @@ a:hover {
     z-index: 10;
 }
 
-.navigation .links, .navigation .settings-item {
+.navigation .links {
     position: absolute;
     top: calc(50% - 100px);
     left: calc(25% - 80px);
     text-align: right;
 }
 
+.settings-item{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.settings-item .justify-with-gap{
+    max-width: 50%;
+    gap: 16px;
+}
+
 .navigation a,
-.experience-details-container a {
+.experience-details-container a,
+.settings-container a {
     color: var(--text-dark-color);
     display: block;
     font-size: 32px;
@@ -189,20 +206,20 @@ a:hover {
 
 .navigation .close,
 .experience-details-container .close,
-.navigation .settings-container .close {
+.settings-container .close {
     position: absolute;
     top: 0;
     right: 50%;
     padding: 12px 16px;
 }
 
-.navigation .settings {
+
+.settings {
     display: block;
     position: absolute;
     right: 50%;
     bottom: 0;
     padding: 12px 20px;
-
 }
 
 ul.screen-indicator {
