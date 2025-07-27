@@ -1,412 +1,274 @@
 <!DOCTYPE html>
-<!-- saved from url=(0036)https://yasser-dlewati.github.io/me/ -->
 <html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <title>Yas Dle</title>
-    <link rel="icon" href="/images/logo-2lines.png" type="image/icon type">
+  <title>Yas Dle</title>
+  <link rel="icon" href="images/logo-2lines.png" type="image/icon type">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Tooplate">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="Tooplate">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/barton" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="css/custom.css">
 
 </head>
 
-<body>
-    <div class="content">
-        <ul class="screen-indicator"></ul>
+<body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+<div class="loader">
+  <img src="images/logo-2lines.png" id="logo" >
+</div>
 
-        <a class="menu-icon">
-            <i class="fa fa-bars"></i>
-        </a>
+<div id="teaser" class="alert alert-warning">
+<p>Stay tuned for the new refresed look of my website...</p><a id="close"><i class="fa fa-close"></i>
+</a></div>
 
-        <div class="experience-details-container">
-            <a href="javascript:void(0);" class="close"><i class="fa fa-xmark"></i></a>
-            <div class="experience-details"></div>
-        </div>
+<div class="content">
+  <!-- MENU BAR -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      
+      <a class="navbar-brand logo" href="#">
+        <img src="images/logo.png" class="logo">
+      </a>
 
-        <div class="settings-container">
-          <a href="javascript:void(0);" class="close"><i class="fa fa-xmark"></i>
-          </a>
-         
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-          <div class="settings-item">
-            <div class="setting-row">
-              <label for="language" class="form-check-label">Language</label>
-              <select class="form-select" id="language">
-                <option value="en">English</option>
-                <option value="ar">العربية</option>
-              </select>
-            </div>
-          
-            <div class="setting-row">
-              <label for="darkModeSwitch" class="form-check-label">Dark Mode</label>
-              <div class="form-check form-switch m-0">
-                <input class="form-check-input" type="checkbox" id="darkModeSwitch">
-              </div>
-            </div>
-          
-            <div class="setting-row">
-              <label for="showUnderGraduateExperience" class="form-check-label">Show under graduate experience</label>
-              <div class="form-check form-switch m-0">
-                <input class="form-check-input" type="checkbox" id="showUnderGraduateExperience">
-              </div>
-            </div>
-          
-            <div class="setting-row">
-              <label for="saveSettingsLocally" class="form-check-label">Save settings locally</label>
-              <div class="form-check form-switch m-0">
-                <input class="form-check-input" type="checkbox" id="saveSettingsLocally">
-              </div>
-            </div>
-          </div>
-          
-          </div>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="#intro" class="nav-link smoothScroll">Introduction</a>
+          </li>
 
-        <div class="navigation">
-            <a href="javascript:void(0);" class="close"><i class="fa fa-xmark"></i>
-            </a>
-            <div class="links">
-            </div>
-            <div class="settings">
-                <a>
-                    <i class="fa fa-gear"></i>
-                </a>
-            </div>
-        </div>
+          <li class="nav-item">
+            <a href="#about" class="nav-link smoothScroll">About Me</a>
+          </li>
 
-        <!-- HERO -->
-        <section id="top">
-            <div class="logo">
-                <div class="top">
-                    <h1>
-                        YAS
-                    </h1>
-                </div>
-                <div class="bottom">
-                    <h1>DL</h1>
-                    <h1>E</h1>
-                    <img src="./images/yasser.png">
-                </div>
-            </div>
-            <div class="scroll">
-                <i class="fa-solid fa-chevron-down"></i>
-            </div>
-        </section>
+          <li class="nav-item">
+            <a href="#experience" class="nav-link smoothScroll">Experience</a>
+          </li>
 
-        <!-- about -->
-        <section id="about">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 vertically-centered">
-                        <h2> about me </h2>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-8">
-                        <p>
-                            My name is Yasser, but you can call me Yas, a self tought software engineer with <span
-                                class="experience-duration"></span> of experience, passionate
-                            about stretching my mind with solving complicated problems, writing code and learning new
-                            stuff.
-                            <br>
-                            I worked in multiple companies vary in size from startups, SMEs to big enterprises, stepping
-                            up and
-                            climping up the ladder from a junior to a mid level and end up with a
-                            senior role, I also served as a team leader from a small portion of time. I have hands on
-                            experience
-                            with
-                            web, mobile and desktop development.
-                        </p>
-                        <a class="button primary" href=""
-                            onclick="Calendly.initPopupWidget({url: 'https://calendly.com/yasdle/30min'});return false;">Schedule
-                            a session <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          <li class="nav-item">
+            <a href="#contact" class="nav-link smoothScroll">Contact</a>
+          </li>
+        </ul>
 
-                        <a class="button" href="#services">Check my services</a>
-                        <img class="side" src="./images/yasser-no-bg.png">
-                    </div>
-                </div>
-            </div>
-        </section>
+      </div>
 
-        <!-- Experience -->
-        <section id="clients">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 vertically-centered">
-                        <h2 class="title">where i left marks</h2>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-8">
-                        <div class="experience-container">
-
-                            <div class="experience-item">
-
-                                <img src="./images/robotat.png" class="img-fluid" alt="Robotat">
-                            </div>
-
-                            <div class="experience-item">
-                                <img src="./images/Menumiz.png" class="img-fluid" alt="Menumiz">
-                            </div>
-
-                            <div class="experience-item">
-                                <img src="./images/Touchless.png" class="img-fluid" alt="Touchless">
-                            </div>
-
-                            <div class="experience-item">
-                                <img src="./images/boostorder.png" class="img-fluid" alt="Boostorder">
-                            </div>
-
-                            <div class="experience-item">
-                                <img src="./images/monster.jpeg" class="img-fluid" alt="Monster">
-
-                            </div>
-
-                            <div class="experience-item">
-                                <img src="./images/timelog.png" class="img-fluid" alt="Timelog">
-
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-2"></div>
-                            <div class="col-1">
-                                <i class="scroll-horizontly prev fa-solid fa-chevron-circle-left"></i>
-                            </div>
-                            <div class="col-6">
-                                <div class="experience-indicator">
-
-                                </div>
-                            </div>
-                            <div class="col-1">
-                                <i class="scroll-horizontly next fa-solid fa-chevron-circle-right"></i>
-                            </div>
-                            <div class="col-2"></div>
-                        </div>
-
-
-                    </div>
-                    <p class="download">
-                        Or simply download my resume from
-                        <a href="./pdf/Yasser Dlewati-Senior software engineer resume.pdf" class="download"
-                            download>here</a>
-
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="services">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 vertically-centered">
-                        <h2>Things I can do </h2>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-8">
-                        <div id="accordion">
-                            <div class="card">
-                                <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#software">
-                                    <i class="fa-regular fa-square-plus"></i>
-                                    software archetict & development
-                                </a>
-
-                                <div id="software" class="collapse" data-bs-parent="#accordion">
-                                    <div class="card-body">
-                                        Crafting the foundation of scalable systems, I focus on designing clear, robust,
-                                        extensible architectures that reduce technical debt and support future growth.
-                                        From early prototypes to full-scale applications, I ensure clean code, modular
-                                        architecture, and long-term value.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-
-                                <a class="collapsed btn card-header service" data-bs-toggle="collapse"
-                                    href="#consulting">
-
-                                    <i class="fa-regular fa-square-plus"></i>technical Leadership & consulting
-                                </a>
-
-                                <div id="consulting" class="collapse" data-bs-parent="#accordion">
-                                    <div class="card-body">
-                                        With a deep understanding of both business and code, I offer guidance on
-                                        choosing the right tools, frameworks, and strategies. Whether it is reviewing
-                                        existing systems or advising on tech direction, I help teams make smart,
-                                        future-proof decisions.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-
-                                <a class="collapsed btn card-header service" data-bs-toggle="collapse"
-                                    href="#management">
-
-                                    <i class="fa-regular fa-square-plus"></i>project & team managemant
-                                </a>
-
-                                <div id="management" class="collapse" data-bs-parent="#accordion">
-                                    <div class="card-body">
-                                        From planning to delivery, I manage software projects with a focus on clarity,
-                                        velocity, and collaboration. I lead cross-functional teams, remove blockers, and
-                                        ensure everyone is aligned and empowered to deliver results.
-                                        From planning to delivery, I manage software projects with a focus on clarity,
-                                        velocity, and collaboration. I lead cross-functional teams, remove blockers, and
-                                        ensure everyone is aligned and empowered to deliver results. I also support
-                                        hiring the right talents upon need.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-
-                                <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#qa">
-
-                                    <i class="fa-regular fa-square-plus"></i>quality assurance
-                                </a>
-
-                                <div id="qa" class="collapse" data-bs-parent="#accordion">
-                                    <div class="card-body">
-                                        I ensure software reliability through a deep manual testing. From carefully
-                                        crafted test cases to real-world scenario validation, I help catch issues early,
-                                        improve user experience, and maintain consistent quality across releases.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-
-                                <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#support">
-                                    <i class="fa-regular fa-square-plus"></i>maitainance & support
-                                </a>
-
-                                <div id="support" class="collapse" data-bs-parent="#accordion">
-                                    <div class="card-body">
-                                        My work does not end with project delivery; it extends into ensuring long-term
-                                        reliability. I stay involved to monitor functionality, fix issues, and adapt the
-                                        software as requirements evolve, so it continues to serve its purpose
-                                        effectively..
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-
-                                <a class="collapsed btn card-header service" data-bs-toggle="collapse"
-                                    href="#mentoring">
-                                    <i class="fa-regular fa-square-plus"></i>coatching & mentoring
-                                </a>
-
-                                <div id="mentoring" class="collapse" data-bs-parent="#accordion">
-                                    <div class="card-body">
-                                        I believe in building strong teams by sharing knowledge. Through one-on-one
-                                        mentoring, code reviews, and tech talks, I help interns, junior and mid-level
-                                        developers grow confidently and contribute effectively.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- Contact me -->
-        <section id="contact">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 vertically-centered">
-                        <h2>say hey</h2>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-8 vertically-centered">
-                        <div class="row" style="display: none;">
-
-                            <div class="col-md-2"></div>
-
-                            <div class="col-md-8 col-sm-12 col-xs-12">
-                                <div class="contact-form webform">
-
-                                    <div class="form-group ">
-                                        <label>Full Name</label>
-                                        <input type="text" class="form-control" id="txtName"
-                                            placeholder="Enter your full name. e.g. John Doe">
-                                    </div>
-
-                                    <div class="form-group ">
-                                        <label>Your Email</label>
-                                        <input type="email" class="form-control" id="txtEmail"
-                                            placeholder="Enter your email address. e.g johnDoe@example.com">
-                                    </div>
-
-                                    <div class="form-group ">
-                                        <label>Message</label>
-                                        <textarea class="form-control" rows="5" name="cf-message" id="txtMessage"
-                                            placeholder="Your Message"></textarea>
-                                    </div>
-
-                                    <button type="submit" class="form-control" id="btnSubmit"
-                                        name="submit">Send</button>
-                                </div>
-                            </div>
-
-                            <div class="col-md-2"></div>
-
-                        </div>
-                        <div>
-                            You can drop me a message via
-                        </div>
-                        <a href="mailto:yasdle@outlook.com" class="email" title="Send an email using preferred mail app">
-                            <h5>
-                                yasdle@outlook.com
-                            </h5>
-                            <a title="Copy email" class="copy">
-                                <h5>
-                                    <i class="fa-regular fa-copy"></i>
-                                    <span class="tooltip">Copied!</span>
-                                </h5>
-                            </a>
-                        </a>
-
-                        <div>
-                            or simply
-                        </div>
-                        <a class="button primary" href=""
-                            onclick="Calendly.initPopupWidget({url: 'https://calendly.com/yasdle/30min'});return false;">Schedule
-                            a session <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-        <div id="snackbar"><span id="snackbar-text"></span><i id="close" class="fa fa-close"></i></div>
-        <footer>
-            <div class="logo">
-                <div class="top">YAS</div>
-                <div class="bottom">DLE</div>
-            </div>
-            <div class="social-links">
-                <a href="https://www.facebook.com/y.dlewati" rel="noopener" class="fa-brands fa-facebook-square"></a>
-                <a href="https://www.linkedin.com/in/yasser-dlewati" rel="noopener" class="fa-brands fa-linkedin"></a>
-                <a href="https://www.github.com/yasser-dlewati" rel="noopener" class="fa-brands fa-github-square"></a>
-            </div>
-        </footer>
     </div>
-    <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"
-    async></script>
-    <script src="./js/main.js"></script>
-    <script src="./js/clients.js"></script>
-    <script src="./js/services.js"></script>
+  </nav>
+
+
+  <!-- HERO -->
+  <section class="hero d-flex flex-column justify-content-center align-items-center section-alone-in-page active"
+    id="intro">
+
+    <div class="container">
+      <div class="row">
+
+        <div class="d-flex flex-column justify-content-center align-items-center col-lg-7 col-md-7 col-12">
+          <div class="hero-text">
+
+            <h4 class="message sent"><span class="wave">👋</span> Who is this?</h4>
+
+            <h4 class="message received"> Meet Yasser, a tech enthusiast
+            </h4>
+
+            <h4 class="message sent">May I know more?</h4>
+
+            <h4 class="message received"> Sure, <span id="scroll-down">scroll down</span>
+            </h4>
+
+          </div>
+        </div>
+
+        <div class="mx-auto col-lg-5 col-md-5 col-10">
+          <img src="images/yasser.png" class="img-banner" alt="yasser">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- about -->
+  <section class="about" id="about">
+    <div class="container">
+      <h1 class="title">About Me</h1>
+      <div class="row">
+        <div class="col-md-6">
+          <img class="about-image circle" src="images/me-circle.jpeg" alt="yasser" />
+        </div>
+        <div class="col-md-6">
+          <p class="description">
+            A self tought software engineer with <span class="experience-duration"></span> of experience, passionate about stretching my mind with solving complicated problems, writing code and learning new stuff.
+            <br />
+            I worked in multiple companies vary in size from startups, SMEs to big enterprises, stepping up and climping up the ladder from a junior to a mid level and end up with a 
+            senior role, I also served as a team leader from a small portion of time. I have hands on experience with web, mobile and desktop development.
+            <br />
+            I always try to explore new technologies, as well as reading books and articles on how to improve myself professionally and personally.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="section-alone-in-page" id="experience">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="title">My Experience</h3>
+
+            <div class="experience-container">
+
+              <i class="scroll-horizontly prev fa fa-chevron-left"></i>
+              <div class="experience">
+                <img src="images/jotun.png" class="img-fluid" alt="Jotun">
+                <h5 class="mb-0 text-center">Jotun</h5>
+                <h6 class="text-center">Sales Representitive</h6>
+                <p>Served customers by helping picking the best painting option, providing training for the DIY people
+                  and managing the office by restocking and prepare purchase orders.</p>
+              </div>
+
+              <div class="experience">
+                <img src="images/kidzone.jpg" class="img-fluid" alt="kidzone">
+                <h5 class="mb-0 text-center">kidzone</h5>
+                <h6 class="text-center">Little Inventor Couch</h6>
+                <p>Couch little ones the basic principles of physics, electricity and roboting as simple as possible,
+                  using simple expirments and Lego NXT robot to simplify programming concepts. </p>
+              </div>
+
+              <div class="experience">
+                <img src="images/robotat.png" class="img-fluid" alt="robotao">
+                <h5 class="mb-0 text-center">Robotat</h5>
+                <h6 class="text-center">Junior Web Developer</h6>
+                <p>First attempt to enter the software development world by getting assigned to test some feature
+                  manually (black box method) then getting enrolled in the development cycle by delivering some simple
+                  models in both front end and back end.</p>
+              </div>
+
+              <div class="experience">
+                <img src="images/vou.jpeg" class="img-fluid" alt="vou">
+                <h5 class="mb-0 text-center">VOU (Voice Of Uranus)</h5>
+                <h6 class="text-center">Senior Web Developer</h6>
+                <p>ِِA place where I graded from a junior level to a senior. Learning a
+                  lot of the development cycle, collaporate with other departments to learn more, working hard to
+                  proof myself professionally and stepping up to be a team leader to keep the wheel rooling.</p>
+              </div>
+
+              <div class="experience">
+                <img src="images/boostorder.jpeg" class="img-fluid" alt="boostorder">
+                <div class="">
+                  <h5 class="mb-0 text-center">Boostorder</h5>
+                  <h6 class="text-center">Senior Software Engineer</h6>
+                  <p>Being the principle software engineer is something very hard but very rewarding at the same time.
+                    During this period of time, I got the chance to meet the brightest minds and not only work with, but
+                    learn from as well.</p>
+                </div>
+              </div>
+
+              <div class="experience">
+                <img src="images/monster.jpeg" class="img-fluid" alt="monster">
+                <h5 class="mb-0 text-center">Monster</h5>
+                <h6 class="text-center">Software Engineer</h6>
+                <p>First experiment working in such a big corporate which is the perfect time to engage and see how the
+                  collaporation should be done. In addition to feel proud as a working in a such a good reputation
+                  enterprises.</p>
+              </div>
+
+              <div class="experience">
+                <img src="images/timelog.png" class="img-fluid" alt="timelog">
+                <h5 class="mb-0 text-center">Timelog</h5>
+                <h6 class="text-center">Senior software Engineer</h6>
+                <p>Woring in a team to delive a first class tier code. paricipating in mind storm sessions to detect the weakness points in the app and workin with task force team to present a solid plan to migrate to the legacy solutions to the latest technology.
+              </div>
+
+              <i class="scroll-horizontly next fa fa-chevron-right"></i>
+
+            </div>
+        </div>
+        <div class="experience-indicator">
+        </div>
+        <div class="col-md-12 download-container">
+          <p>Or simply download my resume from
+            <a href="pdf/YasserDlewatiResume.pdf" class="download" download>here</a>
+          </p>
+        </div>
+  </section>
+
+
+
+  <!-- Contact me -->
+  <section class="contact section-alone-in-page" id="contact">
+    <div class="container">
+      <h1 class="title">Let's connect</h1>
+        <div class="row">
+
+          <div class="col-md-2"></div>
+
+          <div class="col-md-8 col-sm-12 col-xs-12">
+            <div class="contact-form webform">
+
+              <div class="form-group ">
+                <label >Full Name</label>
+                <input type="text" class="form-control" id="txtName" placeholder="Enter your full name. e.g. John Doe">
+              </div>
+
+              <div class="form-group ">
+                <label >Your Email</label>
+                <input type="email" class="form-control" id="txtEmail"
+                  placeholder="Enter your email address. e.g johnDoe@example.com">
+              </div>
+
+              <div class="form-group ">
+                <label >Message</label>
+                <textarea class="form-control" rows="5" name="cf-message" id="txtMessage"
+                  placeholder="Your Message"></textarea>
+              </div>
+
+              <button type="submit" class="form-control" id="btnSubmit" name="submit">Send</button>
+            </div>
+          </div>
+
+          <div class="col-md-2"></div>
+
+        </div>
+
+        <div class="social-links">
+          <a href="tel: +60 18-280-6353" class="fa fa-phone fa-rotate-90 show-on-mobile hide-on-desktop"></a>
+          <a href="https://www.facebook.com/y.dlewati" rel="noopener" class="fab fa-facebook"></a>
+          <a href="https://www.linkedin.com/in/yasser-dlewati" rel="noopener" class="fab fa-linkedin"></a>
+          <a href="https://www.github.com/yasser-dlewati" rel="noopener" class="fab fa-git"></a>
+          <a href="https://wa.link/2pgf0p" rel="noopener" class="fab fa-whatsapp"></a>
+          </ul>
+        </div>
+  </section>
+  <div id="snackbar"><span id="snackbar-text"></span><i  id='close' class='fa fa-close'></i></div>
+  <footer>&copy; All right reserved</footer>
+</div>
+  <!-- SCRIPTS -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/smoothscroll.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="js/email.js"></script>
+  <script src="js/experience.js"></script>
+  <script src="js/smtpjs.js"></script>
+  </script>
+
 </body>
 
 </html>
