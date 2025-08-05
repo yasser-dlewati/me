@@ -110,7 +110,7 @@ div, p, a{
     color: var(--text-dark-color);
 }
 section {
-    background-color: var(--bg-light-color);
+    background-color: var(--bg-dark-color);
     align-items: center;
     height: 100vh;
     display: flex !important;
@@ -126,7 +126,7 @@ section:first-of-type {
 }
 
 section:nth-child(odd) {
-    background-color: var(--bg-dark-color);
+    background-color: var(--bg-light-color);
 
 }
 
@@ -586,12 +586,20 @@ i.scroll-horizontly:Hover {
     top: calc(50% - 15px);
 }
 
+.card-body{
+    background-color: var(--bg-light-color);
+}
+
 .service {
     font-size: var(--h5-font-size);
     text-transform: capitalize;
     background-color: var(--bg-light-color);
+    /* border-bottom: none; */
 }
 
+.collapse{
+    border-bottom: 1px solid #ccc;
+}
 /*----------------------------------------
        CONTACT
 -----------------------------------------*/
