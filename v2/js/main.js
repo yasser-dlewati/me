@@ -180,3 +180,12 @@ $('.copy').on('click', function (e) {
       }, 1500);
     });
 });
+
+const darkModeToggle = document.querySelector('#darkModeSwitch');
+darkModeToggle.addEventListener('change', function () {
+  if (this.checked) {
+    $('body').attr('data-theme', 'dark');
+  } else {
+    $('body').attr('data-theme', 'light');
+  }
+});
