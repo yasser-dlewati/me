@@ -138,6 +138,7 @@ const experienceJson = [
     duration: 18,
     isCurrentCompany: false,
     description: "First attempt to enter the software development world by getting assigned to test some feature manually (black box method) then getting enrolled in the development cycle by delivering some simple models in both front end and back end",
+    websiteUrl: "https://www.robotat.com",
   },
   {
     id: 1,
@@ -146,6 +147,7 @@ const experienceJson = [
     duration: 32,
     isCurrentCompany: false,
     description: "A place where I graded from a junior level to a senior. Learning a lot of the development cycle, collaporate with other departments to learn more, working hard to proof myself professionally and stepping up to be a team leader to keep the wheel rooling.",
+    websiteUrl: "https://www.menumiz.com",
   },
   {
     id: 2,
@@ -154,6 +156,7 @@ const experienceJson = [
     duration: 2,
     isCurrentCompany: false,
     description: "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
+    websiteUrl: "https://touchless.asia",
   },
   {
     id: 3,
@@ -162,6 +165,7 @@ const experienceJson = [
     duration: 15,
     isCurrentCompany: false,
     description: "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
+    websiteUrl: "https://www.boostorder.com",
   },
   {
     id: 4,
@@ -170,6 +174,7 @@ const experienceJson = [
     duration: 24,
     isCurrentCompany: false,
     description: "First experiment working in such a big corporate which is the perfect time to engage and see how the collaporation should be done. In addition to feel proud as a working in a such a good reputation enterprises.",
+    websiteUrl: "https://www.monster.com/about",
   },
   {
     id: 5,
@@ -177,7 +182,12 @@ const experienceJson = [
     position: "Senior software engineer",
     duration: 18,
     isCurrentCompany: true,
-    description: "Woring in a team to delive a first class tier code. paricipating in mind storm sessions to detect the weakness points in the app and workin with task force team to present a solid plan to migrate to the legacy solutions to the latest technology.",
+    description: "Woring in a team t delive a first class tier code. paricipating in mind storm sessions to detect the weakness points in the app and workin with task force team to present a solid plan to migrate to the legacy solutions to the latest technology.",
+    websiteUrl: "https://timelog.com/en",
+    location:{
+      long:0,
+      lat:0,
+    }
   },
 ];
 
