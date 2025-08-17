@@ -4,7 +4,8 @@ const isMobileDevice = regexp.test(userAgent);
 const divExperience = document.querySelector(".experience-container");
 const scrollLeftButton = document.querySelector(".scroll-horizontly.prev");
 const scrollRightButton = document.querySelector(".scroll-horizontly.next");
-const maxDivExperienceWidth = divExperience.scrollWidth - divExperience.clientWidth;
+const maxDivExperienceWidth =
+  divExperience.scrollWidth - divExperience.clientWidth;
 let scrollPosition = 0;
 
 function setExperienceDuration() {
@@ -12,7 +13,8 @@ function setExperienceDuration() {
   if (spanExperienceDuration) {
     const firstWorkingDate = new Date("2016-06-23");
     const todayDate = new Date();
-    const workingDurationInYears = todayDate.getFullYear() - firstWorkingDate.getFullYear();
+    const workingDurationInYears =
+      todayDate.getFullYear() - firstWorkingDate.getFullYear();
     const monthsDifference = todayDate.getMonth() - firstWorkingDate.getMonth();
     let resultText = "";
     if (monthsDifference < 5) {
@@ -30,55 +32,61 @@ function setExperienceDuration() {
 }
 
 function setScrollRightButtonVisibility() {
-  scrollRightButton.style.display = divExperience.scrollLeft > maxDivExperienceWidth - 1 ? "none" : "inline";
+  scrollRightButton.style.display =
+    divExperience.scrollLeft > maxDivExperienceWidth - 1 ? "none" : "inline";
 }
 
 function setScrollLeftButtonVisibility() {
-  scrollLeftButton.style.display = divExperience.scrollLeft === 0 ? "none" : "inline";
+  scrollLeftButton.style.display =
+    divExperience.scrollLeft === 0 ? "none" : "inline";
 }
 
-divExperience.addEventListener('scroll', () => {
+divExperience.addEventListener("scroll", () => {
   setScrollRightButtonVisibility();
   setScrollLeftButtonVisibility();
   scrollPosition = divExperience.scrollLeft;
 });
 
-scrollLeftButton.addEventListener('click', function () {
+scrollLeftButton.addEventListener("click", function () {
   if (scrollPosition > 0) {
     scrollPosition -= document.querySelector(".experience-item").clientWidth;
   }
 
   divExperience.scrollTo({
     left: scrollPosition,
-    behavior: 'smooth'
+    behavior: "smooth",
   });
 
   setExperienceIndicatorByStep(-1);
-  const isFirstIndicatorItemActive = document.querySelector(".experience-indicator li.active") === document.querySelector(".experience-indicator li");
+  const isFirstIndicatorItemActive =
+    document.querySelector(".experience-indicator li.active") ===
+    document.querySelector(".experience-indicator li");
   if (isFirstIndicatorItemActive) {
     divExperience.scrollTo({
       left: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   }
 });
 
-scrollRightButton.addEventListener('click', function () {
+scrollRightButton.addEventListener("click", function () {
   if (scrollPosition < maxDivExperienceWidth) {
     scrollPosition += document.querySelector(".experience-item").clientWidth;
   }
 
   divExperience.scrollTo({
     left: scrollPosition,
-    behavior: 'smooth'
+    behavior: "smooth",
   });
 
   setExperienceIndicatorByStep(1);
-  const isLastIndicatorItemActive = document.querySelector(".experience-indicator li:last-child.active") === document.querySelector(".experience-indicator li:last-child");
+  const isLastIndicatorItemActive =
+    document.querySelector(".experience-indicator li:last-child.active") ===
+    document.querySelector(".experience-indicator li:last-child");
   if (isLastIndicatorItemActive) {
     divExperience.scrollTo({
       left: maxDivExperienceWidth,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   }
 });
@@ -86,7 +94,8 @@ scrollRightButton.addEventListener('click', function () {
 let experienceIndicatorPosition = isMobileDevice ? [0] : [0, 1, 2];
 
 function setExperienceIndicatorByStep(step) {
-  const recentlyAdded = experienceIndicatorPosition[experienceIndicatorPosition.length - 1] + step;
+  const recentlyAdded =
+    experienceIndicatorPosition[experienceIndicatorPosition.length - 1] + step;
   if (step < 0) {
     if (experienceIndicatorPosition[0] - 1 >= 0) {
       experienceIndicatorPosition.unshift(experienceIndicatorPosition[0] - 1);
@@ -117,7 +126,10 @@ function renderExperienceIndicator() {
   const count = document.querySelectorAll(".experience-item").length;
   let content = "";
   for (let i = 0; i < count; i++) {
-    content += ((!isMobileDevice && i < 3) || (isMobileDevice && i === 0)) ? "<li class='active'></li>" : "<li></li>";
+    content +=
+      (!isMobileDevice && i < 3) || (isMobileDevice && i === 0)
+        ? "<li class='active'></li>"
+        : "<li></li>";
   }
 
   document.querySelector(".experience-indicator").innerHTML = content;
@@ -137,8 +149,13 @@ const experienceJson = [
     position: "Web developer",
     duration: 18,
     isCurrentCompany: false,
-    description: "First attempt to enter the software development world by getting assigned to test some feature manually (black box method) then getting enrolled in the development cycle by delivering some simple models in both front end and back end",
+    description:
+      "First attempt to enter the software development world by getting assigned to test some feature manually (black box method) then getting enrolled in the development cycle by delivering some simple models in both front end and back end",
     websiteUrl: "https://www.robotat.com",
+    location: {
+      long: 3.1661670431254234,
+      lat: 101.6519775711648,
+    },
   },
   {
     id: 1,
@@ -146,8 +163,13 @@ const experienceJson = [
     position: "Senior web developer",
     duration: 32,
     isCurrentCompany: false,
-    description: "A place where I graded from a junior level to a senior. Learning a lot of the development cycle, collaporate with other departments to learn more, working hard to proof myself professionally and stepping up to be a team leader to keep the wheel rooling.",
+    description:
+      "A place where I graded from a junior level to a senior. Learning a lot of the development cycle, collaporate with other departments to learn more, working hard to proof myself professionally and stepping up to be a team leader to keep the wheel rooling.",
     websiteUrl: "https://www.menumiz.com",
+    location: {
+      long: 3.1106415178193267,
+      lat: 101.66577115582407,
+    },
   },
   {
     id: 2,
@@ -155,8 +177,13 @@ const experienceJson = [
     position: "Senior software engineer",
     duration: 2,
     isCurrentCompany: false,
-    description: "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
+    description:
+      "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
     websiteUrl: "https://touchless.asia",
+    location: {
+      long: 2.910237,
+      lat: 101.655013,
+    },
   },
   {
     id: 3,
@@ -164,8 +191,13 @@ const experienceJson = [
     position: "Senior software engineer",
     duration: 15,
     isCurrentCompany: false,
-    description: "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
+    description:
+      "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
     websiteUrl: "https://www.boostorder.com",
+    location: {
+      long: 3.1172387768337684,
+      lat: 101.67229855767039,
+    },
   },
   {
     id: 4,
@@ -173,8 +205,13 @@ const experienceJson = [
     position: "Software engineer",
     duration: 24,
     isCurrentCompany: false,
-    description: "First experiment working in such a big corporate which is the perfect time to engage and see how the collaporation should be done. In addition to feel proud as a working in a such a good reputation enterprises.",
+    description:
+      "First experiment working in such a big corporate which is the perfect time to engage and see how the collaporation should be done. In addition to feel proud as a working in a such a good reputation enterprises.",
     websiteUrl: "https://www.monster.com/about",
+    location: {
+      long: 3.1498692224274083,
+      lat: 101.71157475715616,
+    },
   },
   {
     id: 5,
@@ -182,40 +219,53 @@ const experienceJson = [
     position: "Senior software engineer",
     duration: 18,
     isCurrentCompany: true,
-    description: "Woring in a team t delive a first class tier code. paricipating in mind storm sessions to detect the weakness points in the app and workin with task force team to present a solid plan to migrate to the legacy solutions to the latest technology.",
+    description:
+      "Woring in a team t delive a first class tier code. paricipating in mind storm sessions to detect the weakness points in the app and workin with task force team to present a solid plan to migrate to the legacy solutions to the latest technology.",
     websiteUrl: "https://timelog.com/en",
-    location:{
-      long:0,
-      lat:0,
-    }
+    location: {
+      long:3.1595209066025243, 
+      lat: 101.71868384232964,
+    },
   },
 ];
 
-const overlay = document.createElement('div');
-overlay.className = 'overlay';
-document.querySelectorAll('.experience-item').forEach(item => item.appendChild(overlay.cloneNode(true)));
+const overlay = document.createElement("div");
+overlay.className = "overlay";
+document
+  .querySelectorAll(".experience-item")
+  .forEach((item) => item.appendChild(overlay.cloneNode(true)));
 
-document.querySelectorAll('.overlay').forEach(overlay => {
-  const button = document.createElement('button');
-  button.textContent = 'details';
+document.querySelectorAll(".overlay").forEach((overlay) => {
+  const button = document.createElement("button");
+  button.textContent = "details";
   overlay.appendChild(button);
 });
 
-
-document.addEventListener('click', function (event) {
-  if (event.target.matches('button') && event.target.parentElement.classList.contains('overlay')) {
-    if (document.querySelector(".content").style.marginLeft === "0px" || document.querySelector(".content").style.marginLeft === "") {
-      let sections = document.querySelectorAll("section")
-      sections.forEach(section => {
-        section.style.filter = "blur(8px)"
+document.addEventListener("click", function (event) {
+  if (
+    event.target.matches("button") &&
+    event.target.parentElement.classList.contains("overlay")
+  ) {
+    if (
+      document.querySelector(".content").style.marginLeft === "0px" ||
+      document.querySelector(".content").style.marginLeft === ""
+    ) {
+      let sections = document.querySelectorAll("section");
+      sections.forEach((section) => {
+        section.style.filter = "blur(8px)";
       });
-      
-      document.querySelector(".experience-details-container").animate([{ marginLeft: "50%" }], { duration: 500, fill: "forwards" })
-      
-      document.querySelector(".experience-details-container").style.boxShadow = "-8px 0px 32px";
+
+      document
+        .querySelector(".experience-details-container")
+        .animate([{ marginLeft: "50%" }], { duration: 500, fill: "forwards" });
+
+      document.querySelector(".experience-details-container").style.boxShadow =
+        "-8px 0px 32px";
       const imageSrc = event.target.parentElement.previousElementSibling.src;
       const companyName = event.target.parentElement.previousElementSibling.alt;
-      const relatedExperience = experienceJson.find(x => x.company === companyName);
+      const relatedExperience = experienceJson.find(
+        (x) => x.company === companyName
+      );
       const html = `<div class="container">
         <div class="row">
           <div class="col-12">
@@ -232,17 +282,23 @@ document.addEventListener('click', function (event) {
   }
 });
 
-document.querySelector(".experience-details-container .close").addEventListener('click', function () {
-  if (document.querySelector(".content").style.marginLeft !== "0%") {
-    let sections = document.querySelectorAll("section");
-    document.querySelector(".experience-details-container").animate([{ marginLeft: "100%" }], { duration: 500, fill:"forwards" }).finished.then(() => {
-      sections.forEach(section => {
-        section.style.filter = "";
-        section.style.marginLeft = "0%";
-      });
-      document.querySelector(".experience-details-container").style.boxShadow = "none";
-    });
-    setTimeout(() => {
-    }, 500);
-  }
-});
+document
+  .querySelector(".experience-details-container .close")
+  .addEventListener("click", function () {
+    if (document.querySelector(".content").style.marginLeft !== "0%") {
+      let sections = document.querySelectorAll("section");
+      document
+        .querySelector(".experience-details-container")
+        .animate([{ marginLeft: "100%" }], { duration: 500, fill: "forwards" })
+        .finished.then(() => {
+          sections.forEach((section) => {
+            section.style.filter = "";
+            section.style.marginLeft = "0%";
+          });
+          document.querySelector(
+            ".experience-details-container"
+          ).style.boxShadow = "none";
+        });
+      setTimeout(() => {}, 500);
+    }
+  });
