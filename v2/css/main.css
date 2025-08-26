@@ -485,6 +485,12 @@ img.side {
     transition: transform 0.4s ease-out;
 }
 
+.experience-details a {
+    text-decoration: underline;
+    font-size: var(--base-font-size);
+    display: inline;
+}
+
 .experience-container {
     margin: 0 0 32px 32px;
     white-space: nowrap;

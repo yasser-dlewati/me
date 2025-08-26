@@ -274,6 +274,7 @@ document.addEventListener("click", function (event) {
             <h5 class="position">${relatedExperience.position}</h5>
             <p class="duration">Duration: ${relatedExperience.duration} months</p>
             <p>${relatedExperience.description}</p>
+            <p>Visit ${companyName} Website <a href="${relatedExperience.websiteUrl}" target="_blank" rel="noopener">here</a>!</p>
           </div>
         </div>
       </div>`;
