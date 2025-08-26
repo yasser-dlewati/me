@@ -243,8 +243,8 @@ document.querySelectorAll(".overlay").forEach((overlay) => {
 
 document.addEventListener("click", function (event) {
   if (
-    event.target.matches("button") &&
-    event.target.parentElement.classList.contains("overlay")
+    event.target.matches("img") &&
+    event.target.parentElement.classList.contains("experience-item")
   ) {
     if (
       document.querySelector(".content").style.marginLeft === "0px" ||
@@ -261,8 +261,8 @@ document.addEventListener("click", function (event) {
 
       document.querySelector(".experience-details-container").style.boxShadow =
         "-8px 0px 32px";
-      const imageSrc = event.target.parentElement.previousElementSibling.src;
-      const companyName = event.target.parentElement.previousElementSibling.alt;
+      const imageSrc = event.target.src;
+      const companyName = event.target.alt;
       const relatedExperience = experienceJson.find(
         (x) => x.company === companyName
       );

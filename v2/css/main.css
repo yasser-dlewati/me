@@ -419,48 +419,20 @@ img.side {
     margin: 0 auto;
 }
 
-.overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: var(--border-radius-large);
-    transform: translateY(100%);
-    transition: transform 0.4s ease-out;
-}
-
 .overlay button {
     display: none;
 }
 
-.experience-item:hover .overlay {
-    transform: translateY(0);
-}
-
-.experience-item:hover img {
-    transform: translateY(-64px);
-    border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
-    transition: transform 0.4s ease-in;
-}
-
-.experience-item:hover .overlay button {
-    display: block;
-    position: absolute;
-    bottom: 0;
-    width: 200px;
-    background-color: var(--text-light-color);
-    border: none;
-    border-radius: 0 0 var(--border-radius-large) var(--border-radius-large);
-    color: var(--text-dark-color);
-    cursor: pointer;
-    font-size: var(--button-font-size);
-    line-height: 0;
-    padding: 32px;
-    white-space: nowrap;
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-16px);
+    }
+    60% {
+        transform: translateY(-8px);
+    }
 }
 
 .experience-details-container {
@@ -497,6 +469,7 @@ img.side {
 
 .experience-container {
     margin: 0 0 32px 32px;
+    padding-top: 16px;
     white-space: nowrap;
     overflow: hidden;
     -ms-overflow-style: none;
