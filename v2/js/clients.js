@@ -152,10 +152,7 @@ const experienceJson = [
     description:
       "First attempt to enter the software development world by getting assigned to test some feature manually (black box method) then getting enrolled in the development cycle by delivering some simple models in both front end and back end",
     websiteUrl: "https://www.robotat.com",
-    location: {
-      long: 3.1661670431254234,
-      lat: 101.6519775711648,
-    },
+    embededMapLink: "pb=!1m18!1m12!1m3!1d3983.7287107914963!2d101.6519883!3d3.166001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87b783c5818efed7%3A0xfa5b51c991c1d246!2sPlaza%20Mont%E2%80%99%20Kiara!5e0!3m2!1sen!2smy!4v1756546255158!5m2!1sen!2smy",
   },
   {
     id: 1,
@@ -166,10 +163,7 @@ const experienceJson = [
     description:
       "A place where I graded from a junior level to a senior. Learning a lot of the development cycle, collaporate with other departments to learn more, working hard to proof myself professionally and stepping up to be a team leader to keep the wheel rooling.",
     websiteUrl: "https://www.menumiz.com",
-    location: {
-      long: 3.1106415178193267,
-      lat: 101.66577115582407,
-    },
+    embededMapLink:"pb=!1m18!1m12!1m3!1d3983.9404660358446!2d101.66315911147416!3d3.1104541968520425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc48f196c74b49%3A0xa754e103215446f9!2sMenumiz%20Sdn.%20Bhd.!5e0!3m2!1sen!2smy!4v1756546615873!5m2!1sen!2smy"
   },
   {
     id: 2,
@@ -180,10 +174,7 @@ const experienceJson = [
     description:
       "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
     websiteUrl: "https://touchless.asia",
-    location: {
-      long: 2.910237,
-      lat: 101.655013,
-    },
+    embededMapLink:"pb=!1m18!1m12!1m3!1d3983.7088143460246!2d101.66423242602517!3d3.171170203014705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc485de491c479%3A0xa40997f3dc918ec8!2sSolaris%20Dutamas%2C%201%2C%20Jln%20Dutamas%201%2C%20Solaris%20Dutamas%2C%2050754%20Kuala%20Lumpur%2C%20Wilayah%20Persekutuan%20Kuala%20Lumpur!5e0!3m2!1sen!2smy!4v1756546841444!5m2!1sen!2smy"
   },
   {
     id: 3,
@@ -194,10 +185,7 @@ const experienceJson = [
     description:
       "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
     websiteUrl: "https://www.boostorder.com",
-    location: {
-      long: 3.1172387768337684,
-      lat: 101.67229855767039,
-    },
+    embededMapLink:"pb=!1m18!1m12!1m3!1d3983.9086965997476!2d101.66931198601625!3d3.1188508452488763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc49f32cabd35b%3A0x23e273f52c551332!2sBoostorder%20-%20KL%20Eco%20City!5e0!3m2!1sen!2smy!4v1756546887913!5m2!1sen!2smy"
   },
   {
     id: 4,
@@ -208,10 +196,7 @@ const experienceJson = [
     description:
       "First experiment working in such a big corporate which is the perfect time to engage and see how the collaporation should be done. In addition to feel proud as a working in a such a good reputation enterprises.",
     websiteUrl: "https://www.monster.com/about",
-    location: {
-      long: 3.1498692224274083,
-      lat: 101.71157475715616,
-    },
+    embededMapLink:"pb=!1m18!1m12!1m3!1d3983.7913515491928!2d101.7089010760252!3d3.1496712531472517!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc37f6f1c8d147%3A0x8c048efb4266c0bf!2sMenara%20AIA%20Sentral!5e0!3m2!1sen!2smy!4v1756546918525!5m2!1sen!2smy"
   },
   {
     id: 5,
@@ -222,10 +207,7 @@ const experienceJson = [
     description:
       "Woring in a team t delive a first class tier code. paricipating in mind storm sessions to detect the weakness points in the app and workin with task force team to present a solid plan to migrate to the legacy solutions to the latest technology.",
     websiteUrl: "https://timelog.com/en",
-    location: {
-      long:3.1595209066025243, 
-      lat: 101.71868384232964,
-    },
+    embededMapLink:"pb=!1m18!1m12!1m3!1d3983.75408995014!2d101.71612601147427!3d3.159395096802703!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc37d017eaaaab%3A0xd5c2bff92ec47876!2sINSCALE%20Malaysia!5e0!3m2!1sen!2smy!4v1756547062785!5m2!1sen!2smy"
   },
 ];
 
@@ -275,6 +257,7 @@ document.addEventListener("click", function (event) {
             <p class="duration">Duration: ${relatedExperience.duration} months</p>
             <p>${relatedExperience.description}</p>
             <p>Visit ${companyName} Website <a href="${relatedExperience.websiteUrl}" target="_blank" rel="noopener">here</a>!</p>
+             <iframe src="https://www.google.com/maps/embed?${relatedExperience.embededMapLink}" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>`;
