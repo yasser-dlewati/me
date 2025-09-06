@@ -107,6 +107,7 @@ $(document).ready(function () {
       setTimeout(() => {
         console.log("close settings");
         $(".navigation > *").css("filter", "");
+        $(".settings-container").css("box-shadow", "none");
       }, 500);
     }
   });
@@ -116,7 +117,7 @@ $(document).ready(function () {
     if ($(".content").css("margin-left") === "0px") {
       $(".content").animate({ "margin-left": "-50%" }, 500);
       $("section, footer").css("filter", "blur(8px)");
-      $(".navigation").css("box-shadow", "-8px 0px 32px");
+      $(".navigation").css("box-shadow", "var(--menu-box-shadow)");
     }
   });
 
@@ -124,6 +125,8 @@ $(document).ready(function () {
     console.log("this is coming soon");
     $(".settings-container").css("margin-left", "calc(100% + 8px)");
     $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
+    $(".settings-container").css("box-shadow", "var(--menu-box-shadow)");
+    $(".content").css('overflow', 'hidden');
   });
 
   const messages = [];
