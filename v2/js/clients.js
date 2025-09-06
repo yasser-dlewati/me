@@ -224,6 +224,7 @@ document.querySelectorAll(".overlay").forEach((overlay) => {
 });
 
 document.addEventListener("click", function (event) {
+  let isDarkMode = document.body.attributes["data-theme"].value === "dark";
   if (
     event.target.matches("img") &&
     event.target.parentElement.classList.contains("experience-item")
@@ -242,7 +243,7 @@ document.addEventListener("click", function (event) {
         .animate([{ marginLeft: "50%" }], { duration: 500, fill: "forwards" });
 
       document.querySelector(".experience-details-container").style.boxShadow =
-        "-8px 0px 32px";
+        "var(--menu-box-shadow)";
       const imageSrc = event.target.src;
       const companyName = event.target.alt;
       const relatedExperience = experienceJson.find(
@@ -257,7 +258,7 @@ document.addEventListener("click", function (event) {
             <p class="duration">Duration: ${relatedExperience.duration} months</p>
             <p>${relatedExperience.description}</p>
             <p>Visit ${companyName} Website <a href="${relatedExperience.websiteUrl}" target="_blank" rel="noopener">here</a>!</p>
-             <iframe src="https://www.google.com/maps/embed?${relatedExperience.embededMapLink}" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+             <iframe id="map" src="https://www.google.com/maps/embed?${relatedExperience.embededMapLink}" width="100%" height="200" ${isDarkMode ? 'style="filter:invert(90%)"' : ''} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>`;
