@@ -307,7 +307,7 @@ document.querySelectorAll(".overlay").forEach((overlay) => {
 });
 
 document.addEventListener("click", function (event) {
-  let isDarkMode = document.body.attributes["data-theme"].value === "dark";
+  let isDarkMode = document.body.attributes["data-theme"] && document.body.attributes["data-theme"].value === "dark";
   if (
     event.target.matches("img") &&
     event.target.parentElement.classList.contains("experience-item")
@@ -345,7 +345,7 @@ document.addEventListener("click", function (event) {
             } months</p>
             <p>${relatedExperience.description}</p>
             <p>Visit ${companyName} Website <a href="${relatedExperience.websiteUrl}" target="_blank" rel="noopener">here</a>!</p>
-             <iframe src="https://www.google.com/maps/embed?${relatedExperience.embededMapLink}" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+             <iframe src="https://www.google.com/maps/embed?${relatedExperience.embededMapLink}" width="100%" height="200" style=' ${isDarkMode ? "filter:invert(90%)" : ''}' allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>`;
