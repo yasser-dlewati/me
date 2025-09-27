@@ -565,7 +565,7 @@ i.scroll-horizontly:Hover {
 
 .card-header:not([class*="collapsed"]):hover {
     background-color: var(--bg-dark-color);
-
+    color: var(--text-dark-color);
 }
 
 .card a {
@@ -579,20 +579,29 @@ i.scroll-horizontly:Hover {
     top: calc(50% - 15px);
 }
 
-.card-body{
+.card-body {
     background-color: var(--bg-light-color);
+    text-align: justify;
+    text-align-last: right;
+    hyphens: auto
 }
 
 .service {
+    color: var(--text-dark-color);
     font-size: var(--h5-font-size);
     text-transform: capitalize;
     background-color: var(--bg-light-color);
     /* border-bottom: none; */
 }
 
-.collapse{
+.service:hover {
+    color: var(--text-medium-color) !important;
+}
+
+.collapse {
     border-bottom: 1px solid #ccc;
 }
+
 /*----------------------------------------
        CONTACT
 -----------------------------------------*/
