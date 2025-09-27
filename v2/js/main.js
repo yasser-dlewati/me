@@ -101,6 +101,7 @@ $(document).ready(function () {
       }, 500);
     }
     $(".content").css("overflow", "");
+    document.querySelector('body').style.removeProperty("overflow-y");
   });
 
   $(".settings-container .close").click(function () {
@@ -129,6 +130,7 @@ $(document).ready(function () {
       $(".navigation").addClass("active");
       $("section, footer").css("filter", "blur(8px)");
       $(".navigation").css("box-shadow", "var(--menu-box-shadow)");
+      document.querySelector('body').style.overflowY = 'hidden';
     }
   });
 

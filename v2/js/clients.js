@@ -190,7 +190,7 @@ const experienceJson = [
 ];
 
 const experienceContainer = document.querySelector(".experience-container");
-var experienceItem= experienceContainer.children[0];
+var experienceItem = experienceContainer.children[0];
 
 document.addEventListener("DOMContentLoaded", () => {
   setExperienceDuration();
@@ -201,19 +201,19 @@ document.addEventListener("DOMContentLoaded", () => {
 const nextButton = document.querySelector(".scroll-horizontly.next");
 const prevButton = document.querySelector(".scroll-horizontly.prev");
 setTimeout(() => {
-  experienceItem= experienceContainer.children[0].clientWidth;
+  experienceItem = experienceContainer.children[0].clientWidth;
 }, 100);
 
 nextButton.addEventListener("click", () => {
   console.log(experienceItem.clientWidth);
   experienceContainer.scrollBy({ left: experienceItem, behavior: "smooth" });
-  moveExperienceIndicatorByStep(1)
+  moveExperienceIndicatorByStep(1);
 });
 
 prevButton.addEventListener("click", () => {
   console.log(experienceItem.clientWidth);
   experienceContainer.scrollBy({ left: -experienceItem, behavior: "smooth" });
-  moveExperienceIndicatorByStep(-1)
+  moveExperienceIndicatorByStep(-1);
 });
 
 let experienceIndicatorPosition = isMobileDevice ? [0] : [0, 1, 2];
@@ -246,13 +246,17 @@ function updateExperienceIndicator() {
     }
   });
 
-  setNavigationButtonsVisibility();    
+  setNavigationButtonsVisibility();
 }
 
 function setNavigationButtonsVisibility() {
   const lis = document.querySelectorAll(".experience-indicator li");
-  prevButton.style.visibility = lis[0].classList.contains("active") ? "hidden" : "visible";
-    nextButton.style.visibility = lis[lis.length - 1].classList.contains("active") ? "hidden" : "visible";
+  prevButton.style.visibility = lis[0].classList.contains("active")
+    ? "hidden"
+    : "visible";
+  nextButton.style.visibility = lis[lis.length - 1].classList.contains("active")
+    ? "hidden"
+    : "visible";
 }
 
 function renderExperienceIndicator() {
@@ -307,7 +311,9 @@ document.querySelectorAll(".overlay").forEach((overlay) => {
 });
 
 document.addEventListener("click", function (event) {
-  let isDarkMode = document.body.attributes["data-theme"] && document.body.attributes["data-theme"].value === "dark";
+  let isDarkMode =
+    document.body.attributes["data-theme"] &&
+    document.body.attributes["data-theme"].value === "dark";
   if (
     event.target.matches("img") &&
     event.target.parentElement.classList.contains("experience-item")
@@ -323,7 +329,7 @@ document.addEventListener("click", function (event) {
 
       document
         .querySelector(".experience-details-container")
-        .animate([{ marginLeft: "50%" }], { duration: 500, fill: "forwards" });
+        .classList.add("active"); //.animate([{ marginLeft: "50%" }], { duration: 500, fill: "forwards" });
 
       document.querySelector(".experience-details-container").style.boxShadow =
         "var(--menu-box-shadow)";
@@ -344,8 +350,14 @@ document.addEventListener("click", function (event) {
               relatedExperience.duration
             } months</p>
             <p>${relatedExperience.description}</p>
-            <p>Visit ${companyName} Website <a href="${relatedExperience.websiteUrl}" target="_blank" rel="noopener">here</a>!</p>
-             <iframe src="https://www.google.com/maps/embed?${relatedExperience.embededMapLink}" width="100%" height="200" style=' ${isDarkMode ? "filter:invert(90%)" : ''}' allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <p>Visit ${companyName} Website <a href="${
+        relatedExperience.websiteUrl
+      }" target="_blank" rel="noopener">here</a>!</p>
+             <iframe src="https://www.google.com/maps/embed?${
+               relatedExperience.embededMapLink
+             }" width="100%" height="200" style=' ${
+        isDarkMode ? "filter:invert(90%)" : ""
+      }' allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>`;
@@ -361,16 +373,13 @@ document
       let sections = document.querySelectorAll("section");
       document
         .querySelector(".experience-details-container")
-        .animate([{ marginLeft: "100%" }], { duration: 500, fill: "forwards" })
-        .finished.then(() => {
-          sections.forEach((section) => {
-            section.style.filter = "";
-            section.style.marginLeft = "0%";
-          });
-          document.querySelector(
-            ".experience-details-container"
-          ).style.boxShadow = "none";
-        });
-      setTimeout(() => {}, 500);
+        .classList.remove("active"); //.animate([{ marginLeft: "100%" }], { duration: 500, fill: "forwards" })
+
+      sections.forEach((section) => {
+        section.style.filter = "";
+        section.style.marginLeft = "0%";
+      });
+      document.querySelector(".experience-details-container").style.boxShadow =
+        "none";
     }
   });

@@ -33,8 +33,8 @@
     --border-radius-large: 32px;
     --border-radius-small: 16px;
 
-    --section-box-shadow: 0px 0px 8px;
-    --menu-box-shadow: -4px 0px 8px;
+    --section-box-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
+    --menu-box-shadow: -4px 0px 8px rgba(0, 0, 0, 1);
 }
 
 [data-theme="dark"] {
@@ -47,8 +47,8 @@
     --text-medium-color: hsl(0, 0%, 60%);
     --text-light-color: hsl(0, 0%, 20%);
 
-    --section-box-shadow: none;
-    --menu-box-shadow: none;
+    /* --section-box-shadow: none; */
+    /* --menu-box-shadow: none; */
 }
 
 /*---------------------------------------
@@ -57,6 +57,8 @@ TYPOGRAPHY
 body {
     font-family: var(--base-font-family);
     overflow-x: hidden;
+
+    /* background: #121212 !important; */
 }
 
 h1,
