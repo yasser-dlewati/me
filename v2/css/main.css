@@ -112,9 +112,12 @@ p {
     text-justify: inter-word;
 }
 
-div, p, a{
+div,
+p,
+a {
     color: var(--text-dark-color);
 }
+
 section {
     background-color: var(--bg-dark-color);
     align-items: center;
@@ -160,41 +163,53 @@ a:hover {
 -----------------------------------------*/
 
 .settings-container {
-    margin-left: 150%;
+    transform: translateX(150%);
+    transition: transform 0.5s ease-in-out;
     background-color: var(--bg-light-color);
     width: 100%;
     height: 100vh;
     position: fixed;
     border-radius: var(--border-radius-large) 0 0 var(--border-radius-large);
     z-index: 11;
-    transition: margin-left 0.5s ease;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: start;
 }
 
-  
-  .setting-row {
+.settings-container.active {
+    transform: translateX(calc(50% + 8px));
+    transition: transform 0.5s ease-in-out;
+}
+
+.setting-row {
     display: grid;
-    grid-template-columns: 1fr auto; /* label takes more space */
+    grid-template-columns: 1fr auto;
+    /* label takes more space */
     align-items: center;
     gap: 16px;
     max-width: 50%;
-  }
+}
 
-  input[type="checkbox"].form-check-input{
+input[type="checkbox"].form-check-input {
     font-size: 24px;
-  } 
+}
 
 .navigation,
 .experience-details-container {
-    margin-left: 100%;
+    transform: translateX(100%);
+    transition: transform 0.5s ease-out;
     background-color: var(--bg-dark-color);
     width: 100%;
     height: 100vh;
     position: fixed;
     z-index: 10;
+}
+
+.navigation.active,
+.experience-details-container.active {
+    transform: translateX(50%);
+    transition: transform 0.5s ease-in;
 }
 
 .navigation .links {
@@ -204,18 +219,18 @@ a:hover {
     text-align: right;
 }
 
-.settings-item{
+.settings-item {
     width: 50%;
     display: grid;
     gap: 16px;
-    margin-left:15%;
+    margin-left: 15%;
 }
 
-.settings-row label{
+.settings-row label {
     white-space: nowrap;
 }
 
-.settings-item .justify-with-gap{
+.settings-item .justify-with-gap {
     max-width: 50%;
     gap: 16px;
 }
@@ -325,26 +340,26 @@ ul.screen-indicator {
 
 .arrow-left,
 .arrow-right {
-  position: absolute;
-  width: 30%;
-  height: auto;
-  z-index: 0;
+    position: absolute;
+    width: 30%;
+    height: auto;
+    z-index: 0;
 }
 
 .arrow-left {
-  top: 10%;
-  left: -10%;
-  transform: rotate(10deg);
+    top: 10%;
+    left: -10%;
+    transform: rotate(10deg);
 }
 
 .arrow-right {
-  bottom: 5%;
-  right: -5%;
-  transform: rotate(-15deg);
+    bottom: 5%;
+    right: -5%;
+    transform: rotate(-15deg);
 }
 
 #top>img:nth-of-type(1) {
-    width:30%;
+    width: 30%;
     position: absolute;
     max-width: 250px;
     left: calc(32% - 330px);
@@ -434,12 +449,19 @@ img.side {
 }
 
 @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
         transform: translateY(0);
     }
+
     40% {
         transform: translateY(-16px);
     }
+
     60% {
         transform: translateY(-8px);
     }

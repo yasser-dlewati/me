@@ -92,11 +92,11 @@ $(document).ready(function () {
   setScreenIndicator(0);
 
   $(".navigation .close").click(function () {
-    if (document.querySelector(".navigation").style.marginLeft !== "50%") {
-      $(".content").animate({ "margin-left": 0 }, 500);
+    if (document.querySelector(".navigation").classList.contains("active")) {
       setTimeout(() => {
         $("section, footer").css("filter", "");
         $(".screen-indicator").removeClass("show-nav");
+        $(".navigation").removeClass("active"); 
         $(".navigation").css("box-shadow", "none");
       }, 500);
     }
@@ -105,9 +105,9 @@ $(document).ready(function () {
 
   $(".settings-container .close").click(function () {
     if (
-      document.querySelector(".settings-container").style.marginLeft !== "150%"
+      document.querySelector(".settings-container").classList.contains("active")
     ) {
-      $(".settings-container").css("margin-left", "150%");
+      $(".settings-container").removeClass("active");
       setTimeout(() => {
         console.log("close settings");
         $(".navigation > *").css("filter", "");
@@ -125,8 +125,8 @@ $(document).ready(function () {
 
   $(".menu-icon").click(function () {
     console.log("show menu");
-    if ($(".content").css("margin-left") === "0px") {
-      $(".content").animate({ "margin-left": "-50%" }, 500);
+    if (!document.querySelector(".navigation").classList.contains("active")) {
+      $(".navigation").addClass("active");
       $("section, footer").css("filter", "blur(8px)");
       $(".navigation").css("box-shadow", "var(--menu-box-shadow)");
     }
@@ -134,7 +134,7 @@ $(document).ready(function () {
 
   $(".settings").click(() => {
     console.log("this is coming soon");
-    $(".settings-container").css("margin-left", "calc(100% + 8px)");
+    $(".settings-container").addClass("active");
     $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
     $(".settings-container").css("box-shadow", "var(--menu-box-shadow)");
     $(".content").css("overflow", "hidden");
@@ -196,7 +196,7 @@ $(".copy").on("click", function (e) {
   });
 });
 
-function readSavedSettings(){
+function readSavedSettings() {
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme) {
     $("body").attr("data-theme", savedTheme);
@@ -205,7 +205,7 @@ function readSavedSettings(){
   }
 
   const showUnderGraduate = localStorage.getItem("underGraduate");
-  if(showUnderGraduate === "true"){
+  if (showUnderGraduate === "true") {
     document.querySelector("#showUnderGraduateExperience").checked = true;
     $(".undergraduate").show();
   }
@@ -213,7 +213,7 @@ function readSavedSettings(){
 
 var darkModeToggle = document.querySelector("#darkModeSwitch");
 darkModeToggle.addEventListener("change", function () {
-  if(saveSettingsCheckbox.checked){
+  if (saveSettingsCheckbox.checked) {
     localStorage.setItem("theme", this.checked ? "dark" : "light");
   }
 
@@ -221,7 +221,6 @@ darkModeToggle.addEventListener("change", function () {
 
   if (this.checked) {
     $("body").attr("data-theme", "dark");
-
   } else {
     $("body").attr("data-theme", "light");
   }
@@ -236,10 +235,12 @@ saveSettingsCheckbox.addEventListener("change", function () {
   }
 });
 
-const showUnderGraduateExperienceToggle = document.querySelector("#showUnderGraduateExperience");
+const showUnderGraduateExperienceToggle = document.querySelector(
+  "#showUnderGraduateExperience"
+);
 
 showUnderGraduateExperienceToggle.addEventListener("change", function () {
-  if(saveSettingsCheckbox.checked){
+  if (saveSettingsCheckbox.checked) {
     localStorage.setItem("underGraduate", this.checked);
   }
   // if (this.checked) {
