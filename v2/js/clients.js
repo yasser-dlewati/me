@@ -237,7 +237,8 @@ function renderExperienceIndicator() {
 
 export function renderClients() {
   var clients = experienceJson;
-  let isShowingUnderGraduateExperience = document.querySelector("#showUnderGraduateExperience").checked
+  let isShowingUnderGraduateExperience = document.querySelector("#showUnderGraduateExperience").checked || localStorage.getItem("underGraduate") === "true";
+  console.log("isShowingUnderGraduateExperience", isShowingUnderGraduateExperience);
   if (isShowingUnderGraduateExperience) {
     clients = experienceJson;
   } else {
