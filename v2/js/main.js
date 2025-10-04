@@ -1,4 +1,6 @@
 "use strict";
+// main.js
+import { renderClients } from './clients.js';
 
 const setSectionsStylesForScrolling = () => {
   $("section").each(function (index) {
@@ -115,15 +117,8 @@ $(document).ready(function () {
         $(".settings-container").css("box-shadow", "none");
       }, 500);
     }
-
-    const saveSettingsLocally = document.querySelector("#saveSettingsLocally");
-    if (saveSettingsLocally.checked) {
-      localStorage.setItem("theme", "light");
-    } else {
-      console.log("Settings will not be saved locally.");
-    }
   });
-
+  
   $(".menu-icon").click(function () {
     console.log("show menu");
     if (!document.querySelector(".navigation").classList.contains("active")) {
@@ -210,7 +205,6 @@ function readSavedSettings() {
   const showUnderGraduate = localStorage.getItem("underGraduate");
   if (showUnderGraduate === "true") {
     document.querySelector("#showUnderGraduateExperience").checked = true;
-    $(".undergraduate").show();
   }
 }
 
@@ -219,8 +213,6 @@ darkModeToggle.addEventListener("change", function () {
   if (saveSettingsCheckbox.checked) {
     localStorage.setItem("theme", this.checked ? "dark" : "light");
   }
-
-  console.log("Dark mode toggled:", localStorage.getItem("theme"));
 
   if (this.checked) {
     $("body").attr("data-theme", "dark");
@@ -231,29 +223,23 @@ darkModeToggle.addEventListener("change", function () {
 
 var saveSettingsCheckbox = document.querySelector("#saveSettingsLocally");
 saveSettingsCheckbox.addEventListener("change", function () {
-  if (this.checked) {
-    localStorage.setItem("theme", $("body").attr("data-theme"));
+  if (document.querySelector("#saveSettingsLocally").checked) {
+    if(this.checked)
+    localStorage.setItem("theme", document.querySelector("#darkModeSwitch").checked ? "dark" : "light");
+    localStorage.setItem("underGraduate", document.querySelector("#showUnderGraduateExperience").checked);
   } else {
     localStorage.removeItem("theme");
+    localStorage.removeItem("underGraduate");
   }
 });
 
-const showUnderGraduateExperienceToggle = document.querySelector(
-  "#showUnderGraduateExperience"
-);
-
+var showUnderGraduateExperienceToggle = document.querySelector("#showUnderGraduateExperience");
 showUnderGraduateExperienceToggle.addEventListener("change", function () {
   if (saveSettingsCheckbox.checked) {
     localStorage.setItem("underGraduate", this.checked);
+  }else{
+    localStorage.removeItem("underGraduate");
   }
-  // if (this.checked) {
-  //   console.log("Showing undergraduate experience");
-  //   $(".undergraduate").show();
-  //   document.querySelector(".undergraduate").show();
-  // } else {
-  //   console.log("Hiding undergraduate experience");
-  //   $(".undergraduate").hide();
-  //   document.querySelector(".undergraduate").hide();
 
-  // }
+  renderClients();
 });

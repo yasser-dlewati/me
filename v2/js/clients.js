@@ -272,30 +272,30 @@ function renderExperienceIndicator() {
   document.querySelector(".experience-indicator").innerHTML = content;
 }
 
-function renderClients() {
+export function renderClients() {
   var clients = experienceJson;
-  let isShowingUnderGraduateExperience =
-    localStorage.getItem("underGraduate") === "true";
+  let isShowingUnderGraduateExperience = document.querySelector("#showUnderGraduateExperience").checked
   if (isShowingUnderGraduateExperience) {
     clients = experienceJson;
   } else {
     clients = experienceJson.filter((x) => x.id >= 0);
   }
-
+  console.log(clients);
   let clientsContainer = document.querySelector(".experience-container");
 
-  let content = "";
+  let indicatorContent = "";
+  let clientsContent = "";
   for (let i = 0; i < clients.length; i++) {
-    clientsContainer.innerHTML += `<div class='experience-item'>
+    clientsContent += `<div class='experience-item'>
     <img src="./images/${clients[i].imageSrc}" class="img-fluid" alt="${clients[i].company}">
     </div>`;
-    content +=
+    indicatorContent +=
       (!isMobileDevice && i < 3) || (isMobileDevice && i === 0)
         ? "<li class='active'></li>"
         : "<li></li>";
   }
-
-  document.querySelector(".experience-indicator").innerHTML = content;
+  clientsContainer.innerHTML = clientsContent;
+  document.querySelector(".experience-indicator").innerHTML = indicatorContent;
 }
 
 const overlay = document.createElement("div");
