@@ -1,12 +1,6 @@
 const userAgent = navigator.userAgent;
 const regexp = /android|iphone|kindle|ipad/i;
 const isMobileDevice = regexp.test(userAgent);
-const divExperience = document.querySelector(".experience-container");
-const scrollLeftButton = document.querySelector(".scroll-horizontly.prev");
-const scrollRightButton = document.querySelector(".scroll-horizontly.next");
-const maxDivExperienceWidth =
-  divExperience.scrollWidth - divExperience.clientWidth;
-let scrollPosition = 0;
 
 function setExperienceDuration() {
   const spanExperienceDuration = document.querySelector(".experience-duration");
@@ -38,12 +32,12 @@ const experienceJson = [
     position: "Sales Executive",
     duration: 18,
     isCurrentCompany: false,
-    description:
-      `My first job ever. A place to learn how to deal with people, how to manage time and how to be responsible.\n 
+    description: `My first job ever. A place to learn how to deal with people, how to manage time and how to be responsible.\n 
       My main responsibility was to help the clients, introduce the products and close deals.\n`,
     webkitURL: "https://www.jotun.com/ww-en",
-    imageSrc: "jotun2.jpeg",
-    embededMapLink:"pb=!1m21!1m12!1m3!1d831.3169739645502!2d36.21109946875679!3d33.546415270793496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e6!4m0!4m3!3m2!1d33.54617384120685!2d36.2111236086386!5e0!3m2!1sen!2smy!4v1759566409228!5m2!1sen!2smy"
+    imageSrc: "jotun.jpeg",
+    embededMapLink:
+      "pb=!1m21!1m12!1m3!1d831.3169739645502!2d36.21109946875679!3d33.546415270793496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e6!4m0!4m3!3m2!1d33.54617384120685!2d36.2111236086386!5e0!3m2!1sen!2smy!4v1759566409228!5m2!1sen!2smy",
   },
   {
     id: -2,
@@ -51,13 +45,13 @@ const experienceJson = [
     position: "Mentor",
     duration: 24,
     isCurrentCompany: false,
-    description:
-      `As \"Little Inventors\" program mentor, I was responsible for teaching kids the basics of physics, electricity, programming and robotics using age appropriate tools and methods to make sure they understand the concepts and have fun at the same time.\n
+    description: `As \"Little Inventors\" program mentor, I was responsible for teaching kids the basics of physics, electricity, programming and robotics using age appropriate tools and methods to make sure they understand the concepts and have fun at the same time.\n
       Also, I was responsible for organizing the annual events for the kids, playing roles in the plays that Kidzone hosted for the kids and their families.\n
       Lastly, I was responsible for documenting the experiments and working on a simple syllabus to be followed by the mentors.`,
     webkitURL: "https://www.facebook.com/KidZoneSyria/",
     imageSrc: "Kidzone.jpeg",
-    embededMapLink:"pb=!1m18!1m12!1m3!1d318.486929755816!2d36.23401289362759!3d33.532001744626825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1518ddd8e68c44b9%3A0x2b47005f20b74050!2sSevan%20Restaurant!5e0!3m2!1sen!2smy!4v1759566571936!5m2!1sen!2smy"
+    embededMapLink:
+      "pb=!1m18!1m12!1m3!1d318.486929755816!2d36.23401289362759!3d33.532001744626825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1518ddd8e68c44b9%3A0x2b47005f20b74050!2sSevan%20Restaurant!5e0!3m2!1sen!2smy!4v1759566571936!5m2!1sen!2smy",
   },
   {
     id: -1,
@@ -222,23 +216,15 @@ function setNavigationButtonsVisibility() {
     : "visible";
 }
 
-function renderExperienceIndicator() {
-  const count = document.querySelectorAll(".experience-item").length;
-  let content = "";
-  for (let i = 0; i < count; i++) {
-    content +=
-      (!isMobileDevice && i < 3) || (isMobileDevice && i === 0)
-        ? "<li class='active'></li>"
-        : "<li></li>";
-  }
-
-  document.querySelector(".experience-indicator").innerHTML = content;
-}
-
 export function renderClients() {
   var clients = experienceJson;
-  let isShowingUnderGraduateExperience = document.querySelector("#showUnderGraduateExperience").checked || localStorage.getItem("underGraduate") === "true";
-  console.log("isShowingUnderGraduateExperience", isShowingUnderGraduateExperience);
+  let isShowingUnderGraduateExperience =
+    document.querySelector("#showUnderGraduateExperience").checked ||
+    localStorage.getItem("underGraduate") === "true";
+  console.log(
+    "isShowingUnderGraduateExperience",
+    isShowingUnderGraduateExperience
+  );
   if (isShowingUnderGraduateExperience) {
     clients = experienceJson;
   } else {
@@ -258,51 +244,38 @@ export function renderClients() {
         ? "<li class='active'></li>"
         : "<li></li>";
   }
+
   clientsContainer.innerHTML = clientsContent;
   document.querySelector(".experience-indicator").innerHTML = indicatorContent;
+  const experienceItems = document.querySelectorAll(".experience-item img");
+  experienceItems.forEach((item) => {
+    item.addEventListener("click", showClientDetails);
+  });
 }
 
-const overlay = document.createElement("div");
-overlay.className = "overlay";
-document
-  .querySelectorAll(".experience-item")
-  .forEach((item) => item.appendChild(overlay.cloneNode(true)));
-
-document.querySelectorAll(".overlay").forEach((overlay) => {
-  const button = document.createElement("button");
-  button.textContent = "details";
-  overlay.appendChild(button);
-});
-
-document.addEventListener("click", function (event) {
+function showClientDetails() {
   let isDarkMode =
     document.body.attributes["data-theme"] &&
     document.body.attributes["data-theme"].value === "dark";
   if (
-    event.target.matches("img") &&
-    event.target.parentElement.classList.contains("experience-item")
+    document.querySelector(".content").style.marginLeft === "0px" ||
+    document.querySelector(".content").style.marginLeft === ""
   ) {
-    if (
-      document.querySelector(".content").style.marginLeft === "0px" ||
-      document.querySelector(".content").style.marginLeft === ""
-    ) {
-      let sections = document.querySelectorAll("section");
-      sections.forEach((section) => {
-        section.style.filter = "blur(8px)";
-      });
+    let sections = document.querySelectorAll("section");
+    sections.forEach((section) => {
+      section.style.filter = "blur(8px)";
+    });
 
-      document
-        .querySelector(".experience-details-container")
-        .classList.add("active"); //.animate([{ marginLeft: "50%" }], { duration: 500, fill: "forwards" });
-
-      document.querySelector(".experience-details-container").style.boxShadow =
-        "var(--menu-box-shadow)";
-      const imageSrc = event.target.src;
-      const companyName = event.target.alt;
-      const relatedExperience = experienceJson.find(
-        (x) => x.company === companyName
-      );
-      const html = `<div class="container">
+    document
+      .querySelector(".experience-details-container")
+      .classList.add("active");
+    document.querySelector(".experience-details-container").style.boxShadow =
+      "var(--menu-box-shadow)";
+    const companyName = this.alt;
+    const relatedExperience = experienceJson.find(
+      (x) => x.company === companyName
+    );
+    const html = `<div class="container">
         <div class="row">
           <div class="col-12">
             <img src="./images/${
@@ -315,20 +288,19 @@ document.addEventListener("click", function (event) {
             } months</p>
             <p>${relatedExperience.description}</p>
             <p>Visit ${companyName} Website <a href="${
-        relatedExperience.websiteUrl
-      }" target="_blank" rel="noopener">here</a>!</p>
+      relatedExperience.websiteUrl
+    }" target="_blank" rel="noopener">here</a>!</p>
              <iframe src="https://www.google.com/maps/embed?${
                relatedExperience.embededMapLink
              }" width="100%" height="200" style=' ${
-        isDarkMode ? "filter:invert(90%)" : ""
-      }' allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      isDarkMode ? "filter:invert(90%)" : ""
+    }' allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>`;
-      document.querySelector(".experience-details").innerHTML = html;
-    }
+    document.querySelector(".experience-details").innerHTML = html;
   }
-});
+}
 
 document
   .querySelector(".experience-details-container .close")
@@ -337,8 +309,7 @@ document
       let sections = document.querySelectorAll("section");
       document
         .querySelector(".experience-details-container")
-        .classList.remove("active"); //.animate([{ marginLeft: "100%" }], { duration: 500, fill: "forwards" })
-
+        .classList.remove("active");
       sections.forEach((section) => {
         section.style.filter = "";
         section.style.marginLeft = "0%";
