@@ -131,6 +131,7 @@ $(document).ready(function () {
       $("section, footer").css("filter", "blur(8px)");
       $(".navigation").css("box-shadow", "var(--menu-box-shadow)");
       document.querySelector('body').style.overflowY = 'hidden';
+      document.querySelector("body").style.background = "var(--bg-dark-color)";
     }
   });
 
