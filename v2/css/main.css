@@ -292,11 +292,18 @@ ul.screen-indicator {
 -----------------------------------------*/
 
 .logo {
-    width: 600px;
+    width: clamp(280px, 30vw, 600px);
     font-family: var(--h1-font-family);
     font-weight: bold;
     text-align: center;
     margin: auto;
+}
+
+.logo h1{
+    font-size: clamp(80px, 10vw, 200px);
+    padding: 40px 0;
+    margin-bottom: 0;
+
 }
 
 .logo .top {
@@ -307,18 +314,14 @@ ul.screen-indicator {
 
 .logo .top h1 {
     color: var(--white-color);
-    font-size: 200px;
-    padding: 40px 0;
-    margin-bottom: 0;
 }
 
 .logo .bottom h1 {
     position: relative;
     display: inline-block;
     color: var(--black-color);
-    font-size: 200px;
-    margin-bottom: 0;
-    padding: 40px 0;
+
+
     z-index: 2;
 }
 
@@ -335,9 +338,10 @@ ul.screen-indicator {
 
 .logo .bottom img {
     position: absolute;
-    bottom: -4px;
-    right: 15%;
+    bottom: 0;
+    right: 27%;
     z-index: 1;
+    max-width: clamp(170px, 20vw, 334px);
 }
 
 .arrow-left,
@@ -719,3 +723,9 @@ footer .logo .bottom {
     max-width: 100% !important;
     max-height: 100%§ !important;
 }
+
+@media (max-width: 600px) {
+    .screen-indicator li {
+      display: none;
+    }
+  }
