@@ -162,13 +162,11 @@ setTimeout(() => {
 }, 100);
 
 nextButton.addEventListener("click", () => {
-  console.log(experienceItem.clientWidth);
   experienceContainer.scrollBy({ left: experienceItem, behavior: "smooth" });
   moveExperienceIndicatorByStep(1);
 });
 
 prevButton.addEventListener("click", () => {
-  console.log(experienceItem.clientWidth);
   experienceContainer.scrollBy({ left: -experienceItem, behavior: "smooth" });
   moveExperienceIndicatorByStep(-1);
 });
@@ -221,18 +219,14 @@ export function renderClients() {
   let isShowingUnderGraduateExperience =
     document.querySelector("#showUnderGraduateExperience").checked ||
     localStorage.getItem("underGraduate") === "true";
-  console.log(
-    "isShowingUnderGraduateExperience",
-    isShowingUnderGraduateExperience
-  );
+  
   if (isShowingUnderGraduateExperience) {
     clients = experienceJson;
   } else {
     clients = experienceJson.filter((x) => x.id >= 0);
   }
-  console.log(clients);
-  let clientsContainer = document.querySelector(".experience-container");
 
+  let clientsContainer = document.querySelector(".experience-container");
   let indicatorContent = "";
   let clientsContent = "";
   for (let i = 0; i < clients.length; i++) {

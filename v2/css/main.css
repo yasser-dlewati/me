@@ -526,6 +526,10 @@ i.scroll-horizontly {
     color: var(--text-medium-color);
 }
 
+div:has(i.scroll-horizontly) {
+    align-content: center;
+}
+
 i.scroll-horizontly:Hover {
     opacity: 1;
 }
@@ -723,6 +727,10 @@ footer .logo .bottom {
     section h2 {
         text-align: left;
         margin-bottom: 32px;
+    }
+
+    .experience-item {
+        flex: 0 0 100%;
     }
 
     section#contact .col-md-8{
