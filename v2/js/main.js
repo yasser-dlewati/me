@@ -112,7 +112,6 @@ $(document).ready(function () {
     ) {
       $(".settings-container").removeClass("active");
       setTimeout(() => {
-        console.log("close settings");
         $(".navigation > *").css("filter", "");
         $(".settings-container").css("box-shadow", "none");
       }, 500);
@@ -120,7 +119,6 @@ $(document).ready(function () {
   });
   
   $(".menu-icon").click(function () {
-    console.log("show menu");
     if (!document.querySelector(".navigation").classList.contains("active")) {
       $(".navigation").addClass("active");
       $("section, footer").css("filter", "blur(8px)");
@@ -131,7 +129,6 @@ $(document).ready(function () {
   });
 
   $(".settings").click(() => {
-    console.log("this is coming soon");
     $(".settings-container").addClass("active");
     $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
     $(".settings-container").css("box-shadow", "var(--menu-box-shadow)");

@@ -293,6 +293,7 @@ function showClientDetails() {
         </div>
       </div>`;
     document.querySelector(".experience-details").innerHTML = html;
+    document.querySelector('body').style.overflowY = 'hidden';
   }
 }
 
@@ -310,5 +311,7 @@ document
       });
       document.querySelector(".experience-details-container").style.boxShadow =
         "none";
-    }
+      }
+
+    document.querySelector('body').style.removeProperty("overflow-y");
   });
