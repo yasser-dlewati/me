@@ -21,12 +21,12 @@
     --font-weight-light: 300;
 
     --h1-font-size: 200px;
-    --h2-font-size: 5vw;
-    --h3-font-size: 4vw;
+    --h2-font-size: max(44px, 4.5vw);
+    --h3-font-size: 4.5vw;
     --h4-font-size: 3vw;
-    --h5-font-size: 32px;
+    --h5-font-size: min(32px, 4.5vw);
     --h6-font-size: 24px;
-    --base-font-size: 16px;
+    --base-font-size: min(3vw, 16px);
     --button-font-size: 20px;
 
     --border-radius-circle: 50%;
@@ -138,13 +138,10 @@ section:first-of-type {
 
 section:nth-child(odd) {
     background-color: var(--bg-light-color);
-
 }
 
 a {
     text-decoration: none;
-    transition: all 0.4s linear;
-    color: var(--text-medium-color);
 }
 
 a:hover {
@@ -592,7 +589,7 @@ i.scroll-horizontly:Hover {
 }
 
 .card-header:not([class*="collapsed"]):hover {
-    background-color: var(--bg-dark-color);
+    background-color: var(--bg-light-color);
     color: var(--text-dark-color);
 }
 
@@ -619,14 +616,10 @@ i.scroll-horizontly:Hover {
     font-size: var(--h5-font-size);
     text-transform: capitalize;
     background-color: var(--bg-light-color);
-    /* border-bottom: none; */
-}
-
-.service:hover {
-    color: var(--text-medium-color) !important;
 }
 
 .collapse {
+    border:none;
     border-bottom: 1px solid #ccc;
 }
 
@@ -644,15 +637,13 @@ i.scroll-horizontly:Hover {
     margin-left: 16px;
 }
 
-.tooltip {
-    display: inline;
+.copy-tooltip {
+    display: none;
     border-radius: var(--border-radius-small);
     background-color: var(--text-dark-color);
     color: var(--text-light-color);
     padding: 16px;
-    opacity: 0;
     z-index: 10;
-    transition: opacity 0.3s;
 }
 
 /*---------------------------------------
@@ -727,5 +718,14 @@ footer .logo .bottom {
 @media (max-width: 600px) {
     .screen-indicator li {
       display: none;
+    }
+
+    section h2 {
+        text-align: left;
+        margin-bottom: 32px;
+    }
+
+    section#contact .col-md-8{
+        text-align: center;
     }
   }

@@ -185,11 +185,11 @@ $(".copy").on("click", function (e) {
   e.preventDefault();
   const email = $(".email h5").text().trim();
   navigator.clipboard.writeText(email).then(() => {
-    const $tooltip = $(this).find(".tooltip");
-    $tooltip.css("opacity", 1);
+    const $tooltip = $(this).find(".copy-tooltip");
+    $tooltip.show()
 
     setTimeout(() => {
-      $tooltip.css("opacity", 0);
+      $tooltip.hide()
     }, 1500);
   });
 });
