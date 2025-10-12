@@ -408,7 +408,7 @@ ul.screen-indicator {
 .scroll {
     position: absolute;
     bottom: 2%;
-    right: 50%;
+    right: calc(50% - 16px);
     font-size: 32px;
 }
 
