@@ -5,11 +5,12 @@
     --bg-dark-color: hsl(0, 0%, 100%);
     --bg-color: hsl(0, 0%, 95%);
     --bg-light-color: hsl(0, 0%, 90%);
-    --overlay-color: hsla(0, 0%, 90%, 0.5);
 
-    --text-dark-color: hsl(0, 0%, 7%);
-    --text-medium-color: hsl(0, 0%, 20%);
-    --text-light-color: hsl(0, 0%, 80%);
+    --text-darkest-color: hsl(0, 0%, 0%);
+    --text-dark-color: hsl(0, 0%, 15%);
+    --text-medium-color: hsl(0, 0%, 30%);
+    --text-light-color: hsl(0, 0%, 90%);
+    --text-lightest-color: hsl(0, 0%, 100%);
     --black-color: hsl(0, 0%, 0%);
     --white-color: hsl(0, 0%, 100%);
 
@@ -29,9 +30,12 @@
     --base-font-size: min(3vw, 16px);
     --button-font-size: 20px;
 
+    --h2-font-color: var(--text-dark-color);
+
     --border-radius-circle: 50%;
     --border-radius-large: 32px;
     --border-radius-small: 16px;
+    --border-radius-tiny: 8px;
 
     --section-box-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
     --menu-box-shadow: -4px 0px 8px rgba(0, 0, 0, 1);
@@ -43,12 +47,11 @@
     --bg-color: hsl(0, 0%, 34%);
     --overlay-color: hsla(0, 0%, 10%, 0.5);
 
-    --text-dark-color: hsl(0, 0%, 100%);
+    --text-darkest-color: hsl(0, 0%, 100%);
+    --text-dark-color: hsl(0, 0%, 85%);
     --text-medium-color: hsl(0, 0%, 60%);
     --text-light-color: hsl(0, 0%, 20%);
-
-    /* --section-box-shadow: none; */
-    /* --menu-box-shadow: none; */
+    --text-lightest-color: hsl(0, 0%, 0%);
 }
 
 /*---------------------------------------
@@ -57,18 +60,22 @@ TYPOGRAPHY
 body {
     font-family: var(--base-font-family);
     overflow-x: hidden;
-
-    /* background: #121212 !important; */
 }
 
 h1,
 h2,
 h3,
-h4,
+h4{
+    color: var(--text-darkest-color);
+}
+
 h5,
-h6,
-p {
+h6{
     color: var(--text-dark-color);
+}
+
+p {
+    color: var(--text-medium-color);
 }
 
 h1,
@@ -296,7 +303,7 @@ ul.screen-indicator {
     margin: auto;
 }
 
-.logo h1{
+.logo h1 {
     font-size: clamp(80px, 10vw, 200px);
     padding: 40px 0;
     margin-bottom: 0;
@@ -519,19 +526,24 @@ img.side {
     display: none;
 }
 
-i.scroll-horizontly {
-    font-size: 40px;
+.scroll-horizontally {
+    font-size: 24px;
     z-index: 2;
-    opacity: 0.5;
-    color: var(--text-medium-color);
+    color: var(--text-light-color);
+    display: flex;
+    justify-content: center; /* centers horizontally */
+    align-items: center;     /* centers vertically */
+    background-color: var(--text-dark-color);
+    border-radius: var(--border-radius-tiny);
+    padding:12px 16px;
 }
 
-div:has(i.scroll-horizontly) {
+.scroll-horizontally i{
+    color: var(--text-light-color);
+}
+
+div:has(.scroll-horizontally) {
     align-content: center;
-}
-
-i.scroll-horizontly:Hover {
-    opacity: 1;
 }
 
 .experience-indicator {
@@ -568,7 +580,6 @@ i.scroll-horizontly:Hover {
 .button {
     padding: 16px 32px;
     border-radius: var(--border-radius-small);
-    background-color: transparent;
     border: 4px solid var(--text-dark-color);
     color: var(--text-dark-color);
     display: inline-block;
@@ -576,11 +587,15 @@ i.scroll-horizontly:Hover {
     font-size: var(--button-font-size);
     cursor: pointer;
     margin-bottom: 16px;
+    min-width: 272px;
 }
 
 .button.primary {
-    background-color: var(--text-dark-color);
-    color: var(--text-light-color);
+    position: relative;
+    background-color: var(--text-darkest-color);
+    border-color:var(--text-darkest-color);
+    color: var(--text-lightest-color);
+    z-index: 2;
 }
 
 /*---------------------------------------
@@ -623,7 +638,7 @@ i.scroll-horizontly:Hover {
 }
 
 .collapse {
-    border:none;
+    border: none;
     border-bottom: 1px solid #ccc;
 }
 
@@ -654,23 +669,6 @@ i.scroll-horizontly:Hover {
 FOOTER              
  -----------------------------------------*/
 
-.social-links {
-    margin: 4rem 0 1rem 0;
-    text-align: center;
-}
-
-.social-links a {
-    color: var(--text-dark-color);
-    display: inline-block;
-    list-style: none;
-    font-size: 3rem;
-    margin: 0 10px;
-}
-
-.social-links a:hover {
-    color: var(--text-medium-color);
-}
-
 footer {
     background-color: var(--bg-light-color);
     padding: 1rem;
@@ -686,7 +684,6 @@ footer {
 footer .logo {
     position: absolute;
     width: 100px;
-    font-weight: bold;
     text-align: center;
     margin: auto;
     font-family: barton;
@@ -695,21 +692,32 @@ footer .logo {
 }
 
 footer .logo .top {
-    font-size: 24px;
+    border: 4px solid var(--black-color);
+    border-bottom: none;
     padding: 8px 0;
     border-radius: var(--border-radius-small) var(--border-radius-small) 0 0;
     color: var(--white-color);
-    border: 4px solid var(--black-color);
-    border-bottom: none;
 }
 
 footer .logo .bottom {
     border: 4px solid var(--black-color);
     border-top: none;
-    font-size: 24px;
     padding: 8px 0;
     border-radius: 0 0 var(--border-radius-small) var(--border-radius-small);
     color: var(--black-color);
+}
+
+footer .social-links {
+    margin: 4rem 0 1rem 0;
+    text-align: center;
+}
+
+footer .social-links a {
+    color: var(--text-dark-color);
+    display: inline-block;
+    list-style: none;
+    font-size: 3rem;
+    margin: 0 10px;
 }
 
 .calendly-overlay .calendly-popup {
@@ -719,28 +727,40 @@ footer .logo .bottom {
     max-height: 100%§ !important;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
     .screen-indicator li {
-      display: none;
+        display: none;
     }
 
     section h2 {
-        text-align: left;
-        margin-bottom: 32px;
+        text-align: center;
+        margin-bottom: 48px;
+    }
+
+    section#about{
+        padding: 0 16px;
+    }
+
+    section#about img.side {
+       height: 42vh;
+    }
+
+    section#about div.buttons {
+        text-align: center;
     }
 
     .experience-item {
         flex: 0 0 100%;
     }
 
-    section#contact .col-md-8{
+    section#contact .col-md-8 {
         text-align: center;
     }
 
     .navigation.active,
     .experience-details-container.active {
-    transform: translateX(0%);
-    transition: transform 0.5s ease-in; 
+        transform: translateX(0%);
+        transition: transform 0.5s ease-in;
     }
 
     .navigation .links {
@@ -757,7 +777,7 @@ footer .logo .bottom {
         margin: auto;
     }
 
-    .setting-row{
+    .setting-row {
         max-width: 100%;
     }
 
@@ -771,4 +791,19 @@ footer .logo .bottom {
     .experience-details {
         max-width: 100%;
     }
-  }
+
+    footer{
+        margin-top: -152px;
+    }
+
+    footer .logo {
+        width: 88px;
+        font-size: 20px;
+        top: -48px;
+        right: calc(50% - 44px);
+    }
+
+    footer .social-links a {
+        font-size: 2.5rem;
+    }
+}

@@ -155,8 +155,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setNavigationButtonsVisibility();
 });
 
-const nextButton = document.querySelector(".scroll-horizontly.next");
-const prevButton = document.querySelector(".scroll-horizontly.prev");
+const nextButton = document.querySelector(".scroll-horizontally.next");
+const prevButton = document.querySelector(".scroll-horizontally.prev");
 setTimeout(() => {
   experienceItem = experienceContainer.children[0].clientWidth;
 }, 100);
