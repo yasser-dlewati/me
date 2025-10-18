@@ -1,6 +1,6 @@
 "use strict";
 // main.js
-import { renderClients } from './clients.js';
+import { renderClients } from "./clients.js";
 
 const setSectionsStylesForScrolling = () => {
   $("section").each(function (index) {
@@ -63,9 +63,27 @@ function setScreenIndicatorAccordingToScroll() {
   }
 }
 
+Element.prototype.hideForInSeconds = function(seconds) {
+  this.style.display = 'none';
+  setTimeout(() => {
+    this.style.display = '';
+  }, seconds * 1000);
+};
+
+Element.prototype.addBouncyAnimationAfterInSeconds = function(seconds) {
+  setTimeout(() => {
+    console.log('Adding bouncy class to', this);
+    this.classList.add('bouncy');
+  }, seconds * 1000);
+};
+
+const topScrollDiv = document.querySelector("#top .scroll");
+const aboutSection = document.querySelector("section#about");
+const menuIcon = document.querySelector(".menu-icon");
 $(document).ready(function () {
   readSavedSettings();
-
+  topScrollDiv.hideForInSeconds(1.5);
+  aboutSection.addBouncyAnimationAfterInSeconds(1.5);
   setSectionsStylesForScrolling();
   window.scrollTo(0, 0);
 
@@ -98,12 +116,12 @@ $(document).ready(function () {
       setTimeout(() => {
         $("section, footer").css("filter", "");
         $(".screen-indicator").removeClass("show-nav");
-        $(".navigation").removeClass("active"); 
+        $(".navigation").removeClass("active");
         $(".navigation").css("box-shadow", "none");
       }, 500);
     }
     $(".content").css("overflow", "");
-    document.querySelector('body').style.removeProperty("overflow-y");
+    document.querySelector("body").style.removeProperty("overflow-y");
   });
 
   $(".settings-container .close").click(function () {
@@ -117,13 +135,13 @@ $(document).ready(function () {
       }, 500);
     }
   });
-  
+
   $(".menu-icon").click(function () {
     if (!document.querySelector(".navigation").classList.contains("active")) {
       $(".navigation").addClass("active");
       $("section, footer").css("filter", "blur(8px)");
       $(".navigation").css("box-shadow", "var(--menu-box-shadow)");
-      document.querySelector('body').style.overflowY = 'hidden';
+      document.querySelector("body").style.overflowY = "hidden";
       document.querySelector("body").style.background = "var(--bg-dark-color)";
     }
   });
@@ -183,10 +201,10 @@ $(".copy").on("click", function (e) {
   const email = $(".email h5").text().trim();
   navigator.clipboard.writeText(email).then(() => {
     const $tooltip = $(this).find(".copy-tooltip");
-    $tooltip.show()
+    $tooltip.show();
 
     setTimeout(() => {
-      $tooltip.hide()
+      $tooltip.hide();
     }, 1500);
   });
 });
@@ -221,22 +239,46 @@ darkModeToggle.addEventListener("change", function () {
 var saveSettingsCheckbox = document.querySelector("#saveSettingsLocally");
 saveSettingsCheckbox.addEventListener("change", function () {
   if (document.querySelector("#saveSettingsLocally").checked) {
-    if(this.checked)
-    localStorage.setItem("theme", document.querySelector("#darkModeSwitch").checked ? "dark" : "light");
-    localStorage.setItem("underGraduate", document.querySelector("#showUnderGraduateExperience").checked);
+    if (this.checked)
+      localStorage.setItem(
+        "theme",
+        document.querySelector("#darkModeSwitch").checked ? "dark" : "light"
+      );
+    localStorage.setItem(
+      "underGraduate",
+      document.querySelector("#showUnderGraduateExperience").checked
+    );
   } else {
     localStorage.removeItem("theme");
     localStorage.removeItem("underGraduate");
   }
 });
 
-var showUnderGraduateExperienceToggle = document.querySelector("#showUnderGraduateExperience");
+var showUnderGraduateExperienceToggle = document.querySelector(
+  "#showUnderGraduateExperience"
+);
 showUnderGraduateExperienceToggle.addEventListener("change", function () {
   if (saveSettingsCheckbox.checked) {
     localStorage.setItem("underGraduate", this.checked);
-  }else{
+  } else {
     localStorage.removeItem("underGraduate");
   }
 
   renderClients();
+});
+
+topScrollDiv.addEventListener("click", function () {
+  this.classList.remove("bouncy");
+  const currentSection = this.parentElement;
+  const nextSection = currentSection.nextElementSibling;
+  window.scrollTo({
+    top: nextSection.offsetTop,
+    behavior: "smooth",
+  });
+});
+
+$(window).on("scroll", function () {
+  topScrollDiv.classList.remove("bouncy");
+  aboutSection.classList.remove("bouncy");
+  menuIcon.style.removeProperty("display");
 });
