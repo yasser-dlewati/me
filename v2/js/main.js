@@ -17,6 +17,7 @@ const renderNavigationLinks = () => {
 
 const renderScreenIndicator = () => {
   var content = getSectionsCount();
+  document.querySelector(".screen-indicator").style.display = "none";
   $(".screen-indicator").html(content);
 };
 
@@ -267,6 +268,8 @@ showUnderGraduateExperienceToggle.addEventListener("change", function () {
   renderClients();
 });
 
+const screenIndicator = document.querySelector(".screen-indicator");
+
 topScrollDiv.addEventListener("click", function () {
   this.classList.remove("bouncy");
   const currentSection = this.parentElement;
@@ -281,6 +284,8 @@ $(window).on("scroll", function () {
   topScrollDiv.classList.remove("bouncy");
   aboutSection.classList.remove("bouncy");
   menuIcon.style.removeProperty("display");
+  console.log("scroll statrted");
+  screenIndicator.style.removeProperty("display");
 });
 
 const feedbackIcon = document.getElementById('toggleIcon');
