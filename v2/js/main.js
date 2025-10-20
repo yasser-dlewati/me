@@ -283,18 +283,21 @@ $(window).on("scroll", function () {
   menuIcon.style.removeProperty("display");
 });
 
-const icon = document.getElementById('toggleIcon');
+const feedbackIcon = document.getElementById('toggleIcon');
 const feedbackForm = document.querySelector('.feedback-form');
-const submitBtn = document.getElementById('submitBtn');
-const messageInput = document.getElementById('messageInput');
-
-icon.addEventListener('click', () => {
+const submitFeedbackButton = document.querySelector('#btnSubmitFeedback');
+const feedbackMessage = document.getElementById('messageInput');
+const closeFeedbackFormButton = document.querySelector('.feedback-form .close');
+feedbackIcon.addEventListener('click', () => {
   console.log('showing feedback form');
   feedbackForm.classList.add('active');
 });
 
-submitBtn.addEventListener('click', () => {
+submitFeedbackButton.addEventListener('click', () => {
   alert('You submitted: ' + messageInput.value);
-  messageInput.value = '';
-  formContainer.style.display = 'none';
+  feedbackMessage.value = '';
+});
+
+closeFeedbackFormButton.addEventListener('click', () => {
+  feedbackForm.classList.remove('active');
 });
