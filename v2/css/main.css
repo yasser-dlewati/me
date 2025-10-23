@@ -206,7 +206,7 @@ input[type="checkbox"].form-check-input {
 .navigation,
 .experience-details-container {
     transform: translateX(100%);
-    transition: transform 0.5s ease-out;
+    transition: transform 0.5s ease-in-out;
     background-color: var(--bg-dark-color);
     width: 100%;
     height: 100vh;
@@ -217,7 +217,6 @@ input[type="checkbox"].form-check-input {
 .navigation.active,
 .experience-details-container.active {
     transform: translateX(50%);
-    transition: transform 0.5s ease-in;
 }
 
 .navigation .links {
@@ -329,6 +328,7 @@ ul.screen-indicator {
     z-index: 10;
     background-color: var(--bg-dark-color);
     padding: 32px;
+    transition: bottom 0.4s ease-in-out;
   }
 
   .feedback-form .close{
@@ -360,7 +360,6 @@ ul.screen-indicator {
 
   .feedback-form.active{
     bottom: 0;
-    transition: transform 0.5s ease-in;
   }
 
 /*----------------------------------------
@@ -813,7 +812,6 @@ footer .social-links a {
     .navigation.active,
     .experience-details-container.active {
         transform: translateX(0%);
-        transition: transform 0.5s ease-in;
     }
 
     .navigation .links {
