@@ -121,7 +121,7 @@ $(document).ready(function () {
         $(".navigation").css("box-shadow", "none");
       }, 500);
     }
-    $(".content").css("overflow", "");
+
     document.querySelector("body").style.removeProperty("overflow-y");
   });
 
@@ -143,7 +143,6 @@ $(document).ready(function () {
       $("section, footer").css("filter", "blur(8px)");
       $(".navigation").css("box-shadow", "var(--menu-box-shadow)");
       document.querySelector("body").style.overflowY = "hidden";
-      document.querySelector("body").style.background = "var(--bg-dark-color)";
     }
   });
 
@@ -151,7 +150,6 @@ $(document).ready(function () {
     $(".settings-container").addClass("active");
     $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
     $(".settings-container").css("box-shadow", "var(--menu-box-shadow)");
-    $(".content").css("overflow", "hidden");
   });
 
   const messages = [];
@@ -180,7 +178,6 @@ $(document).ready(function () {
 
   $(".links a").click(function (e) {
     e.preventDefault();
-    $(".content").css("overflow", "hidden");
     const targetId = $(this).attr("href");
     const target = $(targetId);
     $("html, body").animate(
@@ -191,10 +188,6 @@ $(document).ready(function () {
     ); // 600 =
     $(".navigation .close").click();
   });
-});
-
-$(document).on("wheel", function (e) {
-  $(".content").css("overflow", "");
 });
 
 $(".copy").on("click", function (e) {

@@ -161,10 +161,8 @@ function showClientDetails() {
   let isDarkMode =
     document.body.attributes["data-theme"] &&
     document.body.attributes["data-theme"].value === "dark";
-  if (
-    document.querySelector(".content").style.marginLeft === "0px" ||
-    document.querySelector(".content").style.marginLeft === ""
-  ) {
+
+  {
     document
       .querySelector(".experience-details-container")
       .classList.add("active");
