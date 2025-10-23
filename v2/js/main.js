@@ -6,7 +6,7 @@ const setSectionsStylesForScrolling = () => {
   $("section").each(function (index) {
     $(this).css("z-index", index + 1);
     $(this).css("top", `${index * 8}px`);
-    $(this).height(`calc(100vh - ${index * 8}px)`);
+    $(this).height(`calc(100dvh - ${index * 8}px)`);
   });
 };
 
