@@ -61,6 +61,7 @@ TYPOGRAPHY
 body {
     font-family: var(--base-font-family);
     overflow-x: hidden;
+    background: var(--bg-dark-color);
 }
 
 h1,
@@ -263,9 +264,8 @@ input[type="checkbox"].form-check-input {
 .settings {
     display: block;
     position: absolute;
-    right: 32px;
+    right: calc(50% + 32px);
     bottom: 32px;
-    /* padding: 12px 20px; */
 }
 
 ul.screen-indicator {
@@ -327,7 +327,7 @@ ul.screen-indicator {
     border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
     box-shadow: var(--section-box-shadow);
     z-index: 10;
-    background-color: var(--bg-color);
+    background-color: var(--bg-dark-color);
     padding: 32px;
   }
 
