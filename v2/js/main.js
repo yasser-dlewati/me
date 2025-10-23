@@ -1,6 +1,6 @@
 "use strict";
 // main.js
-import { renderClients } from "./clients.js";
+import { renderClients, setBodyScroll } from "./common.js";
 
 const setSectionsStylesForScrolling = () => {
   $("section").each(function (index) {
@@ -294,8 +294,8 @@ const submitFeedbackButton = document.querySelector('#btnSubmitFeedback');
 const feedbackMessage = document.getElementById('messageInput');
 const closeFeedbackFormButton = document.querySelector('.feedback-form .close');
 feedbackIcon.addEventListener('click', () => {
-  console.log('showing feedback form');
   feedbackForm.classList.add('active');
+  setBodyScroll(false);
 });
 
 submitFeedbackButton.addEventListener('click', () => {
@@ -305,4 +305,5 @@ submitFeedbackButton.addEventListener('click', () => {
 
 closeFeedbackFormButton.addEventListener('click', () => {
   feedbackForm.classList.remove('active');
+  setBodyScroll(true);
 });
