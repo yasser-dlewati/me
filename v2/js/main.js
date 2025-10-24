@@ -291,11 +291,6 @@ feedbackIcon.addEventListener('click', () => {
   setBodyScroll(false);
 });
 
-submitFeedbackButton.addEventListener('click', () => {
-  alert('You submitted: ' + messageInput.value);
-  feedbackMessage.value = '';
-});
-
 closeFeedbackFormButton.addEventListener('click', () => {
   feedbackForm.classList.remove('active');
   setBodyScroll(true);
