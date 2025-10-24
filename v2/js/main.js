@@ -1,5 +1,6 @@
 "use strict";
 import { renderClients, setBodyScroll } from "./common.js";
+import { feedbackIcon } from "./feedback.js";
 
 const setSectionsStylesForScrolling = () => {
   $("section").each(function (index) {
@@ -114,34 +115,30 @@ $(document).ready(function () {
   $(".navigation .close").click(function () {
     if (document.querySelector(".navigation").classList.contains("active")) {
       setTimeout(() => {
-        $("section, footer").css("filter", "");
-        $(".screen-indicator").removeClass("show-nav");
+        setBodyScroll(true);
         $(".navigation").removeClass("active");
         $(".navigation").css("box-shadow", "none");
+        document.querySelector(".feedback-icon").classList.remove('navigation-active');
       }, 500);
     }
-
-    document.querySelector("body").style.removeProperty("overflow-y");
   });
 
   $(".settings-container .close").click(function () {
-    if (
-      document.querySelector(".settings-container").classList.contains("active")
-    ) {
       $(".settings-container").removeClass("active");
       setTimeout(() => {
         $(".navigation > *").css("filter", "");
         $(".settings-container").css("box-shadow", "none");
+        document.querySelector(".feedback-icon").classList.add('navigation-active');
       }, 500);
-    }
+    
   });
 
-  $(".menu-icon").click(function () {
+  menuIcon.addEventListener("click", function () {
     if (!document.querySelector(".navigation").classList.contains("active")) {
-      $(".navigation").addClass("active");
-      $("section, footer").css("filter", "blur(8px)");
-      $(".navigation").css("box-shadow", "var(--menu-box-shadow)");
-      document.querySelector("body").style.overflowY = "hidden";
+      document.querySelector(".navigation").classList.add("active");
+      setBodyScroll(false);
+      document.querySelector(".navigation").style.boxShadow = "var(--menu-box-shadow)";
+      feedbackIcon.classList.add('navigation-active')
     }
   });
 
@@ -149,6 +146,7 @@ $(document).ready(function () {
     $(".settings-container").addClass("active");
     $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
     $(".settings-container").css("box-shadow", "var(--menu-box-shadow)");
+    document.querySelector(".feedback-icon").classList.remove('navigation-active');
   });
 
   const messages = [];
@@ -278,4 +276,5 @@ $(window).on("scroll", function () {
   menuIcon.style.removeProperty("display");
   console.log("scroll statrted");
   screenIndicator.style.removeProperty("display");
+  feedbackIcon.style.removeProperty("display");
 });

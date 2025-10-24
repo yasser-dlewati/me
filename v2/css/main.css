@@ -29,7 +29,7 @@
     --h6-font-size: 24px;
     --base-font-size: min(3vw, 16px);
     --button-font-size: 20px;
-    --small-font-size:12px;
+    --small-font-size: 12px;
 
     --h2-font-color: var(--text-dark-color);
 
@@ -82,7 +82,7 @@ p {
 
 h1,
 h2,
-h4{
+h4 {
     text-transform: uppercase;
 }
 
@@ -125,7 +125,7 @@ a {
     color: var(--text-dark-color);
 }
 
-small{
+small {
     font-size: var(--small-font-size);
 }
 
@@ -178,7 +178,7 @@ a:hover {
     height: 100dvh;
     position: fixed;
     border-radius: var(--border-radius-large) 0 0 var(--border-radius-large);
-    z-index: 11;
+    z-index: 8;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -211,7 +211,7 @@ input[type="checkbox"].form-check-input {
     width: 100%;
     height: 100dvh;
     position: fixed;
-    z-index: 10;
+    z-index: 7;
 }
 
 .navigation.active,
@@ -253,7 +253,7 @@ input[type="checkbox"].form-check-input {
 
 .navigation .close,
 .experience-details-container .close,
-.settings-container .close{
+.settings-container .close {
     position: absolute;
     top: 32px;
     right: calc(50% + 32px);
@@ -292,33 +292,58 @@ ul.screen-indicator {
 
 .feedback-icon {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    font-family: sans-serif;
+    bottom: 26px;
+    right: 32px;
     z-index: 10;
-  }
-  
-  .icon {
-    background-color: #0078ff;
-    color: white;
+}
+
+.feedback-icon.navigation-active {
+    right: 80px;
+}
+
+.feedback-icon .circle {
+    background-color: var(--bg-color);
+    color: var(--text-dark-color);
     border-radius: 50%;
-    width: 55px;
-    height: 55px;
+    width: 64px;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 24px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease;
-  }
-  
-  .icon:hover {
+    font-size: 32px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease,
+        right 0.3s ease;
+}
+
+.feedback-icon .circle:hover {
     transform: scale(1.1);
-  }
-  
-  .feedback-form,
-  .notification {
+}
+
+.feedback-icon .circle.pulse {
+    animation: pulse 2s infinite
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 var(--bg-dark-color);
+    }
+
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 16px var(--bg-light-color);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 var(--bg-dark-color);
+    }
+}
+
+.feedback-form,
+.notification {
     position: fixed;
     bottom: -100%;
     left: 0;
@@ -331,48 +356,48 @@ ul.screen-indicator {
     transition: bottom 0.4s ease-in-out;
 }
 
-.notification{
+.notification {
     border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
     background-color: var(--bg-light-color);
     font-size: 20px;
     text-align: center;
-  }
+}
 
-  .feedback-form .close,
-  .notification .close{
+.feedback-form .close,
+.notification .close {
     position: absolute;
     top: 32px;
     right: 32px;
     font-size: 32px;
-  }
+}
 
-  .feedback-form .form-control{
+.feedback-form .form-control {
     width: 100%;
     border-radius: var(--border-radius-small);
     border: 2px solid var(--text-lights-color);
     padding: 16px;
     font-size: var(--base-font-size);
     resize: none;
-  }
+}
 
-  .feedback-form h4{
+.feedback-form h4 {
     text-align: right;
-  }
+}
 
-  .feedback-form .button.primary{
+.feedback-form .button.primary {
     width: 100%;
     min-width: auto;
     border: none;
-    margin-bottom: 0 ;
-  }
+    margin-bottom: 0;
+}
 
-  .feedback-form.active{
+.feedback-form.active {
     bottom: 0;
-  }
+}
 
-  .notification.active{
+.notification.active {
     bottom: -8px;
-  }
+}
 
 /*----------------------------------------
        LOGO
@@ -407,8 +432,6 @@ ul.screen-indicator {
     position: relative;
     display: inline-block;
     color: var(--black-color);
-
-
     z-index: 2;
 }
 
@@ -432,20 +455,20 @@ ul.screen-indicator {
     opacity: 0;
     animation: fadeIn 1.5s ease-out forwards;
 }
-  
-  @keyframes fadeIn {
+
+@keyframes fadeIn {
     to {
-      opacity: 1;
+        opacity: 1;
     }
-  }
-  
+}
+
 
 .menu-icon {
     position: fixed;
     top: 32px;
     right: 32px;
     font-size: 32px;
-    z-index: 9;
+    z-index: 7;
 }
 
 .scroll {
@@ -725,7 +748,7 @@ div:has(.scroll-horizontally) {
     background-color: var(--text-dark-color);
     color: var(--text-light-color);
     padding: 16px;
-    z-index: 10;
+    z-index: 6;
 }
 
 /*---------------------------------------
@@ -870,12 +893,12 @@ footer .social-links a {
         font-size: 2.5rem;
     }
 
-    .feedback-form .button.primary{
+    .feedback-form .button.primary {
         padding: 16px;
-      }
+    }
 
-      .feedback-form h4{
-    margin-bottom: 32px;
+    .feedback-form h4 {
+        margin-bottom: 32px;
         text-align: center;
-      }
+    }
 }

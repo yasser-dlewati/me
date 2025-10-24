@@ -1,11 +1,11 @@
 import { setBodyScroll } from "./common.js";
 
 const txtFeedback = document.querySelector("#txtFeedback");
-const btnSubmitFeedback = document.querySelector("#btnSubmitFeedback");
 const feedbackForm = document.querySelector(".feedback-form");
-const feedbackIcon = document.getElementById("toggleIcon");
+export const feedbackIcon = document.querySelector(".feedback-icon");
 
-feedbackIcon.addEventListener("click", () => {
+feedbackIcon.addEventListener("click", function() {
+  this.children[0].classList.remove("pulse");
   feedbackForm.classList.add("active");
   setBodyScroll(false);
 });
