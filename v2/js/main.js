@@ -1,5 +1,4 @@
 "use strict";
-// main.js
 import { renderClients, setBodyScroll } from "./common.js";
 
 const setSectionsStylesForScrolling = () => {
@@ -279,19 +278,4 @@ $(window).on("scroll", function () {
   menuIcon.style.removeProperty("display");
   console.log("scroll statrted");
   screenIndicator.style.removeProperty("display");
-});
-
-const feedbackIcon = document.getElementById('toggleIcon');
-const feedbackForm = document.querySelector('.feedback-form');
-const submitFeedbackButton = document.querySelector('#btnSubmitFeedback');
-const feedbackMessage = document.getElementById('messageInput');
-const closeFeedbackFormButton = document.querySelector('.feedback-form .close');
-feedbackIcon.addEventListener('click', () => {
-  feedbackForm.classList.add('active');
-  setBodyScroll(false);
-});
-
-closeFeedbackFormButton.addEventListener('click', () => {
-  feedbackForm.classList.remove('active');
-  setBodyScroll(true);
 });

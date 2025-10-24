@@ -317,21 +317,29 @@ ul.screen-indicator {
     transform: scale(1.1);
   }
   
-  .feedback-form{
+  .feedback-form,
+  .notification {
     position: fixed;
     bottom: -100%;
     left: 0;
     width: 100%;
     height: 30dvh;
-    border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
     box-shadow: var(--section-box-shadow);
-    z-index: 10;
     background-color: var(--bg-dark-color);
+    z-index: 10;
     padding: 32px;
     transition: bottom 0.4s ease-in-out;
+}
+
+.notification{
+    border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
+    background-color: var(--bg-light-color);
+    font-size: 20px;
+    text-align: center;
   }
 
-  .feedback-form .close{
+  .feedback-form .close,
+  .notification .close{
     position: absolute;
     top: 32px;
     right: 32px;
@@ -360,6 +368,10 @@ ul.screen-indicator {
 
   .feedback-form.active{
     bottom: 0;
+  }
+
+  .notification.active{
+    bottom: -8px;
   }
 
 /*----------------------------------------

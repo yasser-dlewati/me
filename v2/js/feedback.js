@@ -1,30 +1,47 @@
-const txtFeedback = document.querySelector('#txtFeedback');
-const btnSubmitFeedback = document.querySelector('#btnSubmitFeedback');
+import { setBodyScroll } from "./common.js";
 
-(function() {
-    emailjs.init("ONBs1kJm-53DoguLS"); // from EmailJS dashboard
-  })();
+const txtFeedback = document.querySelector("#txtFeedback");
+const btnSubmitFeedback = document.querySelector("#btnSubmitFeedback");
+const feedbackForm = document.querySelector(".feedback-form");
+const feedbackIcon = document.getElementById("toggleIcon");
 
-  // Handle the form submission
-  document.addEventListener("DOMContentLoaded", function() {
-    const form = document.querySelector("form.feedback-form");
-  
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
-  
-      // Option 1: Send by passing template params manually
-    emailjs.send("service_6gtyqvg", "template_olpb3hy", {
+feedbackIcon.addEventListener("click", () => {
+  feedbackForm.classList.add("active");
+  setBodyScroll(false);
+});
+
+const closeFeedbackFormButton = document.querySelector(".feedback-form .close");
+closeFeedbackFormButton.addEventListener("click", () => {
+  feedbackForm.classList.remove("active");
+  setBodyScroll(true);
+});
+
+(function () {
+  emailjs.init("ONBs1kJm-53DoguLS");
+})();
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector("form.feedback-form");
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    if (window.location.hostname === "localhost") {
+      document.querySelector(".notification").classList.add("active");
+      form.reset();
+
+      return;
+    }
+    // Option 1: Send by passing template params manually
+    emailjs
+      .send("service_6gtyqvg", "template_olpb3hy", {
         from_name: "feedback_form",
-      message: txtFeedback.value,
+        message: txtFeedback.value,
       })
-      .then(response => {
-        alert("✅ Email sent successfully!");
+      .then((response) => {
         form.reset();
       })
-      .catch(error => {
-        alert("❌ Failed to send: " + error.text);
+      .catch((error) => {
         console.error(error);
       });
-    });
   });
-  
+});
