@@ -107,7 +107,7 @@ const experienceJson = [
   {
     id: 5,
     company: "Timelog",
-    position: "Senior software engineer",
+    position: "Senior software engineer I",
     duration: 18,
     isCurrentCompany: true,
     description:
@@ -117,6 +117,19 @@ const experienceJson = [
     embededMapLink:
       "pb=!1m18!1m12!1m3!1d3983.75408995014!2d101.71612601147427!3d3.159395096802703!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc37d017eaaaab%3A0xd5c2bff92ec47876!2sINSCALE%20Malaysia!5e0!3m2!1sen!2smy!4v1756547062785!5m2!1sen!2smy",
   },
+  {
+    id: 6,
+    company: "Carsome",
+    position: "Senior software engineer II",
+    duration: 6,
+    isCurrentCompany: true,
+    description:
+      "Working in a fast paced environment to deliver high quality code that meets the business requirements. Collaborating with cross-functional teams to design, develop, and implement new features and functionalities.",
+    websiteUrl: "https://www.carsome.my",
+    imageSrc: "carsome.png",
+    embededMapLink:
+      "pb=!1m18!1m12!1m3!1d3983.745919023914!2d101.614575!3d3.161523399999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4f6ce7472157%3A0x740a20f1d4ecdee!2sCARSOME%20Malaysia%20HQ!5e0!3m2!1sen!2smy!4v1761457307647!5m2!1sen!2smy",
+  }
 ];
 
 const userAgent = navigator.userAgent;
