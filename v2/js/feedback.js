@@ -7,12 +7,16 @@ export const feedbackIcon = document.querySelector(".feedback-icon");
 feedbackIcon.addEventListener("click", function() {
   this.children[0].classList.remove("pulse");
   feedbackForm.classList.add("active");
+  document.querySelector('.navigation').style.filter = 'blur(8px)';
+  document.querySelector('.settings-container').style.filter = 'blur(8px)';
   setBodyScroll(false);
 });
 
 const closeFeedbackFormButton = document.querySelector(".feedback-form .close");
 closeFeedbackFormButton.addEventListener("click", () => {
   feedbackForm.classList.remove("active");
+  document.querySelector('.navigation').style.removeProperty('filter');
+  document.querySelector('.settings-container').style.removeProperty('filter');
   setBodyScroll(true);
 });
 

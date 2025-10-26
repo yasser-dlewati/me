@@ -221,7 +221,7 @@ input[type="checkbox"].form-check-input {
 
 .navigation .links {
     position: absolute;
-    top: calc(50% - 100px);
+    top: calc(50% - 152px);
     left: calc(25% - 80px);
     text-align: right;
 }
@@ -540,10 +540,6 @@ img.side {
     animation: bounce 2s;
 }
 
-.overlay button {
-    display: none;
-}
-
 @keyframes bounce {
 
     0%,
@@ -596,7 +592,7 @@ img.side {
 }
 
 .experience-container {
-    margin: 0 0 32px 32px;
+    margin-bottom: 60px;
     padding-top: 16px;
     white-space: nowrap;
     overflow: hidden;
@@ -605,6 +601,11 @@ img.side {
     /* Hide scrollbar in IE and Edge */
     scrollbar-width: none;
     /* Hide scrollbar in Firefox */
+}
+
+#clients .hint{
+    margin-bottom: 60px;
+    text-align: center !important;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -624,6 +625,15 @@ img.side {
     padding: 12px 16px;
 }
 
+.scroll-horizontally.prev{
+    float: right;
+}
+
+
+.scroll-horizontally.next{
+    float: left;
+}
+
 div:has(.scroll-horizontally) {
     align-content: center;
 }
@@ -639,7 +649,7 @@ div:has(.scroll-horizontally) {
 }
 
 .download {
-    margin-top: 80px;
+    margin-top: 60px;
     text-align: center;
     color: var(--text-medium-color);
 }
@@ -660,6 +670,7 @@ div:has(.scroll-horizontally) {
     cursor: pointer;
     margin-bottom: 16px;
     min-width: 272px;
+    text-align: center;
 }
 
 .button.primary {
@@ -836,7 +847,8 @@ footer .social-links a {
     }
 
     .navigation .links {
-        left: calc(50% - 40px);
+        top: calc(50% - 104px);
+        left: calc(50% - 64px);
         text-align: center;
     }
 
@@ -869,10 +881,10 @@ footer .social-links a {
     }
 
     footer .logo {
-        width: 88px;
-        font-size: 20px;
-        top: -48px;
-        right: calc(50% - 44px);
+        width: 76px;
+        font-size: 16px;
+        top: -44px;
+        right: calc(50% - 38px);
     }
 
     footer .social-links a {
