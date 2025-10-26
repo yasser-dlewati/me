@@ -162,7 +162,7 @@ export function renderClients() {
   }
 
   clientsContainer.innerHTML = clientsContent;
-  document.querySelector(".experience-indicator").innerHTML = indicatorContent;
+  document.querySelector(".experience.indicator").innerHTML = indicatorContent;
   const experienceItems = document.querySelectorAll(".experience-item img");
   experienceItems.forEach((item) => {
     item.addEventListener("click", showClientDetails);

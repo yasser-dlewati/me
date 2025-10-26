@@ -69,7 +69,7 @@ function moveExperienceIndicatorByStep(step) {
 }
 
 function updateExperienceIndicator() {
-  const lis = document.querySelectorAll(".experience-indicator li");
+  const lis = document.querySelectorAll(".experience.indicator li");
   lis.forEach((li, i) => {
     if (experienceIndicatorPosition.includes(i)) {
       li.classList.add("active");
@@ -82,7 +82,7 @@ function updateExperienceIndicator() {
 }
 
 function setNavigationButtonsVisibility() {
-  const lis = document.querySelectorAll(".experience-indicator li");
+  const lis = document.querySelectorAll(".experience.indicator li");
   prevButton.style.visibility = lis[0].classList.contains("active")
     ? "hidden"
     : "visible";

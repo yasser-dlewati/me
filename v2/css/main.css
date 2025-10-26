@@ -267,7 +267,7 @@ input[type="checkbox"].form-check-input {
     bottom: 32px;
 }
 
-ul.screen-indicator {
+ul.indicator {
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -276,18 +276,20 @@ ul.screen-indicator {
     right: 32px;
     top: calc(50% - 40px);
     z-index: 7;
+    align-items: center;
 }
 
-.screen-indicator li {
-    border: 2px solid var(--text-dark-color);
+.indicator li {
+    background-color: var(--text-dark-color);
     display: inline-block;
     border-radius: var(--border-radius-circle);
-    height: 12px;
-    width: 12px;
+    height: 4px;
+    width: 4px;
 }
 
-.screen-indicator li.active {
-    background-color: var(--text-dark-color);
+.indicator li.active {
+    height: 12px;
+    width: 12px;
 }
 
 .feedback-icon {
@@ -613,43 +615,27 @@ img.side {
 .scroll-horizontally {
     font-size: 24px;
     z-index: 2;
-    color: var(--text-light-color);
+    color: var(--text-lightest-color);
     display: flex;
     justify-content: center;
-    /* centers horizontally */
     align-items: center;
-    /* centers vertically */
     background-color: var(--text-dark-color);
     border-radius: var(--border-radius-tiny);
     padding: 12px 16px;
-}
-
-.scroll-horizontally i {
-    color: var(--text-light-color);
 }
 
 div:has(.scroll-horizontally) {
     align-content: center;
 }
 
-.experience-indicator {
+.experience.indicator {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
     width: auto;
-    display: block;
     margin: 16px auto;
-    text-align: center;
-}
-
-.experience-indicator li {
-    border: 2px solid var(--text-dark-color);
-    display: inline-block;
-    border-radius: var(--border-radius-circle);
-    height: 12px;
-    width: 12px;
-    margin: 0 6px;
-}
-
-.experience-indicator li.active {
-    background-color: var(--text-dark-color);
+    align-items: center;
+    justify-content: center;
 }
 
 .download {
@@ -815,7 +801,7 @@ footer .social-links a {
 }
 
 @media (max-width: 767px) {
-    .screen-indicator li {
+    .screen.indicator li {
         display: none;
     }
 

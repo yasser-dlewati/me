@@ -17,8 +17,8 @@ const renderNavigationLinks = () => {
 
 const renderScreenIndicator = () => {
   var content = getSectionsCount();
-  document.querySelector(".screen-indicator").style.display = "none";
-  $(".screen-indicator").html(content);
+  document.querySelector(".screen.indicator").style.display = "none";
+  $(".screen.indicator").html(content);
 };
 
 function getSectionsCount(withNames) {
@@ -39,10 +39,10 @@ function getSectionsCount(withNames) {
 }
 
 function setScreenIndicator(index) {
-  $(".screen-indicator li").each(function () {
+  $(".screen.indicator li").each(function () {
     $(this).removeClass("active");
   });
-  $($(".screen-indicator li")[index]).addClass("active");
+  $($(".screen.indicator li")[index]).addClass("active");
 }
 
 function setScreenIndicatorAccordingToScroll() {
@@ -258,7 +258,7 @@ showUnderGraduateExperienceToggle.addEventListener("change", function () {
   renderClients();
 });
 
-const screenIndicator = document.querySelector(".screen-indicator");
+const screenIndicator = document.querySelector("ul.screen.indicator");
 
 topScrollDiv.addEventListener("click", function () {
   this.classList.remove("bouncy");
