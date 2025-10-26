@@ -112,15 +112,18 @@ $(document).ready(function () {
   });
   setScreenIndicator(0);
 
+function closeNavigationMenu() {
+    setTimeout(() => {
+      setBodyScroll(true);
+      $(".navigation").removeClass("active");
+      $(".navigation").css("box-shadow", "none");
+      document.querySelector(".feedback-icon").classList.remove('navigation-active');
+    }, 500);
+    $(".content").css("overflow", "");
+}
+
   $(".navigation .close").click(function () {
-    if (document.querySelector(".navigation").classList.contains("active")) {
-      setTimeout(() => {
-        setBodyScroll(true);
-        $(".navigation").removeClass("active");
-        $(".navigation").css("box-shadow", "none");
-        document.querySelector(".feedback-icon").classList.remove('navigation-active');
-      }, 500);
-    }
+    closeNavigationMenu();
   });
 
   $(".settings-container .close").click(function () {
@@ -173,18 +176,15 @@ $(document).ready(function () {
     cycle();
   });
 
-  $(".links a").click(function (e) {
-    e.preventDefault();
-    const targetId = $(this).attr("href");
-    const target = $(targetId);
-    $("html, body").animate(
-      {
-        scrollTop: target.offset().top,
-      },
-      600
-    ); // 600 =
-    $(".navigation .close").click();
-  });
+  document.querySelectorAll('.links a').forEach(link => {
+    link.addEventListener('click', e => {
+      document.querySelector(".content").style.overflow = "hidden";
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      closeNavigationMenu();
+    });
+  });  
 });
 
 $(".copy").on("click", function (e) {

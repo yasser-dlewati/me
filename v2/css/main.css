@@ -145,7 +145,7 @@ section:first-of-type {
     border-radius: 0;
 }
 
-section:nth-child(odd) {
+section:nth-child(even) {
     background-color: var(--bg-light-color);
 }
 
