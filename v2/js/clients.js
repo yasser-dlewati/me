@@ -9,14 +9,23 @@ function setExperienceDuration() {
       todayDate.getFullYear() - firstWorkingDate.getFullYear();
     const monthsDifference = todayDate.getMonth() - firstWorkingDate.getMonth();
     let resultText = "";
-    if (monthsDifference < 5) {
-      resultText = "more than " + workingDurationInYears + " years";
-    } else if (monthsDifference >= 5 && monthsDifference < 6) {
-      resultText = "about " + workingDurationInYears + " years and a half";
-    } else if (monthsDifference >= 6 && monthsDifference <= 11) {
-      resultText = "more than " + workingDurationInYears + " years and a half";
+    if (workingDurationInYears >= 10) {
+      resultText = "more than a decade";
     } else {
-      resultText = "about " + (workingDurationInYears + 1) + " years";
+      if (monthsDifference < 5) {
+        resultText = "more than " + workingDurationInYears + " years";
+      } else if (monthsDifference >= 5 && monthsDifference < 6) {
+        resultText = "about " + workingDurationInYears + " years and a half";
+      } else if (monthsDifference >= 6 && monthsDifference <= 11) {
+        resultText =
+          "more than " + workingDurationInYears + " years and a half";
+      } else {
+        if (workingDurationInYears === 9) {
+          resultText = "nearly a decade";
+        } else {
+          resultText = "about " + (workingDurationInYears + 1) + " years";
+        }
+      }
     }
 
     spanExperienceDuration.innerHTML = resultText;
