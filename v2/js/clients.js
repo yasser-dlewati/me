@@ -38,14 +38,30 @@ setTimeout(() => {
   experienceItem = experienceContainer.children[0].clientWidth;
 }, 100);
 
-nextButton.addEventListener("click", () => {
+nextButton.addEventListener("click", function () {
+  if (this.disabled) {
+    return;
+  }
+
+  this.disabled = true;
   experienceContainer.scrollBy({ left: experienceItem, behavior: "smooth" });
   moveExperienceIndicatorByStep(1);
+  setTimeout(() => {
+    this.disabled = false;
+  }, 300);
 });
 
-prevButton.addEventListener("click", () => {
+prevButton.addEventListener("click", function () {
+  if (this.disabled) {
+    return;
+  }
+
+  this.disabled = true;
   experienceContainer.scrollBy({ left: -experienceItem, behavior: "smooth" });
   moveExperienceIndicatorByStep(-1);
+  setTimeout(() => {
+    this.disabled = false;
+  }, 300);
 });
 
 let experienceIndicatorPosition = isMobileDevice ? [0] : [0, 1, 2];
@@ -95,9 +111,9 @@ document
   .querySelector(".experience-details-container .close")
   .addEventListener("click", function () {
     document
-    .querySelector(".experience-details-container")
-    .classList.remove("active");
+      .querySelector(".experience-details-container")
+      .classList.remove("active");
     document.querySelector(".experience-details-container").style.boxShadow =
-    "none";
+      "none";
     setBodyScroll(true);
   });

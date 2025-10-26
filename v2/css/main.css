@@ -613,8 +613,8 @@ img.side {
 }
 
 .scroll-horizontally {
+    max-width: 60px;
     font-size: 24px;
-    z-index: 2;
     color: var(--text-lightest-color);
     display: flex;
     justify-content: center;
@@ -639,7 +639,7 @@ div:has(.scroll-horizontally) {
 }
 
 .download {
-    margin-top: 100px;
+    margin-top: 80px;
     text-align: center;
     color: var(--text-medium-color);
 }
