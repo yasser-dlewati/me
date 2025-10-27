@@ -55,6 +55,16 @@
     --text-lightest-color: hsl(0, 0%, 0%);
 }
 
+html[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
+
+html[dir="ltr"] {
+    direction: ltr;
+    text-align: left;
+}
+
 /*---------------------------------------
 TYPOGRAPHY              
 -----------------------------------------*/
@@ -404,6 +414,10 @@ ul.indicator {
 /*----------------------------------------
        LOGO
 -----------------------------------------*/
+.ignore-rtl {
+    direction: ltr; /* Force Left-to-Right direction */
+    text-align: left; /* Optional: Align text to the left */
+}
 
 .logo {
     width: clamp(280px, 30vw, 600px);
