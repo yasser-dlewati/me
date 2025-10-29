@@ -29,7 +29,7 @@ function getSectionsCount(withNames) {
     if (withNames) {
       let sectionId = $($(sections)[i]).attr("id");
       content = content.concat(
-        '<a href="#' + sectionId + '"><h4>' + sectionId + "</h4></a>"
+        '<a href="#' + sectionId + '" data-translate="'+sectionId+'.navigation"><h4>' + sectionId + "</h4></a>"
       );
     } else {
       content = content.concat("<li></li>");

@@ -52,22 +52,22 @@
 
         <div class="settings-item">
             <div class="setting-row">
-                <label for="language" class="form-check-label">Language</label>
+                <label for="language" class="form-check-label" data-translate="settings.language">Language</label>
                 <select class="form-select" id="language">
-                    <option value="en">English</option>
-                    <option value="ar">العربية</option>
+                    <option value="en" data-translate="settings.en">English</option>
+                    <option value="ar" data-translate="settings.ar">Arabic</option>
                 </select>
             </div>
 
             <div class="setting-row">
-                <label for="darkModeSwitch" class="form-check-label">Dark Mode</label>
+                <label for="darkModeSwitch" class="form-check-label" data-translate="settings.darkMode">Dark Mode</label>
                 <div class="form-check form-switch m-0">
                     <input class="form-check-input" type="checkbox" id="darkModeSwitch">
                 </div>
             </div>
 
             <div class="setting-row">
-                <label for="showUnderGraduateExperience" class="form-check-label">Show under graduate
+                <label for="showUnderGraduateExperience" class="form-check-label" data-translate="settings.undergraduate">Show under graduate
                     experience</label>
                 <div class="form-check form-switch m-0">
                     <input class="form-check-input" type="checkbox" id="showUnderGraduateExperience">
@@ -75,7 +75,7 @@
             </div>
 
             <div class="setting-row">
-                <label for="saveSettingsLocally" class="form-check-label">Save settings locally</label>
+                <label for="saveSettingsLocally" class="form-check-label" data-translate="settings.save">Save settings locally</label>
                 <div class="form-check form-switch m-0">
                     <input class="form-check-input" type="checkbox" id="saveSettingsLocally">
                 </div>
@@ -146,9 +146,13 @@
                     </p>
                     <div class="buttons">
                         <a class="button primary" href=""
-                            onclick="Calendly.initPopupWidget({url: 'https://calendly.com/yasdle/30min'});return false;">Schedule
-                            a session <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                        <a class="button" href="#services">Check my services</a>
+                            onclick="Calendly.initPopupWidget({url: 'https://calendly.com/yasdle/30min'});return false;">
+                            <span data-translate="about.session">
+                                Schedule a session    
+                            </span>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                        <a class="button" href="#services" data-translate="about.services">Check my services</a>
                     </div>
                     <img class="side" src="./images/yasser-no-bg.png">
                 </div>
@@ -161,12 +165,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 vertically-centered">
-                    <h2 class="title" data-translate="title">where i left marks</h2>
+                    <h2 class="title" data-translate="clients.title">where i left marks</h2>
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-8">
                     <div class="experience-container"></div>
-                    <div class="col-12 hint" data-translate="hint">click on the client's logo to know more...</div>
+                    <div class="col-12 hint" data-translate="clients.hint">click on the client's logo to know more...</div>
                     <div class="row">
                         <div class="col-1"></div>
                         <div class="col-2">
@@ -184,10 +188,10 @@
                         </div>
                         <div class="col-1"></div>
                     </div>
-                    <p class="download">
+                    <p class="download" data-translate="clients.download">
                         Or simply download my resume from
                         <a href="./pdf/Yasser Dlewati-Senior software engineer resume.pdf" class="download"
-                            download>here</a>
+                            download data-translate="clients.here">here</a>
     
                     </p>
                 </div>
@@ -199,7 +203,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 vertically-centered">
-                    <h2>Things I can do </h2>
+                    <h2 data-translate="services.title">Things I can do </h2>
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-8">
@@ -351,13 +355,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 vertically-centered">
-                    <h2>say hey</h2>
+                    <h2 data-translate="contact.title">say hey</h2>
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-8 vertically-centered">
-                    <div>
+                    <p data-translate="contact.description">
                         You can drop me a message via
-                    </div>
+                    </p>
                     <a href="mailto:yasdle@outlook.com" class="email" title="Send an email using preferred mail app">
                         <h5>
                             yasdle@outlook.com
@@ -365,17 +369,21 @@
                         <a title="Copy email" class="copy">
                             <h5>
                                 <i class="fa-regular fa-copy"></i>
-                                <span class="copy-tooltip">Copied!</span>
+                                <span class="copy-tooltip" data-translate="copy">Copied!</span>
                             </h5>
                         </a>
                     </a>
 
-                    <div>
+                    <p data-translate="contact.or">
                         or simply
-                    </div>
+                    </p>
                     <a class="button primary" href=""
-                        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/yasdle/30min'});return false;">Schedule
-                        a session <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/yasdle/30min'});return false;">
+                        <span data-translate="about.session">
+                            Schedule a session    
+                        </span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
                 </div>
             </div>
 

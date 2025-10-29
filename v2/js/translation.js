@@ -2,25 +2,80 @@
 const translations = {
     en: {
         top:{
+            navigation:"Top",
             scroll: "Scroll down to know more..."
         },
         about:{
+            navigator:"About Me",
             title: "about me",
-            description:""            
+            description: `My name is Yasser, but you can call me Yas, a self tought software engineer with more than 9 years of experience, passionate about stretching my mind with solving complicated problems, writing code and learning new stuff.
+            I worked in multiple companies vary in size from startups, SMEs to big enterprises, stepping up and climping up the ladder from a junior to a mid level and end up with a senior role, I also served as a team leader from a small portion of time. I have hands on experience with web, mobile and desktop development.`, 
+            services: "Check out my services",
+            session: "Schedule a session",         
         },
-        title: "where i left marks",
-        hint: "click on the client's logo to know more...",
+        clients:{
+            navigation:"Clients",
+            title: "where i left marks",
+            hint: "click on the client's logo to know more...",
+            download: "Or simply download my resume from",
+            here: "here",
+        },
+        services:{
+            navigator:"Services",
+            title: "Things I can do",
+        },
+        contact:{
+            navigator:"Contact Me",
+            title: "Say Hey!",
+            description: "Feel free to reach out for collaborations or just a friendly hello by dropping a message via.",
+            or: "Or simply",
+        },
+        settings:{
+            language:"Language",
+            en:"English",
+            ar:"Arabic",
+            darkMode:"Dark Mode",
+            undergraduate:"Show Undergraduate experience",
+            save:"Save settings locally",
+        }
     },
     ar: {
         top:{
+            navigation:"البداية",
             scroll: " قم بالتمرير لأسفل لمعرفة المزيد...",
         },
         about:{
+            navigation:"مــن أنــا",
             title: "مــن أنــا",
             description:"اسمي ياسر، أنا مهندس برمجيات حيث أني علمت نفسي بنفسي، أمتلك أكثر من تسع سنوات من الخبرة، وشغوف بتحدّي عقلي من خلال حلّ المشكلات المعقّدة، وكتابة الأكواد، وتعلّم كل ما هو جديد. عملت في شركات متعددة الأحجام، بدءًا من الشركات الناشئة مرورًا بالمؤسسات المتوسطة وصولًا إلى الشركات الكبرى، حيث تنقلت في مسيرتي المهنية من مطوّر مبتدئ إلى مطوّر متوسط، ثم إلى دورٍ كبير المهندسين (Senior)، كما تولّيت قيادة فريق لفترة قصيرة. أمتلك خبرة عملية في تطوير تطبيقات الويب والهواتف المحمولة وسطح المكتب.",
+            services: "اطلع على خدماتي",
+            session: "احجز جلسة استشارية معي",
         },
-        title: "أين تركت بصماتي",
-        hint: "اضغط على شعار العميل لمعرفة المزيد...",
+        clients:{
+            navigation:"العملاء",
+            title: "أين تركت بصماتي",
+            hint: "اضغط على شعار العميل لمعرفة المزيد...",
+            download: "أو ببساطة قم بتحميل سيرتي الذاتية من",
+            here: "هنا",
+        },
+        services:{  
+            navigation:"الخدمات",
+            title: "خدماتي التي أقدمها",
+        },
+        contact:{
+            navigation:"تواصل معي",
+            title: "تواصل معي!",
+            description: "يسعدني تواصلك سواء للتعاون أو لمجرد التحية، يمكنك مراسلتي عبر ",
+            or: "أو ببساطة",
+        },
+        settings:{
+            language:"اللغة",
+            en:"الانجليزية",
+            ar:"العربية",
+            darkMode:"الوضع الداكن",
+            undergraduate:"عرض خبرات المرحلة الجامعية",
+            save:"حفظ الإعدادات محليًا",
+        }
     },
 };
 
