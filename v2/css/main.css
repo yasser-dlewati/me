@@ -39,7 +39,16 @@
     --border-radius-tiny: 8px;
 
     --section-box-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
-    --menu-box-shadow: -4px 0px 8px rgba(0, 0, 0, 1);
+    --menu-box-shadow: 4px 0px 8px rgba(0, 0, 0, 1);
+
+    --settings-translate-x: -150%;
+    --settings-translate-x-mobile: calc(0% + 8px);
+    --settings-active-translate-x: calc(-50% - 8px);
+    --settings-border-radius: 0 var(--border-radius-large) var(--border-radius-large) 0;
+    --settings-item-margin-left: 63%;
+
+    --navigation-translate-x: -100%;
+    --navigation-active-translate-x: -50%;
 }
 
 [data-theme="dark"] {
@@ -58,11 +67,14 @@
 html[dir="rtl"] {
     direction: rtl;
     text-align: right;
-}
+    --settings-translate-x: 150%;
+    --settings-translate-x-mobile: calc(0% - 8px);
+    --settings-active-translate-x: calc(50% + 8px);
+    --settings-border-radius:var(--border-radius-large) 0 0 var(--border-radius-large);
+    --navigation-translate-x: 100%;
+    --navigation-active-translate-x: 50%;
+    --menu-box-shadow: -4px 0px 8px rgba(0, 0, 0, 1);
 
-html[dir="ltr"] {
-    direction: ltr;
-    text-align: left;
 }
 
 /*---------------------------------------
@@ -181,13 +193,13 @@ a:hover {
 -----------------------------------------*/
 
 .settings-container {
-    transform: translateX(150%);
+    transform: translateX(var(--settings-translate-x));
     transition: transform 0.5s ease-in-out;
     background-color: var(--bg-light-color);
     width: 100%;
     height: 100dvh;
     position: fixed;
-    border-radius: var(--border-radius-large) 0 0 var(--border-radius-large);
+    border-radius: var(--settings-border-radius);
     z-index: 8;
     display: flex;
     flex-direction: column;
@@ -196,7 +208,7 @@ a:hover {
 }
 
 .settings-container.active {
-    transform: translateX(calc(50% + 8px));
+    transform: translateX(var(--settings-active-translate-x));
     transition: transform 0.5s ease-in-out;
 }
 
@@ -215,7 +227,7 @@ input[type="checkbox"].form-check-input {
 
 .navigation,
 .experience-details-container {
-    transform: translateX(100%);
+    transform: translateX(-100%);
     transition: transform 0.5s ease-in-out;
     background-color: var(--bg-dark-color);
     width: 100%;
@@ -226,21 +238,23 @@ input[type="checkbox"].form-check-input {
 
 .navigation.active,
 .experience-details-container.active {
-    transform: translateX(50%);
+    transform: translateX(-50%);
 }
 
 .navigation .links {
     position: absolute;
     top: calc(50% - 152px);
-    left: calc(25% - 80px);
-    text-align: right;
+    right: calc(25% - 80px);
 }
 
 .settings-item {
     width: 50%;
     display: grid;
     gap: 16px;
-    margin-left: 15%;
+    margin-left: var(--settings-item-margin-left);
+}
+html[dir="rtl"] .settings-item{
+    margin-right: var(--settings-item-margin-left);
 }
 
 .settings-row label {
@@ -266,24 +280,25 @@ input[type="checkbox"].form-check-input {
 .settings-container .close {
     position: absolute;
     top: 32px;
-    right: calc(50% + 32px);
+    left: calc(50% + 32px);
 }
 
 
 .settings {
     display: block;
     position: absolute;
-    right: calc(50% + 32px);
+    left: calc(50% + 32px);
     bottom: 32px;
 }
 
 ul.indicator {
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 12px;
     margin: auto;
     position: fixed;
-    right: 32px;
+    left: 40px;
     top: calc(50% - 40px);
     z-index: 7;
     align-items: center;
@@ -482,7 +497,7 @@ ul.indicator {
 .menu-icon {
     position: fixed;
     top: 32px;
-    right: 32px;
+    left: 32px;
     font-size: 32px;
     z-index: 7;
 }
@@ -867,7 +882,7 @@ footer .social-links a {
     }
 
     .settings-container.active {
-        transform: translateX(calc(0% + 8px));
+        transform: translateX(var(--settings-translate-x-mobile));
     }
 
     .settings-item {
