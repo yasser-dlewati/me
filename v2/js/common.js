@@ -2,11 +2,13 @@ const experienceJson = [
   {
     id: -3,
     company: "Jotun Paints",
+    companyAr: "دهانات جوتن",
     position: "Sales Executive",
+    positionAr: "مندوب مبيعات",
     duration: 18,
     isCurrentCompany: false,
-    description: `My first job ever. A place to learn how to deal with people, how to manage time and how to be responsible.\n 
-        My main responsibility was to help the clients, introduce the products and close deals.\n`,
+    description: `My first job ever. A place to learn how to deal with people, how to manage time and how to be responsible.\n My main responsibility was to help the clients, introduce the products and close deals.\n`,
+    descriptionAr:`كانت هذه أول وظيفة لي على الإطلاق — المكان الذي تعلمت فيه كيفية التعامل مع الناس، وإدارة الوقت، وتحمل المسؤولية.\n كانت مسؤوليتي الأساسية مساعدة العملاء، والتعريف بالمنتجات، وإتمام صفقات البيع.\n`,
     webkitURL: "https://www.jotun.com/ww-en",
     imageSrc: "jotun.jpeg",
     embededMapLink:
@@ -16,11 +18,11 @@ const experienceJson = [
     id: -2,
     company: "KidZone",
     position: "Mentor",
+    positionAr: "مشرف برنامج المخترعون الصغار",
     duration: 24,
     isCurrentCompany: false,
-    description: `As \"Little Inventors\" program mentor, I was responsible for teaching kids the basics of physics, electricity, programming and robotics using age appropriate tools and methods to make sure they understand the concepts and have fun at the same time.\n
-        Also, I was responsible for organizing the annual events for the kids, playing roles in the plays that Kidzone hosted for the kids and their families.\n
-        Lastly, I was responsible for documenting the experiments and working on a simple syllabus to be followed by the mentors.`,
+    description: `As \"Little Inventors\" program mentor, I was responsible for teaching kids the basics of physics, electricity, programming and robotics using age appropriate tools and methods to make sure they understand the concepts and have fun at the same time.\n Also, I was responsible for organizing the annual events for the kids, playing roles in the plays that Kidzone hosted for the kids and their families.\n Lastly, I was responsible for documenting the experiments and working on a simple syllabus to be followed by the mentors.`,
+    descriptionAr: `بصفتي مشرفًا في برنامج "المخترعون الصغار"، كنت مسؤولاً عن تعليم الأطفال أساسيات الفيزياء والكهرباء والبرمجة والروبوتات باستخدام أدوات وأساليب مناسبة لأعمارهم، لضمان الفهم والمتعة في آنٍ واحد.\n كما كنت مسؤولاً عن تنظيم الفعاليات السنوية للأطفال، والمشاركة في المسرحيات التي تستضيفها كيدزون للأطفال وعائلاتهم.\n وأخيرًا، كنت مسؤولاً عن توثيق التجارب وإعداد منهج مبسط يُتبع من قِبَل المشرفين.`,
     webkitURL: "https://www.facebook.com/KidZoneSyria/",
     imageSrc: "Kidzone.jpeg",
     embededMapLink:
@@ -29,11 +31,16 @@ const experienceJson = [
   {
     id: -1,
     company: "Elaf Private School",
+    companyAr: "مدرسة إيلاف الخاصة",
     position: "Educational Counselor",
+    positionAr: "موجّه تربوي",
     duration: 6,
     isCurrentCompany: false,
     description:
       "I played the role of the link between the students, their families and the school. I was responsible for helping the students with resolving the diffeculties, guide them to the right path, in addition to organizing events and workshops to help the students to improve their skills.",
+      descriptionAr:
+      "كنت همزة الوصل بين الطلاب وأسرهم والمدرسة، ومسؤولًا عن مساعدة الطلاب في تجاوز الصعوبات، وتوجيههم نحو الطريق الصحيح، بالإضافة إلى تنظيم الفعاليات وورش العمل التي تساعدهم على تطوير مهاراتهم.",
+    
     webkitURL: "http://lms.elaf-school.com/",
     imageSrc: "elaf.png",
     embededMapLink:
@@ -43,10 +50,14 @@ const experienceJson = [
     id: 0,
     company: "Robotat",
     position: "Web developer",
+    positionAr: "مطوّر ويب",
     duration: 18,
     isCurrentCompany: false,
     description:
       "First attempt to enter the software development world by getting assigned to test some feature manually (black box method) then getting enrolled in the development cycle by delivering some simple models in both front end and back end",
+      descriptionAr:
+      "كانت أول محاولة لدخولي عالم تطوير البرمجيات، حيث بدأت باختبار بعض الخصائص يدويًا (طريقة الصندوق الأسود)، ثم شاركت في دورة التطوير بتسليم نماذج بسيطة في الواجهة الأمامية والخلفية.",
+   
     websiteUrl: "https://www.robotat.com",
     imageSrc: "robotat.png",
     embededMapLink:
@@ -56,10 +67,13 @@ const experienceJson = [
     id: 1,
     company: "Menumiz",
     position: "Senior web developer",
+    positionAr: "مطور ويب خبير",
     duration: 32,
     isCurrentCompany: false,
     description:
       "A place where I graded from a junior level to a senior. Learning a lot of the development cycle, collaporate with other departments to learn more, working hard to proof myself professionally and stepping up to be a team leader to keep the wheel rooling.",
+      descriptionAr:
+      "المكان الذي انتقلت فيه من مستوى مبتدئ إلى مستوى أول، وتعلمت الكثير عن دورة التطوير الكاملة، وتعاونت مع أقسام مختلفة لاكتساب معرفة أوسع. عملت بجد لإثبات نفسي مهنيًا، وتدرجت حتى أصبحت قائد فريق للحفاظ على عجلة العمل مستمرة.",
     websiteUrl: "https://www.menumiz.com",
     imageSrc: "Menumiz.png",
     embededMapLink:
@@ -69,11 +83,15 @@ const experienceJson = [
     id: 2,
     company: "Touchless",
     position: "Senior software engineer",
+    positionAr: "مهندس برمجيات خبير",
     duration: 2,
     isCurrentCompany: false,
     description:
       "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
-    websiteUrl: "https://touchless.asia",
+      descriptionAr:
+      "كوني المهندس الرئيسي في الفريق كانت مسؤولية صعبة لكنها مجزية جدًا في الوقت نفسه. خلال هذه الفترة سنحت لي الفرصة للتعرف على بعض من ألمع العقول، والعمل معهم والتعلم منهم كذلك.",
+    
+      websiteUrl: "https://touchless.asia",
     imageSrc: "Touchless.png",
     embededMapLink:
       "pb=!1m18!1m12!1m3!1d3983.7088143460246!2d101.66423242602517!3d3.171170203014705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc485de491c479%3A0xa40997f3dc918ec8!2sSolaris%20Dutamas%2C%201%2C%20Jln%20Dutamas%201%2C%20Solaris%20Dutamas%2C%2050754%20Kuala%20Lumpur%2C%20Wilayah%20Persekutuan%20Kuala%20Lumpur!5e0!3m2!1sen!2smy!4v1756546841444!5m2!1sen!2smy",
@@ -82,10 +100,13 @@ const experienceJson = [
     id: 3,
     company: "Boostorder",
     position: "Senior software engineer",
+    positionAr: "مهندس برمجيات خبير",
     duration: 15,
     isCurrentCompany: false,
     description:
       "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
+      descriptionAr:
+      "العمل كمهندس برمجيات رئيسي كان تحديًا كبيرًا وتجربة غنية جدًا. خلال هذه المدة، التقيت وتعاونت مع نخبة من الموهوبين، وتعلمت الكثير من الخبرات العملية والفكرية.",
     websiteUrl: "https://www.boostorder.com",
     imageSrc: "boostorder.png",
     embededMapLink:
@@ -95,11 +116,14 @@ const experienceJson = [
     id: 4,
     company: "Monster",
     position: "Software engineer",
+    positionAr: "مهندس برمجيات",
     duration: 24,
     isCurrentCompany: false,
     description:
       "First experiment working in such a big corporate which is the perfect time to engage and see how the collaporation should be done. In addition to feel proud as a working in a such a good reputation enterprises.",
-    websiteUrl: "https://www.monster.com/about",
+      descriptionAr:
+      "كانت أول تجربة لي في شركة ضخمة، أتيحت لي فيها فرصة التعرف على بيئة عمل مؤسساتية متكاملة، وكيف يتم التعاون بين الفرق بشكل احترافي. كما شعرت بالفخر لكوني جزءًا من مؤسسة ذات سمعة متميزة.",
+      websiteUrl: "https://www.monster.com/about",
     imageSrc: "monster.jpeg",
     embededMapLink:
       "pb=!1m18!1m12!1m3!1d3983.7913515491928!2d101.7089010760252!3d3.1496712531472517!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc37f6f1c8d147%3A0x8c048efb4266c0bf!2sMenara%20AIA%20Sentral!5e0!3m2!1sen!2smy!4v1756546918525!5m2!1sen!2smy",
@@ -108,10 +132,14 @@ const experienceJson = [
     id: 5,
     company: "Timelog",
     position: "Senior software engineer I",
+    positionAr: "مهندس برمجيات خبير (مستوى 1)",
     duration: 18,
     isCurrentCompany: true,
     description:
       "Woring in a team t delive a first class tier code. paricipating in mind storm sessions to detect the weakness points in the app and workin with task force team to present a solid plan to migrate to the legacy solutions to the latest technology.",
+      descriptionAr:
+      "أعمل ضمن فريق متميز لتقديم كود برمجي على أعلى مستوى. أشارك في جلسات العصف الذهني لتحديد نقاط الضعف في النظام، وأعمل مع فريق المهام الخاصة لوضع خطة قوية لنقل الأنظمة القديمة إلى أحدث التقنيات.",
+   
     websiteUrl: "https://timelog.com/en",
     imageSrc: "timelog.png",
     embededMapLink:
@@ -121,10 +149,14 @@ const experienceJson = [
     id: 6,
     company: "Carsome",
     position: "Senior software engineer II",
+    positionAr: "مهندس برمجيات خبير (مستوى 2)",
     duration: 6,
     isCurrentCompany: true,
     description:
       "Working in a fast paced environment to deliver high quality code that meets the business requirements. Collaborating with cross-functional teams to design, develop, and implement new features and functionalities.",
+      descriptionAr:
+      "أعمل في بيئة سريعة الإيقاع لتقديم كود عالي الجودة يلبّي متطلبات العمل. أتعاون مع فرق متعددة التخصصات لتصميم وتطوير وتنفيذ ميزات ووظائف جديدة.",
+   
     websiteUrl: "https://www.carsome.my",
     imageSrc: "carsome.png",
     embededMapLink:
@@ -170,29 +202,31 @@ export function renderClients() {
 }
 
 function showClientDetails() {
-  let isDarkMode =
-    document.body.attributes["data-theme"] &&
-    document.body.attributes["data-theme"].value === "dark";
-  {
-    document
-      .querySelector(".experience-details-container")
-      .classList.add("active");
-    document.querySelector(".experience-details-container").style.boxShadow =
-      "var(--menu-box-shadow)";
-    const companyName = this.alt;
-    const relatedExperience = experienceJson.find(
-      (x) => x.company === companyName
-    );
+let language = document.documentElement.lang ?? 'en';
+
+let isDarkMode =
+document.body.attributes["data-theme"] &&
+document.body.attributes["data-theme"].value === "dark";
+{
+  document
+  .querySelector(".experience-details-container")
+  .classList.add("active");
+  document.querySelector(".experience-details-container").style.boxShadow =
+  "var(--menu-box-shadow)";
+  const companyName = this.alt;
+  const relatedExperience = experienceJson.find(
+    (x) => x.company === companyName
+  );
     const html = `<div class="container">
       <div class="row">
       <div class="col-12">
       <img src="./images/${
         relatedExperience.imageSrc
       }" alt="${companyName}" class="company-logo">
-      <h4 class="company-name">${relatedExperience.company}</h4>
-      <h5 class="position">${relatedExperience.position}</h5>
+      <h4 class="company-name">${language == 'en' ? relatedExperience.company : relatedExperience.companyAr ?? relatedExperience.company }</h4>
+      <h5 class="position">${language == 'en' ? relatedExperience.position : relatedExperience.positionAr}</h5>
       <p class="duration">Duration: ${relatedExperience.duration} months</p>
-      <p>${relatedExperience.description}</p>
+      <p>${language == 'en' ? relatedExperience.description : relatedExperience.descriptionAr}</p>
       <p>Visit ${companyName} Website <a href="${
       relatedExperience.websiteUrl
     }" target="_blank" rel="noopener">here</a>!</p>
@@ -206,6 +240,8 @@ function showClientDetails() {
       </div>`;
     document.querySelector(".experience-details").innerHTML = html;
     setBodyScroll(false);
+  console.log(html )
+
   }
 }
 
