@@ -1,3 +1,5 @@
+import { resetClientsView } from "./clients.js";
+
 // Language data object
 const translations = {
     en: {
@@ -104,6 +106,8 @@ function switchLanguage(lang) {
             el.textContent = translation;
         }
     });
+
+    resetClientsView();
 }
 
 const languageSelection = document.querySelector("#language");
