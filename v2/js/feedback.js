@@ -1,4 +1,4 @@
-import { setBodyScroll } from "./common.js";
+import { setBodyScroll, toggleCloseMenuOnOutsideClick, closeFeedbackForm } from "./common.js";
 
 const txtFeedback = document.querySelector("#txtFeedback");
 const feedbackForm = document.querySelector(".feedback-form");
@@ -10,14 +10,12 @@ feedbackIcon.addEventListener("click", function() {
   document.querySelector('.navigation').style.filter = 'blur(8px)';
   document.querySelector('.settings-container').style.filter = 'blur(8px)';
   setBodyScroll(false);
+  toggleCloseMenuOnOutsideClick(true);
 });
 
 const closeFeedbackFormButton = document.querySelector(".feedback-form .close");
 closeFeedbackFormButton.addEventListener("click", () => {
-  feedbackForm.classList.remove("active");
-  document.querySelector('.navigation').style.removeProperty('filter');
-  document.querySelector('.settings-container').style.removeProperty('filter');
-  setBodyScroll(true);
+  closeFeedbackForm();
 });
 
 (function () {

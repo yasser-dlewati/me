@@ -261,6 +261,60 @@ export function setBodyScroll(scrollable) {
   });
 
   document.querySelector("ul.indicator").style.filter = scrollable ? "" : "blur(8px)";
+  
+}
+
+function closeActiveMenuOnEscapeKey() {
+  if(document.querySelector('.settings-container').classList.contains('active')) {
+    closeSettingsMenu();
+    console.log('Clicked outside menu, closing it');
+
+  }
+  else if(document.querySelector('.navigation').classList.contains('active')) {
+    closeNavigationMenu();
+    console.log('Clicked outside menu, closing it');
+  }
+  else if(document.querySelector('.feedback-form').classList.contains('active')) {
+    closeFeedbackForm();
+    console.log('Clicked outside menu, closing it');
+  }
+}
+
+export function toggleCloseMenuOnOutsideClick(enable) {
+  if(!enable) {
+    document.querySelector('.content').removeEventListener('click', closeActiveMenuOnEscapeKey)
+    console.log('Disabled closing menu on outside click');
+    return;
+  }
+  document.querySelector('.content').addEventListener('click', closeActiveMenuOnEscapeKey)
+  console.log('Enabled closing menu on outside click');
+}
+
+export function closeNavigationMenu() {
+  setTimeout(() => {
+    setBodyScroll(true);
+    $(".navigation").removeClass("active");
+    $(".navigation").css("box-shadow", "none");
+    document.querySelector(".feedback-icon").classList.remove('navigation-active');
+  }, 100);
+  $(".content").css("overflow", "");
+  toggleCloseMenuOnOutsideClick(false);
+}
+
+export function closeSettingsMenu() {
+  $(".settings-container").removeClass("active");
+      setTimeout(() => {
+        $(".navigation > *").css("filter", "");
+        $(".settings-container").css("box-shadow", "none");
+        document.querySelector(".feedback-icon").classList.add('navigation-active');
+      }, 500);
+}
+
+export function closeFeedbackForm() {
+  document.querySelector(".notification").classList.remove("active");
+  document.querySelector(".feedback-form").classList.remove("active");
+  setBodyScroll(true);
+  toggleCloseMenuOnOutsideClick(false);
 }
 
 const btnCloseNotification = document.querySelector(".notification .close");

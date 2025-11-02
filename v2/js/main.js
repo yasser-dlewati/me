@@ -1,5 +1,5 @@
 "use strict";
-import { renderClients, setBodyScroll } from "./common.js";
+import { renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu } from "./common.js";
 import { feedbackIcon } from "./feedback.js";
 
 const setSectionsStylesForScrolling = () => {
@@ -112,28 +112,12 @@ $(document).ready(function () {
   });
   setScreenIndicator(0);
 
-function closeNavigationMenu() {
-    setTimeout(() => {
-      setBodyScroll(true);
-      $(".navigation").removeClass("active");
-      $(".navigation").css("box-shadow", "none");
-      document.querySelector(".feedback-icon").classList.remove('navigation-active');
-    }, 500);
-    $(".content").css("overflow", "");
-}
-
   $(".navigation .close").click(function () {
     closeNavigationMenu();
   });
 
   $(".settings-container .close").click(function () {
-      $(".settings-container").removeClass("active");
-      setTimeout(() => {
-        $(".navigation > *").css("filter", "");
-        $(".settings-container").css("box-shadow", "none");
-        document.querySelector(".feedback-icon").classList.add('navigation-active');
-      }, 500);
-    
+    closeSettingsMenu();
   });
 
   menuIcon.addEventListener("click", function () {
@@ -143,6 +127,8 @@ function closeNavigationMenu() {
       document.querySelector(".navigation").style.boxShadow = "var(--menu-box-shadow)";
       feedbackIcon.classList.add('navigation-active')
     }
+
+    toggleCloseMenuOnOutsideClick(true);
   });
 
   $(".settings").click(() => {
