@@ -1,4 +1,4 @@
-import { setBodyScroll, renderClients, isMobileDevice } from "./common.js";
+import { setBodyScroll, renderClients, isMobileDevice,language } from "./common.js";
 
 function setExperienceDuration() {
   const spanExperienceDuration = document.querySelector(".experience-duration");
@@ -35,6 +35,11 @@ function setExperienceDuration() {
 const experienceContainer = document.querySelector(".experience-container");
 var experienceItem = experienceContainer.children[0];
 
+// Need to wait for the container to render properly
+setTimeout(() => {
+  experienceItem = experienceContainer.children[0].clientWidth
+}, 100);
+
 document.addEventListener("DOMContentLoaded", () => {
   setExperienceDuration();
   renderClients();
@@ -43,17 +48,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const nextButton = document.querySelector(".scroll-horizontally.next");
 const prevButton = document.querySelector(".scroll-horizontally.prev");
-setTimeout(() => {
-  experienceItem = experienceContainer.children[0].clientWidth;
-}, 100);
-
 nextButton.addEventListener("click", function () {
   if (this.disabled) {
     return;
   }
 
   this.disabled = true;
-  experienceContainer.scrollBy({ left: experienceItem, behavior: "smooth" });
+  experienceContainer.scrollBy({ left: language.isRTL ? -experienceItem : experienceItem, behavior: "smooth" });
   moveExperienceIndicatorByStep(1);
   setTimeout(() => {
     this.disabled = false;
@@ -66,7 +67,7 @@ prevButton.addEventListener("click", function () {
   }
 
   this.disabled = true;
-  experienceContainer.scrollBy({ left: -experienceItem, behavior: "smooth" });
+  experienceContainer.scrollBy({ left: language.isRTL ? experienceItem : -experienceItem, behavior: "smooth" });
   moveExperienceIndicatorByStep(-1);
   setTimeout(() => {
     this.disabled = false;
@@ -104,6 +105,12 @@ function updateExperienceIndicator() {
   });
 
   setNavigationButtonsVisibility();
+}
+
+export function resetClientsView() {
+  document.querySelector('.experience-container').scroll({left: 0})
+  experienceIndicatorPosition = isMobileDevice ? [0] : [0, 1, 2];
+  updateExperienceIndicator();
 }
 
 function setNavigationButtonsVisibility() {
