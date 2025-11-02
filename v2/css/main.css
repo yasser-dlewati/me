@@ -41,14 +41,17 @@
     --section-box-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
     --menu-box-shadow: 4px 0px 8px rgba(0, 0, 0, 1);
 
+    --navigation-translate-x: -100%;
+    --navigation-active-translate-x: -50%;
     --settings-translate-x: -150%;
     --settings-translate-x-mobile: calc(0% + 8px);
     --settings-active-translate-x: calc(-50% - 8px);
     --settings-border-radius: 0 var(--border-radius-large) var(--border-radius-large) 0;
     --settings-item-margin-left: 63%;
+    --client-details-translate-x: 100%;
 
-    --navigation-translate-x: -100%;
-    --navigation-active-translate-x: -50%;
+    --next-client-float: left;
+    --prev-client-float: right;
 }
 
 [data-theme="dark"] {
@@ -67,14 +70,19 @@
 html[dir="rtl"] {
     direction: rtl;
     text-align: right;
+    --navigation-translate-x: 100%;
+    --navigation-active-translate-x: 50%;
     --settings-translate-x: 150%;
     --settings-translate-x-mobile: calc(0% - 8px);
     --settings-active-translate-x: calc(50% + 8px);
-    --settings-border-radius:var(--border-radius-large) 0 0 var(--border-radius-large);
+    --settings-border-radius: var(--border-radius-large) 0 0 var(--border-radius-large);
     --navigation-translate-x: 100%;
     --navigation-active-translate-x: 50%;
     --menu-box-shadow: -4px 0px 8px rgba(0, 0, 0, 1);
+    --client-details-translate-x: -100%;
 
+    --next-client-float: right;
+    --prev-client-float: left;
 }
 
 /*---------------------------------------
@@ -227,7 +235,7 @@ input[type="checkbox"].form-check-input {
 
 .navigation,
 .experience-details-container {
-    transform: translateX(-100%);
+    transform: translateX(var(--navigation-translate-x));
     transition: transform 0.5s ease-in-out;
     background-color: var(--bg-dark-color);
     width: 100%;
@@ -238,7 +246,7 @@ input[type="checkbox"].form-check-input {
 
 .navigation.active,
 .experience-details-container.active {
-    transform: translateX(-50%);
+    transform: translateX(var(--navigation-active-translate-x));
 }
 
 .navigation .links {
@@ -247,13 +255,19 @@ input[type="checkbox"].form-check-input {
     right: calc(25% - 80px);
 }
 
+html[dir="rtl"] .navigation .links {
+    left: calc(25% - 80px);
+    right: auto;
+}
+
 .settings-item {
     width: 50%;
     display: grid;
     gap: 16px;
     margin-left: var(--settings-item-margin-left);
 }
-html[dir="rtl"] .settings-item{
+
+html[dir="rtl"] .settings-item {
     margin-right: var(--settings-item-margin-left);
 }
 
@@ -275,6 +289,12 @@ html[dir="rtl"] .settings-item{
     margin: auto;
 }
 
+html[dir="rtl"] .navigation .close,
+.experience-details-container .close,
+.settings-container .close {
+    right: calc(50% + 32px);
+}
+
 .navigation .close,
 .experience-details-container .close,
 .settings-container .close {
@@ -291,6 +311,11 @@ html[dir="rtl"] .settings-item{
     bottom: 32px;
 }
 
+html[dir="rtl"] .settings {
+    left: auto;
+    right: calc(50% + 32px);
+}
+
 ul.indicator {
     padding: 0;
     display: flex;
@@ -298,10 +323,15 @@ ul.indicator {
     gap: 12px;
     margin: auto;
     position: fixed;
-    left: 40px;
+    right: 40px;
     top: calc(50% - 40px);
     z-index: 7;
     align-items: center;
+}
+
+html[dir="rtl"] ul.indicator {
+    left: 40px;
+    right: auto;
 }
 
 .indicator li {
@@ -322,6 +352,11 @@ ul.indicator {
     bottom: 26px;
     right: 32px;
     z-index: 10;
+}
+
+html[dir="rtl"] .feedback-icon {
+    right: auto;
+    left: 32px;
 }
 
 .feedback-icon.navigation-active {
@@ -430,8 +465,10 @@ ul.indicator {
        LOGO
 -----------------------------------------*/
 .ignore-rtl {
-    direction: ltr; /* Force Left-to-Right direction */
-    text-align: left; /* Optional: Align text to the left */
+    direction: ltr;
+    /* Force Left-to-Right direction */
+    text-align: left;
+    /* Optional: Align text to the left */
 }
 
 .logo {
@@ -500,6 +537,11 @@ ul.indicator {
     left: 32px;
     font-size: 32px;
     z-index: 7;
+}
+
+html[dir="rtl"] .menu-icon {
+    left: auto;
+    right: 32px;
 }
 
 .scroll {
@@ -595,6 +637,7 @@ img.side {
 .experience-details {
     max-width: 50%;
     padding: 0 32px;
+    transform: translateX(var(--client-details-translate-x));
 }
 
 .experience-details h4,
@@ -632,7 +675,7 @@ img.side {
     /* Hide scrollbar in Firefox */
 }
 
-#clients .hint{
+#clients .hint {
     margin-bottom: 60px;
     text-align: center !important;
 }
@@ -654,13 +697,21 @@ img.side {
     padding: 12px 16px;
 }
 
-.scroll-horizontally.prev{
-    float: right;
+.scroll-horizontally.prev {
+    float: var(--prev-client-float);
 }
 
+.scroll-horizontally.next {
+    float: var(--next-client-float);
+}
 
-.scroll-horizontally.next{
-    float: left;
+html[dir="rtl"] .fa-chevron-left {
+    transform: rotate(180deg);
+    /* flips the arrow */
+}
+
+html[dir="rtl"] .fa-chevron-right {
+    transform: rotate(180deg);
 }
 
 div:has(.scroll-horizontally) {
@@ -765,7 +816,7 @@ div:has(.scroll-horizontally) {
 }
 
 #contact a.copy {
-    margin-left: 16px;
+    margin: 0 16px;
 }
 
 .copy-tooltip {
