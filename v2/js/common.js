@@ -166,6 +166,18 @@ const experienceJson = [
 
 const userAgent = navigator.userAgent;
 const regexp = /android|iphone|kindle|ipad/i;
+function getLanguage() {
+  return document.documentElement.lang ?? 'en'
+}
+
+export let language = {
+  get value(){
+    return getLanguage();
+  },
+  get isRTL(){
+    return this.value === 'ar';
+  }
+}
 export const isMobileDevice = regexp.test(userAgent);
 
 export function renderClients() {
@@ -202,8 +214,6 @@ export function renderClients() {
 }
 
 function showClientDetails() {
-let language = document.documentElement.lang ?? 'en';
-
 let isDarkMode =
 document.body.attributes["data-theme"] &&
 document.body.attributes["data-theme"].value === "dark";
@@ -223,10 +233,10 @@ document.body.attributes["data-theme"].value === "dark";
       <img src="./images/${
         relatedExperience.imageSrc
       }" alt="${companyName}" class="company-logo">
-      <h4 class="company-name">${language == 'en' ? relatedExperience.company : relatedExperience.companyAr ?? relatedExperience.company }</h4>
-      <h5 class="position">${language == 'en' ? relatedExperience.position : relatedExperience.positionAr}</h5>
+      <h4 class="company-name">${language.value == 'en' ? relatedExperience.company : relatedExperience.companyAr ?? relatedExperience.company }</h4>
+      <h5 class="position">${language.value == 'en' ? relatedExperience.position : relatedExperience.positionAr}</h5>
       <p class="duration">Duration: ${relatedExperience.duration} months</p>
-      <p>${language == 'en' ? relatedExperience.description : relatedExperience.descriptionAr}</p>
+      <p>${language.value == 'en' ? relatedExperience.description : relatedExperience.descriptionAr}</p>
       <p>Visit ${companyName} Website <a href="${
       relatedExperience.websiteUrl
     }" target="_blank" rel="noopener">here</a>!</p>
@@ -240,8 +250,6 @@ document.body.attributes["data-theme"].value === "dark";
       </div>`;
     document.querySelector(".experience-details").innerHTML = html;
     setBodyScroll(false);
-  console.log(html )
-
   }
 }
 
@@ -251,6 +259,8 @@ export function setBodyScroll(scrollable) {
   sections.forEach((section) => {
     section.style.filter = scrollable ? "" : "blur(8px)";
   });
+
+  document.querySelector("ul.indicator").style.filter = scrollable ? "" : "blur(8px)";
 }
 
 const btnCloseNotification = document.querySelector(".notification .close");
