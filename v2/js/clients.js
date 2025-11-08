@@ -1,4 +1,9 @@
-import { setBodyScroll, renderClients, isMobileDevice,language } from "./common.js";
+import {
+  renderClients,
+  isMobileDevice,
+  language,
+closeClientDetails,
+} from "./common.js";
 
 function setExperienceDuration() {
   const spanExperienceDuration = document.querySelector(".experience-duration");
@@ -37,7 +42,7 @@ var experienceItem = experienceContainer.children[0];
 
 // Need to wait for the container to render properly
 setTimeout(() => {
-  experienceItem = experienceContainer.children[0].clientWidth
+  experienceItem = experienceContainer.children[0].clientWidth;
 }, 100);
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -54,7 +59,10 @@ nextButton.addEventListener("click", function () {
   }
 
   this.disabled = true;
-  experienceContainer.scrollBy({ left: language.isRTL ? -experienceItem : experienceItem, behavior: "smooth" });
+  experienceContainer.scrollBy({
+    left: language.isRTL ? -experienceItem : experienceItem,
+    behavior: "smooth",
+  });
   moveExperienceIndicatorByStep(1);
   setTimeout(() => {
     this.disabled = false;
@@ -67,7 +75,10 @@ prevButton.addEventListener("click", function () {
   }
 
   this.disabled = true;
-  experienceContainer.scrollBy({ left: language.isRTL ? experienceItem : -experienceItem, behavior: "smooth" });
+  experienceContainer.scrollBy({
+    left: language.isRTL ? experienceItem : -experienceItem,
+    behavior: "smooth",
+  });
   moveExperienceIndicatorByStep(-1);
   setTimeout(() => {
     this.disabled = false;
@@ -108,7 +119,7 @@ function updateExperienceIndicator() {
 }
 
 export function resetClientsView() {
-  document.querySelector('.experience-container').scroll({left: 0})
+  document.querySelector(".experience-container").scroll({ left: 0 });
   experienceIndicatorPosition = isMobileDevice ? [0] : [0, 1, 2];
   updateExperienceIndicator();
 }
@@ -125,11 +136,7 @@ function setNavigationButtonsVisibility() {
 
 document
   .querySelector(".experience-details-container .close")
-  .addEventListener("click", function () {
-    document
-      .querySelector(".experience-details-container")
-      .classList.remove("active");
-    document.querySelector(".experience-details-container").style.boxShadow =
-      "none";
-    setBodyScroll(true);
+  .addEventListener("click", () => {
+    console.log("closing");
+    closeClientDetails();
   });

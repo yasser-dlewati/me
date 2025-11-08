@@ -125,7 +125,6 @@ $(document).ready(function () {
       document.querySelector(".navigation").classList.add("active");
       setBodyScroll(false);
       document.querySelector(".navigation").style.boxShadow = "var(--menu-box-shadow)";
-      feedbackIcon.classList.add('navigation-active')
     }
 
     toggleCloseMenuOnOutsideClick(true);
@@ -135,7 +134,6 @@ $(document).ready(function () {
     $(".settings-container").addClass("active");
     $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
     $(".settings-container").css("box-shadow", "var(--menu-box-shadow)");
-    document.querySelector(".feedback-icon").classList.remove('navigation-active');
   });
 
   const messages = [];

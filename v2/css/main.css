@@ -183,7 +183,7 @@ a {
     text-decoration: none;
 }
 
-a.disabled {
+a.disabled, div.disabled, img.disabled {
     pointer-events: none;
 }
 
@@ -361,10 +361,6 @@ html[dir="rtl"] ul.indicator {
 html[dir="rtl"] .feedback-icon {
     right: auto;
     left: 32px;
-}
-
-.feedback-icon.navigation-active {
-    right: 80px;
 }
 
 .feedback-icon .circle {
@@ -611,7 +607,7 @@ img.side {
     margin: 0 auto;
 }
 
-.experience-item:hover img {
+.experience-item:hover img.bounce {
     animation: bounce 2s;
 }
 

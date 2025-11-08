@@ -197,7 +197,7 @@ export function renderClients() {
   let clientsContent = "";
   for (let i = 0; i < clients.length; i++) {
     clientsContent += `<div class='experience-item'>
-      <img src="./images/${clients[i].imageSrc}" class="img-fluid" alt="${clients[i].company}">
+      <img src="./images/${clients[i].imageSrc}" class="img-fluid bounce" alt="${clients[i].company}">
       </div>`;
     indicatorContent +=
       (!isMobileDevice && i < 3) || (isMobileDevice && i === 0)
@@ -213,7 +213,9 @@ export function renderClients() {
   });
 }
 
-function showClientDetails() {
+function showClientDetails(event) {
+// Prevent the event from propagating further since the event goes to the parent
+event.stopPropagation(); 
 let isDarkMode =
 document.body.attributes["data-theme"] &&
 document.body.attributes["data-theme"].value === "dark";
@@ -249,6 +251,10 @@ document.body.attributes["data-theme"].value === "dark";
       </div>
       </div>`;
     document.querySelector(".experience-details").innerHTML = html;
+    document.querySelectorAll('.experience-item img, .scroll-horizontally').forEach(img => {
+      img.classList.remove('bounce');
+      img.style.pointerEvents = 'none';
+    })
     setBodyScroll(false);
     toggleCloseMenuOnOutsideClick(true);
   }
@@ -271,20 +277,21 @@ export function setBodyScroll(scrollable) {
 }
 
 function closeActiveMenuOnEscapeKey() {
-  if(document.querySelector('.settings-container').classList.contains('active')) {
+  if(document.querySelector('.feedback-form').classList.contains('active')) {
+    closeFeedbackForm();
+    console.log('Clicked outside feedback form, closing it');
+  }
+  else if(document.querySelector('.settings-container').classList.contains('active')) {
     closeSettingsMenu();
-    console.log('Clicked outside menu, closing it');
+    console.log('Clicked settings menu, closing it');
   }
   else if(document.querySelector('.navigation').classList.contains('active')) {
     closeNavigationMenu();
-    console.log('Clicked outside menu, closing it');
-  }
-  else if(document.querySelector('.feedback-form').classList.contains('active')) {
-    closeFeedbackForm();
-    console.log('Clicked outside menu, closing it');
+    console.log('Clicked navigation menu, closing it');
   }
   else if(document.querySelector('.experience-details-container').classList.contains('active')) {
    closeClientDetails();
+   console.log('Clicked outside client\'s details, closing it');
   }
 }
 
@@ -303,7 +310,6 @@ export function closeNavigationMenu() {
     setBodyScroll(true);
     $(".navigation").removeClass("active");
     $(".navigation").css("box-shadow", "none");
-    document.querySelector(".feedback-icon").classList.remove('navigation-active');
   }, 100);
   $(".content").css("overflow", "");
   toggleCloseMenuOnOutsideClick(false);
@@ -314,17 +320,27 @@ export function closeSettingsMenu() {
       setTimeout(() => {
         $(".navigation > *").css("filter", "");
         $(".settings-container").css("box-shadow", "none");
-        document.querySelector(".feedback-icon").classList.add('navigation-active');
       }, 500);
 }
 
 export function closeFeedbackForm() {
   document.querySelector(".notification").classList.remove("active");
   document.querySelector(".feedback-form").classList.remove("active");
-  document.querySelector('.navigation').style.filter = '';
-  document.querySelector('.settings-container').style.filter = '';
-  setBodyScroll(true);
-  toggleCloseMenuOnOutsideClick(false);
+  document.querySelector(".navigation").style.filter = "";
+  document.querySelector(".settings-container").style.filter = "";
+  let sideMenusAreActive = document.querySelector(".navigation").classList.contains("active") ||
+  document
+    .querySelector(".settings-container")
+    .classList.contains("active") ||
+  document
+    .querySelector(".experience-details-container")
+    .classList.contains("active");
+
+  // Allow removing the blur effect only if no side menus are active  
+  if (!sideMenusAreActive) {
+    setBodyScroll(true);
+    toggleCloseMenuOnOutsideClick(false);
+  }
 }
 
 export function closeClientDetails() {
@@ -333,6 +349,10 @@ export function closeClientDetails() {
     .classList.remove("active");
   document.querySelector(".experience-details-container").style.boxShadow =
     "none";
+  document.querySelectorAll('.experience-item img, .scroll-horizontally').forEach(img => {
+    img.classList.add('bounce');
+    img.style.pointerEvents = 'auto';
+  })
   setBodyScroll(true);
   toggleCloseMenuOnOutsideClick(false);
 }
