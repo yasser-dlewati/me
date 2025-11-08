@@ -250,6 +250,7 @@ document.body.attributes["data-theme"].value === "dark";
       </div>`;
     document.querySelector(".experience-details").innerHTML = html;
     setBodyScroll(false);
+    toggleCloseMenuOnOutsideClick(true);
   }
 }
 
@@ -267,14 +268,12 @@ export function setBodyScroll(scrollable) {
     a.classList.toggle("disabled", !scrollable);
     a.style.filter = scrollable ? "" : "blur(8px)";
   })
-  
 }
 
 function closeActiveMenuOnEscapeKey() {
   if(document.querySelector('.settings-container').classList.contains('active')) {
     closeSettingsMenu();
     console.log('Clicked outside menu, closing it');
-
   }
   else if(document.querySelector('.navigation').classList.contains('active')) {
     closeNavigationMenu();
@@ -283,6 +282,9 @@ function closeActiveMenuOnEscapeKey() {
   else if(document.querySelector('.feedback-form').classList.contains('active')) {
     closeFeedbackForm();
     console.log('Clicked outside menu, closing it');
+  }
+  else if(document.querySelector('.experience-details-container').classList.contains('active')) {
+   closeClientDetails();
   }
 }
 
@@ -319,14 +321,29 @@ export function closeSettingsMenu() {
 export function closeFeedbackForm() {
   document.querySelector(".notification").classList.remove("active");
   document.querySelector(".feedback-form").classList.remove("active");
+  document.querySelector('.navigation').style.filter = '';
+  document.querySelector('.settings-container').style.filter = '';
+  setBodyScroll(true);
+  toggleCloseMenuOnOutsideClick(false);
+}
+
+export function closeClientDetails() {
+  document
+    .querySelector(".experience-details-container")
+    .classList.remove("active");
+  document.querySelector(".experience-details-container").style.boxShadow =
+    "none";
   setBodyScroll(true);
   toggleCloseMenuOnOutsideClick(false);
 }
 
 const btnCloseNotification = document.querySelector(".notification .close");
-btnCloseNotification.addEventListener("click", () => {
+btnCloseNotification.addEventListener("click", closeNotification);
+
+function closeNotification(){
   console.log("close notification");
   document.querySelector(".notification").classList.remove("active");
   document.querySelector(".feedback-form").classList.remove("active");
   setBodyScroll(true);
-});
+  toggleCloseMenuOnOutsideClick(false);
+}
