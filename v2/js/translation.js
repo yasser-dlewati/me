@@ -1,4 +1,5 @@
 import { resetClientsView } from "./clients.js";
+import { renderServices } from "./services.js";
 
 // Language data object
 const translations = {
@@ -31,6 +32,10 @@ const translations = {
             title: "Say Hey!",
             description: "Feel free to reach out for collaborations or just a friendly hello by dropping a message via.",
             or: "Or simply",
+        },
+        navigation:{
+            designedBy: "Designed and Developed by YasDle",
+            rights:"All rights reserved © 2025",
         },
         settings:{
             language:"Language",
@@ -70,6 +75,10 @@ const translations = {
             description: "يسعدني تواصلك سواء للتعاون أو لمجرد التحية، يمكنك مراسلتي عبر ",
             or: "أو ببساطة",
         },
+        navigation:{
+            designedBy: '<p dir="rtl">  صُمّم وطُوّر من قبل  <span dir="ltr">YasDle</span>',
+                        rights:"كل الحقوق محفوظة © 2025",
+        },
         settings:{
             language:"اللغة",
             en:"الانجليزية",
@@ -103,11 +112,12 @@ function switchLanguage(lang) {
         const key = el.getAttribute("data-translate");
         const translation = getNestedValue(translations[lang], key);
         if (translation) {
-            el.textContent = translation;
+            el.innerHTML = translation;
         }
     });
 
     resetClientsView();
+    renderServices();
 }
 
 const languageSelection = document.querySelector("#language");

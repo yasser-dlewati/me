@@ -320,6 +320,24 @@ html[dir="rtl"] .settings {
     right: calc(50% + 32px);
 }
 
+.info{
+    display: block;
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+    justify-items: end;
+}
+
+.info p{
+    margin: 0;
+    font-size: 12px;
+}
+
+html[dir="rtl"] .info {
+    right: auto;
+    left: 32px;
+}
+
 ul.indicator {
     padding: 0;
     display: flex;
@@ -477,13 +495,13 @@ html[dir="rtl"] .feedback-icon {
     font-weight: bold;
     text-align: center;
     margin: auto;
+    position: relative;
 }
 
 .logo h1 {
     font-size: clamp(80px, 10vw, 200px);
     padding: 40px 0;
     margin-bottom: 0;
-
 }
 
 .logo .top {
@@ -530,6 +548,12 @@ html[dir="rtl"] .feedback-icon {
     }
 }
 
+.tm{
+    position: absolute;
+    right: -32px;
+    bottom: 16px;
+    font-weight: bold;
+}
 
 .menu-icon {
     position: fixed;
