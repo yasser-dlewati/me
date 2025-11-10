@@ -10,7 +10,7 @@ feedbackIcon.addEventListener("click", function() {
   document.querySelector('.navigation').style.filter = 'blur(8px)';
   document.querySelector('.settings-container').style.filter = 'blur(8px)';
   setBodyScroll(false);
-  toggleCloseMenuOnOutsideClick(true);
+  toggleCloseMenuOnOutsideClick(true, [document.querySelector('.navigation'), document.querySelector('.settings-container')]);
 });
 
 const closeFeedbackFormButton = document.querySelector(".feedback-form .close");
@@ -22,28 +22,63 @@ closeFeedbackFormButton.addEventListener("click", () => {
   emailjs.init("ONBs1kJm-53DoguLS");
 })();
 
+const scriptURL = 'https://script.google.com/macros/s/AKfycby5MDcRfMicYaWx-MLn9WzIfnhCbRqzi2M3BVvS3ippy7n3aKCTZi6RXyXxsmmjS4D8Bw/exec'; // paste your Apps Script URL
+
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.querySelector("form.feedback-form");
 
-  form.addEventListener("submit", function (event) {
+  form.addEventListener("submit", async function (event) {
     event.preventDefault();
-    if (window.location.hostname === "localhost") {
-      document.querySelector(".notification").classList.add("active");
-      form.reset();
+    const form = event.target;
+    // if (window.location.hostname === "localhost") {
+    //   document.querySelector(".notification").classList.add("active");
+    //   form.reset();
 
-      return;
-    }
+    //   return;
+    // }
     // Option 1: Send by passing template params manually
-    emailjs
-      .send("service_6gtyqvg", "template_olpb3hy", {
-        from_name: "feedback_form",
-        message: txtFeedback.value,
-      })
-      .then((response) => {
-        form.reset();
-      })
-      .catch((error) => {
-        console.error(error);
+    // emailjs
+    //   .send("service_6gtyqvg", "template_olpb3hy", {
+    //     from_name: "feedback_form",
+    //     message: txtFeedback.value,
+    //   })
+    //   .then((response) => {
+    //     form.reset();
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+
+
+
+    const payload = {
+      content: form.txtFeedback.value,
+    };
+  
+    console.log(payload);
+    // Send to Google Sheet
+    try {
+      const res = await fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
       });
+  
+      const result = await res.json();
+      if (result.status === 'success') {
+        alert('✅ Feedback sent successfully!');
+        form.reset();
+      } else {
+        alert('⚠️ Something went wrong.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('❌ Failed to send feedback.' + err.message);
+    }
   });
-});
+
+  });
+
+
+
+
