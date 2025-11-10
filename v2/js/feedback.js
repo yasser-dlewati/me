@@ -54,6 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const payload = {
       content: form.txtFeedback.value,
     };
+
+    console.log(event);
   
     console.log(payload);
     // Send to Google Sheet
