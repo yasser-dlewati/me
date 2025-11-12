@@ -22,8 +22,7 @@ closeFeedbackFormButton.addEventListener("click", () => {
   emailjs.init("ONBs1kJm-53DoguLS");
 })();
 
-const scriptURL = //"https://cors-anywhere.herokuapp.com/
-"https://script.google.com/macros/s/AKfycbyZoQyiZ918cIyPK6uOwHHAAr3Uc-Yv5B3yPQzOQPIfWnxjYUZ0yYEAvwR-zwHFvkYmRQ/exec"; // paste your Apps Script URL
+const scriptURL = "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyZoQyiZ918cIyPK6uOwHHAAr3Uc-Yv5B3yPQzOQPIfWnxjYUZ0yYEAvwR-zwHFvkYmRQ/exec"; // paste your Apps Script URL
 
 
 document.addEventListener("DOMContentLoaded", function () {
