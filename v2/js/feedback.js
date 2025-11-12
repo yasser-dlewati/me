@@ -22,7 +22,9 @@ closeFeedbackFormButton.addEventListener("click", () => {
   emailjs.init("ONBs1kJm-53DoguLS");
 })();
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycby5MDcRfMicYaWx-MLn9WzIfnhCbRqzi2M3BVvS3ippy7n3aKCTZi6RXyXxsmmjS4D8Bw/exec'; // paste your Apps Script URL
+const scriptURL = //"https://cors-anywhere.herokuapp.com/
+"https://script.google.com/macros/s/AKfycbyZoQyiZ918cIyPK6uOwHHAAr3Uc-Yv5B3yPQzOQPIfWnxjYUZ0yYEAvwR-zwHFvkYmRQ/exec"; // paste your Apps Script URL
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.querySelector("form.feedback-form");
