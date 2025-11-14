@@ -29,13 +29,17 @@ closeFeedbackFormButton.addEventListener("click", () => {
   emailjs.init("ONBs1kJm-53DoguLS");
 })();
 
+const scriptURL =
+  "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyZoQyiZ918cIyPK6uOwHHAAr3Uc-Yv5B3yPQzOQPIfWnxjYUZ0yYEAvwR-zwHFvkYmRQ/exec"; // paste your Apps Script URL
+
 const formUrl =
   "https://docs.google.com/forms/u/0/d/e/1FAIpQLScEsx_ueZVOLSeN7nT6LAF1aD7Uk7j-1CSOhZhZcHtAKFjI8w/formResponse";
 
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.querySelector("form.feedback-form");
 
-  form.addEventListener("submit", async function () {
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
     var content = txtFeedback.value;
     sendFeedback(content);
   });
@@ -43,12 +47,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function sendFeedback(content) {
   const formData = new FormData();
-  formData.append("entry.500212983", content);
+  formData.append("entry.500212983", content); // Replace with your entry ID
   try {
     await fetch(formUrl, {
       method: "POST",
       body: formData,
-      mode: "no-cors",
+      mode: "no-cors", // <--- magic trick: bypasses CORS
     }).then(() => {
       feedbackForm.reset();
       document.querySelector(".notification").classList.add("active");
