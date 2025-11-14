@@ -295,14 +295,24 @@ function closeActiveMenuOnEscapeKey() {
   }
 }
 
-export function toggleCloseMenuOnOutsideClick(enable) {
+export function toggleCloseMenuOnOutsideClick(enable, additionalElements = []) {
   if(!enable) {
     document.querySelector('.content').removeEventListener('click', closeActiveMenuOnEscapeKey)
-    console.log('Disabled closing menu on outside click');
+    if (additionalElements && additionalElements.length > 0) {
+      additionalElements.forEach(element => {
+        element.removeEventListener("click", closeActiveMenuOnEscapeKey);
+      })
+    }
+    
     return;
   }
+
   document.querySelector('.content').addEventListener('click', closeActiveMenuOnEscapeKey)
-  console.log('Enabled closing menu on outside click');
+  if (additionalElements && additionalElements.length > 0) {
+    additionalElements.forEach(element => {
+      element.addEventListener("click", closeActiveMenuOnEscapeKey);
+    })
+  }
 }
 
 export function closeNavigationMenu() {
