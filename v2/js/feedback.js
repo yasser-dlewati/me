@@ -5,8 +5,14 @@ import {
 } from "./common.js";
 
 const txtFeedback = document.querySelector("#txtFeedback");
-const feedbackForm = document.querySelector(".feedback-form");
+const feedbackForm = document.querySelector("form.feedback-form");
+const notificationBox = document.querySelector(".notification")
+const message = document.querySelector(".notification .message")
 export const feedbackIcon = document.querySelector(".feedback-icon");
+
+(function() {
+  emailjs.init("ONBs1kJm-53DoguLS"); // from EmailJS dashboard
+})();
 
 feedbackIcon.addEventListener("click", function () {
   this.children[0].classList.remove("pulse");
@@ -36,9 +42,7 @@ const formUrl =
   "https://docs.google.com/forms/u/0/d/e/1FAIpQLScEsx_ueZVOLSeN7nT6LAF1aD7Uk7j-1CSOhZhZcHtAKFjI8w/formResponse";
 
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector("form.feedback-form");
-
-  form.addEventListener("submit", async function (event) {
+  feedbackForm.addEventListener("submit", async function (event) {
     event.preventDefault();
     var content = txtFeedback.value;
     sendFeedback(content);
@@ -46,18 +50,30 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function sendFeedback(content) {
-  const formData = new FormData();
-  formData.append("entry.500212983", content); // Replace with your entry ID
+  const formData = new FormData();// Replace with your entry ID
+  formData.append("entry.500212983", content); 
+  formData.append("entry.1920882552", document.body.getAttribute("data-theme")|| 'light'); 
   try {
     await fetch(formUrl, {
       method: "POST",
       body: formData,
       mode: "no-cors", // <--- magic trick: bypasses CORS
     }).then(() => {
+      showNotification('success');
       feedbackForm.reset();
-      document.querySelector(".notification").classList.add("active");
     });
   } catch (error) {
-    console.error("Error!", error.message);
+    showNotification('error', error.message);
+  }
+}
+
+export function showNotification(type, content){
+  notificationBox.classList.add('active');
+  message.innerHTML = type === 'success' ? '<i class="fa-solid fa-check"></i> Feedback sent successfully. Thank you!' : '<i class="fa-solid fa-x"></i> An error occurred while sending feedback. Please try again later.';
+  if(type ==='error'){
+    emailjs.send("service_6gtyqvg", "template_olpb3hy", {
+      from_name: "feedback_form",
+    message: 'Failed to send feedback: ' + content,
+    })
   }
 }
