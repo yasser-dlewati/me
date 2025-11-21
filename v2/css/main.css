@@ -30,6 +30,8 @@
     --base-font-size: min(3vw, 16px);
     --button-font-size: 20px;
     --small-font-size: 12px;
+    --medium-font-size: 16px;
+    --big-font-size: 24px;
 
     --h2-font-color: var(--text-dark-color);
 
@@ -855,10 +857,12 @@ div:has(.scroll-horizontally) {
 
 #contact a.copy {
     margin: 0 16px;
+    font-size: var(--big-font-size);
 }
 
 .copy-tooltip {
     display: none;
+    font-size: var(--small-font-size);
     border-radius: var(--border-radius-small);
     background-color: var(--text-dark-color);
     color: var(--text-light-color);

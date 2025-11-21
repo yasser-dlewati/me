@@ -9,7 +9,7 @@ const translations = {
             scroll: "Scroll down to know more..."
         },
         about:{
-            navigator:"About Me",
+            navigation:"About Me",
             title: "about me",
             description: `My name is Yasser, but you can call me Yas, a self tought software engineer with more than 9 years of experience, passionate about stretching my mind with solving complicated problems, writing code and learning new stuff.
             I worked in multiple companies vary in size from startups, SMEs to big enterprises, stepping up and climping up the ladder from a junior to a mid level and end up with a senior role, I also served as a team leader from a small portion of time. I have hands on experience with web, mobile and desktop development.`, 
@@ -24,14 +24,15 @@ const translations = {
             here: "here",
         },
         services:{
-            navigator:"Services",
+            navigation:"Services",
             title: "Things I can do",
         },
         contact:{
-            navigator:"Contact Me",
+            navigation:"Contact Me",
             title: "Say Hey!",
             description: "Feel free to reach out for collaborations or just a friendly hello by dropping a message via.",
             or: "Or simply",
+            copied:"Copied to clipboard!",
         },
         navigation:{
             designedBy: "Designed and Developed by YasDle",
@@ -44,6 +45,12 @@ const translations = {
             darkMode:"Dark Mode",
             undergraduate:"Show Undergraduate experience",
             save:"Save settings locally",
+        },
+        feedback:{
+            title:"your say!",
+            description:"Please share your thoughts, suggestions, or any issues you encountered while using my website. Your input helps me improve and provide a better experience for all visitors.",
+            placeholder:"Got a thought? Share it here...",
+            submit:"Submit Feedback",
         }
     },
     ar: {
@@ -74,6 +81,7 @@ const translations = {
             title: "تواصل معي!",
             description: "يسعدني تواصلك سواء للتعاون أو لمجرد التحية، يمكنك مراسلتي عبر ",
             or: "أو ببساطة",
+            copied:"تم النسخ!",
         },
         navigation:{
             designedBy: '<p dir="rtl">  صُمّم وطُوّر من قبل  <span dir="ltr">YasDle</span>',
@@ -86,6 +94,12 @@ const translations = {
             darkMode:"الوضع الداكن",
             undergraduate:"عرض خبرات المرحلة الجامعية",
             save:"حفظ الإعدادات محليًا",
+        },
+        feedback:{
+            title:"أبد رأيك!",
+            description:" شارك أفكارك، اقتراحاتك، أو أي مشكلات واجهتها أثناء استخدام موقعي الإلكتروني. تساعدني ملاحظاتك في التحسين وتوفير تجربة أفضل لجميع الزوار.",
+            placeholder:"لديك فكرة؟ شاركها هنا...",
+            submit:"أرسل",
         }
     },
 };
