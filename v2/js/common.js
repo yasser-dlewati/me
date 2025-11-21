@@ -277,7 +277,7 @@ export function setBodyScroll(scrollable) {
 }
 
 function closeActiveMenuOnEscapeKey() {
-  if(document.querySelector('.feedback-form').classList.contains('active')) {
+  if(document.querySelector('.feedback').classList.contains('active')) {
     closeFeedbackForm();
     console.log('Clicked outside feedback form, closing it');
   }
@@ -335,7 +335,7 @@ export function closeSettingsMenu() {
 
 export function closeFeedbackForm() {
   document.querySelector(".notification").classList.remove("active");
-  document.querySelector(".feedback-form").classList.remove("active");
+  document.querySelector(".feedback").classList.remove("active");
   document.querySelector(".navigation").style.filter = "";
   document.querySelector(".settings-container").style.filter = "";
   let sideMenusAreActive = document.querySelector(".navigation").classList.contains("active") ||
@@ -373,7 +373,7 @@ btnCloseNotification.addEventListener("click", closeNotification);
 function closeNotification(){
   console.log("close notification");
   document.querySelector(".notification").classList.remove("active");
-  document.querySelector(".feedback-form").classList.remove("active");
+  document.querySelector(".feedback").classList.remove("active");
   setBodyScroll(true);
   toggleCloseMenuOnOutsideClick(false);
 }

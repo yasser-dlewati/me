@@ -422,7 +422,7 @@ html[dir="rtl"] .feedback-icon {
     }
 }
 
-.feedback-form,
+.feedback,
 .notification {
     position: fixed;
     bottom: -100%;
@@ -436,6 +436,20 @@ html[dir="rtl"] .feedback-icon {
     transition: bottom 0.4s ease-in-out;
 }
 
+.feedback .loading-overlay {
+    display: none !important;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
 .notification {
     border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
     background-color: var(--bg-light-color);
@@ -443,7 +457,7 @@ html[dir="rtl"] .feedback-icon {
     text-align: center;
 }
 
-.feedback-form .close,
+.feedback .close,
 .notification .close {
     position: absolute;
     top: 32px;
@@ -451,7 +465,7 @@ html[dir="rtl"] .feedback-icon {
     font-size: 32px;
 }
 
-.feedback-form .form-control {
+.feedback .form-control {
     width: 100%;
     border-radius: var(--border-radius-small);
     border: 2px solid var(--text-lights-color);
@@ -460,18 +474,18 @@ html[dir="rtl"] .feedback-icon {
     resize: none;
 }
 
-.feedback-form h4 {
+.feedback h4 {
     text-align: right;
 }
 
-.feedback-form .button.primary {
+.feedback .button.primary {
     width: 100%;
     min-width: auto;
     border: none;
     margin-bottom: 0;
 }
 
-.feedback-form.active {
+.feedback.active {
     bottom: 0;
 }
 
@@ -995,11 +1009,11 @@ footer .social-links a {
         font-size: 2.5rem;
     }
 
-    .feedback-form .button.primary {
+    .feedback .button.primary {
         padding: 16px;
     }
 
-    .feedback-form h4 {
+    .feedback h4 {
         margin-bottom: 32px;
         text-align: center;
     }

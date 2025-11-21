@@ -5,7 +5,7 @@ import {
 } from "./common.js";
 
 const txtFeedback = document.querySelector("#txtFeedback");
-const feedbackForm = document.querySelector("form.feedback-form");
+const feedbackForm = document.querySelector("form.feedback");
 const notificationBox = document.querySelector(".notification");
 const message = document.querySelector(".notification .message");
 const cloudinaryName = "dxvgozjup";
@@ -28,7 +28,7 @@ feedbackIcon.addEventListener("click", function () {
   ]);
 });
 
-const closeFeedbackFormButton = document.querySelector(".feedback-form .close");
+const closeFeedbackFormButton = document.querySelector(".feedback .close");
 closeFeedbackFormButton.addEventListener("click", () => {
   closeFeedbackForm();
 });
@@ -105,6 +105,13 @@ async function captureScreenshot() {
 }
 
 async function sendFeedback(content) {
+  const loadingOverlay = document.querySelector(".feedback .loading-overlay");
+  loadingOverlay.style.setProperty('display', 'flex', 'important'); 
+  document.querySelectorAll("form.feedback *:not(.loading-overlay)").forEach(
+    (el) => {
+      el.style.filter = "blur(8px)";
+    }
+  )
   const formData = new FormData();
   const screenshotBase64 = await captureScreenshot();
   const imageUrl = await uploadScreenshot(screenshotBase64);
@@ -125,6 +132,13 @@ async function sendFeedback(content) {
   } catch (error) {
     console.log(error);
     showNotification("error", error.message);
+  } finally {
+    document.querySelectorAll("form.feedback *:not(.loading-overlay)").forEach(
+      (el) => {
+        el.style.filter = "";
+      }
+    )
+    loadingOverlay.style.display = "";
   }
 }
 
