@@ -23,7 +23,7 @@
     --h1-font-size: 200px;
     --h2-font-size: max(44px, 4.5vw);
     --h3-font-size: 4.5vw;
-    --h4-font-size: 3vw;
+    --h4-font-size: max(28px, 3vw);
     --h5-font-size: min(32px, 4.5vw);
     --h6-font-size: 24px;
     --base-font-size: min(3vw, 16px);
@@ -735,5 +735,31 @@ footer .logo .bottom {
 
     section#contact .col-md-8{
         text-align: center;
+    }
+
+    .navigation.active,
+    .experience-details-container.active {
+    transform: translateX(0%);
+    transition: transform 0.5s ease-in; 
+    }
+
+    .navigation .links {
+        left: calc(50% - 40px);
+        text-align: center;
+    }
+
+    .settings-container.active {
+        transform: translateX(calc(0% + 8px));
+    }
+
+    .setting-row{
+        max-width: 100%;
+    }
+
+    .settings,
+    .navigation .close,
+    .experience-details-container .close,
+    .settings-container .close {
+        right: 0;
     }
   }
