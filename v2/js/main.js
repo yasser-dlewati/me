@@ -1,12 +1,12 @@
 "use strict";
-// main.js
-import { renderClients } from './clients.js';
+import { renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu } from "./common.js";
+import { feedbackIcon } from "./feedback.js";
 
 const setSectionsStylesForScrolling = () => {
   $("section").each(function (index) {
     $(this).css("z-index", index + 1);
     $(this).css("top", `${index * 8}px`);
-    $(this).height(`calc(100vh - ${index * 8}px)`);
+    $(this).height(`calc(100dvh - ${index * 8}px)`);
   });
 };
 
@@ -17,7 +17,8 @@ const renderNavigationLinks = () => {
 
 const renderScreenIndicator = () => {
   var content = getSectionsCount();
-  $(".screen-indicator").html(content);
+  document.querySelector(".screen.indicator").style.display = "none";
+  $(".screen.indicator").html(content);
 };
 
 function getSectionsCount(withNames) {
@@ -28,7 +29,7 @@ function getSectionsCount(withNames) {
     if (withNames) {
       let sectionId = $($(sections)[i]).attr("id");
       content = content.concat(
-        '<a href="#' + sectionId + '"><h4>' + sectionId + "</h4></a>"
+        '<a href="#' + sectionId + '" data-translate="'+sectionId+'.navigation"><h4>' + sectionId + "</h4></a>"
       );
     } else {
       content = content.concat("<li></li>");
@@ -38,10 +39,10 @@ function getSectionsCount(withNames) {
 }
 
 function setScreenIndicator(index) {
-  $(".screen-indicator li").each(function () {
+  $(".screen.indicator li").each(function () {
     $(this).removeClass("active");
   });
-  $($(".screen-indicator li")[index]).addClass("active");
+  $($(".screen.indicator li")[index]).addClass("active");
 }
 
 function setScreenIndicatorAccordingToScroll() {
@@ -63,9 +64,27 @@ function setScreenIndicatorAccordingToScroll() {
   }
 }
 
+Element.prototype.hideForInSeconds = function(seconds) {
+  this.style.display = 'none';
+  setTimeout(() => {
+    this.style.display = '';
+  }, seconds * 1000);
+};
+
+Element.prototype.addBouncyAnimationAfterInSeconds = function(seconds) {
+  setTimeout(() => {
+    console.log('Adding bouncy class to', this);
+    this.classList.add('bouncy');
+  }, seconds * 1000);
+};
+
+const topScrollDiv = document.querySelector("#top .scroll");
+const aboutSection = document.querySelector("section#about");
+const menuIcon = document.querySelector(".menu-icon");
 $(document).ready(function () {
   readSavedSettings();
-
+  topScrollDiv.hideForInSeconds(1.5);
+  aboutSection.addBouncyAnimationAfterInSeconds(1.5);
   setSectionsStylesForScrolling();
   window.scrollTo(0, 0);
 
@@ -94,45 +113,27 @@ $(document).ready(function () {
   setScreenIndicator(0);
 
   $(".navigation .close").click(function () {
-    if (document.querySelector(".navigation").classList.contains("active")) {
-      setTimeout(() => {
-        $("section, footer").css("filter", "");
-        $(".screen-indicator").removeClass("show-nav");
-        $(".navigation").removeClass("active"); 
-        $(".navigation").css("box-shadow", "none");
-      }, 500);
-    }
-    $(".content").css("overflow", "");
-    document.querySelector('body').style.removeProperty("overflow-y");
+    closeNavigationMenu();
   });
 
   $(".settings-container .close").click(function () {
-    if (
-      document.querySelector(".settings-container").classList.contains("active")
-    ) {
-      $(".settings-container").removeClass("active");
-      setTimeout(() => {
-        $(".navigation > *").css("filter", "");
-        $(".settings-container").css("box-shadow", "none");
-      }, 500);
-    }
+    closeSettingsMenu();
   });
-  
-  $(".menu-icon").click(function () {
+
+  menuIcon.addEventListener("click", function () {
     if (!document.querySelector(".navigation").classList.contains("active")) {
-      $(".navigation").addClass("active");
-      $("section, footer").css("filter", "blur(8px)");
-      $(".navigation").css("box-shadow", "var(--menu-box-shadow)");
-      document.querySelector('body').style.overflowY = 'hidden';
-      document.querySelector("body").style.background = "var(--bg-dark-color)";
+      document.querySelector(".navigation").classList.add("active");
+      setBodyScroll(false);
+      document.querySelector(".navigation").style.boxShadow = "var(--menu-box-shadow)";
     }
+
+    toggleCloseMenuOnOutsideClick(true);
   });
 
   $(".settings").click(() => {
     $(".settings-container").addClass("active");
     $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
     $(".settings-container").css("box-shadow", "var(--menu-box-shadow)");
-    $(".content").css("overflow", "hidden");
   });
 
   const messages = [];
@@ -159,23 +160,15 @@ $(document).ready(function () {
     cycle();
   });
 
-  $(".links a").click(function (e) {
-    e.preventDefault();
-    $(".content").css("overflow", "hidden");
-    const targetId = $(this).attr("href");
-    const target = $(targetId);
-    $("html, body").animate(
-      {
-        scrollTop: target.offset().top,
-      },
-      600
-    ); // 600 =
-    $(".navigation .close").click();
-  });
-});
-
-$(document).on("wheel", function (e) {
-  $(".content").css("overflow", "");
+  document.querySelectorAll('.links a').forEach(link => {
+    link.addEventListener('click', e => {
+      document.querySelector(".content").style.overflow = "hidden";
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      closeNavigationMenu();
+    });
+  });  
 });
 
 $(".copy").on("click", function (e) {
@@ -183,10 +176,10 @@ $(".copy").on("click", function (e) {
   const email = $(".email h5").text().trim();
   navigator.clipboard.writeText(email).then(() => {
     const $tooltip = $(this).find(".copy-tooltip");
-    $tooltip.show()
+    $tooltip.show();
 
     setTimeout(() => {
-      $tooltip.hide()
+      $tooltip.hide();
     }, 1500);
   });
 });
@@ -221,22 +214,51 @@ darkModeToggle.addEventListener("change", function () {
 var saveSettingsCheckbox = document.querySelector("#saveSettingsLocally");
 saveSettingsCheckbox.addEventListener("change", function () {
   if (document.querySelector("#saveSettingsLocally").checked) {
-    if(this.checked)
-    localStorage.setItem("theme", document.querySelector("#darkModeSwitch").checked ? "dark" : "light");
-    localStorage.setItem("underGraduate", document.querySelector("#showUnderGraduateExperience").checked);
+    if (this.checked)
+      localStorage.setItem(
+        "theme",
+        document.querySelector("#darkModeSwitch").checked ? "dark" : "light"
+      );
+    localStorage.setItem(
+      "underGraduate",
+      document.querySelector("#showUnderGraduateExperience").checked
+    );
   } else {
     localStorage.removeItem("theme");
     localStorage.removeItem("underGraduate");
   }
 });
 
-var showUnderGraduateExperienceToggle = document.querySelector("#showUnderGraduateExperience");
+var showUnderGraduateExperienceToggle = document.querySelector(
+  "#showUnderGraduateExperience"
+);
 showUnderGraduateExperienceToggle.addEventListener("change", function () {
   if (saveSettingsCheckbox.checked) {
     localStorage.setItem("underGraduate", this.checked);
-  }else{
+  } else {
     localStorage.removeItem("underGraduate");
   }
 
   renderClients();
+});
+
+const screenIndicator = document.querySelector("ul.screen.indicator");
+
+topScrollDiv.addEventListener("click", function () {
+  this.classList.remove("bouncy");
+  const currentSection = this.parentElement;
+  const nextSection = currentSection.nextElementSibling;
+  window.scrollTo({
+    top: nextSection.offsetTop,
+    behavior: "smooth",
+  });
+});
+
+$(window).on("scroll", function () {
+  topScrollDiv.classList.remove("bouncy");
+  aboutSection.classList.remove("bouncy");
+  menuIcon.style.removeProperty("display");
+  console.log("scroll statrted");
+  screenIndicator.style.removeProperty("display");
+  feedbackIcon.style.removeProperty("display");
 });
