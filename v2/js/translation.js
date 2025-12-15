@@ -2,7 +2,7 @@ import { resetClientsView } from "./clients.js";
 import { renderServices } from "./services.js";
 
 // Language data object
-const translations = {
+export const translations = {
     en: {
         top:{
             navigation:"Top",
@@ -51,6 +51,9 @@ const translations = {
             description:"Please share your thoughts, suggestions, or any issues you encountered while using my website. Your input helps me improve and provide a better experience for all visitors.",
             placeholder:"Got a thought? Share it here...",
             submit:"Submit Feedback",
+            inProgress:"Submitting your feedback...",
+            success:"Feedback sent successfully. Thank you!",
+            fail:"Failed to send feedback. Please try again later.",
         }
     },
     ar: {
@@ -100,6 +103,9 @@ const translations = {
             description:" شارك أفكارك، اقتراحاتك، أو أي مشكلات واجهتها أثناء استخدام موقعي الإلكتروني. تساعدني ملاحظاتك في التحسين وتوفير تجربة أفضل لجميع الزوار.",
             placeholder:"لديك فكرة؟ شاركها هنا...",
             submit:"أرسل",
+            inProgress:"جاري إرسال ملاحظاتك...",
+            success:"تم إرسال ملاحظاتك بنجاح. شكرًا لك!",
+            fail:"فشل في إرسال الملاحظات. يرجى المحاولة مرة أخرى لاحقًا.",
         }
     },
 };

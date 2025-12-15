@@ -4,6 +4,8 @@ import {
   closeFeedbackForm,
 } from "./common.js";
 
+import { translations } from "./translation.js";
+
 const txtFeedback = document.querySelector("#txtFeedback");
 const feedbackForm = document.querySelector("form.feedback");
 const notificationBox = document.querySelector(".notification");
@@ -107,11 +109,11 @@ async function captureScreenshot() {
 async function sendFeedback(content) {
   const loadingOverlay = document.querySelector(".feedback .loading-overlay");
   loadingOverlay.style.setProperty('display', 'flex', 'important'); 
-  document.querySelectorAll("form.feedback *:not(.loading-overlay)").forEach(
+  document.querySelectorAll("form.feedback *:not(.loading-overlay):not(.loading-overlay span)").forEach(
     (el) => {
       el.style.filter = "blur(8px)";
     }
-  )
+  );
   const formData = new FormData();
   const screenshotBase64 = await captureScreenshot();
   const imageUrl = await uploadScreenshot(screenshotBase64);
@@ -144,10 +146,13 @@ async function sendFeedback(content) {
 
 export function showNotification(type, content) {
   notificationBox.classList.add("active");
+  let isArabic = document.documentElement.lang === 'ar';
+  let successMessageContent = isArabic ? translations.ar.feedback.success : translations.en.feedback.success;
+  let failMessageContent = isArabic ? translations.ar.feedback.fail : translations.en.feedback.fail;
   message.innerHTML =
     type === "success"
-      ? '<i class="fa-solid fa-check"></i> Feedback sent successfully. Thank you!'
-      : '<i class="fa-solid fa-x"></i> An error occurred while sending feedback. Please try again later.';
+      ? '<i class="fa-solid fa-check"></i> '+ successMessageContent
+      : '<i class="fa-solid fa-x"></i> '+ failMessageContent;
   if (type === "error") {
     emailjs.send("service_6gtyqvg", "template_olpb3hy", {
       from_name: "feedback_form",
