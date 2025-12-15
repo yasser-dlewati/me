@@ -81,6 +81,7 @@ Element.prototype.addBouncyAnimationAfterInSeconds = function(seconds) {
 const topScrollDiv = document.querySelector("#top .scroll");
 const aboutSection = document.querySelector("section#about");
 const menuIcon = document.querySelector(".menu-icon");
+const settingsIcon = document.querySelector(".settings");
 $(document).ready(function () {
   readSavedSettings();
   topScrollDiv.hideForInSeconds(1.5);
@@ -125,15 +126,18 @@ $(document).ready(function () {
       document.querySelector(".navigation").classList.add("active");
       setBodyScroll(false);
       document.querySelector(".navigation").style.boxShadow = "var(--menu-box-shadow)";
+      toggleCloseMenuOnOutsideClick(true);
     }
 
-    toggleCloseMenuOnOutsideClick(true);
   });
 
-  $(".settings").click(() => {
-    $(".settings-container").addClass("active");
-    $(".navigation > :not(.settings-container)").css("filter", "blur(8px)");
-    $(".settings-container").css("box-shadow", "var(--menu-box-shadow)");
+  settingsIcon.addEventListener("click", function () {
+    document.querySelector(".settings-container").classList.add("active");
+    document.querySelectorAll(".navigation > :not(.settings-container)").forEach((el) => {
+        el.style.filter = "blur(8px)";
+    });
+    document.querySelector(".settings-container").style.boxShadow = "var(--menu-box-shadow)";
+    toggleCloseMenuOnOutsideClick(true);
   });
 
   const messages = [];

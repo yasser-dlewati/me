@@ -276,7 +276,7 @@ export function setBodyScroll(scrollable) {
   })
 }
 
-function closeActiveMenuOnEscapeKey() {
+function closeActiveMenuWhenClickOutside() {
   if(document.querySelector('.feedback').classList.contains('active')) {
     closeFeedbackForm();
     console.log('Clicked outside feedback form, closing it');
@@ -295,22 +295,22 @@ function closeActiveMenuOnEscapeKey() {
   }
 }
 
-export function toggleCloseMenuOnOutsideClick(enable, additionalElements = []) {
-  if(!enable) {
-    document.querySelector('.content').removeEventListener('click', closeActiveMenuOnEscapeKey)
+export function toggleCloseMenuOnOutsideClick(isClosing, additionalElements = []) {
+  if(!isClosing) {
+    document.querySelector('.content').removeEventListener('click', closeActiveMenuWhenClickOutside)
     if (additionalElements && additionalElements.length > 0) {
       additionalElements.forEach(element => {
-        element.removeEventListener("click", closeActiveMenuOnEscapeKey);
+        element.removeEventListener("click", closeActiveMenuWhenClickOutside);
       })
     }
     
     return;
   }
 
-  document.querySelector('.content').addEventListener('click', closeActiveMenuOnEscapeKey)
+  document.querySelector('.content').addEventListener('click', closeActiveMenuWhenClickOutside)
   if (additionalElements && additionalElements.length > 0) {
     additionalElements.forEach(element => {
-      element.addEventListener("click", closeActiveMenuOnEscapeKey);
+      element.addEventListener("click", closeActiveMenuWhenClickOutside);
     })
   }
 }
@@ -326,11 +326,19 @@ export function closeNavigationMenu() {
 }
 
 export function closeSettingsMenu() {
-  $(".settings-container").removeClass("active");
-      setTimeout(() => {
-        $(".navigation > *").css("filter", "");
-        $(".settings-container").css("box-shadow", "none");
-      }, 500);
+  setTimeout(() => {
+    $(".settings-container").removeClass("active");
+    $(".navigation > *").css("filter", "");
+    $(".settings-container").css("box-shadow", "none");
+  }, 100);
+  let additionalMenus = []
+  if(document.querySelector(".navigation").classList.contains("active")){
+    additionalMenus.push(document.querySelector(".navigation"))
+  }
+  if(document.querySelector(".settings-container").classList.contains("active")){
+    additionalMenus.push(document.querySelector(".settings-container"))
+  }
+  toggleCloseMenuOnOutsideClick(false, additionalMenus);
 }
 
 export function closeFeedbackForm() {
@@ -348,8 +356,11 @@ export function closeFeedbackForm() {
 
   // Allow removing the blur effect only if no side menus are active  
   if (!sideMenusAreActive) {
-    setBodyScroll(true);
-    toggleCloseMenuOnOutsideClick(false);
+    setBodyScroll(true)
+    //toggleCloseMenuOnOutsideClick(false);
+  }
+  else{
+    console.log("Side menu is active, keeping body scroll disabled");
   }
 }
 

@@ -24,10 +24,14 @@ feedbackIcon.addEventListener("click", function () {
   document.querySelector(".navigation").style.filter = "blur(8px)";
   document.querySelector(".settings-container").style.filter = "blur(8px)";
   setBodyScroll(false);
-  toggleCloseMenuOnOutsideClick(true, [
-    document.querySelector(".navigation"),
-    document.querySelector(".settings-container"),
-  ]);
+  let additionalMenus = []
+  if(document.querySelector(".navigation").classList.contains("active")){
+    additionalMenus.push(document.querySelector(".navigation"))
+  }
+  if(document.querySelector(".settings-container").classList.contains("active")){
+    additionalMenus.push(document.querySelector(".settings-container"))
+  }
+  toggleCloseMenuOnOutsideClick(true, additionalMenus);
 });
 
 const closeFeedbackFormButton = document.querySelector(".feedback .close");
