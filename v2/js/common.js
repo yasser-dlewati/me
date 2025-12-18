@@ -270,10 +270,17 @@ export function setBodyScroll(scrollable) {
   document.querySelector("ul.indicator").style.filter = scrollable ? "" : "blur(8px)";
   document.querySelector(".menu-icon").classList.toggle("disabled", !scrollable);
   document.querySelector(".menu-icon").style.filter = scrollable ? "" : "blur(8px)";
-  document.querySelectorAll(".content a").forEach(a => {
+  document.querySelectorAll(".content a").forEach((a) => {
     a.classList.toggle("disabled", !scrollable);
     a.style.filter = scrollable ? "" : "blur(8px)";
-  })
+  });
+  document.querySelectorAll(".experience-item img").forEach((img) => {
+    if (!scrollable) {
+      img.removeEventListener("click", showClientDetails);
+    } else {
+      img.addEventListener("click", showClientDetails);
+    }
+  });
 }
 
 function closeActiveMenuWhenClickOutside() {
