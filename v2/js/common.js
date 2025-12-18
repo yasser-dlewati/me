@@ -353,21 +353,14 @@ export function closeFeedbackForm() {
   document.querySelector(".feedback").classList.remove("active");
   document.querySelector(".navigation").style.filter = "";
   document.querySelector(".settings-container").style.filter = "";
-  let sideMenusAreActive = document.querySelector(".navigation").classList.contains("active") ||
-  document
-    .querySelector(".settings-container")
-    .classList.contains("active") ||
-  document
-    .querySelector(".experience-details-container")
-    .classList.contains("active");
+  document.querySelector(".experience-details-container").style.filter = "";
+  let sideMenusAreActive = document.querySelector(".navigation").classList.contains("active")
+   || document.querySelector(".settings-container").classList.contains("active") 
+   || document.querySelector(".experience-details-container").classList.contains("active");
 
   // Allow removing the blur effect only if no side menus are active  
   if (!sideMenusAreActive) {
     setBodyScroll(true)
-    //toggleCloseMenuOnOutsideClick(false);
-  }
-  else{
-    console.log("Side menu is active, keeping body scroll disabled");
   }
 }
 

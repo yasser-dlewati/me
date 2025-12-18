@@ -23,6 +23,7 @@ feedbackIcon.addEventListener("click", function () {
   feedbackForm.classList.add("active");
   document.querySelector(".navigation").style.filter = "blur(8px)";
   document.querySelector(".settings-container").style.filter = "blur(8px)";
+  document.querySelector(".experience-details-container").style.filter = "blur(8px)";
   setBodyScroll(false);
   let additionalMenus = []
   if(document.querySelector(".navigation").classList.contains("active")){
