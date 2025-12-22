@@ -134,7 +134,7 @@ const experienceJson = [
     position: "Senior software engineer I",
     positionAr: "مهندس برمجيات خبير (مستوى 1)",
     duration: 18,
-    isCurrentCompany: true,
+    isCurrentCompany: false,
     description:
       "Woring in a team t delive a first class tier code. paricipating in mind storm sessions to detect the weakness points in the app and workin with task force team to present a solid plan to migrate to the legacy solutions to the latest technology.",
       descriptionAr:
@@ -150,7 +150,7 @@ const experienceJson = [
     company: "Carsome",
     position: "Senior software engineer II",
     positionAr: "مهندس برمجيات خبير (مستوى 2)",
-    duration: 6,
+    joinedDate: "2025-07-14",
     isCurrentCompany: true,
     description:
       "Working in a fast paced environment to deliver high quality code that meets the business requirements. Collaborating with cross-functional teams to design, develop, and implement new features and functionalities.",
@@ -213,6 +213,52 @@ export function renderClients() {
   });
 }
 
+export function setExperienceDuration(date=null, months=null) {
+  const andString = language.value == "en" ? " and " : " و ";
+  const monthString = language.value == "en" ? " month" : " شهر ";
+  const monthsString = language.value == "en" ? " months" : " أشهر ";
+  const yearString = language.value == "en" ? " year" : " سنة ";
+  const yearsString = language.value == "en" ? " years" : " سنوات ";
+
+  if(date){
+    const firstWorkingDate = new Date(date);
+    const todayDate = new Date();
+    const workingDurationInYears = todayDate.getFullYear() - firstWorkingDate.getFullYear();
+    const monthsDifference = todayDate.getMonth() - firstWorkingDate.getMonth();
+    if (workingDurationInYears >= 10) {
+      return "more than a decade";
+    } else {
+      if (monthsDifference < 5) {
+        return "more than " + workingDurationInYears + " years";
+      } else if (monthsDifference >= 5 && monthsDifference < 6) {
+        return "about " + workingDurationInYears + " years and a half";
+      } else if (monthsDifference >= 6 && monthsDifference <= 11) {
+        if (workingDurationInYears === 9) {
+         return "nearly a decade";
+        }
+       return "more than " + workingDurationInYears + " years and a half";
+    }
+  }
+  } else if(months){
+  let resultText = "";
+    let years = Math.floor(parseInt(months) / 12);
+    let remainingMonths = parseInt(months) % 12;
+    if(years>0){
+    resultText = years + (years > 1 ? yearsString : yearString);
+    }
+
+    if(years > 0 && remainingMonths > 0){
+      resultText += andString;
+    }
+
+    if(remainingMonths > 0){
+      resultText += remainingMonths + (remainingMonths > 1 ? monthsString : monthString);
+    }
+  }
+
+  return resultText;
+}
+
 function showClientDetails(event) {
 // Prevent the event from propagating further since the event goes to the parent
 event.stopPropagation(); 
@@ -230,25 +276,25 @@ document.body.attributes["data-theme"].value === "dark";
     (x) => x.company === companyName
   );
     const html = `<div class="container">
-      <div class="row">
-      <div class="col-12">
-      <img src="./images/${
-        relatedExperience.imageSrc
-      }" alt="${companyName}" class="company-logo">
-      <h4 class="company-name">${language.value == 'en' ? relatedExperience.company : relatedExperience.companyAr ?? relatedExperience.company }</h4>
-      <h5 class="position">${language.value == 'en' ? relatedExperience.position : relatedExperience.positionAr}</h5>
-      <p class="duration">Duration: ${relatedExperience.duration} months</p>
-      <p>${language.value == 'en' ? relatedExperience.description : relatedExperience.descriptionAr}</p>
-      <p>Visit ${companyName} Website <a href="${
-      relatedExperience.websiteUrl
-    }" target="_blank" rel="noopener">here</a>!</p>
-      <iframe src="https://www.google.com/maps/embed?${
-        relatedExperience.embededMapLink
-      }" width="100%" height="200" style=' ${
-      isDarkMode ? "filter:invert(90%)" : ""
-    }' allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-      </div>
+        <div class="row">
+          <div class="col-12">
+          <img src="./images/${relatedExperience.imageSrc}" alt="${companyName}" class="company-logo">
+          <h4 class="company-name">${language.value == "en" ? relatedExperience.company : relatedExperience.companyAr ?? relatedExperience.company
+          }</h4>
+          <h5 class="position">${language.value == "en" ? relatedExperience.position : relatedExperience.positionAr}</h5>
+          <p>${language.value == "en" ? relatedExperience.description : relatedExperience.descriptionAr}. 
+           ${relatedExperience.isCurrentCompany
+              ? language.value == "en"
+                ? "I've been working here for " + setExperienceDuration(relatedExperience.joinedDate)
+                : "أعمل في هذه الشركة منذ" + setExperienceDuration(relatedExperience.joinedDate)
+              : language.value == "en"
+                ? "I worked here for " + setExperienceDuration(null, relatedExperience.duration)
+                : "عملت في هذه الشركة لمدة " + setExperienceDuration(null, relatedExperience.duration)
+          }.</p>
+          <p>Visit ${companyName} Website <a href="${relatedExperience.websiteUrl}" target="_blank" rel="noopener">here</a>!</p>
+          <iframe src="https://www.google.com/maps/embed?${relatedExperience.embededMapLink}" width="100%" height="200" style=' ${isDarkMode ? "filter:invert(90%)" : ""}' allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
       </div>`;
     document.querySelector(".experience-details").innerHTML = html;
     document.querySelectorAll('.experience-item img, .scroll-horizontally').forEach(img => {
@@ -290,6 +336,7 @@ function closeActiveMenuWhenClickOutside() {
   }
   else if(document.querySelector('.settings-container').classList.contains('active')) {
     closeSettingsMenu();
+    closeNavigationMenu();
     console.log('Clicked settings menu, closing it');
   }
   else if(document.querySelector('.navigation').classList.contains('active')) {
