@@ -220,43 +220,54 @@ export function setExperienceDuration(date=null, months=null) {
   const yearString = language.value == "en" ? " year" : " سنة ";
   const yearsString = language.value == "en" ? " years" : " سنوات ";
 
-  if(date){
+  if (date) {
     const firstWorkingDate = new Date(date);
     const todayDate = new Date();
-    const workingDurationInYears = todayDate.getFullYear() - firstWorkingDate.getFullYear();
+    const workingDurationInYears =
+      todayDate.getFullYear() - firstWorkingDate.getFullYear();
     const monthsDifference = todayDate.getMonth() - firstWorkingDate.getMonth();
     if (workingDurationInYears >= 10) {
       return "more than a decade";
-    } else {
+    } else if(workingDurationInYears >0){
       if (monthsDifference < 5) {
         return "more than " + workingDurationInYears + " years";
       } else if (monthsDifference >= 5 && monthsDifference < 6) {
         return "about " + workingDurationInYears + " years and a half";
-      } else if (monthsDifference >= 6 && monthsDifference <= 11) {
+      } else if (monthsDifference >= 6 && monthsDifference <= 9) {
         if (workingDurationInYears === 9) {
-         return "nearly a decade";
+          return "nearly a decade";
         }
-       return "more than " + workingDurationInYears + " years and a half";
+        return "more than " + workingDurationInYears + " years and a half";
+      }
+    } else {
+      if (monthsDifference < 5) {
+        return "less than half a year";
+      } else if (monthsDifference >= 5 && monthsDifference < 6) {
+        return "about half a year";
+      } else if (monthsDifference >= 6 && monthsDifference <= 9) {
+        return "more than half a year";
+      } else{
+        return "nearly a year";
+      }
+
     }
-  }
-  } else if(months){
-  let resultText = "";
+  } else if (months) {
+    let resultText = "";
     let years = Math.floor(parseInt(months) / 12);
     let remainingMonths = parseInt(months) % 12;
-    if(years>0){
-    resultText = years + (years > 1 ? yearsString : yearString);
+    if (years > 0) {
+      resultText = years + (years > 1 ? yearsString : yearString);
+      if (remainingMonths > 0) {
+        resultText += andString + remainingMonths + (remainingMonths > 1 ? monthsString : monthString);
+      }
     }
 
-    if(years > 0 && remainingMonths > 0){
-      resultText += andString;
-    }
-
-    if(remainingMonths > 0){
+    else if (remainingMonths > 0) {
       resultText += remainingMonths + (remainingMonths > 1 ? monthsString : monthString);
     }
-  }
 
-  return resultText;
+    return resultText;
+  }
 }
 
 function showClientDetails(event) {
