@@ -3,39 +3,8 @@ import {
   isMobileDevice,
   language,
 closeClientDetails,
+setExperienceDuration,
 } from "./common.js";
-
-function setExperienceDuration() {
-  const spanExperienceDuration = document.querySelector(".experience-duration");
-  if (spanExperienceDuration) {
-    const firstWorkingDate = new Date("2016-06-23");
-    const todayDate = new Date();
-    const workingDurationInYears =
-      todayDate.getFullYear() - firstWorkingDate.getFullYear();
-    const monthsDifference = todayDate.getMonth() - firstWorkingDate.getMonth();
-    let resultText = "";
-    if (workingDurationInYears >= 10) {
-      resultText = "more than a decade";
-    } else {
-      if (monthsDifference < 5) {
-        resultText = "more than " + workingDurationInYears + " years";
-      } else if (monthsDifference >= 5 && monthsDifference < 6) {
-        resultText = "about " + workingDurationInYears + " years and a half";
-      } else if (monthsDifference >= 6 && monthsDifference <= 11) {
-        resultText =
-          "more than " + workingDurationInYears + " years and a half";
-      } else {
-        if (workingDurationInYears === 9) {
-          resultText = "nearly a decade";
-        } else {
-          resultText = "about " + (workingDurationInYears + 1) + " years";
-        }
-      }
-    }
-
-    spanExperienceDuration.innerHTML = resultText;
-  }
-}
 
 const experienceContainer = document.querySelector(".experience-container");
 var experienceItem = experienceContainer.children[0];
@@ -46,7 +15,10 @@ setTimeout(() => {
 }, 100);
 
 document.addEventListener("DOMContentLoaded", () => {
-  setExperienceDuration();
+  const spanExperienceDuration = document.querySelector(".experience-duration");
+  let experienceDuration = setExperienceDuration('2016-06-23');
+  spanExperienceDuration.innerHTML = experienceDuration;
+  console.log("Rendering clients..."+spanExperienceDuration.innerHTML  );
   renderClients();
   setNavigationButtonsVisibility();
 });
