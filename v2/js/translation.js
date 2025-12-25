@@ -20,7 +20,7 @@ export const translations = {
             navigation:"Clients",
             title: "where i left marks",
             hint: "click on the client's logo to know more...",
-            download: "Or simply download my resume from",
+            download: "Or simply download my resume from ",
             here: "here",
         },
         services:{
@@ -72,7 +72,7 @@ export const translations = {
             navigation:"العملاء",
             title: "أين تركت بصماتي",
             hint: "اضغط على شعار العميل لمعرفة المزيد...",
-            download: "أو ببساطة قم بتحميل سيرتي الذاتية من",
+            download: " أو ببساطة قم بتحميل سيرتي الذاتية من",
             here: "هنا",
         },
         services:{  
