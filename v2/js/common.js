@@ -443,6 +443,6 @@ function closeNotification(){
   console.log("close notification");
   document.querySelector(".notification").classList.remove("active");
   document.querySelector(".feedback").classList.remove("active");
-  setBodyScroll(true);
+  closeFeedbackForm();
   toggleCloseMenuOnOutsideClick(false);
 }
