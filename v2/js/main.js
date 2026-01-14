@@ -1,7 +1,7 @@
 "use strict";
-import { renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu } from "./common.js";
+import { language, renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu } from "./common.js";
 import { feedbackIcon } from "./feedback.js";
-import { switchLanguage } from "./translation.js";
+import { switchLanguage, getNestedValue, translations } from "./translation.js";
 
 const setSectionsStylesForScrolling = () => {
   $("section").each(function (index) {
@@ -23,14 +23,14 @@ const renderScreenIndicator = () => {
 };
 
 function getSectionsCount(withNames) {
-  var sections = $("section");
-
+  var sections = document.querySelectorAll("section")
   var content = "";
   for (let i = 0; i < sections.length; i++) {
     if (withNames) {
-      let sectionId = $($(sections)[i]).attr("id");
+      let sectionId = sections[i].id;
+      let sectionTitle = getNestedValue(translations[language.value], sections[i].getAttribute("data-title"))
       content = content.concat(
-        '<a href="#' + sectionId + '" data-translate="'+sectionId+'.navigation"><h4>' + sectionId + "</h4></a>"
+        '<a href="#' + sectionId + '"><h4 data-translate="' + sectionId + '.navigation">' + sectionTitle + "</h4></a>"
       );
     } else {
       content = content.concat("<li></li>");
@@ -50,7 +50,6 @@ function setScreenIndicatorAccordingToScroll() {
   const scrollTop = $(window).scrollTop() + 4;
   const sections = $("section");
   const windowHeight = $(window).height();
-
   for (let i = 0; i < sections.length; i++) {
     const currentTop = $(sections[i]).offset().top - windowHeight / 2;
     const nextTop =
@@ -74,7 +73,6 @@ Element.prototype.hideForInSeconds = function(seconds) {
 
 Element.prototype.addBouncyAnimationAfterInSeconds = function(seconds) {
   setTimeout(() => {
-    console.log('Adding bouncy class to', this);
     this.classList.add('bouncy');
   }, seconds * 1000);
 };
@@ -141,30 +139,6 @@ $(document).ready(function () {
     toggleCloseMenuOnOutsideClick(true);
   });
 
-  const messages = [];
-  $(function () {
-    var index = 0;
-
-    messages.push("tech enthusiast");
-    messages.push("car lover");
-    messages.push("Marvel fan");
-    messages.push("dad");
-    messages.push("millennium");
-
-    function cycle() {
-      $(".adjectives").html(messages[index]);
-      index++;
-
-      if (index === messages.length) {
-        index = 0;
-      }
-
-      setTimeout(cycle, 1500);
-    }
-
-    cycle();
-  });
-
   document.querySelectorAll('.links a').forEach(link => {
     link.addEventListener('click', e => {
       document.querySelector(".content").style.overflow = "hidden";
@@ -222,8 +196,8 @@ darkModeToggle.addEventListener("change", function () {
   }
 });
 
-var language = document.querySelector("#language")
-language.addEventListener("change", function () {
+var languageSelect = document.querySelector("#language")
+languageSelect.addEventListener("change", function () {
   if (saveSettingsCheckbox.checked) {
     localStorage.setItem("language", this.value);
   }
@@ -281,7 +255,6 @@ $(window).on("scroll", function () {
   topScrollDiv.classList.remove("bouncy");
   aboutSection.classList.remove("bouncy");
   menuIcon.style.removeProperty("display");
-  console.log("scroll statrted");
   screenIndicator.style.removeProperty("display");
   feedbackIcon.style.removeProperty("display");
 });

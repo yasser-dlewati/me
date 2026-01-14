@@ -100,59 +100,291 @@
             </a>
         </div>
     </div>
-<div class="content">
+    <div class="content">
 
-    <!-- HERO -->
-    <section id="top">
-        <div class="logo ignore-rtl">
-            <div class="top">
-                <h1>
-                    YAS
-                </h1>
-            </div>
-            <div class="bottom">
-                <h1>DL</h1>
-                <h1>E</h1>
-                <img class="img-fluid" src="./images/yasser.png">
-            </div>
-            <span class="tm">
-                TM
-            </span>
-        </div>
-        <div class="scroll bouncy">
-            <div>
-                <small data-translate="top.scroll">
-                    Scroll down to know more...
-                </small>
-            </div>
-            <i class="fa-solid fa-chevron-down"></i>
-        </div>
-    </section>
-
-    <!-- about -->
-    <section id="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 vertically-centered">
-                    <h2 data-translate="about.title"> about me </h2>
+        <!-- HERO -->
+        <section id="top" data-title="top.navigation" >
+            <div class="logo ignore-rtl">
+                <div class="top">
+                    <h1>
+                        YAS
+                    </h1>
                 </div>
-                <div class="col-md-1"></div>
-                <div class="col-md-8">
-                    <p data-translate="about.description">
-                        My name is Yasser, but you can call me Yas, a self tought software engineer with <span
-                            class="experience-duration"></span> of experience, passionate
-                        about stretching my mind with solving complicated problems, writing code and learning new
-                        stuff.
-                        <br>
-                        I worked in multiple companies vary in size from startups, SMEs to big enterprises, stepping
-                        up and
-                        climping up the ladder from a junior to a mid level and end up with a
-                        senior role, I also served as a team leader from a small portion of time. I have hands on
-                        experience
-                        with
-                        web, mobile and desktop development.
-                    </p>
-                    <div class="buttons">
+                <div class="bottom">
+                    <h1>DL</h1>
+                    <h1>E</h1>
+                    <img class="img-fluid" src="./images/yasser.png">
+                </div>
+                <span class="tm">
+                    TM
+                </span>
+            </div>
+            <div class="scroll bouncy">
+                <div>
+                    <small data-translate="top.scroll">
+                        Scroll down to know more...
+                    </small>
+                </div>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- about -->
+        <section id="about" data-title="about.navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 vertically-centered">
+                        <h2 data-translate="about.title"> about me </h2>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-8">
+                        <p data-translate="about.description">
+                            My name is Yasser, but you can call me Yas, a self tought software engineer with <span
+                                class="experience-duration"></span> of experience, passionate
+                            about stretching my mind with solving complicated problems, writing code and learning new
+                            stuff.
+                            <br>
+                            I worked in multiple companies vary in size from startups, SMEs to big enterprises, stepping
+                            up and
+                            climping up the ladder from a junior to a mid level and end up with a
+                            senior role, I also served as a team leader from a small portion of time. I have hands on
+                            experience
+                            with
+                            web, mobile and desktop development.
+                        </p>
+                        <div class="buttons">
+                            <a class="button primary" href=""
+                                onclick="Calendly.initPopupWidget({url: 'https://calendly.com/yasdle/30min'});return false;">
+                                <span data-translate="about.session">
+                                    Schedule a session    
+                                </span>
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+                            <a class="button" href="#services" data-translate="about.services">Check my services</a>
+                        </div>
+                        <img class="side" src="./images/yasser-no-bg.png">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section id="clients" data-title="clients.navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 vertically-centered">
+                        <h2 class="title" data-translate="clients.title">where i left marks</h2>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-8">
+                        <div class="experience-container"></div>
+                        <div class="col-12 hint" data-translate="clients.hint">click on the client's logo to know more...</div>
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-2">
+                                <div class="scroll-horizontally prev ">
+                                    <i class="fa fa-chevron-left"></i>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="experience indicator"></div>
+                            </div>
+                            <div class="col-2">
+                                <div class="scroll-horizontally next ">
+                                    <i class="fa fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                        <span class="download" >
+                            <span data-translate="clients.download">
+                                Or simply download my resume from
+                            </span>
+                            <a href="./pdf/Yasser Dlewati-Senior software engineer resume.pdf" download data-translate="clients.here">here</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" data-title="services.navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 vertically-centered">
+                        <h2 data-translate="services.title">Things I can do </h2>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-8">
+                        <div id="accordion">
+                            <!-- <div class="card">
+                                <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#software">
+                                    <i class="fa-regular fa-square-plus"></i>
+                                    <h5>
+                                        software archetict & development
+                                    </h5>
+                                </a>
+
+                                <div id="software" class="collapse" data-bs-parent="#accordion">
+                                    <div class="card-body">
+                                        <p>
+                                            Crafting the foundation of scalable systems, I focus on designing clear,
+                                            robust,
+                                            extensible architectures that reduce technical debt and support future
+                                            growth.
+                                            From early prototypes to full-scale applications, I ensure clean code,
+                                            modular
+                                            architecture, and long-term value.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+
+                                <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#consulting">
+
+                                    <i class="fa-regular fa-square-plus"></i>
+                                    <h5>
+                                        technical Leadership & consulting
+                                    </h5>
+                                </a>
+
+                                <div id="consulting" class="collapse" data-bs-parent="#accordion">
+                                    <div class="card-body">
+                                        <p>
+                                            With a deep understanding of both business and code, I offer guidance on
+                                            choosing the right tools, frameworks, and strategies. Whether it is
+                                            reviewing
+                                            existing systems or advising on tech direction, I help teams make smart,
+                                            future-proof decisions.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+
+                                <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#management">
+
+                                    <i class="fa-regular fa-square-plus"></i>
+                                    <h5>
+                                        project & team managemant
+                                    </h5>
+                                </a>
+
+                                <div id="management" class="collapse" data-bs-parent="#accordion">
+                                    <div class="card-body">
+                                        <p>
+                                            From planning to delivery, I manage software projects with a focus on
+                                            clarity,
+                                            velocity, and collaboration. I lead cross-functional teams, remove blockers,
+                                            and
+                                            ensure everyone is aligned and empowered to deliver results.
+                                            From planning to delivery, I manage software projects with a focus on
+                                            clarity,
+                                            velocity, and collaboration. I lead cross-functional teams, remove blockers,
+                                            and
+                                            ensure everyone is aligned and empowered to deliver results. I also support
+                                            hiring the right talents upon need.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+
+                                <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#qa">
+
+                                    <i class="fa-regular fa-square-plus"></i>
+                                    <h5>
+                                        quality assurance
+                                    </h5>
+                                </a>
+
+                                <div id="qa" class="collapse" data-bs-parent="#accordion">
+                                    <div class="card-body">
+                                        <p>
+                                            I ensure software reliability through a deep manual testing. From carefully
+                                            crafted test cases to real-world scenario validation, I help catch issues
+                                            early,
+                                            improve user experience, and maintain consistent quality across releases.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+
+                                <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#support">
+                                    <i class="fa-regular fa-square-plus"></i>
+                                    <h5>
+                                        maitainance & support
+                                    </h5>
+                                </a>
+
+                                <div id="support" class="collapse" data-bs-parent="#accordion">
+                                    <div class="card-body">
+                                        <p>
+                                            My work does not end with project delivery; it extends into ensuring
+                                            long-term
+                                            reliability. I stay involved to monitor functionality, fix issues, and adapt
+                                            the
+                                            software as requirements evolve, so it continues to serve its purpose
+                                            effectively..
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+
+                                <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#mentoring">
+                                    <i class="fa-regular fa-square-plus"></i>
+                                    <h5>
+                                        coatching & mentoring
+                                    </h5>
+                                </a>
+
+                                <div id="mentoring" class="collapse" data-bs-parent="#accordion">
+                                    <div class="card-body">
+                                        <p>
+                                            I believe in building strong teams by sharing knowledge. Through one-on-one
+                                            mentoring, code reviews, and tech talks, I help interns, junior and
+                                            mid-level
+                                            developers grow confidently and contribute effectively.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Contact me -->
+        <section id="contact" data-title="contact.navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 vertically-centered">
+                        <h2 data-translate="contact.title">say hey</h2>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-8 vertically-centered">
+                        <p data-translate="contact.description">
+                            You can drop me a message via
+                        </p>
+                        <a href="mailto:yasdle@outlook.com" class="email" title="Send an email using preferred mail app">
+                            <h5>
+                                yasdle@outlook.com
+                            </h5>
+                            <a title="Copy email" class="copy">
+                                <div class="copy">
+                                    <i class="fa-regular fa-copy"></i>
+                                    <span class="copy-tooltip" data-translate="contact.copied">Copied!</span>
+                            </div>
+                            </a>
+                        </a>
+
+                        <p data-translate="contact.or">
+                            or simply
+                        </p>
                         <a class="button primary" href=""
                             onclick="Calendly.initPopupWidget({url: 'https://calendly.com/yasdle/30min'});return false;">
                             <span data-translate="about.session">
@@ -160,244 +392,12 @@
                             </span>
                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </a>
-                        <a class="button" href="#services" data-translate="about.services">Check my services</a>
-                    </div>
-                    <img class="side" src="./images/yasser-no-bg.png">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience -->
-    <section id="clients">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 vertically-centered">
-                    <h2 class="title" data-translate="clients.title">where i left marks</h2>
-                </div>
-                <div class="col-md-1"></div>
-                <div class="col-md-8">
-                    <div class="experience-container"></div>
-                    <div class="col-12 hint" data-translate="clients.hint">click on the client's logo to know more...</div>
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-2">
-                            <div class="scroll-horizontally prev ">
-                                <i class="fa fa-chevron-left"></i>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="experience indicator"></div>
-                        </div>
-                        <div class="col-2">
-                            <div class="scroll-horizontally next ">
-                                <i class="fa fa-chevron-right"></i>
-                            </div>
-                        </div>
-                        <div class="col-1"></div>
-                    </div>
-                    <span class="download" >
-                        <span data-translate="clients.download">
-                            Or simply download my resume from
-                        </span>
-                        <a href="./pdf/Yasser Dlewati-Senior software engineer resume.pdf" download data-translate="clients.here">here</a>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="services">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 vertically-centered">
-                    <h2 data-translate="services.title">Things I can do </h2>
-                </div>
-                <div class="col-md-1"></div>
-                <div class="col-md-8">
-                    <div id="accordion">
-                        <div class="card">
-                            <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#software">
-                                <i class="fa-regular fa-square-plus"></i>
-                                <h5>
-                                    software archetict & development
-                                </h5>
-                            </a>
-
-                            <div id="software" class="collapse" data-bs-parent="#accordion">
-                                <div class="card-body">
-                                    <p>
-                                        Crafting the foundation of scalable systems, I focus on designing clear,
-                                        robust,
-                                        extensible architectures that reduce technical debt and support future
-                                        growth.
-                                        From early prototypes to full-scale applications, I ensure clean code,
-                                        modular
-                                        architecture, and long-term value.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-
-                            <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#consulting">
-
-                                <i class="fa-regular fa-square-plus"></i>
-                                <h5>
-                                    technical Leadership & consulting
-                                </h5>
-                            </a>
-
-                            <div id="consulting" class="collapse" data-bs-parent="#accordion">
-                                <div class="card-body">
-                                    <p>
-                                        With a deep understanding of both business and code, I offer guidance on
-                                        choosing the right tools, frameworks, and strategies. Whether it is
-                                        reviewing
-                                        existing systems or advising on tech direction, I help teams make smart,
-                                        future-proof decisions.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-
-                            <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#management">
-
-                                <i class="fa-regular fa-square-plus"></i>
-                                <h5>
-                                    project & team managemant
-                                </h5>
-                            </a>
-
-                            <div id="management" class="collapse" data-bs-parent="#accordion">
-                                <div class="card-body">
-                                    <p>
-                                        From planning to delivery, I manage software projects with a focus on
-                                        clarity,
-                                        velocity, and collaboration. I lead cross-functional teams, remove blockers,
-                                        and
-                                        ensure everyone is aligned and empowered to deliver results.
-                                        From planning to delivery, I manage software projects with a focus on
-                                        clarity,
-                                        velocity, and collaboration. I lead cross-functional teams, remove blockers,
-                                        and
-                                        ensure everyone is aligned and empowered to deliver results. I also support
-                                        hiring the right talents upon need.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-
-                            <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#qa">
-
-                                <i class="fa-regular fa-square-plus"></i>
-                                <h5>
-                                    quality assurance
-                                </h5>
-                            </a>
-
-                            <div id="qa" class="collapse" data-bs-parent="#accordion">
-                                <div class="card-body">
-                                    <p>
-                                        I ensure software reliability through a deep manual testing. From carefully
-                                        crafted test cases to real-world scenario validation, I help catch issues
-                                        early,
-                                        improve user experience, and maintain consistent quality across releases.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-
-                            <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#support">
-                                <i class="fa-regular fa-square-plus"></i>
-                                <h5>
-                                    maitainance & support
-                                </h5>
-                            </a>
-
-                            <div id="support" class="collapse" data-bs-parent="#accordion">
-                                <div class="card-body">
-                                    <p>
-                                        My work does not end with project delivery; it extends into ensuring
-                                        long-term
-                                        reliability. I stay involved to monitor functionality, fix issues, and adapt
-                                        the
-                                        software as requirements evolve, so it continues to serve its purpose
-                                        effectively..
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-
-                            <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#mentoring">
-                                <i class="fa-regular fa-square-plus"></i>
-                                <h5>
-                                    coatching & mentoring
-                                </h5>
-                            </a>
-
-                            <div id="mentoring" class="collapse" data-bs-parent="#accordion">
-                                <div class="card-body">
-                                    <p>
-                                        I believe in building strong teams by sharing knowledge. Through one-on-one
-                                        mentoring, code reviews, and tech talks, I help interns, junior and
-                                        mid-level
-                                        developers grow confidently and contribute effectively.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
+
             </div>
-        </div>
-
-    </section>
-
-    <!-- Contact me -->
-    <section id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 vertically-centered">
-                    <h2 data-translate="contact.title">say hey</h2>
-                </div>
-                <div class="col-md-1"></div>
-                <div class="col-md-8 vertically-centered">
-                    <p data-translate="contact.description">
-                        You can drop me a message via
-                    </p>
-                    <a href="mailto:yasdle@outlook.com" class="email" title="Send an email using preferred mail app">
-                        <h5>
-                            yasdle@outlook.com
-                        </h5>
-                        <a title="Copy email" class="copy">
-                            <div class="copy">
-                                <i class="fa-regular fa-copy"></i>
-                                <span class="copy-tooltip" data-translate="contact.copied">Copied!</span>
-                        </div>
-                        </a>
-                    </a>
-
-                    <p data-translate="contact.or">
-                        or simply
-                    </p>
-                    <a class="button primary" href=""
-                        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/yasdle/30min'});return false;">
-                        <span data-translate="about.session">
-                            Schedule a session    
-                        </span>
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
 
     <div class="feedback-icon" style="display: none;">
         <div class="circle pulse">
