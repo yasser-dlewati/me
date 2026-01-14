@@ -119,7 +119,7 @@ function getNestedValue(obj, key) {
 }
 
 // Function to switch language
-function switchLanguage(lang) {
+export function switchLanguage(lang) {
     const html = document.documentElement;
     if (lang === "ar") {
         html.setAttribute("dir", "rtl"); // Set direction to RTL

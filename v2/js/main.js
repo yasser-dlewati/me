@@ -1,6 +1,7 @@
 "use strict";
 import { renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu } from "./common.js";
 import { feedbackIcon } from "./feedback.js";
+import { switchLanguage } from "./translation.js";
 
 const setSectionsStylesForScrolling = () => {
   $("section").each(function (index) {
@@ -200,6 +201,12 @@ function readSavedSettings() {
   if (showUnderGraduate === "true") {
     document.querySelector("#showUnderGraduateExperience").checked = true;
   }
+
+  const savedLanguage = localStorage.getItem("language")
+  switchLanguage(savedLanguage ?? "en")
+  if(savedLanguage){
+    document.querySelector("#language").value = savedLanguage
+  }
 }
 
 var darkModeToggle = document.querySelector("#darkModeSwitch");
@@ -215,6 +222,13 @@ darkModeToggle.addEventListener("change", function () {
   }
 });
 
+var language = document.querySelector("#language")
+language.addEventListener("change", function () {
+  if (saveSettingsCheckbox.checked) {
+    localStorage.setItem("language", this.value);
+  }
+})
+
 var saveSettingsCheckbox = document.querySelector("#saveSettingsLocally");
 saveSettingsCheckbox.addEventListener("change", function () {
   if (document.querySelector("#saveSettingsLocally").checked) {
@@ -227,9 +241,14 @@ saveSettingsCheckbox.addEventListener("change", function () {
       "underGraduate",
       document.querySelector("#showUnderGraduateExperience").checked
     );
+    localStorage.setItem(
+      "language",
+      document.querySelector("#language").value
+    )
   } else {
     localStorage.removeItem("theme");
     localStorage.removeItem("underGraduate");
+    localStorage.removeItem("language")
   }
 });
 
