@@ -45,6 +45,7 @@ export const translations = {
             darkMode:"Dark Mode",
             undergraduate:"Show Undergraduate experience",
             save:"Save settings locally",
+            hint: "By turning this feature on, you are saving the settings above to your browser local storage, and you will be able to retrieve it every time you visit this website unless you clear it.",
         },
         feedback:{
             title:"your say!",
@@ -97,6 +98,7 @@ export const translations = {
             darkMode:"الوضع الداكن",
             undergraduate:"عرض خبرات المرحلة الجامعية",
             save:"حفظ الإعدادات محليًا",
+            hint:"بتفعيل هذه الميزة، يتم حفظ الإعدادات المذكورة أعلاه في وحدة التخزين المحلية للمتصفح، وستتمكن من استعادتها في كل مرة تزور فيها هذا الموقع الإلكتروني ما لم تقم بمسحها.",
         },
         feedback:{
             title:"أبد رأيك!",
