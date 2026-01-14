@@ -785,6 +785,13 @@ span.download p{
 .download a {
     color: var(--text-dark-color);
     border-bottom: solid 1px var(--text-dark-color);
+    padding-left: 4px;
+    padding-right: 0;
+}
+
+html[dir="rtl"] .download a {
+    padding-left: 0;
+    padding-right: 4px;
 }
 
 .button {
