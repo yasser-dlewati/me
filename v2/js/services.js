@@ -57,14 +57,11 @@ const servicesJson = [
   
 export function renderServices(){
     let servicesContainer = document.querySelector('#accordion');
-    console.log(servicesContainer);
     let servicesContent = '';
     let isArabic = document.documentElement.lang === 'ar';
-
     servicesJson.forEach( service => {
         let title = isArabic ? service.titleAr : service.title;
         let description = isArabic ? service.DescriptionAr : service.Description;
-
         servicesContent += `
         <div class="card">
             <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#${service.id}" aria-expanded="false" aria-controls="${service.id}">
@@ -88,23 +85,39 @@ export function renderServices(){
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    renderServices();
+  renderServices();
 })
 
-$('.service').click( function() { 
-    $('.service i').removeClass('fa-square-minus').addClass('fa-square-plus');
-    let targetDescription = $(this).next('div'); 
-    setTimeout(() => {
-        let isTargetDescriptionOpen = targetDescription.hasClass('show');
-        if (isTargetDescriptionOpen) {
-            $(this).find('i').removeClass('fa-square-plus').addClass('fa-square-minus');
-            $(this).css('border-bottom', 'none');
-            $('.service').not(this).css('border-bottom', '1px solid #ccc');
-        } else {
-            $(this).find('i').removeClass('fa-square-minus').addClass('fa-square-plus');
-            $(this).css('border-bottom', '1px solid #ccc');
-            $(this).css('background-color', 'var(--bg-light-color)')
-            $(this).css('color', 'var(--text-dark-color)')
-        }
-    }, 400);
+document.querySelectorAll('.service').forEach(service => {
+  service.addEventListener('click', function() {
+      document.querySelectorAll('.service i').forEach(icon => {
+          icon.classList.replace('fa-square-minus', 'fa-square-plus');
+      });
+  });
+});
+
+document.addEventListener('shown.bs.collapse', function (event) {
+  const targetDescription = event.target;
+  const header = targetDescription.previousElementSibling;
+  if (header && header.classList.contains('service')) {
+      const icon = header.querySelector('i');
+      if (icon) icon.classList.replace('fa-square-plus', 'fa-square-minus');
+      header.style.borderBottom = 'none';
+      document.querySelectorAll('.service').forEach(s => {
+          if (s !== header) {
+            s.style.borderBottom = '1px solid rgba(0, 0, 0, 0.2)';
+          }
+      });
+  }
+});
+
+document.addEventListener('hidden.bs.collapse', function (event) {
+  const targetDescription = event.target;
+  const header = targetDescription.previousElementSibling;
+  
+  if (header && header.classList.contains('service')) {
+      const icon = header.querySelector('i');
+      if (icon) icon.classList.replace('fa-square-minus', 'fa-square-plus');
+      header.style.borderBottom = '1px solid rgba(0, 0, 0, 0.2)';
+  }
 });
