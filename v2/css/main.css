@@ -133,6 +133,7 @@ h2 {
 h4 {
     font-family: var(--h2-font-family);
     font-size: var(--h4-font-size);
+    text-align: center;
 }
 
 h5 {
@@ -638,6 +639,11 @@ img.side {
     opacity: 0.3;
 }
 
+html[dir="rtl"] img.side {
+    left: 0;
+    right: auto;
+}
+
 
 /*---------------------------------------
        EXPERIENCE               
@@ -845,7 +851,8 @@ html[dir="rtl"] .download a {
     background-color: var(--bg-light-color);
     text-align: justify;
     text-align-last: right;
-    hyphens: auto
+    hyphens: auto;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .service {
@@ -857,7 +864,7 @@ html[dir="rtl"] .download a {
 
 .collapse {
     border: none;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 /*----------------------------------------
