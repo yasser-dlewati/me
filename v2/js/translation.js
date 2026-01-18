@@ -1,4 +1,5 @@
 import { resetClientsView } from "./clients.js";
+import { experienceStartDate, language, setExperienceDuration } from "./common.js";
 import { renderServices } from "./services.js";
 
 // Language data object
@@ -9,9 +10,9 @@ export const translations = {
             scroll: "Scroll down to know more..."
         },
         about:{
-            navigation:"About Me",
+            navigation:"About",
             title: "about me",
-            description: `My name is Yasser, but you can call me Yas, a self tought software engineer with more than 9 years of experience, passionate about stretching my mind with solving complicated problems, writing code and learning new stuff.
+            description: `My name is Yasser, but you can call me Yas, a self tought software engineer with <span class="experience-duration"></span> of experience, passionate about stretching my mind with solving complicated problems, writing code and learning new stuff.
             I worked in multiple companies vary in size from startups, SMEs to big enterprises, stepping up and climping up the ladder from a junior to a mid level and end up with a senior role, I also served as a team leader from a small portion of time. I have hands on experience with web, mobile and desktop development.`, 
             services: "Check out my services",
             session: "Schedule a session",         
@@ -28,7 +29,7 @@ export const translations = {
             title: "Things I can do",
         },
         contact:{
-            navigation:"Contact Me",
+            navigation:"Contact",
             title: "Say Hey!",
             description: "Feel free to reach out for collaborations or just a friendly hello by dropping a message via.",
             or: "Or simply",
@@ -65,7 +66,7 @@ export const translations = {
         about:{
             navigation:"مــن أنــا",
             title: "مــن أنــا",
-            description:"اسمي ياسر، أنا مهندس برمجيات حيث أني علمت نفسي بنفسي، أمتلك أكثر من تسع سنوات من الخبرة، وشغوف بتحدّي عقلي من خلال حلّ المشكلات المعقّدة، وكتابة الأكواد، وتعلّم كل ما هو جديد. عملت في شركات متعددة الأحجام، بدءًا من الشركات الناشئة مرورًا بالمؤسسات المتوسطة وصولًا إلى الشركات الكبرى، حيث تنقلت في مسيرتي المهنية من مطوّر مبتدئ إلى مطوّر متوسط، ثم إلى دورٍ كبير المهندسين (Senior)، كما تولّيت قيادة فريق لفترة قصيرة. أمتلك خبرة عملية في تطوير تطبيقات الويب والهواتف المحمولة وسطح المكتب.",
+            description:'اسمي ياسر، أنا مهندس برمجيات حيث أني علمت نفسي بنفسي، أمتلك <span class="experience-duration"></span> من الخبرة، وشغوف بتحدّي عقلي من خلال حلّ المشكلات المعقّدة، وكتابة الأكواد، وتعلّم كل ما هو جديد. عملت في شركات متعددة الأحجام، بدءًا من الشركات الناشئة مرورًا بالمؤسسات المتوسطة وصولًا إلى الشركات الكبرى، حيث تنقلت في مسيرتي المهنية من مطوّر مبتدئ إلى مطوّر متوسط، ثم إلى دورٍ كبير المهندسين (Senior)، كما تولّيت قيادة فريق لفترة قصيرة. أمتلك خبرة عملية في تطوير تطبيقات الويب والهواتف المحمولة وسطح المكتب.',
             services: "اطلع على خدماتي",
             session: "احجز جلسة استشارية معي",
         },
@@ -101,7 +102,7 @@ export const translations = {
             hint:"بتفعيل هذه الميزة، يتم حفظ الإعدادات المذكورة أعلاه في وحدة التخزين المحلية للمتصفح، وستتمكن من استعادتها في كل مرة تزور فيها هذا الموقع الإلكتروني ما لم تقم بمسحها.",
         },
         feedback:{
-            title:"أبد رأيك!",
+            title:"أبدِ رأيك!",
             description:" شارك أفكارك، اقتراحاتك، أو أي مشكلات واجهتها أثناء استخدام موقعي الإلكتروني. تساعدني ملاحظاتك في التحسين وتوفير تجربة أفضل لجميع الزوار.",
             placeholder:"لديك فكرة؟ شاركها هنا...",
             submit:"أرسل",
@@ -112,9 +113,8 @@ export const translations = {
     },
 };
 
-
 // Helper function to get nested values
-function getNestedValue(obj, key) {
+export function getNestedValue(obj, key) {
     return key.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : null), obj);
 }
 
@@ -131,9 +131,17 @@ export function switchLanguage(lang) {
 
     const elements = document.querySelectorAll("[data-translate]");
     elements.forEach((el) => {
+        if(el.id == "txtFeedback") {
+            txtFeedback.setAttribute("placeholder", getNestedValue(translations[language.value], txtFeedback.getAttribute("data-translate")));
+        }
+
         const key = el.getAttribute("data-translate");
-        const translation = getNestedValue(translations[lang], key);
+        let translation = getNestedValue(translations[lang], key);
         if (translation) {
+            if(key === "about.description"){
+                translation = translation.replace('<span class="experience-duration"></span>', '<span class="experience-duration">'+ setExperienceDuration(experienceStartDate) + '</span>');
+            }
+
             el.innerHTML = translation;
         }
     });
