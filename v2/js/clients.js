@@ -2,8 +2,9 @@ import {
   renderClients,
   isMobileDevice,
   language,
-closeClientDetails,
-setExperienceDuration,
+  closeClientDetails,
+  setExperienceDuration,
+  experienceStartDate,
 } from "./common.js";
 
 const experienceContainer = document.querySelector(".experience-container");
@@ -16,9 +17,8 @@ setTimeout(() => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const spanExperienceDuration = document.querySelector(".experience-duration");
-  let experienceDuration = setExperienceDuration('2016-06-23');
+  let experienceDuration = setExperienceDuration(experienceStartDate);
   spanExperienceDuration.innerHTML = experienceDuration;
-  console.log("Rendering clients..."+spanExperienceDuration.innerHTML  );
   renderClients();
   setNavigationButtonsVisibility();
 });

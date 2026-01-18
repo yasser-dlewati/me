@@ -178,7 +178,10 @@ export let language = {
     return this.value === 'ar';
   }
 }
+
 export const isMobileDevice = regexp.test(userAgent);
+
+export const experienceStartDate = new Date(2016, 6, 23);
 
 export function renderClients() {
   var clients = experienceJson;
@@ -211,9 +214,17 @@ export function renderClients() {
   experienceItems.forEach((item) => {
     item.addEventListener("click", showClientDetails);
   });
+
+  updateAboutSectionExperienceDuration();
+}
+
+function updateAboutSectionExperienceDuration(){
+  let span = document.querySelector(".experience-duration");
+  span.innerHTML = setExperienceDuration(experienceStartDate);
 }
 
 export function setExperienceDuration(date=null, months=null) {
+  let isShowingUnderGraduateExperience = document.querySelector("#showUnderGraduateExperience").checked
   const andString = language.value == "en" ? " and " : " و ";
   const monthString = language.value == "en" ? " month" : " شهر ";
   const monthsString = language.value == "en" ? " months" : " أشهر ";
@@ -221,35 +232,41 @@ export function setExperienceDuration(date=null, months=null) {
   const yearsString = language.value == "en" ? " years" : " سنوات ";
 
   if (date) {
-    const firstWorkingDate = new Date(date);
     const todayDate = new Date();
-    const workingDurationInYears =
-      todayDate.getFullYear() - firstWorkingDate.getFullYear();
-    const monthsDifference = todayDate.getMonth() - firstWorkingDate.getMonth();
-    if (workingDurationInYears >= 10) {
-      return "more than a decade";
+    let workingDurationInYears = todayDate.getFullYear() - date.getFullYear();
+    const monthsDifference = todayDate.getMonth() - date.getMonth();
+    if(isShowingUnderGraduateExperience){
+      workingDurationInYears += 3.5;
+    }
+
+    if(workingDurationInYears >=15 && workingDurationInYears < 20){
+      return language.value == "en" ? "more than a decade and a half" : "أكثر من عقد ونصف";
+    } else if(workingDurationInYears >=12 && workingDurationInYears < 15){
+      return language.value == "en" ? "more than a dosen years" : "أكثر من اثني عشر عامًا";
+    } else if (workingDurationInYears >= 10 && workingDurationInYears < 12) {
+      return language.value == "en" ? "more than a decade" : "أكثر من عقد من الزمن";
     } else if(workingDurationInYears >0){
       if (monthsDifference < 5) {
-        return "more than " + workingDurationInYears + " years";
+        return language.value == "en" ? "more than " + workingDurationInYears + " years" : "أكثر من " + workingDurationInYears + " سنوات";
       } else if (monthsDifference >= 5 && monthsDifference < 6) {
-        return "about " + workingDurationInYears + " years and a half";
+        return language.value == "en" ? "about " + workingDurationInYears + " years and a half" : "حوالي " + workingDurationInYears + " سنوات ونصف";
       } else if (monthsDifference >= 6 && monthsDifference <= 9) {
         if (workingDurationInYears === 9) {
-          return "nearly a decade";
+          return language.value == "en" ? "nearly a decade" : "ما يقرب من عقد من الزمن";
         }
-        return "more than " + workingDurationInYears + " years and a half";
+
+        return language.value == "en" ?  "more than " + workingDurationInYears + " years and a half" : "أكثر من " + workingDurationInYears + " سنوات ونصف";
       }
     } else {
       if (monthsDifference < 5) {
-        return "less than half a year";
+        return language.value == "en" ? "less than half a year" : "أقل من نصف سنة";
       } else if (monthsDifference >= 5 && monthsDifference < 6) {
-        return "about half a year";
+        return language.value == "en" ? "about half a year" : "حوالي نصف سنة";
       } else if (monthsDifference >= 6 && monthsDifference <= 9) {
-        return "more than half a year";
-      } else{
-        return "nearly a year";
+        return language.value == "en" ? "more than half a year" : "أكثر من نصف سنة";
       }
 
+      return "nearly a year";
     }
   } else if (months) {
     let resultText = "";
@@ -261,7 +278,6 @@ export function setExperienceDuration(date=null, months=null) {
         resultText += andString + remainingMonths + (remainingMonths > 1 ? monthsString : monthString);
       }
     }
-
     else if (remainingMonths > 0) {
       resultText += remainingMonths + (remainingMonths > 1 ? monthsString : monthString);
     }
