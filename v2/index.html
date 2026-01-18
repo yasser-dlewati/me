@@ -156,7 +156,7 @@
                             <a class="button primary" href=""
                                 onclick="Calendly.initPopupWidget({url: 'https://calendly.com/yasdle/30min'});return false;">
                                 <span data-translate="about.session">
-                                    Schedule a session    
+                                    Schedule a session
                                 </span>
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             </a>
@@ -378,7 +378,7 @@
                                 <div class="copy">
                                     <i class="fa-regular fa-copy"></i>
                                     <span class="copy-tooltip" data-translate="contact.copied">Copied!</span>
-                            </div>
+                                </div>
                             </a>
                         </a>
 
@@ -388,7 +388,7 @@
                         <a class="button primary" href=""
                             onclick="Calendly.initPopupWidget({url: 'https://calendly.com/yasdle/30min'});return false;">
                             <span data-translate="about.session">
-                                Schedule a session    
+                                Schedule a session
                             </span>
                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </a>
@@ -406,24 +406,30 @@
     </div>
     <form class="feedback vertically-centered" method="post">
         <div class="loading-overlay">
-          <span data-translate="feedback.inProgress">
-              Submitting your feedback...
-          </span>
+            <span data-translate="feedback.inProgress">
+                Submitting your feedback...
+            </span>
         </div>
         <a href="javascript:void(0);" class="close"><i class="fa fa-xmark"></i></a>
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 vertically-centered">
                     <h4 data-translate="feedback.title">Your say</h4>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="col-md-7 col-9 vertically-centered">
-                    <input type="textarea" rows="3" class="form-control" id="txtFeedback" name="txtFeedback" data-translate="feedback.placeholder"/>
-                </div>
-                <div class="col-md-1 col-3 vertically-centered">
-                    <button type="submit" id="btnSubmitFeedback" class="button primary">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
+                <div class="col-md-8">
+                    <p data-translate="feedback.description"></p>
+                    <div class="row">
+                        <div class="col-9 vertically-centered">
+                            <input type="textarea" rows="3" class="form-control" id="txtFeedback" name="txtFeedback"
+                                data-translate="feedback.placeholder" />
+                        </div>
+                        <div class="col-3 vertically-centered">
+                            <button type="submit" id="btnSubmitFeedback" class="button primary">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
