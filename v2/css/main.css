@@ -842,17 +842,25 @@ html[dir="rtl"] .download a {
 }
 
 .card a i {
-    position: absolute;
+    float: right;
     left: 32px;
     top: calc(50% - 15px);
+}
+
+html[dir="rtl"] .card a i {
+    float: left;
 }
 
 .card-body {
     background-color: var(--bg-light-color);
     text-align: justify;
-    text-align-last: right;
+    text-align-last: left;
     hyphens: auto;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+html[dir="rtl"] .card-body {
+    text-align-last: right;
 }
 
 .service {
@@ -860,6 +868,14 @@ html[dir="rtl"] .download a {
     font-size: var(--h5-font-size);
     text-transform: capitalize;
     background-color: var(--bg-light-color);
+}
+
+html[lang="en"] .service h5{
+    float: left;
+}
+
+html[lang="ar"] .service h5{
+    float: right;
 }
 
 .collapse {
