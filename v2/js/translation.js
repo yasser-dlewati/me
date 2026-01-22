@@ -20,7 +20,7 @@ export const translations = {
         clients:{
             navigation:"Clients",
             title: "where i left marks",
-            hint: "click on the client's logo to know more...",
+            hint: "Use the navigation arrows to scroll through clients, and click on the client's logo to know more...",
             download: "Or simply download my resume from ",
             here: "here",
         },
@@ -73,9 +73,9 @@ export const translations = {
         clients:{
             navigation:"العملاء",
             title: "أين تركت بصماتي",
-            hint: "اضغط على شعار العميل لمعرفة المزيد...",
+            hint: "استخدم أزرار التوجيه لتستطيع اللتمرير على العملاء، واضغط على شعار العميل لمعرفة المزيد...",
             download: " أو ببساطة قم بتحميل سيرتي الذاتية من",
-            here: "هنا",
+            here: "هـــنــا",
         },
         services:{  
             navigation:"الخدمات",

@@ -726,7 +726,7 @@ html[dir="rtl"] img.side {
 }
 
 #clients .hint {
-    margin-bottom: 60px;
+    margin-bottom: 32px;
     text-align: center !important;
 }
 
@@ -776,11 +776,11 @@ div:has(.scroll-horizontally) {
     margin: 16px auto;
     align-items: center;
     justify-content: center;
+    margin-bottom: 60px;
 }
 
 span.download {
     display: flex;
-    margin: 60px auto 0 auto;
     justify-content: center;
 }
 
