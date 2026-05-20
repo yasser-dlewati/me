@@ -34,6 +34,8 @@ export const translations = {
             description: "Feel free to reach out for collaborations or just a friendly hello by dropping a message via.",
             or: "Or simply",
             copied:"Copied to clipboard!",
+            senEmail:"Send an email using preferred mail app",
+            copy:"Copy email",
         },
         navigation:{
             designedBy: "Designed and Developed by YasDle",
@@ -87,6 +89,8 @@ export const translations = {
             description: "يسعدني تواصلك سواء للتعاون أو لمجرد التحية، يمكنك مراسلتي عبر ",
             or: "أو ببساطة",
             copied:"تم النسخ!",
+            senEmail:"أرسل بريد إلكتروني باستخدام تطبيق البريد المفضل لديك",
+            copy:"نسخ البريد الإلكتروني",
         },
         navigation:{
             designedBy: '<p dir="rtl">  صُمّم وطُوّر من قبل  <span dir="ltr">YasDle</span>',
@@ -145,6 +149,13 @@ export function switchLanguage(lang) {
             el.innerHTML = translation;
         }
     });
+
+    const titles = document.querySelectorAll("[data-title-translate]");
+    titles.forEach((el) => {
+        const key = el.getAttribute("data-title-translate");
+        let translation = getNestedValue(translations[lang], key);
+        el.setAttribute("title", translation)
+    })
 
     resetClientsView();
     renderServices();
