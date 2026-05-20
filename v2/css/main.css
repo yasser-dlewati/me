@@ -187,7 +187,9 @@ a {
     text-decoration: none;
 }
 
-a.disabled, div.disabled, img.disabled {
+a.disabled,
+div.disabled,
+img.disabled {
     pointer-events: none;
 }
 
@@ -324,7 +326,7 @@ html[dir="rtl"] .settings {
     right: calc(50% + 32px);
 }
 
-.info{
+.info {
     display: block;
     position: absolute;
     bottom: 32px;
@@ -332,7 +334,7 @@ html[dir="rtl"] .settings {
     justify-items: end;
 }
 
-.info p{
+.info p {
     margin: 0;
     font-size: 12px;
 }
@@ -446,9 +448,11 @@ html[dir="rtl"] .feedback-icon {
 .feedback .loading-overlay {
     display: none !important;
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
     color: white;
     font-size: 24px;
     display: flex;
@@ -490,6 +494,13 @@ html[dir="rtl"] .feedback-icon {
     min-width: auto;
     border: none;
     margin-bottom: 0;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.feedback .button.primary:disabled {
+    opacity: .4;
+    cursor: not-allowed;
 }
 
 .feedback.active {
@@ -569,7 +580,7 @@ html[dir="rtl"] .feedback-icon {
     }
 }
 
-.tm{
+.tm {
     position: absolute;
     right: -32px;
     bottom: 16px;
@@ -717,11 +728,11 @@ html[dir="rtl"] img.side {
     margin-bottom: 60px;
     padding-top: 16px;
     white-space: nowrap;
-    overflow: hidden;
+    overflow: scroll;
     -ms-overflow-style: none;
     display: flex;
     /* Hide scrollbar in IE and Edge */
-    scrollbar-width: none;
+    /* scrollbar-width: none; */
     /* Hide scrollbar in Firefox */
 }
 
@@ -784,7 +795,7 @@ span.download {
     justify-content: center;
 }
 
-span.download p{
+span.download p {
     color: var(--text-medium-color);
 }
 
@@ -870,11 +881,11 @@ html[dir="rtl"] .card-body {
     background-color: var(--bg-light-color);
 }
 
-html[lang="en"] .service h5{
+html[lang="en"] .service h5 {
     float: left;
 }
 
-html[lang="ar"] .service h5{
+html[lang="ar"] .service h5 {
     float: right;
 }
 
@@ -1006,7 +1017,7 @@ footer .social-links a {
         text-align: center;
     }
 
-    #contact p{
+    #contact p {
         text-align: center;
     }
 
@@ -1039,7 +1050,7 @@ footer .social-links a {
         max-width: 100%;
     }
 
-   
+
     .experience-details {
         max-width: 100%;
     }
@@ -1062,6 +1073,7 @@ footer .social-links a {
     .feedback .button.primary {
         padding: 16px;
     }
+
     .feedback h4 {
         margin-bottom: 32px;
         text-align: center;
@@ -1085,8 +1097,8 @@ footer .social-links a {
 
     .navigation.active,
     .experience-details-container.active {
-    transform: translateX(0%);
-    transition: transform 0.5s ease-in; 
+        transform: translateX(0%);
+        transition: transform 0.5s ease-in;
     }
 
     .navigation .links {
@@ -1102,7 +1114,7 @@ footer .social-links a {
         transform: translateX(calc(0% + 8px));
     }
 
-    .setting-row{
+    .setting-row {
         max-width: 100%;
     }
 
@@ -1119,4 +1131,4 @@ footer .social-links a {
     .settings-container .close {
         right: 32px !important;
     }
-  }
+}
