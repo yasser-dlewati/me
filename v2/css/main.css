@@ -728,7 +728,8 @@ html[dir="rtl"] img.side {
     margin-bottom: 60px;
     padding-top: 16px;
     white-space: nowrap;
-    overflow: scroll;
+    overflow-x: auto;
+    overflow-y: hidden;
     -ms-overflow-style: none;
     display: flex;
     /* Hide scrollbar in IE and Edge */
@@ -1011,6 +1012,15 @@ footer .social-links a {
 
     .experience-item {
         flex: 0 0 100%;
+        scroll-snap-align: center;
+    }
+
+    .experience-container {
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 0;
+        scroll-behavior: smooth;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
     }
 
     section#contact .col-md-8 {
