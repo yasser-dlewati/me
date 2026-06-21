@@ -725,10 +725,9 @@ html[dir="rtl"] img.side {
 }
 
 .experience-container {
-    margin-bottom: 60px;
     padding-top: 16px;
     white-space: nowrap;
-    overflow: scroll;
+    overflow: hidden;
     -ms-overflow-style: none;
     display: flex;
     /* Hide scrollbar in IE and Edge */
@@ -737,7 +736,7 @@ html[dir="rtl"] img.side {
 }
 
 #clients .hint {
-    margin-bottom: 32px;
+    margin-bottom: 16px;
     text-align: center !important;
 }
 
@@ -787,7 +786,7 @@ div:has(.scroll-horizontally) {
     margin: 16px auto;
     align-items: center;
     justify-content: center;
-    margin-bottom: 60px;
+    margin: 40px 0;
 }
 
 span.download {
