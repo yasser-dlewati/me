@@ -8,7 +8,7 @@ const experienceJson = [
     duration: 18,
     isCurrentCompany: false,
     description: `My first job ever. A place to learn how to deal with people, how to manage time and how to be responsible.\n My main responsibility was to help the clients, introduce the products and close deals.\n`,
-    descriptionAr:`كانت هذه أول وظيفة لي على الإطلاق — المكان الذي تعلمت فيه كيفية التعامل مع الناس، وإدارة الوقت، وتحمل المسؤولية.\n كانت مسؤوليتي الأساسية مساعدة العملاء، والتعريف بالمنتجات، وإتمام صفقات البيع.\n`,
+    descriptionAr: `كانت هذه أول وظيفة لي على الإطلاق — المكان الذي تعلمت فيه كيفية التعامل مع الناس، وإدارة الوقت، وتحمل المسؤولية.\n كانت مسؤوليتي الأساسية مساعدة العملاء، والتعريف بالمنتجات، وإتمام صفقات البيع.\n`,
     webkitURL: "https://www.jotun.com/ww-en",
     imageSrc: "jotun.jpeg",
     embededMapLink:
@@ -38,9 +38,9 @@ const experienceJson = [
     isCurrentCompany: false,
     description:
       "I played the role of the link between the students, their families and the school. I was responsible for helping the students with resolving the diffeculties, guide them to the right path, in addition to organizing events and workshops to help the students to improve their skills.",
-      descriptionAr:
+    descriptionAr:
       "كنت همزة الوصل بين الطلاب وأسرهم والمدرسة، ومسؤولًا عن مساعدة الطلاب في تجاوز الصعوبات، وتوجيههم نحو الطريق الصحيح، بالإضافة إلى تنظيم الفعاليات وورش العمل التي تساعدهم على تطوير مهاراتهم.",
-    
+
     webkitURL: "http://lms.elaf-school.com/",
     imageSrc: "elaf.png",
     embededMapLink:
@@ -55,9 +55,9 @@ const experienceJson = [
     isCurrentCompany: false,
     description:
       "First attempt to enter the software development world by getting assigned to test some feature manually (black box method) then getting enrolled in the development cycle by delivering some simple models in both front end and back end",
-      descriptionAr:
+    descriptionAr:
       "كانت أول محاولة لدخولي عالم تطوير البرمجيات، حيث بدأت باختبار بعض الخصائص يدويًا (طريقة الصندوق الأسود)، ثم شاركت في دورة التطوير بتسليم نماذج بسيطة في الواجهة الأمامية والخلفية.",
-   
+
     websiteUrl: "https://www.robotat.com",
     imageSrc: "robotat.png",
     embededMapLink:
@@ -72,7 +72,7 @@ const experienceJson = [
     isCurrentCompany: false,
     description:
       "A place where I graded from a junior level to a senior. Learning a lot of the development cycle, collaporate with other departments to learn more, working hard to proof myself professionally and stepping up to be a team leader to keep the wheel rooling.",
-      descriptionAr:
+    descriptionAr:
       "المكان الذي انتقلت فيه من مستوى مبتدئ إلى مستوى أول، وتعلمت الكثير عن دورة التطوير الكاملة، وتعاونت مع أقسام مختلفة لاكتساب معرفة أوسع. عملت بجد لإثبات نفسي مهنيًا، وتدرجت حتى أصبحت قائد فريق للحفاظ على عجلة العمل مستمرة.",
     websiteUrl: "https://www.menumiz.com",
     imageSrc: "Menumiz.png",
@@ -88,10 +88,10 @@ const experienceJson = [
     isCurrentCompany: false,
     description:
       "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
-      descriptionAr:
+    descriptionAr:
       "كوني المهندس الرئيسي في الفريق كانت مسؤولية صعبة لكنها مجزية جدًا في الوقت نفسه. خلال هذه الفترة سنحت لي الفرصة للتعرف على بعض من ألمع العقول، والعمل معهم والتعلم منهم كذلك.",
-    
-      websiteUrl: "https://touchless.asia",
+
+    websiteUrl: "https://touchless.asia",
     imageSrc: "Touchless.png",
     embededMapLink:
       "pb=!1m18!1m12!1m3!1d3983.7088143460246!2d101.66423242602517!3d3.171170203014705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc485de491c479%3A0xa40997f3dc918ec8!2sSolaris%20Dutamas%2C%201%2C%20Jln%20Dutamas%201%2C%20Solaris%20Dutamas%2C%2050754%20Kuala%20Lumpur%2C%20Wilayah%20Persekutuan%20Kuala%20Lumpur!5e0!3m2!1sen!2smy!4v1756546841444!5m2!1sen!2smy",
@@ -105,7 +105,7 @@ const experienceJson = [
     isCurrentCompany: false,
     description:
       "Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
-      descriptionAr:
+    descriptionAr:
       "العمل كمهندس برمجيات رئيسي كان تحديًا كبيرًا وتجربة غنية جدًا. خلال هذه المدة، التقيت وتعاونت مع نخبة من الموهوبين، وتعلمت الكثير من الخبرات العملية والفكرية.",
     websiteUrl: "https://www.boostorder.com",
     imageSrc: "boostorder.png",
@@ -121,9 +121,9 @@ const experienceJson = [
     isCurrentCompany: false,
     description:
       "First experiment working in such a big corporate which is the perfect time to engage and see how the collaporation should be done. In addition to feel proud as a working in a such a good reputation enterprises.",
-      descriptionAr:
+    descriptionAr:
       "كانت أول تجربة لي في شركة ضخمة، أتيحت لي فيها فرصة التعرف على بيئة عمل مؤسساتية متكاملة، وكيف يتم التعاون بين الفرق بشكل احترافي. كما شعرت بالفخر لكوني جزءًا من مؤسسة ذات سمعة متميزة.",
-      websiteUrl: "https://www.monster.com/about",
+    websiteUrl: "https://www.monster.com/about",
     imageSrc: "monster.jpeg",
     embededMapLink:
       "pb=!1m18!1m12!1m3!1d3983.7913515491928!2d101.7089010760252!3d3.1496712531472517!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc37f6f1c8d147%3A0x8c048efb4266c0bf!2sMenara%20AIA%20Sentral!5e0!3m2!1sen!2smy!4v1756546918525!5m2!1sen!2smy",
@@ -137,9 +137,9 @@ const experienceJson = [
     isCurrentCompany: false,
     description:
       "Woring in a team t delive a first class tier code. paricipating in mind storm sessions to detect the weakness points in the app and workin with task force team to present a solid plan to migrate to the legacy solutions to the latest technology.",
-      descriptionAr:
+    descriptionAr:
       "أعمل ضمن فريق متميز لتقديم كود برمجي على أعلى مستوى. أشارك في جلسات العصف الذهني لتحديد نقاط الضعف في النظام، وأعمل مع فريق المهام الخاصة لوضع خطة قوية لنقل الأنظمة القديمة إلى أحدث التقنيات.",
-   
+
     websiteUrl: "https://timelog.com/en",
     imageSrc: "timelog.png",
     embededMapLink:
@@ -154,30 +154,30 @@ const experienceJson = [
     isCurrentCompany: true,
     description:
       "Working in a fast paced environment to deliver high quality code that meets the business requirements. Collaborating with cross-functional teams to design, develop, and implement new features and functionalities.",
-      descriptionAr:
+    descriptionAr:
       "أعمل في بيئة سريعة الإيقاع لتقديم كود عالي الجودة يلبّي متطلبات العمل. أتعاون مع فرق متعددة التخصصات لتصميم وتطوير وتنفيذ ميزات ووظائف جديدة.",
-   
+
     websiteUrl: "https://www.carsome.my",
     imageSrc: "carsome.png",
     embededMapLink:
       "pb=!1m18!1m12!1m3!1d3983.745919023914!2d101.614575!3d3.161523399999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4f6ce7472157%3A0x740a20f1d4ecdee!2sCARSOME%20Malaysia%20HQ!5e0!3m2!1sen!2smy!4v1761457307647!5m2!1sen!2smy",
-  }
+  },
 ];
 
 const userAgent = navigator.userAgent;
 const regexp = /android|iphone|kindle|ipad/i;
 function getLanguage() {
-  return document.documentElement.lang ?? 'en'
+  return document.documentElement.lang ?? "en";
 }
 
 export let language = {
-  get value(){
+  get value() {
     return getLanguage();
   },
-  get isRTL(){
-    return this.value === 'ar';
-  }
-}
+  get isRTL() {
+    return this.value === "ar";
+  },
+};
 
 export const isMobileDevice = regexp.test(userAgent);
 
@@ -218,13 +218,15 @@ export function renderClients() {
   updateAboutSectionExperienceDuration();
 }
 
-function updateAboutSectionExperienceDuration(){
+function updateAboutSectionExperienceDuration() {
   let span = document.querySelector(".experience-duration");
   span.innerHTML = setExperienceDuration(experienceStartDate);
 }
 
-export function setExperienceDuration(date=null, months=null) {
-  let isShowingUnderGraduateExperience = document.querySelector("#showUnderGraduateExperience").checked
+export function setExperienceDuration(date = null, months = null) {
+  let isShowingUnderGraduateExperience = document.querySelector(
+    "#showUnderGraduateExperience"
+  ).checked;
   const andString = language.value == "en" ? " and " : " و ";
   const monthString = language.value == "en" ? " month" : " شهر ";
   const monthsString = language.value == "en" ? " months" : " أشهر ";
@@ -232,38 +234,72 @@ export function setExperienceDuration(date=null, months=null) {
   const yearsString = language.value == "en" ? " years" : " سنوات ";
 
   if (date) {
+    const joinedDate = new Date(date);
     const todayDate = new Date();
-    let workingDurationInYears = todayDate.getFullYear() - date.getFullYear();
-    const monthsDifference = todayDate.getMonth() - date.getMonth();
-    if(isShowingUnderGraduateExperience){
-      workingDurationInYears += 3.5;
+    let totalMonths =
+      (todayDate.getFullYear() - joinedDate.getFullYear()) * 12 +
+      todayDate.getMonth() -
+      joinedDate.getMonth();
+
+    if (todayDate.getDate() < joinedDate.getDate()) {
+      totalMonths -= 1;
     }
 
-    if(workingDurationInYears >=15 && workingDurationInYears < 20){
-      return language.value == "en" ? "more than a decade and a half" : "أكثر من عقد ونصف";
-    } else if(workingDurationInYears >=12 && workingDurationInYears < 15){
-      return language.value == "en" ? "more than a dosen years" : "أكثر من اثني عشر عامًا";
-    } else if (workingDurationInYears >= 10 && workingDurationInYears < 12) {
-      return language.value == "en" ? "more than a decade" : "أكثر من عقد من الزمن";
-    } else if(workingDurationInYears >0){
-      if (monthsDifference < 5) {
-        return language.value == "en" ? "more than " + workingDurationInYears + " years" : "أكثر من " + workingDurationInYears + " سنوات";
-      } else if (monthsDifference >= 5 && monthsDifference < 6) {
-        return language.value == "en" ? "about " + workingDurationInYears + " years and a half" : "حوالي " + workingDurationInYears + " سنوات ونصف";
-      } else if (monthsDifference >= 6 && monthsDifference <= 9) {
-        if (workingDurationInYears === 9) {
-          return language.value == "en" ? "nearly a decade" : "ما يقرب من عقد من الزمن";
-        }
+    if (isShowingUnderGraduateExperience) {
+      totalMonths += 42;
+    }
 
-        return language.value == "en" ?  "more than " + workingDurationInYears + " years and a half" : "أكثر من " + workingDurationInYears + " سنوات ونصف";
+    const workingDurationInYears = Math.floor(totalMonths / 12);
+    const remainingMonths = totalMonths % 12;
+    const workingDurationApproximation = totalMonths / 12;
+
+    if (workingDurationInYears >= 15 && workingDurationInYears < 20) {
+      return language.value == "en"
+        ? "more than a decade and a half"
+        : "أكثر من عقد ونصف";
+    } else if (workingDurationInYears >= 12 && workingDurationInYears < 15) {
+      return language.value == "en"
+        ? "more than a dozen years"
+        : "أكثر من اثني عشر عامًا";
+    } else if (workingDurationInYears >= 10 && workingDurationInYears < 12) {
+      return language.value == "en"
+        ? "more than a decade"
+        : "أكثر من عقد من الزمن";
+    } else if (
+      workingDurationApproximation >= 9.5 &&
+      workingDurationApproximation < 10
+    ) {
+      return language.value == "en" ? "about a decade" : "حوالي عقد من الزمن";
+    } else if (workingDurationInYears >= 1) {
+      if (remainingMonths < 5) {
+        return language.value == "en"
+          ? "more than " + workingDurationInYears + " years"
+          : "أكثر من " + workingDurationInYears + " سنوات";
+      } else if (remainingMonths >= 5 && remainingMonths < 6) {
+        return language.value == "en"
+          ? "about " + workingDurationInYears + " years and a half"
+          : "حوالي " + workingDurationInYears + " سنوات ونصف";
+      } else if (remainingMonths >= 6) {
+        if (workingDurationInYears === 9) {
+          return language.value == "en"
+            ? "nearly a decade"
+            : "ما يقرب من عقد من الزمن";
+        }
+        return language.value == "en"
+          ? "more than " + workingDurationInYears + " years and a half"
+          : "أكثر من " + workingDurationInYears + " سنوات ونصف";
       }
     } else {
-      if (monthsDifference < 5) {
-        return language.value == "en" ? "less than half a year" : "أقل من نصف سنة";
-      } else if (monthsDifference >= 5 && monthsDifference < 6) {
+      if (remainingMonths < 5) {
+        return language.value == "en"
+          ? "less than half a year"
+          : "أقل من نصف سنة";
+      } else if (remainingMonths >= 5 && remainingMonths < 6) {
         return language.value == "en" ? "about half a year" : "حوالي نصف سنة";
-      } else if (monthsDifference >= 6 && monthsDifference <= 9) {
-        return language.value == "en" ? "more than half a year" : "أكثر من نصف سنة";
+      } else if (remainingMonths >= 6 && remainingMonths <= 9) {
+        return language.value == "en"
+          ? "more than half a year"
+          : "أكثر من نصف سنة";
       }
 
       return "nearly a year";
@@ -275,11 +311,14 @@ export function setExperienceDuration(date=null, months=null) {
     if (years > 0) {
       resultText = years + (years > 1 ? yearsString : yearString);
       if (remainingMonths > 0) {
-        resultText += andString + remainingMonths + (remainingMonths > 1 ? monthsString : monthString);
+        resultText +=
+          andString +
+          remainingMonths +
+          (remainingMonths > 1 ? monthsString : monthString);
       }
-    }
-    else if (remainingMonths > 0) {
-      resultText += remainingMonths + (remainingMonths > 1 ? monthsString : monthString);
+    } else if (remainingMonths > 0) {
+      resultText +=
+        remainingMonths + (remainingMonths > 1 ? monthsString : monthString);
     }
 
     return resultText;
@@ -287,47 +326,73 @@ export function setExperienceDuration(date=null, months=null) {
 }
 
 function showClientDetails(event) {
-// Prevent the event from propagating further since the event goes to the parent
-event.stopPropagation(); 
-let isDarkMode =
-document.body.attributes["data-theme"] &&
-document.body.attributes["data-theme"].value === "dark";
-{
-  document
-  .querySelector(".experience-details-container")
-  .classList.add("active");
-  document.querySelector(".experience-details-container").style.boxShadow =
-  "var(--menu-box-shadow)";
-  const companyName = this.alt;
-  const relatedExperience = experienceJson.find(
-    (x) => x.company === companyName
-  );
+  // Prevent the event from propagating further since the event goes to the parent
+  event.stopPropagation();
+  let isDarkMode =
+    document.body.attributes["data-theme"] &&
+    document.body.attributes["data-theme"].value === "dark";
+  {
+    document
+      .querySelector(".experience-details-container")
+      .classList.add("active");
+    document.querySelector(".experience-details-container").style.boxShadow =
+      "var(--menu-box-shadow)";
+    const companyName = this.alt;
+    const relatedExperience = experienceJson.find(
+      (x) => x.company === companyName
+    );
     const html = `<div class="container">
         <div class="row">
           <div class="col-12">
-          <img src="./images/${relatedExperience.imageSrc}" alt="${companyName}" class="company-logo">
-          <h4 class="company-name">${language.value == "en" ? relatedExperience.company : relatedExperience.companyAr ?? relatedExperience.company
+          <img src="./images/${
+            relatedExperience.imageSrc
+          }" alt="${companyName}" class="company-logo">
+          <h4 class="company-name">${
+            language.value == "en"
+              ? relatedExperience.company
+              : relatedExperience.companyAr ?? relatedExperience.company
           }</h4>
-          <h5 class="position">${language.value == "en" ? relatedExperience.position : relatedExperience.positionAr}</h5>
-          <p>${language.value == "en" ? relatedExperience.description : relatedExperience.descriptionAr}. 
-           ${relatedExperience.isCurrentCompany
-              ? language.value == "en"
-                ? "I've been working here for " + setExperienceDuration(relatedExperience.joinedDate)
-                : "أعمل في هذه الشركة منذ" + setExperienceDuration(relatedExperience.joinedDate)
-              : language.value == "en"
-                ? "I worked here for " + setExperienceDuration(null, relatedExperience.duration)
-                : "عملت في هذه الشركة لمدة " + setExperienceDuration(null, relatedExperience.duration)
-          }.</p>
-          <p>Visit ${companyName} Website <a href="${relatedExperience.websiteUrl}" target="_blank" rel="noopener">here</a>!</p>
-          <iframe src="https://www.google.com/maps/embed?${relatedExperience.embededMapLink}" width="100%" height="200" style=' ${isDarkMode ? "filter:invert(90%)" : ""}' allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <h5 class="position">${
+            language.value == "en"
+              ? relatedExperience.position
+              : relatedExperience.positionAr
+          }</h5>
+          <p>${
+            language.value == "en"
+              ? relatedExperience.description
+              : relatedExperience.descriptionAr
+          }. 
+           ${
+             relatedExperience.isCurrentCompany
+               ? language.value == "en"
+                 ? "I've been working here for " +
+                   setExperienceDuration(relatedExperience.joinedDate)
+                 : "أعمل في هذه الشركة منذ" +
+                   setExperienceDuration(relatedExperience.joinedDate)
+               : language.value == "en"
+               ? "I worked here for " +
+                 setExperienceDuration(null, relatedExperience.duration)
+               : "عملت في هذه الشركة لمدة " +
+                 setExperienceDuration(null, relatedExperience.duration)
+           }.</p>
+          <p>Visit ${companyName} Website <a href="${
+      relatedExperience.websiteUrl
+    }" target="_blank" rel="noopener">here</a>!</p>
+          <iframe src="https://www.google.com/maps/embed?${
+            relatedExperience.embededMapLink
+          }" width="100%" height="200" style=' ${
+      isDarkMode ? "filter:invert(90%)" : ""
+    }' allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>`;
     document.querySelector(".experience-details").innerHTML = html;
-    document.querySelectorAll('.experience-item img, .scroll-horizontally').forEach(img => {
-      img.classList.remove('bounce');
-      img.style.pointerEvents = 'none';
-    })
+    document
+      .querySelectorAll(".experience-item img, .scroll-horizontally")
+      .forEach((img) => {
+        img.classList.remove("bounce");
+        img.style.pointerEvents = "none";
+      });
     setBodyScroll(false);
     toggleCloseMenuOnOutsideClick(true);
   }
@@ -340,9 +405,15 @@ export function setBodyScroll(scrollable) {
     section.style.filter = scrollable ? "" : "blur(8px)";
   });
 
-  document.querySelector("ul.indicator").style.filter = scrollable ? "" : "blur(8px)";
-  document.querySelector(".menu-icon").classList.toggle("disabled", !scrollable);
-  document.querySelector(".menu-icon").style.filter = scrollable ? "" : "blur(8px)";
+  document.querySelector("ul.indicator").style.filter = scrollable
+    ? ""
+    : "blur(8px)";
+  document
+    .querySelector(".menu-icon")
+    .classList.toggle("disabled", !scrollable);
+  document.querySelector(".menu-icon").style.filter = scrollable
+    ? ""
+    : "blur(8px)";
   document.querySelectorAll(".content a").forEach((a) => {
     a.classList.toggle("disabled", !scrollable);
     a.style.filter = scrollable ? "" : "blur(8px)";
@@ -357,42 +428,38 @@ export function setBodyScroll(scrollable) {
 }
 
 function closeActiveMenuWhenClickOutside() {
-  if(document.querySelector('.feedback').classList.contains('active')) {
+  if (document.querySelector(".feedback").classList.contains("active")) {
     closeFeedbackForm();
-    console.log('Clicked outside feedback form, closing it');
-  }
-  else if(document.querySelector('.settings-container').classList.contains('active')) {
+  } else if (document.querySelector(".settings-container").classList.contains("active")) {
     closeSettingsMenu();
     closeNavigationMenu();
-    console.log('Clicked settings menu, closing it');
-  }
-  else if(document.querySelector('.navigation').classList.contains('active')) {
+  } else if (document.querySelector(".navigation").classList.contains("active")) {
     closeNavigationMenu();
-    console.log('Clicked navigation menu, closing it');
-  }
-  else if(document.querySelector('.experience-details-container').classList.contains('active')) {
-   closeClientDetails();
-   console.log('Clicked outside client\'s details, closing it');
+  } else if (document.querySelector(".experience-details-container").classList.contains("active")) {
+    closeClientDetails();
   }
 }
 
-export function toggleCloseMenuOnOutsideClick(isClosing, additionalElements = []) {
-  if(!isClosing) {
-    document.querySelector('.content').removeEventListener('click', closeActiveMenuWhenClickOutside)
+export function toggleCloseMenuOnOutsideClick(
+  isClosing,
+  additionalElements = []
+) {
+  if (!isClosing) {
+    document.querySelector(".content").removeEventListener("click", closeActiveMenuWhenClickOutside);
     if (additionalElements && additionalElements.length > 0) {
-      additionalElements.forEach(element => {
+      additionalElements.forEach((element) => {
         element.removeEventListener("click", closeActiveMenuWhenClickOutside);
-      })
+      });
     }
-    
+
     return;
   }
 
-  document.querySelector('.content').addEventListener('click', closeActiveMenuWhenClickOutside)
+  document.querySelector(".content").addEventListener("click", closeActiveMenuWhenClickOutside);
   if (additionalElements && additionalElements.length > 0) {
-    additionalElements.forEach(element => {
+    additionalElements.forEach((element) => {
       element.addEventListener("click", closeActiveMenuWhenClickOutside);
-    })
+    });
   }
 }
 
@@ -412,13 +479,16 @@ export function closeSettingsMenu() {
     $(".navigation > *").css("filter", "");
     $(".settings-container").css("box-shadow", "none");
   }, 100);
-  let additionalMenus = []
-  if(document.querySelector(".navigation").classList.contains("active")){
-    additionalMenus.push(document.querySelector(".navigation"))
+  let additionalMenus = [];
+  if (document.querySelector(".navigation").classList.contains("active")) {
+    additionalMenus.push(document.querySelector(".navigation"));
   }
-  if(document.querySelector(".settings-container").classList.contains("active")){
-    additionalMenus.push(document.querySelector(".settings-container"))
+
+  if (document.querySelector(".settings-container").classList.contains("active")) {
+    additionalMenus.push(document.querySelector(".settings-container"));
+    additionalMenus.push(document.querySelector(".navigation"));
   }
+  
   toggleCloseMenuOnOutsideClick(false, additionalMenus);
 }
 
@@ -428,13 +498,18 @@ export function closeFeedbackForm() {
   document.querySelector(".navigation").style.filter = "";
   document.querySelector(".settings-container").style.filter = "";
   document.querySelector(".experience-details-container").style.filter = "";
-  let sideMenusAreActive = document.querySelector(".navigation").classList.contains("active")
-   || document.querySelector(".settings-container").classList.contains("active") 
-   || document.querySelector(".experience-details-container").classList.contains("active");
+  let sideMenusAreActive =
+    document.querySelector(".navigation").classList.contains("active") ||
+    document
+      .querySelector(".settings-container")
+      .classList.contains("active") ||
+    document
+      .querySelector(".experience-details-container")
+      .classList.contains("active");
 
-  // Allow removing the blur effect only if no side menus are active  
+  // Allow removing the blur effect only if no side menus are active
   if (!sideMenusAreActive) {
-    setBodyScroll(true)
+    setBodyScroll(true);
   }
 }
 
@@ -444,10 +519,12 @@ export function closeClientDetails() {
     .classList.remove("active");
   document.querySelector(".experience-details-container").style.boxShadow =
     "none";
-  document.querySelectorAll('.experience-item img, .scroll-horizontally').forEach(img => {
-    img.classList.add('bounce');
-    img.style.pointerEvents = 'auto';
-  })
+  document
+    .querySelectorAll(".experience-item img, .scroll-horizontally")
+    .forEach((img) => {
+      img.classList.add("bounce");
+      img.style.pointerEvents = "auto";
+    });
   setBodyScroll(true);
   toggleCloseMenuOnOutsideClick(false);
 }
@@ -455,8 +532,7 @@ export function closeClientDetails() {
 const btnCloseNotification = document.querySelector(".notification .close");
 btnCloseNotification.addEventListener("click", closeNotification);
 
-function closeNotification(){
-  console.log("close notification");
+function closeNotification() {
   document.querySelector(".notification").classList.remove("active");
   document.querySelector(".feedback").classList.remove("active");
   closeFeedbackForm();
