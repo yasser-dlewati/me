@@ -21,7 +21,7 @@ const experienceJson = [
     positionAr: "مشرف برنامج المخترعون الصغار",
     duration: 24,
     isCurrentCompany: false,
-    description: `As \"Little Inventors\" program mentor, I was responsible for teaching kids the basics of physics, electricity, programming and robotics using age appropriate tools and methods to make sure they understand the concepts and have fun at the same time.\n Also, I was responsible for organizing the annual events for the kids, playing roles in the plays that Kidzone hosted for the kids and their families.\n Lastly, I was responsible for documenting the experiments and working on a simple syllabus to be followed by the mentors.`,
+    description: `As "Little Inventors" program mentor, I was responsible for teaching kids the basics of physics, electricity, programming and robotics using age appropriate tools and methods to make sure they understand the concepts and have fun at the same time.\n Also, I was responsible for organizing the annual events for the kids, playing roles in the plays that Kidzone hosted for the kids and their families.\n Lastly, I was responsible for documenting the experiments and working on a simple syllabus to be followed by the mentors.`,
     descriptionAr: `بصفتي مشرفًا في برنامج "المخترعون الصغار"، كنت مسؤولاً عن تعليم الأطفال أساسيات الفيزياء والكهرباء والبرمجة والروبوتات باستخدام أدوات وأساليب مناسبة لأعمارهم، لضمان الفهم والمتعة في آنٍ واحد.\n كما كنت مسؤولاً عن تنظيم الفعاليات السنوية للأطفال، والمشاركة في المسرحيات التي تستضيفها كيدزون للأطفال وعائلاتهم.\n وأخيرًا، كنت مسؤولاً عن توثيق التجارب وإعداد منهج مبسط يُتبع من قِبَل المشرفين.`,
     webkitURL: "https://www.facebook.com/KidZoneSyria/",
     imageSrc: "Kidzone.jpeg",
@@ -216,6 +216,7 @@ export function renderClients() {
   });
 
   updateAboutSectionExperienceDuration();
+  resetClientsView();
 }
 
 function updateAboutSectionExperienceDuration() {
@@ -538,3 +539,5 @@ function closeNotification() {
   closeFeedbackForm();
   toggleCloseMenuOnOutsideClick(false);
 }
+
+import { resetClientsView } from "./clients.js";

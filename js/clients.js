@@ -16,6 +16,7 @@ setTimeout(() => {
 }, 100);
 
 document.addEventListener("DOMContentLoaded", () => {
+  initializeExperienceIndicatorPosition();
   const spanExperienceDuration = document.querySelector(".experience-duration");
   let experienceDuration = setExperienceDuration(experienceStartDate);
   spanExperienceDuration.innerHTML = experienceDuration;
@@ -57,7 +58,11 @@ prevButton.addEventListener("click", function () {
   }, 300);
 });
 
-let experienceIndicatorPosition = isMobileDevice ? [0] : [0, 1, 2];
+let experienceIndicatorPosition;
+
+function resetExperienceIndicatorPosition() {
+    experienceIndicatorPosition = isMobileDevice ? [0] : [0, 1, 2];
+}
 
 function moveExperienceIndicatorByStep(step) {
   const recentlyAdded =
@@ -91,8 +96,8 @@ function updateExperienceIndicator() {
 }
 
 export function resetClientsView() {
+  initializeExperienceIndicatorPosition();
   document.querySelector(".experience-container").scroll({ left: 0 });
-  experienceIndicatorPosition = isMobileDevice ? [0] : [0, 1, 2];
   updateExperienceIndicator();
 }
 
