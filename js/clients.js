@@ -16,7 +16,7 @@ setTimeout(() => {
 }, 100);
 
 document.addEventListener("DOMContentLoaded", () => {
-  initializeExperienceIndicatorPosition();
+  resetExperienceIndicatorPosition();
   const spanExperienceDuration = document.querySelector(".experience-duration");
   let experienceDuration = setExperienceDuration(experienceStartDate);
   spanExperienceDuration.innerHTML = experienceDuration;
@@ -96,7 +96,7 @@ function updateExperienceIndicator() {
 }
 
 export function resetClientsView() {
-  initializeExperienceIndicatorPosition();
+  resetExperienceIndicatorPosition();
   document.querySelector(".experience-container").scroll({ left: 0 });
   updateExperienceIndicator();
 }
