@@ -169,6 +169,10 @@ function readSavedSettings() {
     $("body").attr("data-theme", savedTheme);
     document.querySelector("#darkModeSwitch").checked = savedTheme === "dark";
     document.querySelector("#saveSettingsLocally").checked = true;
+  } else {
+    const isSystemDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
+    $("body").attr("data-theme", isSystemDarkMode.matches ? "dark" : "light");
+    document.querySelector("#darkModeSwitch").checked = isSystemDarkMode.matches;
   }
 
   const showUnderGraduate = localStorage.getItem("underGraduate");
@@ -176,10 +180,10 @@ function readSavedSettings() {
     document.querySelector("#showUnderGraduateExperience").checked = true;
   }
 
-  const savedLanguage = localStorage.getItem("language")
-  switchLanguage(savedLanguage ?? "en")
-  if(savedLanguage){
-    document.querySelector("#language").value = savedLanguage
+  const savedLanguage = localStorage.getItem("language");
+  switchLanguage(savedLanguage ?? "en");
+  if (savedLanguage) {
+    document.querySelector("#language").value = savedLanguage;
   }
 }
 
