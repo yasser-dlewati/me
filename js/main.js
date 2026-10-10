@@ -2,6 +2,7 @@
 import { language, renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu, observeReveal } from "./common.js";
 import { feedbackIcon } from "./feedback.js";
 import { switchLanguage, getNestedValue, translations } from "./translation.js";
+import { initSectionScroll, scrollToSection } from "./sectionScroll.js";
 
 const setSectionsStylesForScrolling = () => {
   $("section").each(function (index) {
@@ -87,6 +88,7 @@ $(document).ready(function () {
   aboutSection.addBouncyAnimationAfterInSeconds(1.5);
   setSectionsStylesForScrolling();
   window.scrollTo(0, 0);
+  initSectionScroll();
 
   // About's content column isn't animated directly since a transform would re-anchor its absolute side image
   document.querySelectorAll("section:not(#top)").forEach((section) => {
@@ -151,7 +153,7 @@ $(document).ready(function () {
       document.querySelector(".content").style.overflow = "hidden";
       e.preventDefault();
       const target = document.querySelector(link.getAttribute('href'));
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      scrollToSection([...document.querySelectorAll("section")].indexOf(target));
       closeNavigationMenu();
     });
   });  
@@ -254,12 +256,7 @@ const screenIndicator = document.querySelector("ul.screen.indicator");
 
 topScrollDiv.addEventListener("click", function () {
   this.classList.remove("bouncy");
-  const currentSection = this.parentElement;
-  const nextSection = currentSection.nextElementSibling;
-  window.scrollTo({
-    top: nextSection.offsetTop,
-    behavior: "smooth",
-  });
+  scrollToSection(1);
 });
 
 $(window).on("scroll", function () {
