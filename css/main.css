@@ -55,6 +55,8 @@
 
     --next-client-float: left;
     --prev-client-float: right;
+
+    --reveal-offset: -48px;
 }
 
 [data-theme="dark"] {
@@ -86,6 +88,8 @@ html[dir="rtl"] {
 
     --next-client-float: right;
     --prev-client-float: left;
+
+    --reveal-offset: 48px;
 }
 
 /*---------------------------------------
@@ -204,6 +208,26 @@ a:hover {
 
 ::-webkit-scrollbar {
     width: 0;
+}
+
+/* Fade in from the reading start side (left in English, right in Arabic) */
+.reveal {
+    opacity: 0;
+    transform: translateX(var(--reveal-offset));
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    transition-delay: var(--reveal-delay, 0s);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        transform: none;
+        transition: opacity 0.3s ease-out;
+    }
 }
 
 /*---------------------------------------

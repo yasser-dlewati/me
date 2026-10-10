@@ -1,4 +1,5 @@
 "use strict"
+import { observeReveal } from "./common.js";
 
 const servicesJson = [
   {
@@ -82,6 +83,7 @@ export function renderServices(){
     });
 
     servicesContainer.innerHTML = servicesContent;
+    observeReveal(servicesContainer.querySelectorAll('.card'), 0.15);
 }
 
 document.addEventListener("DOMContentLoaded", function () {

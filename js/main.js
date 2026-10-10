@@ -1,5 +1,5 @@
 "use strict";
-import { language, renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu } from "./common.js";
+import { language, renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu, observeReveal } from "./common.js";
 import { feedbackIcon } from "./feedback.js";
 import { switchLanguage, getNestedValue, translations } from "./translation.js";
 
@@ -87,6 +87,13 @@ $(document).ready(function () {
   aboutSection.addBouncyAnimationAfterInSeconds(1.5);
   setSectionsStylesForScrolling();
   window.scrollTo(0, 0);
+
+  // About's content column isn't animated directly since a transform would re-anchor its absolute side image
+  document.querySelectorAll("section:not(#top)").forEach((section) => {
+    observeReveal(section.querySelectorAll(
+      ".container > .row > .col-md-3, #about .col-md-8 > p, #about .buttons, #clients .col-md-8, #contact .col-md-8"
+    ), 0.15);
+  });
 
   $(".hero-text .message").each(function (i) {
     var $this = $(this);

@@ -540,4 +540,26 @@ function closeNotification() {
   toggleCloseMenuOnOutsideClick(false);
 }
 
+let revealObserver;
+
+export function observeReveal(elements, staggerSeconds = 0) {
+  revealObserver ??= new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  elements.forEach((element, index) => {
+    element.classList.add("reveal");
+    element.style.setProperty("--reveal-delay", `${index * staggerSeconds}s`);
+    revealObserver.observe(element);
+  });
+}
+
 import { resetClientsView } from "./clients.js";
