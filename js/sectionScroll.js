@@ -1,6 +1,6 @@
 "use strict";
 
-const SECTION_STACK_OFFSET = 8; // matches setSectionsStylesForScrolling in main.js
+export const SECTION_STACK_OFFSET = 8;
 const WHEEL_QUIET_MS = 200;
 const SWIPE_THRESHOLD = 50;
 const SCROLL_LOCK_FALLBACK_MS = 1000;
@@ -35,10 +35,23 @@ function unlock() {
   isAnimating = false;
 }
 
+// Sections stay in the viewport while stacked, so reverse their reveal as soon as we head back up
+function hideRevealsBelow(index) {
+  document.querySelectorAll("section").forEach((section, sectionIndex) => {
+    if (sectionIndex > index) {
+      section.querySelectorAll(".reveal.visible").forEach((el) => el.classList.remove("visible"));
+    }
+  });
+}
+
 export function scrollToSection(index) {
   const points = getSnapPoints();
   const target = points[Math.min(Math.max(index, 0), points.length - 1)];
   if (Math.abs(window.scrollY - target) < 2) return;
+
+  if (target < window.scrollY) {
+    hideRevealsBelow(index);
+  }
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   isAnimating = true;

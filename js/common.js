@@ -200,7 +200,7 @@ export function renderClients() {
   let clientsContent = "";
   for (let i = 0; i < clients.length; i++) {
     clientsContent += `<div class='experience-item'>
-      <img src="./images/${clients[i].imageSrc}" class="img-fluid bounce" alt="${clients[i].company}">
+      <img src="./images/${clients[i].imageSrc}" class="img-fluid bounce" alt="${clients[i].company}" loading="lazy">
       </div>`;
     indicatorContent +=
       (!isMobileDevice && i < 3) || (isMobileDevice && i === 0)
@@ -214,6 +214,15 @@ export function renderClients() {
   experienceItems.forEach((item) => {
     item.addEventListener("click", showClientDetails);
   });
+
+  // Stagger only the clients visible at first; the rest reveal one at a time as the carousel scrolls.
+  // Those only fade: sliding would pull them past the carousel edge into view and make them flicker.
+  const clientItems = [...clientsContainer.children];
+  const initiallyVisibleCount = isMobileDevice ? 1 : 3;
+  const laterItems = clientItems.slice(initiallyVisibleCount);
+  laterItems.forEach((item) => item.classList.add("reveal-fade"));
+  observeReveal(clientItems.slice(0, initiallyVisibleCount), 0.15);
+  observeReveal(laterItems);
 
   updateAboutSectionExperienceDuration();
   resetClientsView();
@@ -326,12 +335,18 @@ export function setExperienceDuration(date = null, months = null) {
   }
 }
 
+// Each client's details are built once and kept (hidden) in the panel, so the map iframe and
+// logo don't reload every time the panel opens. Cleared when the language changes.
+const clientDetailsCache = new Map();
+
+export function clearClientDetailsCache() {
+  clientDetailsCache.clear();
+  document.querySelector(".experience-details").innerHTML = "";
+}
+
 function showClientDetails(event) {
   // Prevent the event from propagating further since the event goes to the parent
   event.stopPropagation();
-  let isDarkMode =
-    document.body.attributes["data-theme"] &&
-    document.body.attributes["data-theme"].value === "dark";
   {
     document
       .querySelector(".experience-details-container")
@@ -339,6 +354,29 @@ function showClientDetails(event) {
     document.querySelector(".experience-details-container").style.boxShadow =
       "var(--menu-box-shadow)";
     const companyName = this.alt;
+    const detailsContainer = document.querySelector(".experience-details");
+    let details = clientDetailsCache.get(companyName);
+    if (!details) {
+      details = buildClientDetails(companyName);
+      clientDetailsCache.set(companyName, details);
+      detailsContainer.appendChild(details);
+    }
+    clientDetailsCache.forEach((element) => {
+      element.hidden = element !== details;
+    });
+
+    document
+      .querySelectorAll(".experience-item img, .scroll-horizontally")
+      .forEach((img) => {
+        img.classList.remove("bounce");
+        img.style.pointerEvents = "none";
+      });
+    setBodyScroll(false);
+    toggleCloseMenuOnOutsideClick(true);
+  }
+}
+
+function buildClientDetails(companyName) {
     const relatedExperience = experienceJson.find(
       (x) => x.company === companyName
     );
@@ -381,22 +419,13 @@ function showClientDetails(event) {
     }" target="_blank" rel="noopener">here</a>!</p>
           <iframe src="https://www.google.com/maps/embed?${
             relatedExperience.embededMapLink
-          }" width="100%" height="200" style=' ${
-      isDarkMode ? "filter:invert(90%)" : ""
-    }' allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          }" width="100%" height="200" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>`;
-    document.querySelector(".experience-details").innerHTML = html;
-    document
-      .querySelectorAll(".experience-item img, .scroll-horizontally")
-      .forEach((img) => {
-        img.classList.remove("bounce");
-        img.style.pointerEvents = "none";
-      });
-    setBodyScroll(false);
-    toggleCloseMenuOnOutsideClick(true);
-  }
+    const details = document.createElement("div");
+    details.innerHTML = html;
+    return details;
 }
 
 export function setBodyScroll(scrollable) {
@@ -464,11 +493,26 @@ export function toggleCloseMenuOnOutsideClick(
   }
 }
 
+// Keep the edge shadow while the panel slides out, then drop it so no line shows at the screen edge
+function removeShadowAfterClosing(panel) {
+  let fallback;
+  const removeShadow = (e) => {
+    if (e && (e.target !== panel || e.propertyName !== "transform")) return;
+    clearTimeout(fallback);
+    panel.removeEventListener("transitionend", removeShadow);
+    if (!panel.classList.contains("active")) {
+      panel.style.boxShadow = "none";
+    }
+  };
+  panel.addEventListener("transitionend", removeShadow);
+  fallback = setTimeout(removeShadow, 1000);
+}
+
 export function closeNavigationMenu() {
   setTimeout(() => {
     setBodyScroll(true);
     $(".navigation").removeClass("active");
-    $(".navigation").css("box-shadow", "none");
+    removeShadowAfterClosing(document.querySelector(".navigation"));
   }, 100);
   $(".content").css("overflow", "");
   toggleCloseMenuOnOutsideClick(false);
@@ -478,7 +522,7 @@ export function closeSettingsMenu() {
   setTimeout(() => {
     $(".settings-container").removeClass("active");
     $(".navigation > *").css("filter", "");
-    $(".settings-container").css("box-shadow", "none");
+    removeShadowAfterClosing(document.querySelector(".settings-container"));
   }, 100);
   let additionalMenus = [];
   if (document.querySelector(".navigation").classList.contains("active")) {
@@ -518,8 +562,7 @@ export function closeClientDetails() {
   document
     .querySelector(".experience-details-container")
     .classList.remove("active");
-  document.querySelector(".experience-details-container").style.boxShadow =
-    "none";
+  removeShadowAfterClosing(document.querySelector(".experience-details-container"));
   document
     .querySelectorAll(".experience-item img, .scroll-horizontally")
     .forEach((img) => {
@@ -546,10 +589,8 @@ export function observeReveal(elements, staggerSeconds = 0) {
   revealObserver ??= new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          revealObserver.unobserve(entry.target);
-        }
+        // Keep observing so the motion replays every time the element comes back into view
+        entry.target.classList.toggle("visible", entry.isIntersecting);
       });
     },
     { threshold: 0.2 }
@@ -558,6 +599,7 @@ export function observeReveal(elements, staggerSeconds = 0) {
   elements.forEach((element, index) => {
     element.classList.add("reveal");
     element.style.setProperty("--reveal-delay", `${index * staggerSeconds}s`);
+    element.style.setProperty("--reveal-hide-delay", `${(elements.length - 1 - index) * staggerSeconds / 2}s`);
     revealObserver.observe(element);
   });
 }

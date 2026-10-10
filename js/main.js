@@ -2,19 +2,25 @@
 import { language, renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu, observeReveal } from "./common.js";
 import { feedbackIcon } from "./feedback.js";
 import { switchLanguage, getNestedValue, translations } from "./translation.js";
-import { initSectionScroll, scrollToSection } from "./sectionScroll.js";
+import { initSectionScroll, scrollToSection, SECTION_STACK_OFFSET } from "./sectionScroll.js";
 
 const setSectionsStylesForScrolling = () => {
   $("section").each(function (index) {
     $(this).css("z-index", index + 1);
-    $(this).css("top", `${index * 8}px`);
-    $(this).height(`calc(100dvh - ${index * 8}px)`);
+    $(this).css("top", `${index * SECTION_STACK_OFFSET}px`);
+    $(this).height(`calc(100dvh - ${index * SECTION_STACK_OFFSET}px)`);
   });
 };
 
 const renderNavigationLinks = () => {
   var content = getSectionsCount(true);
   $(".links").html(content);
+
+  const links = document.querySelectorAll(".links a");
+  links.forEach((link, index) => {
+    link.style.setProperty("--reveal-delay", `${0.2 + index * 0.1}s`);
+    link.style.setProperty("--reveal-hide-delay", `${(links.length - 1 - index) * 0.05}s`);
+  });
 };
 
 const renderScreenIndicator = () => {
@@ -45,6 +51,9 @@ function setScreenIndicator(index) {
     $(this).removeClass("active");
   });
   $($(".screen.indicator li")[index]).addClass("active");
+
+  // Keep the menu button at the same spot relative to the current stacked section
+  document.documentElement.style.setProperty("--section-stack-top", `${index * SECTION_STACK_OFFSET}px`);
 }
 
 function setScreenIndicatorAccordingToScroll() {
@@ -82,18 +91,33 @@ const topScrollDiv = document.querySelector("#top .scroll");
 const aboutSection = document.querySelector("section#about");
 const menuIcon = document.querySelector(".menu-icon");
 const settingsIcon = document.querySelector(".settings");
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw.js").catch((error) => {
+    console.warn("Image caching unavailable:", error);
+  });
+}
+const INTRO_SECONDS = 1.5;
+
 $(document).ready(function () {
   readSavedSettings();
-  topScrollDiv.hideForInSeconds(1.5);
-  aboutSection.addBouncyAnimationAfterInSeconds(1.5);
+  topScrollDiv.hideForInSeconds(INTRO_SECONDS);
+  aboutSection.addBouncyAnimationAfterInSeconds(INTRO_SECONDS);
   setSectionsStylesForScrolling();
   window.scrollTo(0, 0);
-  initSectionScroll();
+
+  // Let the intro play without scrolling; the menu button appears when it's over
+  document.documentElement.style.overflow = "hidden";
+  setTimeout(() => {
+    document.documentElement.style.overflow = "";
+    menuIcon.style.removeProperty("display");
+    initSectionScroll();
+  }, INTRO_SECONDS * 1000);
 
   // About's content column isn't animated directly since a transform would re-anchor its absolute side image
   document.querySelectorAll("section:not(#top)").forEach((section) => {
     observeReveal(section.querySelectorAll(
-      ".container > .row > .col-md-3, #about .col-md-8 > p, #about .buttons, #clients .col-md-8, #contact .col-md-8"
+      ".container > .row > .col-md-3, #about .col-md-8 > p, #about .buttons > a, #clients .col-md-8 .col-md-1, #clients .experience.indicator, #clients .hint, #clients .download, #contact .col-md-8"
     ), 0.15);
   });
 
@@ -262,7 +286,6 @@ topScrollDiv.addEventListener("click", function () {
 $(window).on("scroll", function () {
   topScrollDiv.classList.remove("bouncy");
   aboutSection.classList.remove("bouncy");
-  menuIcon.style.removeProperty("display");
   screenIndicator.style.removeProperty("display");
   feedbackIcon.style.removeProperty("display");
 });

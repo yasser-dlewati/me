@@ -1,5 +1,5 @@
 import { resetClientsView } from "./clients.js";
-import { experienceStartDate, language, setExperienceDuration } from "./common.js";
+import { experienceStartDate, language, setExperienceDuration, clearClientDetailsCache } from "./common.js";
 import { renderServices } from "./services.js";
 
 // Language data object
@@ -125,6 +125,8 @@ export function getNestedValue(obj, key) {
 // Function to switch language
 export function switchLanguage(lang) {
     const html = document.documentElement;
+    // Flipping direction moves the hidden side panels to the other edge; without this they slide across the screen
+    html.classList.add("switching-direction");
     if (lang === "ar") {
         html.setAttribute("dir", "rtl"); // Set direction to RTL
         html.setAttribute("lang", "ar"); // Set language to Arabic
@@ -132,6 +134,8 @@ export function switchLanguage(lang) {
         html.setAttribute("dir", "ltr"); // Set direction to LTR
         html.setAttribute("lang", "en"); // Set language to English
     }
+    void html.offsetWidth; // apply the new positions before re-enabling transitions
+    html.classList.remove("switching-direction");
 
     const elements = document.querySelectorAll("[data-translate]");
     elements.forEach((el) => {
@@ -158,6 +162,7 @@ export function switchLanguage(lang) {
     })
 
     resetClientsView();
+    clearClientDetailsCache();
     renderServices();
 }
 

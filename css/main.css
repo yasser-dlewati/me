@@ -210,21 +210,36 @@ a:hover {
     width: 0;
 }
 
-/* Fade in from the reading start side (left in English, right in Arabic) */
+/* Fade in from the reading start side (left in English, right in Arabic),
+   and play it backwards (faster, last item first) when scrolling back up */
 .reveal {
     opacity: 0;
     transform: translateX(var(--reveal-offset));
+    transition: opacity 0.4s ease-in, transform 0.4s ease-in;
+    transition-delay: var(--reveal-hide-delay, 0s);
+}
+
+/* Section titles come in from the opposite side to meet the content */
+section .col-md-3.reveal {
+    transform: translateX(calc(-1 * var(--reveal-offset)));
+}
+
+.reveal.reveal-fade {
+    transform: none;
+}
+
+.reveal.visible,
+section .col-md-3.reveal.visible {
+    opacity: 1;
+    transform: none;
     transition: opacity 0.7s ease-out, transform 0.7s ease-out;
     transition-delay: var(--reveal-delay, 0s);
 }
 
-.reveal.visible {
-    opacity: 1;
-    transform: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
-    .reveal {
+    .reveal,
+    .reveal.visible,
+    section .col-md-3.reveal {
         transform: none;
         transition: opacity 0.3s ease-out;
     }
@@ -249,6 +264,13 @@ a:hover {
     align-items: start;
 }
 
+html.switching-direction .settings-container,
+html.switching-direction .navigation,
+html.switching-direction .experience-details-container,
+html.switching-direction .feedback-icon {
+    transition: none !important;
+}
+
 .settings-container.active {
     transform: translateX(var(--settings-active-translate-x));
     transition: transform 0.5s ease-in-out;
@@ -261,6 +283,25 @@ a:hover {
     align-items: center;
     gap: 16px;
     max-width: 50%;
+}
+
+/* Bootstrap's LTR build keeps the chevron and its padding on the right; mirror them for Arabic */
+html[dir="rtl"] .form-select {
+    padding: 0.375rem 0.75rem 0.375rem 2.25rem;
+    background-position: left 0.75rem center;
+}
+
+/* Bootstrap offsets switches with a float + negative em margin, which overshoots at our larger
+   font size and ignores RTL; align them to the column's end edge instead, like the dropdown */
+.setting-row .form-switch {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
+}
+
+.setting-row .form-switch .form-check-input {
+    float: none;
+    margin: 0;
 }
 
 input[type="checkbox"].form-check-input {
@@ -292,6 +333,29 @@ input[type="checkbox"].form-check-input {
 html[dir="rtl"] .navigation .links {
     left: calc(25% - 80px);
     right: auto;
+}
+
+/* Same motion as .reveal, driven by the menu opening/closing instead of scrolling */
+.navigation .links a {
+    opacity: 0;
+    transform: translateX(var(--reveal-offset));
+    transition: opacity 0.4s ease-in, transform 0.4s ease-in;
+    transition-delay: var(--reveal-hide-delay, 0s);
+}
+
+.navigation.active .links a {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    transition-delay: var(--reveal-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navigation .links a,
+    .navigation.active .links a {
+        transform: none;
+        transition: opacity 0.3s ease-out;
+    }
 }
 
 .settings-item {
@@ -613,10 +677,21 @@ html[dir="rtl"] .feedback-icon {
 
 .menu-icon {
     position: fixed;
-    top: 32px;
+    top: calc(32px + var(--section-stack-top, 0px));
+    transition: top 0.4s ease-out;
     left: 32px;
     font-size: 32px;
     z-index: 7;
+}
+
+.menu-icon.fade-in {
+    animation: fadeInFromHidden 0.5s ease-out;
+}
+
+@keyframes fadeInFromHidden {
+    from {
+        opacity: 0;
+    }
 }
 
 html[dir="rtl"] .menu-icon {
@@ -740,6 +815,11 @@ html[dir="rtl"] img.side {
     display: block;
     border-radius: var(--border-radius-large);
     transition: transform 0.4s ease-out;
+}
+
+/* Applied via CSS so cached client details follow theme changes without being rebuilt */
+[data-theme="dark"] .experience-details iframe {
+    filter: invert(90%);
 }
 
 .experience-details a {
