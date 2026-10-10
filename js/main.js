@@ -1,5 +1,5 @@
 "use strict";
-import { language, renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu, observeReveal } from "./common.js";
+import { language, renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu, observeReveal, openCalendly, closeCalendly } from "./common.js";
 import { feedbackIcon } from "./feedback.js";
 import { switchLanguage, getNestedValue, translations } from "./translation.js";
 import { initSectionScroll, scrollToSection, SECTION_STACK_OFFSET } from "./sectionScroll.js";
@@ -151,6 +151,19 @@ $(document).ready(function () {
 
   $(".settings-container .close").click(function () {
     closeSettingsMenu();
+  });
+
+  $(".calendly-container .close").click(function () {
+    closeCalendly();
+  });
+
+  document.querySelectorAll(".schedule-session").forEach((button) => {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      // Stop the click reaching .content, which would close the panel straight away
+      e.stopPropagation();
+      openCalendly();
+    });
   });
 
   menuIcon.addEventListener("click", function () {

@@ -267,6 +267,7 @@ section .col-md-3.reveal.visible {
 html.switching-direction .settings-container,
 html.switching-direction .navigation,
 html.switching-direction .experience-details-container,
+html.switching-direction .calendly-container,
 html.switching-direction .feedback-icon {
     transition: none !important;
 }
@@ -309,7 +310,8 @@ input[type="checkbox"].form-check-input {
 }
 
 .navigation,
-.experience-details-container {
+.experience-details-container,
+.calendly-container {
     transform: translateX(var(--navigation-translate-x));
     transition: transform 0.5s ease-in-out;
     background-color: var(--bg-dark-color);
@@ -320,7 +322,8 @@ input[type="checkbox"].form-check-input {
 }
 
 .navigation.active,
-.experience-details-container.active {
+.experience-details-container.active,
+.calendly-container.active {
     transform: translateX(var(--navigation-active-translate-x));
 }
 
@@ -380,6 +383,7 @@ html[dir="rtl"] .settings-item {
 
 .navigation a,
 .experience-details-container a,
+.calendly-container a,
 .settings-container a {
     color: var(--text-dark-color);
     display: block;
@@ -389,12 +393,14 @@ html[dir="rtl"] .settings-item {
 
 html[dir="rtl"] .navigation .close,
 .experience-details-container .close,
+.calendly-container .close,
 .settings-container .close {
     right: calc(50% + 32px);
 }
 
 .navigation .close,
 .experience-details-container .close,
+.calendly-container .close,
 .settings-container .close {
     position: absolute;
     top: 32px;
@@ -1079,11 +1085,24 @@ footer .social-links a {
     margin: 0 10px;
 }
 
-.calendly-overlay .calendly-popup {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100% !important;
-    max-height: 100%§ !important;
+/* Calendly's iframe can't be styled from here, so filters remap its colors to match .button.primary:
+   its (blue) accent becomes black in light mode and white in dark mode, while its white page
+   background lands on the theme background (95% / 20% grey). Button text follows the background. */
+.calendly-content iframe {
+    filter: grayscale(100%) brightness(71%) contrast(212%);
+}
+
+/* Calendly has no dark mode, so the light frame is inverted first */
+[data-theme="dark"] .calendly-content iframe {
+    filter: grayscale(100%) invert(100%) contrast(76%) brightness(167%);
+}
+
+/* Calendly's inline widget fills the visible half of the panel, below the close button */
+.calendly-content {
+    width: 50%;
+    height: calc(100dvh - 96px);
+    margin-top: 96px;
+    transform: translateX(var(--client-details-translate-x));
 }
 
 @media (max-width: 767px) {
@@ -1134,8 +1153,14 @@ footer .social-links a {
     }
 
     .navigation.active,
-    .experience-details-container.active {
+    .experience-details-container.active,
+    .calendly-container.active {
         transform: translateX(0%);
+    }
+
+    .calendly-content {
+        width: 100%;
+        transform: none;
     }
 
     .navigation .links {
@@ -1208,7 +1233,8 @@ footer .social-links a {
     }
 
     .navigation.active,
-    .experience-details-container.active {
+    .experience-details-container.active,
+    .calendly-container.active {
         transform: translateX(0%);
         transition: transform 0.5s ease-in;
     }
@@ -1233,6 +1259,7 @@ footer .social-links a {
     .settings,
     .navigation .close,
     .experience-details-container .close,
+    .calendly-container .close,
     .settings-container .close {
         left: 32px;
     }
@@ -1240,6 +1267,7 @@ footer .social-links a {
     html[dir="rtl"] .settings,
     .navigation .close,
     .experience-details-container .close,
+    .calendly-container .close,
     .settings-container .close {
         right: 32px !important;
     }

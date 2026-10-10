@@ -26,6 +26,7 @@ feedbackIcon.addEventListener("click", function () {
   document.querySelector(".settings-container").style.filter = "blur(8px)";
   document.querySelector(".experience-details-container").style.filter =
     "blur(8px)";
+  document.querySelector(".calendly-container").style.filter = "blur(8px)";
   setBodyScroll(false);
   let additionalMenus = [];
   if (document.querySelector(".navigation").classList.contains("active")) {
