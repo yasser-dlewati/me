@@ -95,9 +95,16 @@ html[dir="rtl"] {
 /*---------------------------------------
 TYPOGRAPHY              
 -----------------------------------------*/
+/* Clip (not hide) sideways overflow, e.g. reveal items still offset off-screen: iOS ignores
+   overflow-x: hidden on body alone, and hidden on html would make body a scroll container
+   and break the sticky sections */
+html,
+body {
+    overflow-x: clip;
+}
+
 body {
     font-family: var(--base-font-family);
-    overflow-x: hidden;
     background: var(--bg-dark-color);
 }
 
@@ -177,6 +184,7 @@ section {
     top: 0;
     border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
     box-shadow: var(--section-box-shadow);
+    overflow-x: clip;
 }
 
 section:first-of-type {
