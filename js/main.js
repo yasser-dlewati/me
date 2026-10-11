@@ -1,6 +1,7 @@
 "use strict";
 import { language, renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu, observeReveal, openCalendly, closeCalendly } from "./common.js";
 import { feedbackIcon } from "./feedback.js";
+import { setSwipeMode } from "./clients.js";
 import { switchLanguage, getNestedValue, translations } from "./translation.js";
 import { initSectionScroll, scrollToSection, SECTION_STACK_OFFSET } from "./sectionScroll.js";
 
@@ -98,6 +99,7 @@ Element.prototype.addBouncyAnimationAfterInSeconds = function(seconds) {
 const topScrollDiv = document.querySelector("#top .scroll");
 const aboutSection = document.querySelector("section#about");
 const menuIcon = document.querySelector(".menu-icon");
+const swipeClientsToggle = document.querySelector("#swipeClients");
 const settingsIcon = document.querySelector(".settings");
 
 if ("serviceWorker" in navigator) {
@@ -242,6 +244,12 @@ function readSavedSettings() {
     document.querySelector("#showUnderGraduateExperience").checked = true;
   }
 
+  const swipeClients = localStorage.getItem("swipeClients") === "true";
+  if (swipeClientsToggle) {
+    swipeClientsToggle.checked = swipeClients;
+  }
+  setSwipeMode(swipeClients);
+
   const savedLanguage = localStorage.getItem("language");
   switchLanguage(savedLanguage ?? "en");
   if (savedLanguage) {
@@ -281,9 +289,11 @@ saveSettingsCheckbox.addEventListener("change", function () {
       "language",
       document.querySelector("#language").value
     )
+    localStorage.setItem("swipeClients", swipeClientsToggle?.checked ?? false);
   } else {
     localStorage.removeItem("theme");
     localStorage.removeItem("underGraduate");
+    localStorage.removeItem("swipeClients");
     localStorage.removeItem("language")
   }
 });
@@ -299,6 +309,17 @@ showUnderGraduateExperienceToggle.addEventListener("change", function () {
   }
 
   renderClients();
+});
+
+// Optional chaining keeps the rest of the page working if a cached index.html lacks this toggle
+swipeClientsToggle?.addEventListener("change", function () {
+  if (saveSettingsCheckbox.checked) {
+    localStorage.setItem("swipeClients", this.checked);
+  } else {
+    localStorage.removeItem("swipeClients");
+  }
+
+  setSwipeMode(this.checked);
 });
 
 const screenIndicator = document.querySelector("ul.screen.indicator");

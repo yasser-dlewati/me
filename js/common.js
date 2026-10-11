@@ -208,6 +208,11 @@ export function renderClients() {
         : "<li></li>";
   }
 
+  // Too many dots crowd a phone screen, so switch to a numeric counter
+  if (isMobileDevice && clients.length > 9) {
+    indicatorContent = `<span class='counter'>1 / ${clients.length}</span>`;
+  }
+
   clientsContainer.innerHTML = clientsContent;
   document.querySelector(".experience.indicator").innerHTML = indicatorContent;
   const experienceItems = document.querySelectorAll(".experience-item img");
