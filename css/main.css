@@ -738,6 +738,205 @@ html[dir="rtl"] .menu-icon {
 }
 
 /*---------------------------------------
+       CHARACTERISTICS
+-----------------------------------------*/
+
+/* Chips are small versions of .button.primary and flip with the theme like the buttons do.
+   Labels, icons, tooltips and motion ranges live in js/characteristics.js.
+   Declared on body (where data-theme sits) so the colors follow dark mode */
+body {
+    --trait-bg: var(--text-darkest-color);
+    --trait-text: var(--text-lightest-color);
+    /* A ring in the page color, so a chip passing behind the logo stays distinct from it */
+    --trait-halo: var(--bg-dark-color);
+    --trait-border-width: 3px;
+}
+
+/* No z-index here on purpose: chips stack against the box's own layers */
+.characteristics {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--base-font-family);
+    font-size: 14px;
+    font-weight: var(--font-weight-normal);
+    text-align: left;
+    pointer-events: none;
+}
+
+.trait {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+/* Moved by js/characteristics.js; hidden until the script fades it in */
+.trait-float {
+    position: relative;
+    width: max-content;
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.trait-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border: var(--trait-border-width) solid var(--trait-bg);
+    border-radius: var(--border-radius-small);
+    background-color: var(--trait-bg);
+    color: var(--trait-text);
+    font: inherit;
+    white-space: nowrap;
+    cursor: default;
+    pointer-events: auto;
+    box-shadow: 0 0 0 3px var(--trait-halo), 0 8px 20px rgba(0, 0, 0, 0.18);
+    transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+
+/* Same swap as the site's two button styles: primary at rest, outline while being read */
+.trait-chip:hover,
+.trait-chip:focus-visible {
+    background-color: var(--trait-halo);
+    color: var(--trait-bg);
+}
+
+.trait-chip:focus-visible {
+    outline: 2px solid var(--trait-bg);
+    outline-offset: 4px;
+}
+
+.trait-icon {
+    font-size: 14px;
+}
+
+/* Styled like the outline .button */
+.trait-tooltip {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    width: max-content;
+    max-width: 240px;
+    padding: 10px 14px;
+    border: var(--trait-border-width) solid var(--text-dark-color);
+    border-radius: var(--border-radius-small);
+    background-color: var(--bg-dark-color);
+    color: var(--text-dark-color);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    font-size: 13px;
+    line-height: 1.4;
+    white-space: normal;
+    pointer-events: none;
+    /* Not just invisible: a hidden tooltip on a chip near the edge would still widen the page */
+    display: none;
+}
+
+.trait-chip:is(:hover, :focus):not(.tooltip-dismissed) + .trait-tooltip {
+    display: block;
+    animation: trait-tooltip-in 0.15s ease-out;
+}
+
+@keyframes trait-tooltip-in {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+}
+
+/* Set by the script so the tooltip opens toward the middle of the screen */
+.trait.tip-up .trait-tooltip {
+    top: auto;
+    bottom: calc(100% + 12px);
+}
+
+.trait.tip-end .trait-tooltip {
+    left: auto;
+    right: 0;
+}
+
+/* Tablet and desktop: every chip flies its own orbit around the logo, passing behind it */
+@media (min-width: 768px) {
+    .trait {
+        z-index: -1;
+    }
+
+    /* Bring the chip being read (and its tooltip) in front of the logo */
+    .trait:hover,
+    .trait:focus-within {
+        z-index: 4;
+    }
+}
+
+/* Tablets have room for fewer orbits */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .trait:nth-child(n + 6) {
+        display: none;
+    }
+}
+
+/* Mobile: chips drift on bands above and below the logo (positioned by the script) */
+@media (max-width: 767px) {
+    /* Stretch the list to the full screen width around the logo and clip it there, so chips
+       wrapping round off-screen never widen the page */
+    .characteristics {
+        left: calc(50% - 50vw);
+        right: calc(50% - 50vw);
+        top: -50vh;
+        bottom: -50vh;
+        overflow-x: clip;
+    }
+
+    .trait {
+        z-index: 3;
+    }
+
+    .trait-chip {
+        min-height: 44px;
+    }
+}
+
+/* Clicking the logo hides or shows the chips (see js/characteristics.js) */
+#top .logo {
+    cursor: pointer;
+}
+
+/* Keyboard-only twin of that click: hidden until tabbed to, then shown under the logo like an outline chip */
+.traits-toggle {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    padding: 8px 16px;
+    border: var(--trait-border-width) solid var(--trait-bg);
+    border-radius: var(--border-radius-small);
+    background-color: var(--trait-halo);
+    color: var(--trait-bg);
+    font-family: var(--base-font-family);
+    font-size: 14px;
+    font-weight: var(--font-weight-normal);
+    white-space: nowrap;
+}
+
+.traits-toggle:focus-visible {
+    outline: 2px solid var(--trait-bg);
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .trait-chip {
+        transition: none;
+    }
+
+    .trait-tooltip {
+        animation: none !important;
+    }
+}
+
+/*---------------------------------------
        ABOUT                
 -----------------------------------------*/
 

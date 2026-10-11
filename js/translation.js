@@ -1,6 +1,7 @@
 import { resetClientsView } from "./clients.js";
 import { experienceStartDate, language, setExperienceDuration, clearClientDetailsCache } from "./common.js";
 import { renderServices } from "./services.js";
+import { renderCharacteristics } from "./characteristics.js";
 
 // Language data object
 export const translations = {
@@ -164,6 +165,7 @@ export function switchLanguage(lang) {
     resetClientsView();
     clearClientDetailsCache();
     renderServices();
+    renderCharacteristics();
 }
 
 const languageSelection = document.querySelector("#language");
