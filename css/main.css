@@ -101,6 +101,8 @@ TYPOGRAPHY
 html,
 body {
     overflow-x: clip;
+    /* No bounce past the footer, which would show the page background below it */
+    overscroll-behavior-y: none;
 }
 
 body {
@@ -1246,10 +1248,12 @@ footer {
     font-size: 1rem;
     text-align: center;
     position: sticky;
-    margin-top: -160px;
+    margin-top: calc(-1 * var(--footer-height, 160px));
     z-index: 6;
     border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
     box-shadow: var(--section-box-shadow);
+    /* Keep only the top shadow; the negative top inset leaves room for the logo above the footer */
+    clip-path: inset(-100% 0 0 0);
 }
 
 footer .logo {
@@ -1351,6 +1355,15 @@ footer .social-links a {
         -webkit-overflow-scrolling: touch;
     }
 
+    /* Keep the centered content above the footer, which overlaps this section, plus the 44px of logo above it */
+    section#contact {
+        padding-bottom: calc(var(--footer-height, 152px) + 44px);
+    }
+
+    #contact h2 {
+        margin-bottom: 24px;
+    }
+
     section#contact .col-md-8 {
         text-align: center;
     }
@@ -1399,8 +1412,13 @@ footer .social-links a {
         max-width: 100%;
     }
 
+    /* Bottom padding clears the iOS home indicator */
     footer {
-        margin-top: -152px;
+        padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    }
+
+    footer .social-links {
+        margin: 3.5rem 0 1rem 0;
     }
 
     footer .logo {

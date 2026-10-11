@@ -12,6 +12,14 @@ const setSectionsStylesForScrolling = () => {
   });
 };
 
+// The footer overlaps the last section by exactly its own height, so the page ends with that section
+const syncFooterHeight = () => {
+  const footer = document.querySelector("footer");
+  new ResizeObserver(() => {
+    document.documentElement.style.setProperty("--footer-height", `${footer.offsetHeight}px`);
+  }).observe(footer);
+};
+
 const renderNavigationLinks = () => {
   var content = getSectionsCount(true);
   $(".links").html(content);
@@ -104,6 +112,7 @@ $(document).ready(function () {
   topScrollDiv.hideForInSeconds(INTRO_SECONDS);
   aboutSection.addBouncyAnimationAfterInSeconds(INTRO_SECONDS);
   setSectionsStylesForScrolling();
+  syncFooterHeight();
   window.scrollTo(0, 0);
 
   // Let the intro play without scrolling; the menu button appears when it's over
