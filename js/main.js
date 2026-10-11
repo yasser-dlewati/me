@@ -187,9 +187,10 @@ $(document).ready(function () {
 
   document.querySelectorAll('.links a').forEach(link => {
     link.addEventListener('click', e => {
-      document.querySelector(".content").style.overflow = "hidden";
       e.preventDefault();
       const target = document.querySelector(link.getAttribute('href'));
+      // Unlock the page before scrolling: toggling overflow mid-scroll cancels a smooth scroll
+      setBodyScroll(true);
       scrollToSection([...document.querySelectorAll("section")].indexOf(target));
       closeNavigationMenu();
     });
