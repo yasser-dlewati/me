@@ -219,15 +219,21 @@ $(".copy").on("click", function (e) {
   });
 });
 
+// theme-color tints the browser bars on older iOS and Android; values mirror --bg-dark-color
+function applyTheme(theme) {
+  $("body").attr("data-theme", theme);
+  $('meta[name="theme-color"]').attr("content", theme === "dark" ? "#333333" : "#f2f2f2");
+}
+
 function readSavedSettings() {
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme) {
-    $("body").attr("data-theme", savedTheme);
+    applyTheme(savedTheme);
     document.querySelector("#darkModeSwitch").checked = savedTheme === "dark";
     document.querySelector("#saveSettingsLocally").checked = true;
   } else {
     const isSystemDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
-    $("body").attr("data-theme", isSystemDarkMode.matches ? "dark" : "light");
+    applyTheme(isSystemDarkMode.matches ? "dark" : "light");
     document.querySelector("#darkModeSwitch").checked = isSystemDarkMode.matches;
   }
 
@@ -249,11 +255,7 @@ darkModeToggle.addEventListener("change", function () {
     localStorage.setItem("theme", this.checked ? "dark" : "light");
   }
 
-  if (this.checked) {
-    $("body").attr("data-theme", "dark");
-  } else {
-    $("body").attr("data-theme", "light");
-  }
+  applyTheme(this.checked ? "dark" : "light");
 });
 
 var languageSelect = document.querySelector("#language")

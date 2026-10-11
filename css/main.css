@@ -105,6 +105,17 @@ body {
     overscroll-behavior-y: none;
 }
 
+/* iOS Safari tints its status bar and toolbar from the root background. data-theme sits on body,
+   so html can't read the theme variables; these literals mirror --bg-dark-color */
+html {
+    background-color: hsl(0, 0%, 95%);
+}
+
+html:has(body[data-theme="dark"]) {
+    background-color: hsl(0, 0%, 20%);
+    color-scheme: dark;
+}
+
 body {
     font-family: var(--base-font-family);
     background: var(--bg-dark-color);
