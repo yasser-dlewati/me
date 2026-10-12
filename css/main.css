@@ -1497,8 +1497,10 @@ footer .social-links a {
     }
 
 
+    /* The panel is full width here, so drop the desktop offset into its visible half */
     .experience-details {
         max-width: 100%;
+        transform: none;
     }
 
     /* Bottom padding clears the iOS home indicator */
