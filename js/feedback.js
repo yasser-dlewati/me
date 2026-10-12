@@ -1,10 +1,6 @@
-import {
-  setBodyScroll,
-  toggleCloseMenuOnOutsideClick,
-  closeFeedbackForm,
-} from "./common.js";
+import { lockPage, unlockPage } from "./overlay.js";
 
-import { translations } from "./translation.js";
+import { t } from "./i18n.js";
 
 const txtFeedback = document.querySelector("#txtFeedback");
 const feedbackForm = document.querySelector("form.feedback");
@@ -14,45 +10,108 @@ const submitButton = document.querySelector(".feedback button[type='submit']");
 const cloudinaryName = "dxvgozjup";
 const cloudinaryUploadPreset = "personalWebsite";
 export const feedbackIcon = document.querySelector(".feedback-icon");
+const consentStep = document.querySelector(".feedback-consent");
+const entryStep = document.querySelector(".feedback-entry");
+const FEEDBACK_CONSENT_KEY = "feedbackConsent";
+// Also kept in memory, so consent holds for this visit even when storage is blocked
+let consentGiven = false;
 
-(function () {
-  emailjs.init("ONBs1kJm-53DoguLS"); // from EmailJS dashboard
-})();
-
-feedbackIcon.addEventListener("click", function () {
-  this.children[0].classList.remove("pulse");
-  feedbackForm.classList.add("active");
-  document.querySelector(".navigation").style.filter = "blur(8px)";
-  document.querySelector(".settings-container").style.filter = "blur(8px)";
-  document.querySelector(".experience-details-container").style.filter =
-    "blur(8px)";
-  document.querySelector(".calendly-container").style.filter = "blur(8px)";
-  setBodyScroll(false);
-  let additionalMenus = [];
-  if (document.querySelector(".navigation").classList.contains("active")) {
-    additionalMenus.push(document.querySelector(".navigation"));
+// The IP and a screenshot go out with each feedback, so ask once before showing the form
+function hasFeedbackConsent() {
+  try {
+    return consentGiven || localStorage.getItem(FEEDBACK_CONSENT_KEY) === "true";
+  } catch {
+    return consentGiven;
   }
-  if (
-    document.querySelector(".settings-container").classList.contains("active")
-  ) {
-    additionalMenus.push(document.querySelector(".settings-container"));
+}
+
+function showFeedbackStep() {
+  const consented = hasFeedbackConsent();
+  consentStep.hidden = consented;
+  entryStep.hidden = !consented;
+}
+
+// Most visitors never send feedback, so its libraries load the first time they're needed
+const HTML2CANVAS_URL = "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
+const EMAILJS_URL = "https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js";
+const EMAILJS_PUBLIC_KEY = "ONBs1kJm-53DoguLS"; // from the EmailJS dashboard
+const scriptLoads = new Map();
+
+// Loads a script once; a failed load can be tried again later
+function loadScript(url) {
+  if (!scriptLoads.has(url)) {
+    scriptLoads.set(url, new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = url;
+      script.onload = resolve;
+      script.onerror = () => {
+        scriptLoads.delete(url);
+        script.remove();
+        reject(new Error(`Couldn't load ${url}`));
+      };
+      document.head.appendChild(script);
+    }));
   }
-  toggleCloseMenuOnOutsideClick(true, additionalMenus);
-});
+  return scriptLoads.get(url);
+}
 
-const closeFeedbackFormButton = document.querySelector(".feedback .close");
-closeFeedbackFormButton.addEventListener("click", () => {
-  closeFeedbackForm();
-});
+let emailjsReady = null;
+function loadEmailjs() {
+  emailjsReady ??= loadScript(EMAILJS_URL).then(() => {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+    return emailjs;
+  }).catch((error) => {
+    emailjsReady = null;
+    throw error;
+  });
+  return emailjsReady;
+}
 
-(function () {
-  emailjs.init("ONBs1kJm-53DoguLS");
-})();
-
+const FEEDBACK_TIMEOUT_MS = 15000;
 const formUrl =
   "https://docs.google.com/forms/u/0/d/e/1FAIpQLScEsx_ueZVOLSeN7nT6LAF1aD7Uk7j-1CSOhZhZcHtAKFjI8w/formResponse";
 
-document.addEventListener("DOMContentLoaded", function () {
+export function closeFeedbackForm() {
+  document.querySelector(".notification").classList.remove("active");
+  document.querySelector(".feedback").classList.remove("active");
+  // Stays locked if a side panel is still open under the feedback form
+  unlockPage("feedback");
+}
+
+// The feedback button, consent step and form. Called once from main.js at start-up
+export function initFeedback() {
+  feedbackIcon.addEventListener("click", function () {
+    // Start fetching the screenshot library now, so it's usually ready by the time feedback is sent
+    loadScript(HTML2CANVAS_URL).catch((error) => console.log(error.message));
+    this.children[0].classList.remove("pulse");
+    showFeedbackStep();
+    feedbackForm.classList.add("active");
+    // The notification belongs to the form: clicking it doesn't count as outside
+    lockPage("feedback", {
+      elements: [feedbackForm, notificationBox],
+      close: closeFeedbackForm,
+    });
+  });
+
+  document
+    .querySelector("#btnAcceptFeedbackConsent")
+    .addEventListener("click", () => {
+      consentGiven = true;
+      try {
+        localStorage.setItem(FEEDBACK_CONSENT_KEY, "true");
+      } catch (error) {
+        console.log("Couldn't save feedback consent:", error);
+      }
+      showFeedbackStep();
+      txtFeedback.focus();
+    });
+
+  const closeFeedbackFormButton = document.querySelector(".feedback .close");
+  closeFeedbackFormButton.addEventListener("click", () => {
+    closeFeedbackForm();
+  });
+  document.querySelector(".notification .close").addEventListener("click", closeFeedbackForm);
+
   // Disable submit button when the textarea is empty.
   txtFeedback.addEventListener("input", function () {
     submitButton.toggleAttribute("disabled", txtFeedback.value.trim() === "");
@@ -60,15 +119,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   feedbackForm.addEventListener("submit", async function (event) {
     event.preventDefault();
+    if (entryStep.hidden) return;
     var content = txtFeedback.value;
     try {
       await sendFeedback(content);
     } catch (error) {
       console.log(error);
-      showNotification("error", error.message);
+      showNotification("error");
+      reportFailedFeedback(content, error);
     }
   });
-});
+}
 
 async function getIP() {
   const res = await fetch("https://api.ipify.org?format=json");
@@ -77,6 +138,7 @@ async function getIP() {
 }
 
 async function uploadScreenshot(base64) {
+  if (!base64) return "";
   const formData = new FormData();
 
   // Make sure the base64 has the correct prefix
@@ -116,11 +178,17 @@ async function captureScreenshot() {
   const centerY = window.innerHeight / 2;
   const topSection = document
     .elementFromPoint(centerX, centerY)
-    .closest("section");
+    ?.closest("section");
   if (!topSection) return null;
 
-  const canvas = await html2canvas(topSection, { scale: 1 });
-  return canvas.toDataURL("image/png", 0.3);
+  try {
+    await loadScript(HTML2CANVAS_URL);
+    const canvas = await html2canvas(topSection, { scale: 1 });
+    return canvas.toDataURL("image/png", 0.3);
+  } catch (error) {
+    console.log("Error capturing screenshot:", error);
+    return null;
+  }
 }
 
 async function sendFeedback(content) {
@@ -133,32 +201,42 @@ async function sendFeedback(content) {
     .forEach((el) => {
       el.style.filter = "blur(8px)";
     });
-  const formData = new FormData();
-  const screenshotBase64 = await captureScreenshot();
-  const imageUrl = await uploadScreenshot(screenshotBase64);
-  formData.append("entry.500212983", content);
-  formData.append(
-    "entry.1920882552",
-    document.body.getAttribute("data-theme") || "light"
-  );
-  formData.append(
-    "entry.1705496179",
-    document.documentElement.getAttribute("lang") || "en"
-  );
-  formData.append("entry.275842004", await getIP());
-  formData.append("entry.1136156880", imageUrl);
   try {
+    // Screenshot and IP are extras; the feedback is sent without them if either fails
+    const screenshotBase64 = await captureScreenshot();
+    const imageUrl = await uploadScreenshot(screenshotBase64);
+    const ip = await getIP().catch((error) => {
+      console.log("Error getting IP:", error);
+      return "";
+    });
+
+    const formData = new FormData();
+    formData.append("entry.500212983", content);
+    formData.append(
+      "entry.1920882552",
+      document.body.getAttribute("data-theme") || "light"
+    );
+    formData.append(
+      "entry.1705496179",
+      document.documentElement.getAttribute("lang") || "en"
+    );
+    formData.append("entry.275842004", ip);
+    formData.append("entry.1136156880", imageUrl);
+
+    // Google Forms allows no CORS, so the response is opaque: only network failures
+    // and timeouts can be detected here, not a rejection by the form itself
     await fetch(formUrl, {
       method: "POST",
       body: formData,
       mode: "no-cors",
-    }).then(() => {
-      showNotification("success");
-      feedbackForm.reset();
+      signal: AbortSignal.timeout(FEEDBACK_TIMEOUT_MS),
     });
+    showNotification("success");
+    feedbackForm.reset();
   } catch (error) {
     console.log(error);
-    showNotification("error", error.message);
+    showNotification("error");
+    reportFailedFeedback(content, error);
   } finally {
     document
       .querySelectorAll("form.feedback *:not(.loading-overlay)")
@@ -169,23 +247,22 @@ async function sendFeedback(content) {
   }
 }
 
-export function showNotification(type, content) {
+export function showNotification(type) {
   notificationBox.classList.add("active");
-  let isArabic = document.documentElement.lang === "ar";
-  let successMessageContent = isArabic
-    ? translations.ar.feedback.success
-    : translations.en.feedback.success;
-  let failMessageContent = isArabic
-    ? translations.ar.feedback.fail
-    : translations.en.feedback.fail;
   message.innerHTML =
     type === "success"
-      ? '<i class="fa-solid fa-check"></i> ' + successMessageContent
-      : '<i class="fa-solid fa-x"></i> ' + failMessageContent;
-  if (type === "error") {
-    emailjs.send("service_6gtyqvg", "template_olpb3hy", {
-      from_name: "feedback_form",
-      message: "Failed to send feedback: " + content,
-    });
-  }
+      ? '<i class="fa-solid fa-check"></i> ' + t("feedback.success")
+      : '<i class="fa-solid fa-x"></i> ' + t("feedback.fail");
+}
+
+// Email the visitor's feedback when it couldn't be submitted, so it isn't lost
+function reportFailedFeedback(feedback, error) {
+  loadEmailjs()
+    .then((emailjs) =>
+      emailjs.send("service_6gtyqvg", "template_olpb3hy", {
+        from_name: "feedback_form",
+        message: `Failed to send feedback.\n\nFeedback:\n${feedback}\n\nError: ${error?.message ?? error}`,
+      })
+    )
+    .catch((emailError) => console.log("Error emailing failed feedback:", emailError));
 }

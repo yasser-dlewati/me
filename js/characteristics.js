@@ -1,72 +1,43 @@
 "use strict"
+import { escapeHtml } from "./html.js";
+import { t } from "./i18n.js";
 
-// Edit the chips here: label, icon (Font Awesome solid icon name) and tooltip copy.
+// Edit the chips here: icon (Font Awesome solid icon name) and order. Their label and tooltip text
+// live in js/i18n.js under traitList, keyed by id.
 // Order is priority: wide screens show all, tablets the first five; on desktop the first chip
 // gets the innermost ring. Phones show all of them, each travelling its own straight route.
 // Colors and sizes live in css/main.css under CHARACTERISTICS; motion is tuned in MOTION below
 export const characteristics = [
   {
     id: "engineer",
-    label: "Software engineer",
-    labelAr: "مهندس برمجيات",
-    tooltip: "Placeholder: what I build and how I like to work.",
-    tooltipAr: "نص مؤقت: ما أبنيه وطريقتي في العمل.",
     icon: "fa-code",
   },
   {
     id: "dad",
-    label: "Dad",
-    labelAr: "أب",
-    tooltip: "Placeholder: a line about family life.",
-    tooltipAr: "نص مؤقت: سطر عن الحياة العائلية.",
     icon: "fa-heart",
   },
   {
     id: "cars",
-    label: "Car enthusiast",
-    labelAr: "عاشق للسيارات",
-    tooltip: "Placeholder: the cars I love and why.",
-    tooltipAr: "نص مؤقت: السيارات التي أحبها ولماذا.",
     icon: "fa-car",
   },
   {
     id: "self-taught",
-    label: "Self-taught",
-    labelAr: "تعلّم ذاتي",
-    tooltip: "Placeholder: how I taught myself to code.",
-    tooltipAr: "نص مؤقت: كيف علّمت نفسي البرمجة.",
     icon: "fa-book-open",
   },
   {
     id: "team-lead",
-    label: "Team lead",
-    labelAr: "قائد فريق",
-    tooltip: "Placeholder: what leading a team taught me.",
-    tooltipAr: "نص مؤقت: ما تعلمته من قيادة الفريق.",
     icon: "fa-people-group",
   },
   {
     id: "mentor",
-    label: "Mentor",
-    labelAr: "مرشد",
-    tooltip: "Placeholder: who I mentor and how.",
-    tooltipAr: "نص مؤقت: من أرشدهم وكيف.",
     icon: "fa-chalkboard-user",
   },
   {
     id: "problem-solver",
-    label: "Problem solver",
-    labelAr: "محب لحل المشكلات",
-    tooltip: "Placeholder: the kind of problems I enjoy.",
-    tooltipAr: "نص مؤقت: نوع المشكلات التي أستمتع بحلها.",
     icon: "fa-puzzle-piece",
   },
   {
     id: "learner",
-    label: "Lifelong learner",
-    labelAr: "متعلم دائم",
-    tooltip: "Placeholder: what I'm learning right now.",
-    tooltipAr: "نص مؤقت: ما أتعلمه حاليًا.",
     icon: "fa-seedling",
   },
 ];
@@ -119,17 +90,15 @@ export function renderCharacteristics() {
   const list = document.querySelector("#top .characteristics");
   if (!list) return;
 
-  const isArabic = document.documentElement.lang === "ar";
-
-  list.setAttribute("aria-label", isArabic ? "عني باختصار" : "A bit about me");
+  list.setAttribute("aria-label", t("traits.list"));
   list.innerHTML = characteristics.map((trait, index) => `
-    <li class="trait" style="--i: ${index};" data-id="${trait.id}">
+    <li class="trait" style="--i: ${index};" data-id="${escapeHtml(trait.id)}">
       <div class="trait-float">
-        <button type="button" class="trait-chip" aria-describedby="trait-tip-${trait.id}">
-          <i class="trait-icon fa-solid ${trait.icon}" aria-hidden="true"></i>
-          <span class="trait-label" dir="auto">${isArabic ? trait.labelAr : trait.label}</span>
+        <button type="button" class="trait-chip" aria-describedby="trait-tip-${escapeHtml(trait.id)}">
+          <i class="trait-icon fa-solid ${escapeHtml(trait.icon)}" aria-hidden="true"></i>
+          <span class="trait-label" dir="auto">${escapeHtml(t(`traitList.${trait.id}.label`))}</span>
         </button>
-        <span class="trait-tooltip" role="tooltip" id="trait-tip-${trait.id}" dir="auto">${isArabic ? trait.tooltipAr : trait.tooltip}</span>
+        <span class="trait-tooltip" role="tooltip" id="trait-tip-${escapeHtml(trait.id)}" dir="auto">${escapeHtml(t(`traitList.${trait.id}.tooltip`))}</span>
       </div>
     </li>
   `).join("");
@@ -207,10 +176,7 @@ function updateToggle() {
   const toggle = logo?.querySelector(".traits-toggle");
   if (!toggle || !list) return;
 
-  const isArabic = document.documentElement.lang === "ar";
-  const label = traitsHidden
-    ? (isArabic ? "إظهار الصفات" : "Show traits")
-    : (isArabic ? "إخفاء الصفات" : "Hide traits");
+  const label = t(traitsHidden ? "traits.show" : "traits.hide");
   toggle.textContent = label;
   toggle.setAttribute("aria-expanded", String(!traitsHidden));
   logo.title = label;
@@ -642,24 +608,40 @@ function apply(chip, index, dt, elapsed, orbiting, reduced) {
 }
 
 let resizeTimer;
-window.addEventListener("resize", () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => { measure(); requestFrame(); }, 150);
-});
-desktopQuery.addEventListener("change", () => { measure(); requestFrame(); });
-reducedMotionQuery.addEventListener("change", () => { measure(); requestFrame(); });
-// The menu button and scroll cue only appear after the intro, so keep their positions fresh
-setInterval(() => { if (geometry) measure(); }, 1000);
 
-// Escape closes an open tooltip (hovered or focused) without moving focus;
-// it can show again once the pointer or focus leaves the chip
-document.addEventListener("keydown", (e) => {
-  if (e.key !== "Escape") return;
-  document.querySelectorAll("#top .trait-chip:hover, #top .trait-chip:focus").forEach((chip) => {
-    chip.classList.add("tooltip-dismissed");
+// Keeps the chips' motion in step with the window, preferences and keyboard. Called once from
+// main.js at start-up; the chips themselves render when the language is applied
+export function initTraits() {
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { measure(); requestFrame(); }, 150);
   });
-});
+  desktopQuery.addEventListener("change", () => { measure(); requestFrame(); });
+  reducedMotionQuery.addEventListener("change", () => { measure(); requestFrame(); });
+  // Re-measure when what the chips steer around changes, instead of on a timer:
+  // - the logo, and the page chrome, which appears after the intro and the first scroll (showing or
+  //   hiding an element changes its size, which is what a ResizeObserver reports)
+  const resized = new ResizeObserver(() => { if (geometry) measure(); });
+  ["#top .logo", ...PROTECTED].forEach((selector) => {
+    const element = document.querySelector(selector);
+    if (element) resized.observe(element);
+  });
+  // - the menu button, which shifts a little per section, once a scroll comes to rest
+  //   (a debounce rather than scrollend, which Safari lacks)
+  let scrollTimer;
+  window.addEventListener("scroll", () => {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => { if (geometry) measure(); }, 150);
+  }, { passive: true });
+  // - the logo's and chips' sizes, once the web fonts have loaded
+  document.fonts?.ready.then(() => { if (geometry) measure(); });
 
-document.addEventListener("DOMContentLoaded", function () {
-  renderCharacteristics();
-});
+  // Escape closes an open tooltip (hovered or focused) without moving focus;
+  // it can show again once the pointer or focus leaves the chip
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    document.querySelectorAll("#top .trait-chip:hover, #top .trait-chip:focus").forEach((chip) => {
+      chip.classList.add("tooltip-dismissed");
+    });
+  });
+}

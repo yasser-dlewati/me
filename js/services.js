@@ -1,77 +1,52 @@
 "use strict"
-import { observeReveal } from "./common.js";
+import { observeReveal } from "./reveal.js";
+import { escapeHtml } from "./html.js";
+import { t } from "./i18n.js";
 
+// Each service's title and description live in js/i18n.js under serviceList, keyed by key
 const servicesJson = [
   {
     id: 1,
-    title: "Software Architecture & Development",
-    titleAr: "هندسة وتطوير البرمجيات",
-    Description:
-      "Crafting the foundation of scalable systems, I focus on designing clear, robust, extensible architectures that reduce technical debt and support future growth. From early prototypes to full-scale applications, I ensure clean code, modular architecture, and long-term value.",
-    DescriptionAr:
-      "أعمل على بناء الأساس لأنظمة قابلة للتوسع، مع التركيز على تصميم هياكل برمجية واضحة، قوية وقابلة للتطوير تقلل من الديون التقنية وتدعم النمو المستقبلي. من النماذج الأولية المبكرة إلى التطبيقات الكاملة، أحرص على كتابة كود نظيف وهيكلية منظمة تحقق قيمة طويلة الأمد.",
+    key: "architecture",
   },
   {
     id: 2,
-    title: "Technical Leadership & Consulting",
-    titleAr: "القيادة التقنية والاستشارات",
-    Description:
-      "With a deep understanding of both business and code, I offer guidance on choosing the right tools, frameworks, and strategies. Whether it is reviewing existing systems or advising on tech direction, I help teams make smart, future-proof decisions.",
-    DescriptionAr:
-      "بخبرة تجمع بين فهم الأعمال والبرمجة، أقدم استشارات تساعد على اختيار الأدوات، الأطر، والاستراتيجيات المناسبة. سواء في مراجعة الأنظمة الحالية أو في توجيه المسار التقني، أساعد الفرق على اتخاذ قرارات ذكية ومستقبلية.",
+    key: "leadership",
   },
   {
     id: 3,
-    title: "Project & Team Management",
-    titleAr: "إدارة المشاريع والفرق",
-    Description:
-      "From planning to delivery, I manage software projects with a focus on clarity, velocity, and collaboration. I lead cross-functional teams, remove blockers, and ensure everyone is aligned and empowered to deliver results. I also support hiring the right talents upon need.",
-    DescriptionAr:
-      "من مرحلة التخطيط إلى التسليم، أدير المشاريع البرمجية بتركيز على الوضوح، السرعة، والتعاون. أقود فرقاً متعددة التخصصات، أزيل العقبات، وأضمن أن الجميع يعمل بانسجام لتحقيق النتائج. كما أساهم في اختيار وتوظيف المواهب المناسبة عند الحاجة.",
+    key: "management",
   },
   {
     id: 4,
-    title: "Quality Assurance",
-    titleAr: "ضمان الجودة",
-    Description:
-      "I ensure software reliability through a deep manual testing. From carefully crafted test cases to real-world scenario validation, I help catch issues early, improve user experience, and maintain consistent quality across releases.",
-    DescriptionAr:
-      "أضمن موثوقية البرمجيات من خلال اختبارات دقيقة وشاملة. من تصميم حالات اختبار مدروسة إلى محاكاة السيناريوهات الواقعية، أساعد في اكتشاف المشكلات مبكراً، وتحسين تجربة المستخدم، والحفاظ على جودة ثابتة عبر الإصدارات.",
+    key: "qa",
   },
   {
     id: 5,
-    title: "Maintenance & Support",
-    titleAr: "الصيانة والدعم",
-    Description:
-      "My work does not end with project delivery; it extends into ensuring long-term reliability. I stay involved to monitor functionality, fix issues, and adapt the software as requirements evolve, so it continues to serve its purpose effectively.",
-    DescriptionAr:
-      "عملي لا ينتهي عند تسليم المشروع؛ بل يمتد لضمان استقراره على المدى الطويل. أتابع أداء النظام، أصلح المشكلات عند ظهورها، وأطور الحلول مع تغيّر المتطلبات ليبقى البرنامج يخدم هدفه بكفاءة.",
+    key: "maintenance",
   },
   {
     id: 6,
-    title: "Coaching & Mentoring",
-    titleAr: "التدريب والإرشاد",
-    Description: "I coach and mentor developers and teams to grow their technical skills and professional thinking. Through hands-on sessions, code reviews, and career guidance, I help individuals level up and teams become more effective and self-sufficient.",
-    DescriptionAr: "أقوم بتدريب وإرشاد المطورين والفرق لتطوير مهاراتهم التقنية والتفكير المهني. من خلال جلسات عملية، مراجعات للكود، وتوجيه مهني، أساعد الأفراد على الارتقاء بمستواهم وتتقدم الفرق لتصبح أكثر فعالية واعتمادًا على نفسها."
-  }
+    key: "mentoring",
+  },
 ];
   
 export function renderServices(){
     let servicesContainer = document.querySelector('#accordion');
     let servicesContent = '';
-    let isArabic = document.documentElement.lang === 'ar';
     servicesJson.forEach( service => {
-        let title = isArabic ? service.titleAr : service.title;
-        let description = isArabic ? service.DescriptionAr : service.Description;
+        let title = escapeHtml(t(`serviceList.${service.key}.title`));
+        let description = escapeHtml(t(`serviceList.${service.key}.description`));
+        let panelId = `service-${escapeHtml(service.key)}`;
         servicesContent += `
         <div class="card">
-            <a class="collapsed btn card-header service" data-bs-toggle="collapse" href="#${service.id}" aria-expanded="false" aria-controls="${service.id}">
-                <i class="fa-regular fa-square-plus"></i>
+            <a class="collapsed btn card-header service" href="#${panelId}" role="button" aria-expanded="false" aria-controls="${panelId}">
+                <i class="fa-regular fa-square-plus" aria-hidden="true"></i>
                 <h5>
                     ${title}
                 </h5>
             </a>
-            <div id="${service.id}" class="collapse" data-bs-parent="#accordion">
+            <div id="${panelId}" class="collapse">
                 <div class="card-body">
                     <p>
                         ${description}
@@ -86,40 +61,99 @@ export function renderServices(){
     observeReveal(servicesContainer.querySelectorAll('.card'), 0.15);
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  renderServices();
-})
+// The accordion: one service open at a time, with the same height animation Bootstrap's script
+// gave it. Bootstrap's CSS is still loaded (.collapse, .collapsing, .show), and these functions drive
+// those classes in the same order its script did
 
-document.querySelectorAll('.service').forEach(service => {
-  service.addEventListener('click', function() {
-      document.querySelectorAll('.service i').forEach(icon => {
-          icon.classList.replace('fa-square-minus', 'fa-square-plus');
-      });
+let isAnimating = false;
+
+// Calls back when the element's transition ends; the timeout covers no transition (reduced motion)
+function afterTransition(element) {
+  const duration = parseFloat(getComputedStyle(element).transitionDuration) * 1000 || 0;
+  return new Promise((resolve) => {
+    const finish = () => {
+      element.removeEventListener("transitionend", onEnd);
+      clearTimeout(fallback);
+      resolve();
+    };
+    const onEnd = (event) => {
+      if (event.target === element) finish();
+    };
+    element.addEventListener("transitionend", onEnd);
+    const fallback = setTimeout(finish, duration + 50);
   });
-});
+}
 
-document.addEventListener('shown.bs.collapse', function (event) {
-  const targetDescription = event.target;
-  const header = targetDescription.previousElementSibling;
-  if (header && header.classList.contains('service')) {
-      const icon = header.querySelector('i');
-      if (icon) icon.classList.replace('fa-square-plus', 'fa-square-minus');
-      header.style.borderBottom = 'none';
-      document.querySelectorAll('.service').forEach(s => {
-          if (s !== header) {
-            s.style.borderBottom = '1px solid rgba(0, 0, 0, 0.2)';
-          }
-      });
-  }
-});
+function setHeaderOpen(header, open) {
+  header.classList.toggle("collapsed", !open);
+  header.setAttribute("aria-expanded", String(open));
+}
 
-document.addEventListener('hidden.bs.collapse', function (event) {
-  const targetDescription = event.target;
-  const header = targetDescription.previousElementSibling;
-  
-  if (header && header.classList.contains('service')) {
-      const icon = header.querySelector('i');
-      if (icon) icon.classList.replace('fa-square-minus', 'fa-square-plus');
-      header.style.borderBottom = '1px solid rgba(0, 0, 0, 0.2)';
-  }
-});
+async function showPanel(header, panel) {
+  setHeaderOpen(header, true);
+  panel.classList.remove("collapse");
+  panel.classList.add("collapsing");
+  panel.style.height = "0px";
+  // Reading scrollHeight lays the panel out at 0, so the height transition starts from there
+  panel.style.height = `${panel.scrollHeight}px`;
+  await afterTransition(panel);
+  panel.classList.remove("collapsing");
+  panel.classList.add("collapse", "show");
+  panel.style.height = "";
+
+  header.querySelector("i").classList.replace("fa-square-plus", "fa-square-minus");
+  header.style.borderBottom = "none";
+  document.querySelectorAll("#accordion .service").forEach((other) => {
+    if (other !== header) other.style.borderBottom = "1px solid rgba(0, 0, 0, 0.2)";
+  });
+}
+
+async function hidePanel(header, panel) {
+  panel.style.height = `${panel.getBoundingClientRect().height}px`;
+  void panel.offsetHeight;
+  panel.classList.add("collapsing");
+  panel.classList.remove("collapse", "show");
+  setHeaderOpen(header, false);
+  panel.style.height = "";
+  await afterTransition(panel);
+  panel.classList.remove("collapsing");
+  panel.classList.add("collapse");
+
+  header.querySelector("i").classList.replace("fa-square-minus", "fa-square-plus");
+  header.style.borderBottom = "1px solid rgba(0, 0, 0, 0.2)";
+}
+
+async function toggleService(header) {
+  if (isAnimating) return;
+  const panel = document.getElementById(header.getAttribute("aria-controls"));
+  const opening = !panel.classList.contains("show");
+  const othersOpen = opening
+    ? [...document.querySelectorAll("#accordion .collapse.show")].filter((other) => other !== panel)
+    : [];
+
+  isAnimating = true;
+  await Promise.all([
+    opening ? showPanel(header, panel) : hidePanel(header, panel),
+    ...othersOpen.map((other) => hidePanel(other.previousElementSibling, other)),
+  ]);
+  isAnimating = false;
+}
+
+// Called once from main.js at start-up; the services themselves render when the language is applied.
+// The headers are re-rendered on a language switch, so clicks are handled on the accordion itself
+export function initServices() {
+  const accordion = document.querySelector("#accordion");
+  accordion.addEventListener("click", (event) => {
+    const header = event.target.closest(".service");
+    if (!header) return;
+    event.preventDefault();
+    toggleService(header);
+  });
+  // Enter already clicks a link; Space should too, since the headers act as buttons
+  accordion.addEventListener("keydown", (event) => {
+    const header = event.target.closest(".service");
+    if (!header || event.key !== " ") return;
+    event.preventDefault();
+    toggleService(header);
+  });
+}

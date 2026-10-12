@@ -2,6 +2,31 @@
 <html lang="en">
 <head>
     <title>Yas Dle</title>
+    <!-- Before first paint: apply a saved Arabic direction (js/translation.js applies the language fully
+         once the page loads), and set up the page transition back from the privacy page -->
+    <script>
+        try {
+            if (localStorage.getItem("language") === "ar") {
+                document.documentElement.lang = "ar";
+                document.documentElement.dir = "rtl";
+            }
+        } catch (e) {}
+
+        // Slide back the way the privacy page came in, even when this page loads in the other language
+        addEventListener("pagereveal", function (e) {
+            var from = null;
+            try {
+                from = sessionStorage.getItem("pageSlideFrom");
+                sessionStorage.removeItem("pageSlideFrom");
+            } catch (err) {}
+            if (!e.viewTransition || !from) return;
+            var root = document.documentElement;
+            root.style.setProperty("--page-slide", from === "rtl" ? "-1" : "1");
+            e.viewTransition.finished.then(function () {
+                root.style.removeProperty("--page-slide");
+            });
+        });
+    </script>
     <link rel="icon" href="./images/logo-2lines.png" type="image/icon type">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -24,31 +49,45 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/barton" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/main.css">
 </head>
 
 <body>
+    <!-- Apply the theme before anything renders, so dark mode doesn't flash light first. Same choice
+         as js/settings.js (saved theme, else the system's); main.js keeps it in sync afterwards -->
+    <script>
+        (function () {
+            var theme = null;
+            try {
+                theme = localStorage.getItem("theme");
+            } catch (e) {}
+            theme = theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            document.body.setAttribute("data-theme", theme);
+            // Browser bar tint; the values mirror --bg-dark-color, as in applyTheme in main.js
+            document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "dark" ? "#333333" : "#f2f2f2");
+        })();
+    </script>
     <ul class="screen indicator"></ul>
 
-    <a class="menu-icon fade-in" style="display: none;">
-        <i class="fa fa-bars"></i>
-    </a>
+    <button type="button" class="menu-icon icon-button fade-in" style="display: none;" aria-label="Open menu"
+        data-label-translate="a11y.openMenu">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+    </button>
 
     <div class="experience-details-container">
-        <a href="javascript:void(0);" class="close"><i class="fa fa-xmark"></i></a>
+        <button type="button" class="close icon-button" aria-label="Close" data-label-translate="a11y.close"><i class="fa fa-xmark" aria-hidden="true"></i></button>
         <div class="experience-details"></div>
     </div>
 
     <div class="calendly-container">
-        <a href="javascript:void(0);" class="close"><i class="fa fa-xmark"></i></a>
+        <button type="button" class="close icon-button" aria-label="Close" data-label-translate="a11y.close"><i class="fa fa-xmark" aria-hidden="true"></i></button>
         <div class="calendly-content"></div>
     </div>
 
     <div class="settings-container">
-        <a href="javascript:void(0);" class="close"><i class="fa fa-xmark"></i>
-        </a>
+        <button type="button" class="close icon-button" aria-label="Close" data-label-translate="a11y.close"><i class="fa fa-xmark" aria-hidden="true"></i></button>
 
         <div class="settings-item">
             <div class="setting-row">
@@ -90,27 +129,29 @@
                 <div class="form-check form-switch m-0">
                     <input class="form-check-input" type="checkbox" id="saveSettingsLocally">
                 </div>
-                <small data-translate="settings.hint"> By turning this feature on, you are saveing the settings above to
-                    your browser local storage, and you will be able to retreive it every time you visit this websit
-                    unless you clear it.</small>
+                <small data-translate="settings.hint">Your settings are saved in this browser as soon as you change
+                    one, so they're ready on your next visit. Turn this off to stop saving them and clear what's
+                    saved.</small>
             </div>
         </div>
 
     </div>
 
     <div class="navigation">
-        <a href="javascript:void(0);" class="close"><i class="fa fa-xmark"></i>
-        </a>
+        <button type="button" class="close icon-button" aria-label="Close" data-label-translate="a11y.close"><i class="fa fa-xmark" aria-hidden="true"></i></button>
         <div class="links">
         </div>
         <div class="info">
             <p data-translate="navigation.designedBy">Designed and Developed by Yas Dle</p>
-            <p data-translate="navigation.rights">© All rights reserved </p>
+            <p>
+                <span data-translate="navigation.rights">© All rights reserved</span> ·
+                <span data-translate="navigation.privacy"><a href="privacy.html" class="info-link">Privacy</a></span>
+            </p>
         </div>
         <div class="settings">
-            <a>
-                <i class="fa fa-gear"></i>
-            </a>
+            <button type="button" class="icon-button" aria-label="Settings" data-label-translate="a11y.settings">
+                <i class="fa fa-gear" aria-hidden="true"></i>
+            </button>
         </div>
     </div>
 
@@ -127,7 +168,7 @@
                 <div class="bottom">
                     <h1>DL</h1>
                     <h1>E</h1>
-                    <img class="img-fluid" src="./images/yasser.png">
+                    <img class="img-fluid" src="./images/yasser.png" alt="Portrait of Yasser" data-alt-translate="a11y.photo">
                 </div>
                 <span class="tm">
                     TM
@@ -177,7 +218,7 @@
                             </a>
                             <a class="button" href="#services" data-translate="about.services">Check my services</a>
                         </div>
-                        <img class="side" src="./images/yasser-no-bg.png">
+                        <img class="side" src="./images/yasser-no-bg.png" alt="">
                     </div>
                 </div>
             </div>
@@ -194,16 +235,18 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col-md-1 col-2" style="padding-top: 16px;">
-                                <div class="scroll-horizontally prev ">
-                                    <i class="fa fa-chevron-left"></i>
-                                </div>
+                                <button type="button" class="scroll-horizontally prev" aria-label="Previous clients"
+                                    data-label-translate="a11y.previousClients">
+                                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="col-md-10 col-8 experience-container"></div>
 
                             <div class="col-md-1 col-2" style="padding-top: 16px;">
-                                <div class="scroll-horizontally next ">
-                                    <i class="fa fa-chevron-right"></i>
-                                </div>
+                                <button type="button" class="scroll-horizontally next" aria-label="Next clients"
+                                    data-label-translate="a11y.nextClients">
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                </button>
                             </div>
                         </div>
                         <div class="row">
@@ -397,13 +440,14 @@
                             <h5>
                                 yasdle@outlook.com
                             </h5>
-                            <a data-title-translate="contact.copy" class="copy">
-                                <div class="copy">
-                                    <i class="fa-regular fa-copy"></i>
-                                    <span class="copy-tooltip" data-translate="contact.copied">Copied!</span>
-                                </div>
-                            </a>
                         </a>
+                        <button type="button" class="copy icon-button" title="Copy email" aria-label="Copy email"
+                            data-title-translate="contact.copy" data-label-translate="contact.copy">
+                            <span>
+                                <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                                <span class="copy-tooltip" data-translate="contact.copied" role="status">Copied!</span>
+                            </span>
+                        </button>
 
                         <p data-translate="contact.or">
                             or simply
@@ -421,11 +465,12 @@
         </section>
     </div>
 
-    <div class="feedback-icon" style="display: none;">
-        <div class="circle pulse">
-            <i class="fa-solid fa-comment"></i>
-        </div>
-    </div>
+    <button type="button" class="feedback-icon icon-button" style="display: none;" aria-label="Share your feedback"
+        data-label-translate="a11y.feedback">
+        <span class="circle pulse">
+            <i class="fa-solid fa-comment" aria-hidden="true"></i>
+        </span>
+    </button>
 
     <form class="feedback vertically-centered" method="post">
         <div class="loading-overlay">
@@ -433,7 +478,7 @@
                 Submitting your feedback...
             </span>
         </div>
-        <a href="javascript:void(0);" class="close"><i class="fa fa-xmark"></i></a>
+        <button type="button" class="close icon-button" aria-label="Close" data-label-translate="a11y.close"><i class="fa fa-xmark" aria-hidden="true"></i></button>
         <div class="container">
             <div class="row">
                 <div class="col-md-3 vertically-centered">
@@ -441,17 +486,28 @@
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-8">
-                    <p data-translate="feedback.description"></p>
-                    <div class="row">
-                        <div class="col-9 vertically-centered">
-                            <input type="textarea" rows="3" class="form-control" id="txtFeedback" name="txtFeedback"
-                                data-translate="feedback.placeholder" />
-                        </div>
-                        <div class="col-3 vertically-centered">
-                            <button type="submit" id="btnSubmitFeedback" class="button primary"
-                                data-title-translate="feedback.submit" disabled>
-                                <i class="fa-solid fa-paper-plane"></i>
-                            </button>
+                    <!-- Shown until the visitor agrees; the choice is kept in localStorage -->
+                    <div class="feedback-consent" hidden>
+                        <p data-translate="feedback.consent">Before you share your thoughts: your IP address and a
+                            screenshot of the section you're viewing are sent along with your feedback, to help me
+                            understand and fix issues. Your choice is saved in this browser.
+                            <a href="privacy.html">Learn more</a></p>
+                        <button type="button" id="btnAcceptFeedbackConsent" class="button primary"
+                            data-translate="feedback.accept">Agree and continue</button>
+                    </div>
+                    <div class="feedback-entry" hidden>
+                        <p data-translate="feedback.description"></p>
+                        <div class="row">
+                            <div class="col-9 vertically-centered">
+                                <input type="text" class="form-control" id="txtFeedback" name="txtFeedback"
+                                    data-translate="feedback.placeholder" />
+                            </div>
+                            <div class="col-3 vertically-centered">
+                                <button type="submit" id="btnSubmitFeedback" class="button primary"
+                                    data-title-translate="feedback.submit" disabled>
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -460,7 +516,7 @@
     </form>
 
     <div class="notification vertically-centered">
-        <a href="javascript:void(0);" class="close"><i class="fa fa-xmark"></i></a>
+        <button type="button" class="close icon-button" aria-label="Close" data-label-translate="a11y.close"><i class="fa fa-xmark" aria-hidden="true"></i></button>
         <span class="message"></span>
     </div>
 
@@ -470,23 +526,15 @@
             <div class="bottom">DLE</div>
         </div>
         <div class="social-links">
-            <a href="https://www.facebook.com/y.dlewati" rel="noopener" class="fa-brands fa-facebook-square"></a>
-            <a href="https://www.linkedin.com/in/yasser-dlewati" rel="noopener" class="fa-brands fa-linkedin"></a>
-            <a href="https://www.github.com/yasser-dlewati" rel="noopener" class="fa-brands fa-github-square"></a>
+            <a href="https://www.facebook.com/y.dlewati" rel="noopener" class="fa-brands fa-facebook-square" aria-label="Facebook"></a>
+            <a href="https://www.linkedin.com/in/yasser-dlewati" rel="noopener" class="fa-brands fa-linkedin" aria-label="LinkedIn"></a>
+            <a href="https://www.github.com/yasser-dlewati" rel="noopener" class="fa-brands fa-github-square" aria-label="GitHub"></a>
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    <!-- The site's only entry point; it imports every other module -->
     <script type="module" src="./js/main.js"></script>
-    <script type="module" src="./js/clients.js"></script>
-    <script type="module" src="./js/feedback.js"></script>
-    <script type="module" src="./js/translation.js"></script>
-    <script type="module" src="./js/services.js"></script>
-    <script type="module" src="./js/characteristics.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 </body>
 </html>

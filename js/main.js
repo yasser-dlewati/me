@@ -1,15 +1,23 @@
 "use strict";
-import { language, renderClients, setBodyScroll, toggleCloseMenuOnOutsideClick, closeNavigationMenu, closeSettingsMenu, observeReveal, openCalendly, closeCalendly } from "./common.js";
-import { feedbackIcon } from "./feedback.js";
-import { setSwipeMode } from "./clients.js";
-import { switchLanguage, getNestedValue, translations } from "./translation.js";
+import { closeNavigationMenu, closeSettingsMenu } from "./navigation.js";
+import { observeReveal } from "./reveal.js";
+import { openCalendly, closeCalendly } from "./calendly.js";
+import { feedbackIcon, initFeedback } from "./feedback.js";
+import { setSwipeMode, initClients, renderClients } from "./clients.js";
+import { initServices } from "./services.js";
+import { initTraits } from "./characteristics.js";
+import { switchLanguage } from "./translation.js";
+import { t } from "./i18n.js";
+import { escapeHtml } from "./html.js";
+import { lockPage, unlockPage } from "./overlay.js";
+import { getSetting, setSetting, onSettingChange } from "./settings.js";
 import { initSectionScroll, scrollToSection, SECTION_STACK_OFFSET } from "./sectionScroll.js";
 
 const setSectionsStylesForScrolling = () => {
-  $("section").each(function (index) {
-    $(this).css("z-index", index + 1);
-    $(this).css("top", `${index * SECTION_STACK_OFFSET}px`);
-    $(this).height(`calc(100dvh - ${index * SECTION_STACK_OFFSET}px)`);
+  document.querySelectorAll("section").forEach((section, index) => {
+    section.style.zIndex = index + 1;
+    section.style.top = `${index * SECTION_STACK_OFFSET}px`;
+    section.style.height = `calc(100dvh - ${index * SECTION_STACK_OFFSET}px)`;
   });
 };
 
@@ -23,7 +31,7 @@ const syncFooterHeight = () => {
 
 const renderNavigationLinks = () => {
   var content = getSectionsCount(true);
-  $(".links").html(content);
+  document.querySelector(".links").innerHTML = content;
 
   const links = document.querySelectorAll(".links a");
   links.forEach((link, index) => {
@@ -35,7 +43,7 @@ const renderNavigationLinks = () => {
 const renderScreenIndicator = () => {
   var content = getSectionsCount();
   document.querySelector(".screen.indicator").style.display = "none";
-  $(".screen.indicator").html(content);
+  document.querySelector(".screen.indicator").innerHTML = content;
 };
 
 function getSectionsCount(withNames) {
@@ -43,8 +51,8 @@ function getSectionsCount(withNames) {
   var content = "";
   for (let i = 0; i < sections.length; i++) {
     if (withNames) {
-      let sectionId = sections[i].id;
-      let sectionTitle = getNestedValue(translations[language.value], sections[i].getAttribute("data-title"))
+      let sectionId = escapeHtml(sections[i].id);
+      let sectionTitle = escapeHtml(t(sections[i].getAttribute("data-title")))
       content = content.concat(
         '<a href="#' + sectionId + '"><h4 data-translate="' + sectionId + '.navigation">' + sectionTitle + "</h4></a>"
       );
@@ -56,74 +64,226 @@ function getSectionsCount(withNames) {
 }
 
 function setScreenIndicator(index) {
-  $(".screen.indicator li").each(function () {
-    $(this).removeClass("active");
+  document.querySelectorAll(".screen.indicator li").forEach((li, i) => {
+    li.classList.toggle("active", i === index);
   });
-  $($(".screen.indicator li")[index]).addClass("active");
 
   // Keep the menu button at the same spot relative to the current stacked section
   document.documentElement.style.setProperty("--section-stack-top", `${index * SECTION_STACK_OFFSET}px`);
 }
 
-function setScreenIndicatorAccordingToScroll() {
-  const scrollTop = $(window).scrollTop() + 4;
-  const sections = $("section");
-  const windowHeight = $(window).height();
-  for (let i = 0; i < sections.length; i++) {
-    const currentTop = $(sections[i]).offset().top - windowHeight / 2;
-    const nextTop =
-      i + 1 < sections.length
-        ? $(sections[i + 1]).offset().top - windowHeight / 2
-        : Infinity;
+// Where each section starts in the page's flow, ignoring the sticky stacking. Measured once and again
+// whenever a section's size changes, so scrolling only compares numbers
+let sectionStarts = [];
+let currentSection = -1;
 
-    if (scrollTop >= currentTop && scrollTop < nextTop) {
-      setScreenIndicator(i);
-      break;
-    }
+function measureSectionStarts() {
+  let top = 0;
+  sectionStarts = [...document.querySelectorAll("section")].map((section) => {
+    const start = top;
+    top += section.offsetHeight;
+    return start;
+  });
+}
+
+// A section is current once its top passes the middle of the viewport. Sections already stuck at the
+// top sit above that line, so this only needs their flow positions, not their on-screen ones
+function setScreenIndicatorAccordingToScroll() {
+  // The viewport without the scrollbar, as jQuery's $(window).height() measured it
+  const line = window.scrollY + 4 + document.documentElement.clientHeight / 2;
+  let index = 0;
+  sectionStarts.forEach((start, i) => {
+    if (start <= line) index = i;
+  });
+  if (index !== currentSection) {
+    currentSection = index;
+    setScreenIndicator(index);
   }
 }
 
-Element.prototype.hideForInSeconds = function(seconds) {
-  this.style.display = 'none';
-  setTimeout(() => {
-    this.style.display = '';
-  }, seconds * 1000);
-};
+function trackCurrentSection() {
+  const resized = new ResizeObserver(() => {
+    measureSectionStarts();
+    setScreenIndicatorAccordingToScroll();
+  });
+  document.querySelectorAll("section").forEach((section) => resized.observe(section));
+  window.addEventListener("scroll", setScreenIndicatorAccordingToScroll, { passive: true });
+  measureSectionStarts();
+  setScreenIndicatorAccordingToScroll();
+}
 
-Element.prototype.addBouncyAnimationAfterInSeconds = function(seconds) {
+// Hides an element now and shows it again after the given time
+function hideFor(element, seconds) {
+  element.style.display = "none";
   setTimeout(() => {
-    this.classList.add('bouncy');
+    element.style.display = "";
   }, seconds * 1000);
-};
+}
+
+function addBouncyAfter(element, seconds) {
+  setTimeout(() => {
+    element.classList.add("bouncy");
+  }, seconds * 1000);
+}
 
 const topScrollDiv = document.querySelector("#top .scroll");
 const aboutSection = document.querySelector("section#about");
 const menuIcon = document.querySelector(".menu-icon");
 const swipeClientsToggle = document.querySelector("#swipeClients");
 const settingsIcon = document.querySelector(".settings");
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./sw.js").catch((error) => {
-    console.warn("Image caching unavailable:", error);
-  });
-}
+const screenIndicator = document.querySelector("ul.screen.indicator");
 const INTRO_SECONDS = 1.5;
 
-$(document).ready(function () {
-  readSavedSettings();
-  topScrollDiv.hideForInSeconds(INTRO_SECONDS);
-  aboutSection.addBouncyAnimationAfterInSeconds(INTRO_SECONDS);
-  setSectionsStylesForScrolling();
-  syncFooterHeight();
-  window.scrollTo(0, 0);
+function registerServiceWorker() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js").catch((error) => {
+      console.warn("Image caching unavailable:", error);
+    });
+  }
+}
 
-  // Let the intro play without scrolling; the menu button appears when it's over
+// Let the intro play without scrolling; the menu button and the scroll cue appear when it's over
+function playIntro() {
+  hideFor(topScrollDiv, INTRO_SECONDS);
+  addBouncyAfter(aboutSection, INTRO_SECONDS);
+  window.scrollTo(0, 0);
   document.documentElement.style.overflow = "hidden";
   setTimeout(() => {
     document.documentElement.style.overflow = "";
     menuIcon.style.removeProperty("display");
     initSectionScroll();
   }, INTRO_SECONDS * 1000);
+}
+
+// The menu, settings and Calendly buttons, the section links, the copy button and the scroll cue
+function initPageControls() {
+  document.querySelector(".navigation .close").addEventListener("click", closeNavigationMenu);
+  document.querySelector(".settings-container .close").addEventListener("click", closeSettingsMenu);
+  document.querySelector(".calendly-container .close").addEventListener("click", closeCalendly);
+
+  document.querySelectorAll(".schedule-session").forEach((button) => {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      openCalendly();
+    });
+  });
+
+  menuIcon.addEventListener("click", function () {
+    if (!document.querySelector(".navigation").classList.contains("active")) {
+      document.querySelector(".navigation").classList.add("active");
+      lockPage("navigation", {
+        elements: [document.querySelector(".navigation")],
+        close: closeNavigationMenu,
+      });
+      document.querySelector(".navigation").style.boxShadow = "var(--menu-box-shadow)";
+    }
+  });
+
+  settingsIcon.addEventListener("click", function () {
+    document.querySelector(".settings-container").classList.add("active");
+    document.querySelector(".settings-container").style.boxShadow = "var(--menu-box-shadow)";
+    lockPage("settings", {
+      elements: [document.querySelector(".settings-container")],
+      // A click on the menu goes back to it; a click on the page closes both
+      close: (event) => {
+        closeSettingsMenu();
+        if (!document.querySelector(".navigation").contains(event.target)) closeNavigationMenu();
+      },
+    });
+  });
+
+  document.querySelectorAll(".links a").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute("href"));
+      // Unlock the page before scrolling: toggling overflow mid-scroll cancels a smooth scroll
+      unlockPage("navigation");
+      scrollToSection([...document.querySelectorAll("section")].indexOf(target));
+      closeNavigationMenu();
+    });
+  });
+
+  const copyButton = document.querySelector(".copy");
+  copyButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    const email = document.querySelector(".email h5").textContent.trim();
+    navigator.clipboard.writeText(email).then(() => {
+      const tooltip = copyButton.querySelector(".copy-tooltip");
+      tooltip.style.display = "inline";
+
+      setTimeout(() => {
+        // Back to the stylesheet's display: none
+        tooltip.style.removeProperty("display");
+      }, 1500);
+    });
+  });
+
+  topScrollDiv.addEventListener("click", function () {
+    this.classList.remove("bouncy");
+    scrollToSection(1);
+  });
+
+  window.addEventListener("scroll", () => {
+    topScrollDiv.classList.remove("bouncy");
+    aboutSection.classList.remove("bouncy");
+    screenIndicator.style.removeProperty("display");
+    feedbackIcon.style.removeProperty("display");
+  });
+}
+
+// theme-color tints the browser bars on older iOS and Android; values mirror --bg-dark-color
+function applyTheme(theme) {
+  document.body.setAttribute("data-theme", theme);
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "dark" ? "#333333" : "#f2f2f2");
+}
+
+const darkModeToggle = document.querySelector("#darkModeSwitch");
+const languageSelect = document.querySelector("#language");
+const showUndergraduateToggle = document.querySelector("#showUnderGraduateExperience");
+const saveSettingsCheckbox = document.querySelector("#saveSettingsLocally");
+
+function initSettings() {
+  // The settings panel starts from the stored settings and writes changes back
+  darkModeToggle.checked = getSetting("theme") === "dark";
+  languageSelect.value = getSetting("language");
+  showUndergraduateToggle.checked = getSetting("showUndergraduate");
+  saveSettingsCheckbox.checked = getSetting("saveLocally");
+  // Optional chaining keeps the rest of the page working if a cached index.html lacks this toggle
+  if (swipeClientsToggle) swipeClientsToggle.checked = getSetting("swipeClients");
+
+  darkModeToggle.addEventListener("change", () => setSetting("theme", darkModeToggle.checked ? "dark" : "light"));
+  languageSelect.addEventListener("change", () => setSetting("language", languageSelect.value));
+  showUndergraduateToggle.addEventListener("change", () => setSetting("showUndergraduate", showUndergraduateToggle.checked));
+  saveSettingsCheckbox.addEventListener("change", () => setSetting("saveLocally", saveSettingsCheckbox.checked));
+  swipeClientsToggle?.addEventListener("change", () => setSetting("swipeClients", swipeClientsToggle.checked));
+
+  // What each setting does when it changes
+  onSettingChange("theme", applyTheme);
+  onSettingChange("language", switchLanguage);
+  onSettingChange("showUndergraduate", renderClients);
+  onSettingChange("swipeClients", setSwipeMode);
+  // Saving can also turn on by itself, when the first setting changes
+  onSettingChange("saveLocally", (saving) => (saveSettingsCheckbox.checked = saving));
+
+  applyTheme(getSetting("theme"));
+  setSwipeMode(getSetting("swipeClients"));
+  switchLanguage(getSetting("language"));
+}
+
+// Start-up, in order. Module scripts run once the page's HTML is parsed, so the DOM is ready here
+function start() {
+  registerServiceWorker();
+  initClients();
+  initFeedback();
+  initServices();
+  initTraits();
+  // Applies the theme and swipe mode, and the language: that renders the translated page, including
+  // the services and the trait chips
+  initSettings();
+
+  setSectionsStylesForScrolling();
+  syncFooterHeight();
+  playIntro();
 
   // About's content column isn't animated directly since a transform would re-anchor its absolute side image
   document.querySelectorAll("section:not(#top)").forEach((section) => {
@@ -132,206 +292,11 @@ $(document).ready(function () {
     ), 0.15);
   });
 
-  $(".hero-text .message").each(function (i) {
-    var $this = $(this);
-    if (i >= 3) {
-      $this.hide();
-      setTimeout(function () {
-        $this
-          .hide()
-          .delay((i + 1) * 1000)
-          .fadeIn(1000);
-      }, 6500);
-    } else {
-      $this
-        .hide()
-        .delay((i + 1) * 1000)
-        .fadeIn(1000);
-    }
-  });
   renderScreenIndicator();
   renderNavigationLinks();
-  $(window).scroll(function () {
-    setScreenIndicatorAccordingToScroll();
-  });
-  setScreenIndicator(0);
+  trackCurrentSection();
 
-  $(".navigation .close").click(function () {
-    closeNavigationMenu();
-  });
-
-  $(".settings-container .close").click(function () {
-    closeSettingsMenu();
-  });
-
-  $(".calendly-container .close").click(function () {
-    closeCalendly();
-  });
-
-  document.querySelectorAll(".schedule-session").forEach((button) => {
-    button.addEventListener("click", (e) => {
-      e.preventDefault();
-      // Stop the click reaching .content, which would close the panel straight away
-      e.stopPropagation();
-      openCalendly();
-    });
-  });
-
-  menuIcon.addEventListener("click", function () {
-    if (!document.querySelector(".navigation").classList.contains("active")) {
-      document.querySelector(".navigation").classList.add("active");
-      setBodyScroll(false);
-      document.querySelector(".navigation").style.boxShadow = "var(--menu-box-shadow)";
-      toggleCloseMenuOnOutsideClick(true);
-    }
-
-  });
-
-  settingsIcon.addEventListener("click", function () {
-    document.querySelector(".settings-container").classList.add("active");
-    document.querySelectorAll(".navigation > :not(.settings-container)").forEach((el) => {
-        el.style.filter = "blur(8px)";
-    });
-    document.querySelector(".settings-container").style.boxShadow = "var(--menu-box-shadow)";
-    toggleCloseMenuOnOutsideClick(true);
-  });
-
-  document.querySelectorAll('.links a').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const target = document.querySelector(link.getAttribute('href'));
-      // Unlock the page before scrolling: toggling overflow mid-scroll cancels a smooth scroll
-      setBodyScroll(true);
-      scrollToSection([...document.querySelectorAll("section")].indexOf(target));
-      closeNavigationMenu();
-    });
-  });  
-});
-
-$(".copy").on("click", function (e) {
-  e.preventDefault();
-  const email = $(".email h5").text().trim();
-  navigator.clipboard.writeText(email).then(() => {
-    const $tooltip = $(this).find(".copy-tooltip");
-    $tooltip.show();
-
-    setTimeout(() => {
-      $tooltip.hide();
-    }, 1500);
-  });
-});
-
-// theme-color tints the browser bars on older iOS and Android; values mirror --bg-dark-color
-function applyTheme(theme) {
-  $("body").attr("data-theme", theme);
-  $('meta[name="theme-color"]').attr("content", theme === "dark" ? "#333333" : "#f2f2f2");
+  initPageControls();
 }
 
-function readSavedSettings() {
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme) {
-    applyTheme(savedTheme);
-    document.querySelector("#darkModeSwitch").checked = savedTheme === "dark";
-    document.querySelector("#saveSettingsLocally").checked = true;
-  } else {
-    const isSystemDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
-    applyTheme(isSystemDarkMode.matches ? "dark" : "light");
-    document.querySelector("#darkModeSwitch").checked = isSystemDarkMode.matches;
-  }
-
-  const showUnderGraduate = localStorage.getItem("underGraduate");
-  if (showUnderGraduate === "true") {
-    document.querySelector("#showUnderGraduateExperience").checked = true;
-  }
-
-  const swipeClients = localStorage.getItem("swipeClients") === "true";
-  if (swipeClientsToggle) {
-    swipeClientsToggle.checked = swipeClients;
-  }
-  setSwipeMode(swipeClients);
-
-  const savedLanguage = localStorage.getItem("language");
-  switchLanguage(savedLanguage ?? "en");
-  if (savedLanguage) {
-    document.querySelector("#language").value = savedLanguage;
-  }
-}
-
-var darkModeToggle = document.querySelector("#darkModeSwitch");
-darkModeToggle.addEventListener("change", function () {
-  if (saveSettingsCheckbox.checked) {
-    localStorage.setItem("theme", this.checked ? "dark" : "light");
-  }
-
-  applyTheme(this.checked ? "dark" : "light");
-});
-
-var languageSelect = document.querySelector("#language")
-languageSelect.addEventListener("change", function () {
-  if (saveSettingsCheckbox.checked) {
-    localStorage.setItem("language", this.value);
-  }
-})
-
-var saveSettingsCheckbox = document.querySelector("#saveSettingsLocally");
-saveSettingsCheckbox.addEventListener("change", function () {
-  if (document.querySelector("#saveSettingsLocally").checked) {
-    if (this.checked)
-      localStorage.setItem(
-        "theme",
-        document.querySelector("#darkModeSwitch").checked ? "dark" : "light"
-      );
-    localStorage.setItem(
-      "underGraduate",
-      document.querySelector("#showUnderGraduateExperience").checked
-    );
-    localStorage.setItem(
-      "language",
-      document.querySelector("#language").value
-    )
-    localStorage.setItem("swipeClients", swipeClientsToggle?.checked ?? false);
-  } else {
-    localStorage.removeItem("theme");
-    localStorage.removeItem("underGraduate");
-    localStorage.removeItem("swipeClients");
-    localStorage.removeItem("language")
-  }
-});
-
-var showUnderGraduateExperienceToggle = document.querySelector(
-  "#showUnderGraduateExperience"
-);
-showUnderGraduateExperienceToggle.addEventListener("change", function () {
-  if (saveSettingsCheckbox.checked) {
-    localStorage.setItem("underGraduate", this.checked);
-  } else {
-    localStorage.removeItem("underGraduate");
-  }
-
-  renderClients();
-});
-
-// Optional chaining keeps the rest of the page working if a cached index.html lacks this toggle
-swipeClientsToggle?.addEventListener("change", function () {
-  if (saveSettingsCheckbox.checked) {
-    localStorage.setItem("swipeClients", this.checked);
-  } else {
-    localStorage.removeItem("swipeClients");
-  }
-
-  setSwipeMode(this.checked);
-});
-
-const screenIndicator = document.querySelector("ul.screen.indicator");
-
-topScrollDiv.addEventListener("click", function () {
-  this.classList.remove("bouncy");
-  scrollToSection(1);
-});
-
-$(window).on("scroll", function () {
-  topScrollDiv.classList.remove("bouncy");
-  aboutSection.classList.remove("bouncy");
-  screenIndicator.style.removeProperty("display");
-  feedbackIcon.style.removeProperty("display");
-});
+start();

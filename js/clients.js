@@ -1,64 +1,20 @@
-import {
-  renderClients,
-  isMobileDevice,
-  language,
-  closeClientDetails,
-  setExperienceDuration,
-  experienceStartDate,
-} from "./common.js";
+import { escapeHtml } from "./html.js";
+import { lockPage, unlockPage, removeShadowAfterClosing } from "./overlay.js";
+import { getSetting } from "./settings.js";
+import { t, language } from "./i18n.js";
+import { observeReveal } from "./reveal.js";
+import { experienceJson, experienceStartDate, setExperienceDuration } from "./experience.js";
+
+export const isMobileDevice = /android|iphone|kindle|ipad/i.test(navigator.userAgent);
 
 const experienceContainer = document.querySelector(".experience-container");
-var experienceItem = experienceContainer.children[0];
-
-// Need to wait for the container to render properly
-setTimeout(() => {
-  experienceItem = experienceContainer.children[0].clientWidth;
-}, 100);
-
-document.addEventListener("DOMContentLoaded", () => {
-  setupSwipe();
-  resetExperienceIndicatorPosition();
-  const spanExperienceDuration = document.querySelector(".experience-duration");
-  let experienceDuration = setExperienceDuration(experienceStartDate);
-  spanExperienceDuration.innerHTML = experienceDuration;
-  renderClients();
-  setNavigationButtonsVisibility();
-});
+// Measured on each click so the step stays right after resizing or re-rendering
+function getScrollStep() {
+  return experienceContainer.children[0]?.clientWidth ?? 0;
+}
 
 const nextButton = document.querySelector(".scroll-horizontally.next");
 const prevButton = document.querySelector(".scroll-horizontally.prev");
-nextButton.addEventListener("click", function () {
-  if (this.disabled) {
-    return;
-  }
-
-  this.disabled = true;
-  experienceContainer.scrollBy({
-    left: language.isRTL ? -experienceItem : experienceItem,
-    behavior: "smooth",
-  });
-  moveExperienceIndicatorByStep(1);
-  setTimeout(() => {
-    this.disabled = false;
-  }, 300);
-});
-
-prevButton.addEventListener("click", function () {
-  if (this.disabled) {
-    return;
-  }
-
-  this.disabled = true;
-  experienceContainer.scrollBy({
-    left: language.isRTL ? experienceItem : -experienceItem,
-    behavior: "smooth",
-  });
-  moveExperienceIndicatorByStep(-1);
-  setTimeout(() => {
-    this.disabled = false;
-  }, 300);
-});
-
 let experienceIndicatorPosition;
 
 function resetExperienceIndicatorPosition() {
@@ -123,12 +79,6 @@ function setNavigationButtonsVisibility() {
     : "visible";
 }
 
-document
-  .querySelector(".experience-details-container .close")
-  .addEventListener("click", () => {
-    console.log("closing");
-    closeClientDetails();
-  });
 
 let isSwipeMode = false;
 let hasSwiped = false;
@@ -293,4 +243,191 @@ function setupMouseDrag() {
       event.preventDefault();
     }
   });
+}
+
+// Carousel controls, swipe and the clients list. Called once from main.js at start-up
+export function initClients() {
+  nextButton.addEventListener("click", function () {
+    if (this.disabled) {
+      return;
+    }
+
+    this.disabled = true;
+    experienceContainer.scrollBy({
+      left: language.isRTL ? -getScrollStep() : getScrollStep(),
+      behavior: "smooth",
+    });
+    moveExperienceIndicatorByStep(1);
+    setTimeout(() => {
+      this.disabled = false;
+    }, 300);
+  });
+
+  prevButton.addEventListener("click", function () {
+    if (this.disabled) {
+      return;
+    }
+
+    this.disabled = true;
+    experienceContainer.scrollBy({
+      left: language.isRTL ? getScrollStep() : -getScrollStep(),
+      behavior: "smooth",
+    });
+    moveExperienceIndicatorByStep(-1);
+    setTimeout(() => {
+      this.disabled = false;
+    }, 300);
+  });
+
+  document
+    .querySelector(".experience-details-container .close")
+    .addEventListener("click", closeClientDetails);
+
+  setupSwipe();
+  resetExperienceIndicatorPosition();
+  // Also sets the About section's experience duration
+  renderClients();
+  setNavigationButtonsVisibility();
+}
+
+export function renderClients() {
+  var clients = experienceJson;
+  let isShowingUnderGraduateExperience = getSetting("showUndergraduate");
+
+  if (isShowingUnderGraduateExperience) {
+    clients = experienceJson;
+  } else {
+    clients = experienceJson.filter((x) => x.id >= 0);
+  }
+
+  let clientsContainer = document.querySelector(".experience-container");
+  let indicatorContent = "";
+  let clientsContent = "";
+  for (let i = 0; i < clients.length; i++) {
+    clientsContent += `<div class='experience-item'>
+      <img src="./images/${escapeHtml(clients[i].imageSrc)}" class="img-fluid bounce" alt="${escapeHtml(t(`clientList.${clients[i].key}.company`))}" data-key="${escapeHtml(clients[i].key)}" loading="lazy">
+      </div>`;
+    indicatorContent +=
+      (!isMobileDevice && i < 3) || (isMobileDevice && i === 0)
+        ? "<li class='active'></li>"
+        : "<li></li>";
+  }
+
+  // Too many dots crowd a phone screen, so switch to a numeric counter
+  if (isMobileDevice && clients.length > 9) {
+    indicatorContent = `<span class='counter'>1 / ${clients.length}</span>`;
+  }
+
+  clientsContainer.innerHTML = clientsContent;
+  document.querySelector(".experience.indicator").innerHTML = indicatorContent;
+  const experienceItems = document.querySelectorAll(".experience-item img");
+  experienceItems.forEach((item) => {
+    item.addEventListener("click", showClientDetails);
+  });
+
+  // Stagger only the clients visible at first; the rest reveal one at a time as the carousel scrolls.
+  // Those only fade: sliding would pull them past the carousel edge into view and make them flicker.
+  const clientItems = [...clientsContainer.children];
+  const initiallyVisibleCount = isMobileDevice ? 1 : 3;
+  const laterItems = clientItems.slice(initiallyVisibleCount);
+  laterItems.forEach((item) => item.classList.add("reveal-fade"));
+  observeReveal(clientItems.slice(0, initiallyVisibleCount), 0.15);
+  observeReveal(laterItems);
+
+  updateAboutSectionExperienceDuration();
+  resetClientsView();
+}
+
+function updateAboutSectionExperienceDuration() {
+  let span = document.querySelector(".experience-duration");
+  span.textContent = setExperienceDuration(experienceStartDate);
+}
+
+// Each client's details are built once and kept (hidden) in the panel, so the map iframe and
+// logo don't reload every time the panel opens. Cleared when the language changes.
+const clientDetailsCache = new Map();
+
+export function clearClientDetailsCache() {
+  clientDetailsCache.clear();
+  document.querySelector(".experience-details").innerHTML = "";
+}
+
+function showClientDetails() {
+  {
+    document
+      .querySelector(".experience-details-container")
+      .classList.add("active");
+    document.querySelector(".experience-details-container").style.boxShadow =
+      "var(--menu-box-shadow)";
+    const clientKey = this.dataset.key;
+    const detailsContainer = document.querySelector(".experience-details");
+    let details = clientDetailsCache.get(clientKey);
+    if (!details) {
+      details = buildClientDetails(clientKey);
+      clientDetailsCache.set(clientKey, details);
+      detailsContainer.appendChild(details);
+    }
+    clientDetailsCache.forEach((element) => {
+      element.hidden = element !== details;
+    });
+
+    document
+      .querySelectorAll(".experience-item img, .scroll-horizontally")
+      .forEach((img) => {
+        img.classList.remove("bounce");
+        img.style.pointerEvents = "none";
+      });
+    lockPage("clientDetails", {
+      elements: [document.querySelector(".experience-details-container")],
+      close: closeClientDetails,
+    });
+  }
+}
+
+function buildClientDetails(clientKey) {
+    const relatedExperience = experienceJson.find((x) => x.key === clientKey);
+    const text = (field) => t(`clientList.${clientKey}.${field}`);
+    const companyName = text("company");
+    const html = `<div class="container">
+        <div class="row">
+          <div class="col-12">
+          <img src="./images/${escapeHtml(
+            relatedExperience.imageSrc
+          )}" alt="${escapeHtml(companyName)}" class="company-logo">
+          <h4 class="company-name">${escapeHtml(companyName)}</h4>
+          <h5 class="position">${escapeHtml(text("position"))}</h5>
+          <p>${escapeHtml(text("description"))}. 
+           ${escapeHtml(
+             relatedExperience.isCurrentCompany
+               ? t("clientDetails.workingFor", { duration: setExperienceDuration(relatedExperience.joinedDate) })
+               : t("clientDetails.workedFor", { duration: setExperienceDuration(null, relatedExperience.duration) })
+           )}.</p>
+          <p>${t("clientDetails.visit", {
+            company: escapeHtml(companyName),
+            url: escapeHtml(relatedExperience.websiteUrl),
+          })}</p>
+          <iframe src="https://www.google.com/maps/embed?${escapeHtml(
+            relatedExperience.embededMapLink
+          )}" width="100%" height="200" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>`;
+    const details = document.createElement("div");
+    details.innerHTML = html;
+    return details;
+}
+
+export function closeClientDetails() {
+  document
+    .querySelector(".experience-details-container")
+    .classList.remove("active");
+  removeShadowAfterClosing(document.querySelector(".experience-details-container"));
+  document
+    .querySelectorAll(".experience-item img, .scroll-horizontally")
+    .forEach((img) => {
+      img.classList.add("bounce");
+      // Removed rather than set to auto, so the overlay CSS can still disable it under other panels
+      img.style.removeProperty("pointer-events");
+    });
+  unlockPage("clientDetails");
 }

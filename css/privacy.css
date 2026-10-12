@@ -1,0 +1,210 @@
+/* Privacy page. Builds on main.css for the theme colors, typography and footer */
+
+/* main.css keys the root background off body's theme; here the theme sits on html */
+html[data-theme="dark"] {
+    background-color: hsl(0, 0%, 20%);
+    color-scheme: dark;
+}
+
+/* Keep the footer at the bottom when the content is short */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+/* Only what's marked for the page's language is shown */
+html[lang="en"] [data-lang="ar"],
+html[lang="ar"] [data-lang="en"] {
+    display: none;
+}
+
+/*---------------------------------------
+       HEADER
+-----------------------------------------*/
+.privacy-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    max-width: 760px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px 16px 0;
+}
+
+/* Chevron + logo, one link back to the site. The chevron sits on the reading start side,
+   so in Arabic it moves to the logo's right and is mirrored to point right */
+.privacy-home {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+    color: var(--text-dark-color);
+}
+
+.privacy-home .fa-chevron-left {
+    transition: transform 0.2s ease-out;
+}
+
+.privacy-home:hover .fa-chevron-left {
+    transform: translateX(-4px);
+}
+
+html[dir="rtl"] .privacy-home .fa-chevron-left {
+    transform: scaleX(-1);
+}
+
+html[dir="rtl"] .privacy-home:hover .fa-chevron-left {
+    transform: scaleX(-1) translateX(-4px);
+}
+
+/* A small copy of the footer logo; it overrides the hero-sized .logo rules in main.css */
+.privacy-header .logo {
+    display: block;
+    flex-shrink: 0;
+    width: 76px;
+    margin: 0;
+    font-size: 16px;
+}
+
+.privacy-header .logo .top,
+.privacy-header .logo .bottom {
+    border: 4px solid var(--black-color);
+    padding: 6px 0;
+}
+
+.privacy-header .logo .top {
+    border-bottom: none;
+    border-radius: var(--border-radius-tiny) var(--border-radius-tiny) 0 0;
+    color: var(--white-color);
+}
+
+.privacy-header .logo .bottom {
+    border-top: none;
+    border-radius: 0 0 var(--border-radius-tiny) var(--border-radius-tiny);
+    color: var(--black-color);
+}
+
+/* Gear button, like the main site's settings button */
+.privacy-settings-toggle {
+    border: none;
+    background: none;
+    padding: 8px;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--text-dark-color);
+    transition: transform 0.3s ease-out;
+}
+
+.privacy-settings-toggle[aria-expanded="true"] {
+    transform: rotate(60deg);
+}
+
+.privacy-settings-toggle:focus-visible {
+    outline: 2px solid var(--text-darkest-color);
+    outline-offset: 2px;
+    border-radius: var(--border-radius-tiny);
+}
+
+/* Settings card that opens under the gear, on the reading end side */
+.privacy-header {
+    position: relative;
+}
+
+.privacy-settings {
+    position: absolute;
+    top: 100%;
+    inset-inline-end: 16px;
+    z-index: 20;
+    display: grid;
+    gap: 16px;
+    min-width: 260px;
+    margin-top: 8px;
+    padding: 20px 24px;
+    border-radius: var(--border-radius-small);
+    background-color: var(--bg-light-color);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* main.css caps setting rows at half the settings panel; the card is already narrow */
+.privacy-settings .setting-row {
+    max-width: none;
+}
+
+.privacy-settings label {
+    white-space: nowrap;
+}
+
+/*---------------------------------------
+       CONTENT
+-----------------------------------------*/
+.privacy {
+    flex: 1;
+    max-width: 760px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 48px 16px 0;
+}
+
+.privacy h1 {
+    font-family: var(--h2-font-family);
+    font-size: var(--h2-font-size);
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.privacy h3 {
+    font-size: var(--big-font-size);
+    margin: 40px 0 8px;
+}
+
+.privacy p,
+.privacy li {
+    font-size: var(--medium-font-size);
+    line-height: 1.8em;
+    text-align: start;
+    color: var(--text-medium-color);
+}
+
+.privacy p a,
+.privacy li a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.privacy .updated {
+    font-size: var(--small-font-size);
+    color: var(--text-medium-color);
+}
+
+/*---------------------------------------
+       FOOTER
+-----------------------------------------*/
+/* On the main page the footer overlaps the last section; here it simply follows the content,
+   with room above for the logo that sits on its top edge */
+footer {
+    position: relative;
+    margin-top: 120px;
+}
+
+@media (max-width: 575px) {
+    .privacy-settings {
+        inset-inline: 16px;
+        min-width: 0;
+    }
+}
+
+/*---------------------------------------
+       PAGE TRANSITION
+-----------------------------------------*/
+/* The way in: this page pushes in from the reading end side while the site slides a little the
+   other way. main.css (also loaded here) has the way back and the keyframes */
+::view-transition-old(root) {
+    z-index: auto;
+    animation: page-exit-to-start 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+::view-transition-new(root) {
+    animation: page-enter-from-end 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+}

@@ -214,6 +214,26 @@ a {
     text-decoration: none;
 }
 
+/* Icon-only controls are buttons, so they work from the keyboard. This strips the browser's button
+   look so they match the links they replaced; each control's own rules below set size and place */
+.icon-button,
+.icon-button:disabled {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: var(--text-dark-color);
+    cursor: pointer;
+    opacity: 1;
+}
+
+.icon-button:focus-visible {
+    outline: 2px solid var(--text-darkest-color);
+    outline-offset: 4px;
+    border-radius: var(--border-radius-tiny);
+}
+
 a.disabled,
 div.disabled,
 img.disabled {
@@ -407,18 +427,15 @@ html[dir="rtl"] .settings-item {
 .navigation a,
 .experience-details-container a,
 .calendly-container a,
-.settings-container a {
+.settings-container a,
+.navigation .icon-button,
+.experience-details-container .icon-button,
+.calendly-container .icon-button,
+.settings-container .icon-button {
     color: var(--text-dark-color);
     display: block;
     font-size: 32px;
     margin: auto;
-}
-
-html[dir="rtl"] .navigation .close,
-.experience-details-container .close,
-.calendly-container .close,
-.settings-container .close {
-    right: calc(50% + 32px);
 }
 
 .navigation .close,
@@ -428,6 +445,16 @@ html[dir="rtl"] .navigation .close,
     position: absolute;
     top: 32px;
     left: calc(50% + 32px);
+    /* Above the panel's content, which is transformed and would otherwise paint over it */
+    z-index: 1;
+}
+
+html[dir="rtl"] .navigation .close,
+html[dir="rtl"] .experience-details-container .close,
+html[dir="rtl"] .calendly-container .close,
+html[dir="rtl"] .settings-container .close {
+    left: auto;
+    right: calc(50% + 32px);
 }
 
 
@@ -443,6 +470,15 @@ html[dir="rtl"] .settings {
     right: calc(50% + 32px);
 }
 
+/* The gear turns on hover, with the same motion as the privacy page's settings button */
+.settings .fa-gear {
+    transition: transform 0.3s ease-out;
+}
+
+.settings .icon-button:hover .fa-gear {
+    transform: rotate(60deg);
+}
+
 .info {
     display: block;
     position: absolute;
@@ -453,7 +489,24 @@ html[dir="rtl"] .settings {
 
 .info p {
     margin: 0;
-    font-size: 12px;
+    font-size: var(--small-font-size);
+}
+
+/* Links inside running text are underlined so they read as links */
+.feedback-consent p a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* A link in the navigation's small print: same size and color as the text around it,
+   instead of the big block links of the navigation menu */
+.navigation .info-link {
+    display: inline;
+    margin: 0;
+    font-size: var(--small-font-size);
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
 html[dir="rtl"] .info {
@@ -505,6 +558,10 @@ html[dir="rtl"] .feedback-icon {
     right: auto;
     transform: translateX(48px);
     left: 0;
+}
+
+.feedback-icon:focus-visible {
+    border-radius: 50%;
 }
 
 .feedback-icon .circle {
@@ -1154,6 +1211,11 @@ html[dir="rtl"] img.side {
 }
 
 .scroll-horizontally {
+    /* A button: fill the column like the div it replaced, without the browser's border */
+    width: 100%;
+    border: 0;
+    font: inherit;
+    cursor: pointer;
     max-width: 60px;
     font-size: 24px;
     color: var(--text-lightest-color);
@@ -1311,7 +1373,7 @@ html[lang="ar"] .service h5 {
     display: inline-block;
 }
 
-#contact a.copy {
+#contact .copy {
     margin: 0 16px;
     font-size: var(--big-font-size);
 }
@@ -1322,7 +1384,7 @@ html[lang="ar"] .service h5 {
     font-size: var(--small-font-size);
     border-radius: var(--border-radius-small);
     background-color: var(--text-dark-color);
-    color: var(--text-light-color);
+    color: var(--text-lightest-color);
     padding: 16px;
     z-index: 6;
 }
@@ -1581,10 +1643,222 @@ footer .social-links a {
     }
 
     html[dir="rtl"] .settings,
-    .navigation .close,
-    .experience-details-container .close,
-    .calendly-container .close,
-    .settings-container .close {
+    html[dir="rtl"] .navigation .close,
+    html[dir="rtl"] .experience-details-container .close,
+    html[dir="rtl"] .calendly-container .close,
+    html[dir="rtl"] .settings-container .close {
+        left: auto;
         right: 32px !important;
+    }
+}
+
+/*---------------------------------------
+       SHORT LANDSCAPE SCREENS
+-----------------------------------------*/
+/* Phones turned sideways: each section is one screen tall, only about 320-430px here, while the
+   rest of the styles assume a tall screen. So content is sized by the screen's height instead.
+   Portrait phones, tablets and desktops don't match this and are unaffected */
+@media (orientation: landscape) and (max-height: 500px) {
+    /* The hero logo is about twice as tall as it is wide, so its size follows the screen height */
+    .logo {
+        width: 40vh;
+    }
+
+    .logo h1 {
+        font-size: 12vh;
+        padding: 3vh 0;
+    }
+
+    .logo .bottom {
+        border-width: 4px;
+    }
+
+    .logo .bottom img {
+        max-width: 24vh;
+    }
+
+    section h2 {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+
+    section p {
+        font-size: 13px;
+        line-height: 1.6em;
+    }
+
+    /* A faded copy of the hero photo, behind the text; there's no room for it here */
+    section#about img.side {
+        display: none;
+    }
+
+    .button {
+        min-width: 0;
+        padding: 8px 20px;
+        margin-bottom: 8px;
+        font-size: 15px;
+    }
+
+    /* Client logos, in the carousel and in a client's details */
+    .experience-item img,
+    .experience-details img {
+        width: 28vh;
+        height: 28vh;
+    }
+
+    .service h5 {
+        font-size: 17px;
+        margin: 0;
+    }
+
+    #clients .hint,
+    #clients .download {
+        font-size: 13px;
+    }
+
+    #contact .email h5 {
+        font-size: 22px;
+    }
+
+    /* The footer normally slides up over the bottom of the contact section. A short screen has no
+       room for both, so here it follows that section instead, as one more short step down */
+    footer {
+        margin-top: 0;
+    }
+
+    section#contact {
+        padding-bottom: 0;
+    }
+
+    footer .social-links {
+        margin: 2.25rem 0 0.5rem;
+    }
+
+    footer .social-links a {
+        font-size: 1.75rem;
+    }
+
+    /* A smaller footer logo, still centred on the footer's top edge (top is minus half its height) */
+    footer .logo {
+        width: 56px;
+        font-size: 12px;
+        top: -32px;
+        right: calc(50% - 28px);
+    }
+
+    footer .logo .top,
+    footer .logo .bottom {
+        padding: 5px 0;
+        border-width: 3px;
+    }
+
+    /* Client details are taller than the screen here, so they scroll inside the panel, from the top
+       (centring would push the start out of reach), below the close button, which stays put */
+    .experience-details-container {
+        align-content: start;
+    }
+
+    .experience-details {
+        max-height: 100dvh;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding-top: 88px;
+        padding-bottom: 24px;
+    }
+}
+
+/*---------------------------------------
+       OVERLAYS
+-----------------------------------------*/
+/* While any side panel is open, js/overlay.js marks <html data-overlay>, and the page behind the
+   panels is locked, blurred and can't be clicked. Both html and body are locked: the page scrolls on
+   <html>, whose overflow-x: clip stops body's overflow from reaching the viewport */
+html[data-overlay],
+html[data-overlay] body {
+    overflow-y: hidden;
+}
+
+html[data-overlay] section,
+html[data-overlay] ul.screen.indicator,
+html[data-overlay] .menu-icon,
+html[data-overlay] .content a,
+html[data-overlay] .content button {
+    filter: blur(8px);
+}
+
+/* A panel opened over another blurs the one underneath: feedback over any side panel,
+   and settings over the navigation menu */
+html[data-overlay~="feedback"] .navigation,
+html[data-overlay~="feedback"] .settings-container,
+html[data-overlay~="feedback"] .experience-details-container,
+html[data-overlay~="feedback"] .calendly-container,
+html[data-overlay~="settings"] .navigation > * {
+    filter: blur(8px);
+}
+
+/* A click on these falls through to the page behind, which closes the open panel */
+html[data-overlay] .menu-icon,
+html[data-overlay] .content a,
+html[data-overlay] .content button,
+html[data-overlay] .experience-item img {
+    pointer-events: none;
+}
+
+/*---------------------------------------
+       PAGE TRANSITIONS
+-----------------------------------------*/
+/* Moving between the site and the privacy page. Going to it, the privacy page pushes in from the
+   reading end side while the site slides a little the other way and dims; coming back plays the
+   reverse. Each page styles its own arrival: these rules are the way back to the site,
+   css/privacy.css has the way in. Browsers without cross-document view transitions simply navigate */
+@media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+        navigation: auto;
+    }
+}
+
+/* 1 slides toward the right, -1 mirrors it for Arabic */
+:root {
+    --page-slide: 1;
+}
+
+html[dir="rtl"] {
+    --page-slide: -1;
+}
+
+::view-transition-old(root) {
+    /* The privacy page stays on top while it slides away */
+    z-index: 1;
+    animation: page-exit-to-end 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+::view-transition-new(root) {
+    animation: page-enter-from-start 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* The page coming forward moves the full width; the one behind it only part of the way, dimmed */
+@keyframes page-enter-from-end {
+    from {
+        transform: translateX(calc(var(--page-slide) * 100%));
+    }
+}
+
+@keyframes page-exit-to-end {
+    to {
+        transform: translateX(calc(var(--page-slide) * 100%));
+    }
+}
+
+@keyframes page-exit-to-start {
+    to {
+        transform: translateX(calc(var(--page-slide) * -30%));
+        opacity: 0.5;
+    }
+}
+
+@keyframes page-enter-from-start {
+    from {
+        transform: translateX(calc(var(--page-slide) * -30%));
+        opacity: 0.5;
     }
 }

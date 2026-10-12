@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Privacy · Yas Dle</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="What yasser-dlewati.github.io/me collects, why, and where it goes.">
+    <link rel="icon" href="./images/logo-2lines.png">
+    <link rel="canonical" href="https://yasser-dlewati.github.io/me/privacy.html">
+    <!-- Plain script in <head>: applies the language and theme before first paint -->
+    <script src="./js/privacy.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/barton" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/privacy.css">
+</head>
+
+<body>
+    <header class="privacy-header">
+        <a href="./index.html" class="privacy-home" aria-label="Yas Dle, back to the site">
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+            <div class="logo ignore-rtl">
+                <div class="top">YAS</div>
+                <div class="bottom">DLE</div>
+            </div>
+        </a>
+
+        <button type="button" class="privacy-settings-toggle" aria-expanded="false" aria-controls="privacySettings"
+            aria-label="Settings">
+            <i class="fa fa-gear" aria-hidden="true"></i>
+        </button>
+
+        <!-- Same rows as the main site's settings panel -->
+        <div class="privacy-settings" id="privacySettings" hidden>
+            <div class="setting-row">
+                <label for="language" class="form-check-label">
+                    <span data-lang="en">Language</span><span data-lang="ar">اللغة</span>
+                </label>
+                <select class="form-select" id="language">
+                    <option value="en">English</option>
+                    <option value="ar">Arabic</option>
+                </select>
+            </div>
+
+            <div class="setting-row">
+                <label for="darkModeSwitch" class="form-check-label">
+                    <span data-lang="en">Dark Mode</span><span data-lang="ar">الوضع الداكن</span>
+                </label>
+                <div class="form-check form-switch m-0">
+                    <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="privacy">
+        <article data-lang="en" lang="en">
+            <h1>Privacy</h1>
+            <p class="updated">Last updated 12 October 2026</p>
+
+            <p>This is a personal portfolio. It has no analytics, no advertising and no tracking cookies.
+                Nothing about you is collected unless you choose to send feedback. Here is exactly what
+                happens and where it goes.</p>
+
+            <h3>Feedback</h3>
+            <p>Before the feedback form appears, you're asked to agree to the following. If you don't, nothing
+                is sent. When you send feedback, these go with it:</p>
+            <ul>
+                <li><strong>Your message</strong>, as you typed it.</li>
+                <li><strong>Your IP address</strong>, looked up through
+                    <a href="https://www.ipify.org" target="_blank" rel="noopener">ipify</a>.</li>
+                <li><strong>A screenshot of the section you were viewing</strong>, so I can see what you
+                    saw. It's uploaded to <a href="https://cloudinary.com/privacy" target="_blank"
+                        rel="noopener">Cloudinary</a>.</li>
+                <li><strong>Your theme and language</strong> (light or dark, English or Arabic).</li>
+            </ul>
+            <p>All of this is saved in a Google Form that only I can see (see
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy
+                    policy</a>). If sending fails, your message is emailed to me through
+                <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank" rel="noopener">EmailJS</a>
+                so it isn't lost. I use it only to improve this website.</p>
+
+            <h3>Booking a session</h3>
+            <p>The scheduler is provided by Calendly. Its script loads with the page, and the scheduler itself
+                loads when you open it. Anything you enter there is handled by Calendly under
+                <a href="https://calendly.com/privacy" target="_blank" rel="noopener">its privacy policy</a>.</p>
+
+            <h3>Saved in your browser</h3>
+            <ul>
+                <li><strong>Settings</strong>: your theme, language, "show undergraduate experience" and
+                    "swipe through clients" choices, saved as soon as you change one. Turning off "Save settings
+                    locally" removes them, and only a note that you turned it off is kept, so they aren't saved
+                    again.</li>
+                <li><strong>Feedback consent</strong>: that you agreed to the terms above, so you're not asked
+                    again.</li>
+                <li><strong>Images</strong>: the site's own images are cached so repeat visits load faster.
+                    No personal data is involved.</li>
+            </ul>
+            <p>All of this stays on your device. You can clear it at any time from your browser's site data
+                settings.</p>
+
+            <h3>Third-party files</h3>
+            <p>Fonts, icons and libraries load from public content networks (cdnjs, jsDelivr and cdnfonts),
+                and the scheduler script from Calendly. Like any request on the web, these providers see your
+                IP address when your browser fetches the files.</p>
+
+            <h3>Your data</h3>
+            <p>To see or delete feedback you've sent, email me at
+                <a href="mailto:yasdle@outlook.com">yasdle@outlook.com</a>.</p>
+        </article>
+
+        <article data-lang="ar" lang="ar" dir="rtl">
+            <h1>الخصوصية</h1>
+            <p class="updated">آخر تحديث: 12 أكتوبر 2026</p>
+
+            <p>هذا موقع شخصي لعرض أعمالي. لا يستخدم أي أدوات تحليل أو إعلانات أو ملفات تعريف ارتباط للتتبع،
+                ولا يُجمع عنك أي شيء إلا إذا اخترت إرسال ملاحظاتك. إليك بالتحديد ما يحدث وإلى أين يذهب.</p>
+
+            <h3>الملاحظات</h3>
+            <p>قبل ظهور نموذج الملاحظات، يُطلب منك الموافقة على ما يلي. إن لم توافق، لا يُرسَل أي شيء.
+                عند إرسال ملاحظاتك، يُرسَل معها:</p>
+            <ul>
+                <li><strong>رسالتك</strong> كما كتبتها.</li>
+                <li><strong>عنوان IP الخاص بك</strong>، ويُحدَّد عبر خدمة
+                    <a href="https://www.ipify.org" target="_blank" rel="noopener">ipify</a>.</li>
+                <li><strong>لقطة شاشة للقسم الذي كنت تشاهده</strong>، لأرى ما رأيته، وتُرفَع إلى
+                    <a href="https://cloudinary.com/privacy" target="_blank" rel="noopener">Cloudinary</a>.</li>
+                <li><strong>الوضع واللغة</strong> (فاتح أو داكن، عربي أو إنجليزي).</li>
+            </ul>
+            <p>تُحفَظ هذه البيانات في نموذج Google لا يطّلع عليه أحد غيري (راجع
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">سياسة خصوصية
+                    Google</a>). وإذا فشل الإرسال، تصلني رسالتك بالبريد الإلكتروني عبر
+                <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank" rel="noopener">EmailJS</a>
+                حتى لا تضيع. أستخدمها فقط لتحسين هذا الموقع.</p>
+
+            <h3>حجز جلسة</h3>
+            <p>أداة الحجز مقدَّمة من Calendly. يُحمَّل البرنامج النصي الخاص بها مع الصفحة، وتُحمَّل أداة الحجز
+                نفسها عند فتحها. وأي بيانات تُدخلها هناك تتعامل معها Calendly وفق
+                <a href="https://calendly.com/privacy" target="_blank" rel="noopener">سياسة الخصوصية الخاصة
+                    بها</a>.</p>
+
+            <h3>ما يُحفَظ في متصفحك</h3>
+            <ul>
+                <li><strong>الإعدادات</strong>: الوضع واللغة وخيارا "عرض خبرات المرحلة الجامعية" و"التمرير بالسحب
+                    بين العملاء"، وتُحفَظ بمجرد أن تغيّر أيًّا منها. وإيقاف "حفظ الإعدادات محليًا" يحذفها، ولا يُحتفَظ إلا
+                    بملاحظة أنك أوقفته، حتى لا تُحفَظ مجددًا.</li>
+                <li><strong>الموافقة على الملاحظات</strong>: أنك وافقت على ما سبق، حتى لا يُطلب منك ذلك مجددًا.</li>
+                <li><strong>الصور</strong>: تُخزَّن صور الموقع مؤقتًا لتسريع الزيارات التالية، دون أي بيانات
+                    شخصية.</li>
+            </ul>
+            <p>تبقى كل هذه البيانات على جهازك، ويمكنك مسحها في أي وقت من إعدادات بيانات المواقع في متصفحك.</p>
+
+            <h3>ملفات من جهات خارجية</h3>
+            <p>تُحمَّل الخطوط والأيقونات والمكتبات من شبكات توزيع محتوى عامة (cdnjs وjsDelivr وcdnfonts)،
+                والبرنامج النصي لأداة الحجز من Calendly. وكما في أي طلب على الإنترنت، يرى هؤلاء المزوّدون عنوان IP
+                الخاص بك عند تحميل متصفحك لهذه الملفات.</p>
+
+            <h3>بياناتك</h3>
+            <p>للاطلاع على ملاحظات أرسلتها أو حذفها، راسلني على
+                <a href="mailto:yasdle@outlook.com" dir="ltr">yasdle@outlook.com</a>.</p>
+        </article>
+    </main>
+
+    <footer>
+        <div class="logo">
+            <div class="top">YAS</div>
+            <div class="bottom">DLE</div>
+        </div>
+        <div class="social-links">
+            <a href="https://www.facebook.com/y.dlewati" rel="noopener" class="fa-brands fa-facebook-square"></a>
+            <a href="https://www.linkedin.com/in/yasser-dlewati" rel="noopener" class="fa-brands fa-linkedin"></a>
+            <a href="https://www.github.com/yasser-dlewati" rel="noopener" class="fa-brands fa-github-square"></a>
+        </div>
+    </footer>
+</body>
+</html>

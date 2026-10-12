@@ -1,4 +1,5 @@
 "use strict";
+import { isPageLocked } from "./overlay.js";
 
 export const SECTION_STACK_OFFSET = 8;
 const WHEEL_QUIET_MS = 200;
@@ -73,7 +74,7 @@ function step(direction) {
 
 function shouldIgnore(target) {
   return (
-    document.body.style.overflowY === "hidden" ||
+    isPageLocked() ||
     (target instanceof Element && target.closest(IGNORED_AREAS) !== null)
   );
 }
@@ -118,6 +119,8 @@ function onTouchEnd(e) {
 function onKeyDown(e) {
   if (e.ctrlKey || e.metaKey || e.altKey || shouldIgnore(e.target)) return;
   if (e.target.closest?.("input, textarea, select, [contenteditable]")) return;
+  // Space presses a focused button; taking it for scrolling would make the button unusable by keyboard
+  if (e.key === " " && e.target.closest?.("button, summary, [role='button']")) return;
 
   const directions = {
     ArrowDown: 1,

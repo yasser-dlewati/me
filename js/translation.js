@@ -1,131 +1,8 @@
-import { resetClientsView } from "./clients.js";
-import { experienceStartDate, language, setExperienceDuration, clearClientDetailsCache } from "./common.js";
+import { resetClientsView, clearClientDetailsCache } from "./clients.js";
+import { experienceStartDate, setExperienceDuration } from "./experience.js";
 import { renderServices } from "./services.js";
 import { renderCharacteristics } from "./characteristics.js";
-
-// Language data object
-export const translations = {
-    en: {
-        top:{
-            navigation:"Top",
-            scroll: "Scroll down to know more..."
-        },
-        about:{
-            navigation:"About",
-            title: "about me",
-            description: `My name is Yasser, but you can call me Yas, a self tought software engineer with <span class="experience-duration"></span> of experience, passionate about stretching my mind with solving complicated problems, writing code and learning new stuff.
-            I worked in multiple companies vary in size from startups, SMEs to big enterprises, stepping up and climping up the ladder from a junior to a mid level and end up with a senior role, I also served as a team leader from a small portion of time. I have hands on experience with web, mobile and desktop development.`, 
-            services: "Check out my services",
-            session: "Schedule a session",         
-        },
-        clients:{
-            navigation:"Clients",
-            title: "where i left marks",
-            hint: "Use the navigation arrows to scroll through clients, and click on the client's logo to know more...",
-            hintSwipe: "Swipe left or right to browse clients, and click on the client's logo to know more...",
-            download: "Or simply download my resume from ",
-            here: "here",
-        },
-        services:{
-            navigation:"Services",
-            title: "Things I can do",
-        },
-        contact:{
-            navigation:"Contact",
-            title: "Say Hey!",
-            description: "Feel free to reach out for collaborations or just a friendly hello by dropping a message via.",
-            or: "Or simply",
-            copied:"Copied to clipboard!",
-            senEmail:"Send an email using preferred mail app",
-            copy:"Copy email",
-        },
-        navigation:{
-            designedBy: "Designed and Developed by YasDle",
-            rights:"All rights reserved © 2025",
-        },
-        settings:{
-            language:"Language",
-            en:"English",
-            ar:"Arabic",
-            darkMode:"Dark Mode",
-            undergraduate:"Show Undergraduate experience",
-            swipeClients:"Swipe through clients",
-            save:"Save settings locally",
-            hint: "By turning this feature on, you are saving the settings above to your browser local storage, and you will be able to retrieve it every time you visit this website unless you clear it.",
-        },
-        feedback:{
-            title:"your say!",
-            description:"Please share your thoughts, suggestions, or any issues you encountered while using my website. Your input helps me improve and provide a better experience for all visitors.",
-            placeholder:"Got a thought? Share it here...",
-            submit:"Submit Feedback",
-            inProgress:"Submitting your feedback...",
-            success:"Feedback sent successfully. Thank you!",
-            fail:"Failed to send feedback. Please try again later.",
-        }
-    },
-    ar: {
-        top:{
-            navigation:"البداية",
-            scroll: " قم بالتمرير لأسفل لمعرفة المزيد...",
-        },
-        about:{
-            navigation:"مــن أنــا",
-            title: "مــن أنــا",
-            description:'اسمي ياسر، أنا مهندس برمجيات حيث أني علمت نفسي بنفسي، أمتلك <span class="experience-duration"></span> من الخبرة، وشغوف بتحدّي عقلي من خلال حلّ المشكلات المعقّدة، وكتابة الأكواد، وتعلّم كل ما هو جديد. عملت في شركات متعددة الأحجام، بدءًا من الشركات الناشئة مرورًا بالمؤسسات المتوسطة وصولًا إلى الشركات الكبرى، حيث تنقلت في مسيرتي المهنية من مطوّر مبتدئ إلى مطوّر متوسط، ثم إلى دورٍ كبير المهندسين (Senior)، كما تولّيت قيادة فريق لفترة قصيرة. أمتلك خبرة عملية في تطوير تطبيقات الويب والهواتف المحمولة وسطح المكتب.',
-            services: "اطلع على خدماتي",
-            session: "احجز جلسة استشارية معي",
-        },
-        clients:{
-            navigation:"العملاء",
-            title: "أين تركت بصماتي",
-            hint: "استخدم أزرار التوجيه لتستطيع اللتمرير على العملاء، واضغط على شعار العميل لمعرفة المزيد...",
-            hintSwipe: "اسحب لليمين أو اليسار لتصفح العملاء، واضغط على شعار العميل لمعرفة المزيد...",
-            download: " أو ببساطة قم بتحميل سيرتي الذاتية من",
-            here: "هـــنــا",
-        },
-        services:{  
-            navigation:"الخدمات",
-            title: "خدماتي التي أقدمها",
-        },
-        contact:{
-            navigation:"تواصل معي",
-            title: "تواصل معي!",
-            description: "يسعدني تواصلك سواء للتعاون أو لمجرد التحية، يمكنك مراسلتي عبر ",
-            or: "أو ببساطة",
-            copied:"تم النسخ!",
-            senEmail:"أرسل بريد إلكتروني باستخدام تطبيق البريد المفضل لديك",
-            copy:"نسخ البريد الإلكتروني",
-        },
-        navigation:{
-            designedBy: '<p dir="rtl">  صُمّم وطُوّر من قبل  <span dir="ltr">YasDle</span>',
-                        rights:"كل الحقوق محفوظة © 2025",
-        },
-        settings:{
-            language:"اللغة",
-            en:"الانجليزية",
-            ar:"العربية",
-            darkMode:"الوضع الداكن",
-            undergraduate:"عرض خبرات المرحلة الجامعية",
-            swipeClients:"التمرير بالسحب بين العملاء",
-            save:"حفظ الإعدادات محليًا",
-            hint:"بتفعيل هذه الميزة، يتم حفظ الإعدادات المذكورة أعلاه في وحدة التخزين المحلية للمتصفح، وستتمكن من استعادتها في كل مرة تزور فيها هذا الموقع الإلكتروني ما لم تقم بمسحها.",
-        },
-        feedback:{
-            title:"أبدِ رأيك!",
-            description:" شارك أفكارك، اقتراحاتك، أو أي مشكلات واجهتها أثناء استخدام موقعي الإلكتروني. تساعدني ملاحظاتك في التحسين وتوفير تجربة أفضل لجميع الزوار.",
-            placeholder:"لديك فكرة؟ شاركها هنا...",
-            submit:"أرسل",
-            inProgress:"جاري إرسال ملاحظاتك...",
-            success:"تم إرسال ملاحظاتك بنجاح. شكرًا لك!",
-            fail:"فشل في إرسال الملاحظات. يرجى المحاولة مرة أخرى لاحقًا.",
-        }
-    },
-};
-
-// Helper function to get nested values
-export function getNestedValue(obj, key) {
-    return key.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : null), obj);
-}
+import { translations, getNestedValue } from "./i18n.js";
 
 // Function to switch language
 export function switchLanguage(lang) {
@@ -144,8 +21,10 @@ export function switchLanguage(lang) {
 
     const elements = document.querySelectorAll("[data-translate]");
     elements.forEach((el) => {
+        // A text field shows its placeholder, not its content, so only that gets translated
         if(el.id == "txtFeedback") {
-            txtFeedback.setAttribute("placeholder", getNestedValue(translations[language.value], txtFeedback.getAttribute("data-translate")));
+            el.setAttribute("placeholder", getNestedValue(translations[lang], el.getAttribute("data-translate")));
+            return;
         }
 
         const key = el.getAttribute("data-translate");
@@ -159,12 +38,15 @@ export function switchLanguage(lang) {
         }
     });
 
-    const titles = document.querySelectorAll("[data-title-translate]");
-    titles.forEach((el) => {
-        const key = el.getAttribute("data-title-translate");
-        let translation = getNestedValue(translations[lang], key);
-        el.setAttribute("title", translation)
-    })
+    // Attributes translate the same way: data-title-translate, data-label-translate (aria-label)
+    // and data-alt-translate (alt)
+    const attributes = { title: "data-title-translate", "aria-label": "data-label-translate", alt: "data-alt-translate" };
+    for (const [attribute, marker] of Object.entries(attributes)) {
+        document.querySelectorAll(`[${marker}]`).forEach((el) => {
+            const translation = getNestedValue(translations[lang], el.getAttribute(marker));
+            if (translation) el.setAttribute(attribute, translation);
+        });
+    }
 
     resetClientsView();
     clearClientDetailsCache();
@@ -172,8 +54,3 @@ export function switchLanguage(lang) {
     renderCharacteristics();
 }
 
-const languageSelection = document.querySelector("#language");
-languageSelection.addEventListener("change", function () {
-  const selectedLang = this.value;
-  switchLanguage(selectedLang);
-});
