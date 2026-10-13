@@ -1,6 +1,7 @@
 import { lockPage, unlockPage, showBusy, hideBusy } from "./overlay.js";
 
 import { t } from "./i18n.js";
+import { isMobileDevice } from "./clients.js";
 
 const txtFeedback = document.querySelector("#txtFeedback");
 const feedbackForm = document.querySelector("form.feedback");
@@ -214,6 +215,8 @@ async function sendFeedback(content) {
     );
     formData.append("entry.275842004", ip);
     formData.append("entry.1136156880", imageUrl);
+    // Must match the form's choices exactly, including their case
+    formData.append("entry.1110382472", isMobileDevice ? "yes" : "No");
 
     // Google Forms allows no CORS, so the response is opaque: only network failures
     // and timeouts can be detected here, not a rejection by the form itself
