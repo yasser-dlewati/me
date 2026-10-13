@@ -686,9 +686,7 @@ html[dir="rtl"] .feedback-icon {
     z-index: 999;
 }
 
-/* js/feedback.js sets its min-height to cover the whole feedback form, padding included */
 .notification {
-    box-sizing: border-box;
     border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
     background-color: var(--bg-light-color);
     font-size: 20px;
@@ -736,6 +734,12 @@ html[dir="rtl"] .feedback-icon {
 
 .notification.active {
     bottom: -8px;
+}
+
+@media (max-width: 767px) {
+    .notification.active {
+        bottom: 0px;
+    }
 }
 
 /*----------------------------------------
