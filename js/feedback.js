@@ -33,7 +33,8 @@ function showFeedbackStep() {
 }
 
 // Most visitors never send feedback, so its libraries load the first time they're needed
-const HTML2CANVAS_URL = "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
+// html2canvas-pro: a drop-in fork of html2canvas, which throws on modern colors such as color-mix()
+const HTML2CANVAS_URL = "https://cdn.jsdelivr.net/npm/html2canvas-pro@2.4.5/dist/html2canvas-pro.min.js";
 const EMAILJS_URL = "https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js";
 const EMAILJS_PUBLIC_KEY = "ONBs1kJm-53DoguLS"; // from the EmailJS dashboard
 const scriptLoads = new Map();
@@ -174,17 +175,28 @@ async function uploadScreenshot(base64) {
 }
 
 async function captureScreenshot() {
-  // Find the section that is currently visible at the viewport center
-  const centerX = window.innerWidth / 2;
+  // Find the section that is currently visible at the viewport center. By position, not
+  // elementFromPoint: the page is inert behind the open feedback form, so hit-testing skips it
   const centerY = window.innerHeight / 2;
-  const topSection = document
-    .elementFromPoint(centerX, centerY)
-    ?.closest("section");
+  const topSection = [...document.querySelectorAll("section")].find((section) => {
+    const rect = section.getBoundingClientRect();
+    return rect.top <= centerY && rect.bottom >= centerY;
+  });
   if (!topSection) return null;
 
   try {
     await loadScript(HTML2CANVAS_URL);
-    const canvas = await html2canvas(topSection, { scale: 1 });
+    const canvas = await html2canvas(topSection, {
+      scale: 1,
+      onclone: (clonedDocument) => {
+        // The page is blurred behind the open feedback form (OVERLAYS in css/main.css): unblur the copy
+        delete clonedDocument.documentElement.dataset.overlay;
+        // With letter-spacing, html2canvas draws each letter on its own, which breaks joined Arabic letters
+        const style = clonedDocument.createElement("style");
+        style.textContent = 'html[dir="rtl"] * { letter-spacing: normal !important; }';
+        clonedDocument.head.append(style);
+      },
+    });
     return canvas.toDataURL("image/png", 0.3);
   } catch (error) {
     console.log("Error capturing screenshot:", error);
@@ -228,6 +240,8 @@ async function sendFeedback(content) {
     });
     showNotification("success");
     feedbackForm.reset();
+    // reset() fires no input event, so disable the emptied form's button here
+    submitButton.disabled = true;
   } catch (error) {
     console.log(error);
     showNotification("error");
@@ -238,9 +252,6 @@ async function sendFeedback(content) {
 }
 
 export function showNotification(type) {
-  // The form grows with its content, so cover all of it rather than a fixed height
-  // (the notification sits 8px below the screen's bottom edge)
-  notificationBox.style.minHeight = feedbackForm.offsetHeight + 8 + "px";
   notificationBox.classList.add("active");
   message.innerHTML =
     type === "success"
