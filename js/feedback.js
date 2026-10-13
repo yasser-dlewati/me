@@ -238,6 +238,9 @@ async function sendFeedback(content) {
 }
 
 export function showNotification(type) {
+  // The form grows with its content, so cover all of it rather than a fixed height
+  // (the notification sits 8px below the screen's bottom edge)
+  notificationBox.style.minHeight = feedbackForm.offsetHeight + 8 + "px";
   notificationBox.classList.add("active");
   message.innerHTML =
     type === "success"
