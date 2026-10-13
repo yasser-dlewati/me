@@ -1,4 +1,4 @@
-import { lockPage, unlockPage } from "./overlay.js";
+import { lockPage, unlockPage, showBusy, hideBusy } from "./overlay.js";
 
 import { t } from "./i18n.js";
 
@@ -192,15 +192,7 @@ async function captureScreenshot() {
 }
 
 async function sendFeedback(content) {
-  const loadingOverlay = document.querySelector(".feedback .loading-overlay");
-  loadingOverlay.style.setProperty("display", "flex", "important");
-  document
-    .querySelectorAll(
-      "form.feedback *:not(.loading-overlay):not(.loading-overlay span)"
-    )
-    .forEach((el) => {
-      el.style.filter = "blur(8px)";
-    });
+  showBusy(feedbackForm);
   try {
     // Screenshot and IP are extras; the feedback is sent without them if either fails
     const screenshotBase64 = await captureScreenshot();
@@ -214,7 +206,7 @@ async function sendFeedback(content) {
     formData.append("entry.500212983", content);
     formData.append(
       "entry.1920882552",
-      document.body.getAttribute("data-theme") || "light"
+      document.documentElement.getAttribute("data-theme") || "light"
     );
     formData.append(
       "entry.1705496179",
@@ -238,12 +230,7 @@ async function sendFeedback(content) {
     showNotification("error");
     reportFailedFeedback(content, error);
   } finally {
-    document
-      .querySelectorAll("form.feedback *:not(.loading-overlay)")
-      .forEach((el) => {
-        el.style.filter = "";
-      });
-    loadingOverlay.style.display = "";
+    hideBusy(feedbackForm);
   }
 }
 

@@ -6,6 +6,9 @@
 // - closes the top panel when a click lands outside it.
 // - keeps keyboard focus and screen readers out of what can't be seen (inert): closed panels, which
 //   sit off-screen, and the page behind an open panel.
+// - marks a panel <... data-busy> while it works (sending feedback), so CSS can show its loading
+//   overlay and blur its contents, and makes it inert so it can't be used or closed by a click
+//   outside until the work ends.
 const openPanels = new Map();
 
 const PANELS = [".navigation", ".settings-container", ".experience-details-container", ".calendly-container", "form.feedback", ".notification"];
@@ -25,16 +28,27 @@ function sync() {
   });
 }
 
+function updateInert(panel) {
+  panel.inert = !panel.classList.contains("active") || "busy" in panel.dataset;
+}
+
 // Panels open and close by their "active" class, so follow that rather than every open/close function
 PANELS.forEach((selector) => {
   const panel = document.querySelector(selector);
   if (!panel) return;
-  const update = () => {
-    panel.inert = !panel.classList.contains("active");
-  };
-  update();
-  new MutationObserver(update).observe(panel, { attributes: true, attributeFilter: ["class"] });
+  updateInert(panel);
+  new MutationObserver(() => updateInert(panel)).observe(panel, { attributes: true, attributeFilter: ["class"] });
 });
+
+export function showBusy(panel) {
+  panel.dataset.busy = "";
+  updateInert(panel);
+}
+
+export function hideBusy(panel) {
+  delete panel.dataset.busy;
+  updateInert(panel);
+}
 
 // elements: what counts as inside the panel; close: called with the click event on a click outside them
 export function lockPage(panelName, { elements = [], close = null } = {}) {
@@ -71,6 +85,9 @@ document.addEventListener("click", (event) => {
   topAtClickStart = null;
   if (!top || !top.close || !startedOnSameTop) return;
   if (top.elements.some((element) => element?.contains(event.target))) return;
+  // A busy panel is inert, so a click on it lands on the page and would look like a click outside.
+  // It stays open until its work ends
+  if (top.elements.some((element) => element && "busy" in element.dataset)) return;
   top.close(event);
 });
 

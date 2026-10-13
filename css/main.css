@@ -1,7 +1,9 @@
 /*---------------------------------------
        GLOBAL VARIABLES
 -----------------------------------------*/
-:root {
+/* [data-theme="light"] lets an element opt back into the light palette inside dark mode (js/calendly.js) */
+:root,
+[data-theme="light"] {
     --bg-dark-color: hsl(0, 0%, 95%);
     --bg-color: hsl(0, 0%, 85%);
     --bg-light-color: hsl(0, 0%, 75%);
@@ -107,14 +109,12 @@ body {
     overscroll-behavior-y: none;
 }
 
-/* iOS Safari tints its status bar and toolbar from the root background. data-theme sits on body,
-   so html can't read the theme variables; these literals mirror --bg-dark-color */
+/* iOS Safari tints its status bar and toolbar from the root background */
 html {
-    background-color: hsl(0, 0%, 95%);
+    background-color: var(--bg-dark-color);
 }
 
-html:has(body[data-theme="dark"]) {
-    background-color: hsl(0, 0%, 20%);
+html[data-theme="dark"] {
     color-scheme: dark;
 }
 
@@ -151,9 +151,46 @@ h1 {
     font-weight: var(--font-weight-bold);
 }
 
+/* NEON GLOW: a soft halo in the text's own color, light in dark mode and faintly dark in light mode.
+   On headings, the logos, buttons and icons; js/neon.js makes them flicker now and then */
+:root {
+    --neon-strong: color-mix(in srgb, var(--text-darkest-color) 35%, transparent);
+    --neon-soft: color-mix(in srgb, var(--text-darkest-color) 20%, transparent);
+    --neon-text-glow: 0 0 24px var(--neon-strong), 0 0 24px var(--neon-soft);
+    --neon-icon-glow: 0 0 6px var(--neon-strong), 0 0 14px var(--neon-soft);
+    --neon-box-glow: 0 0 12px var(--neon-strong), 0 0 28px var(--neon-soft);
+}
+
 h2 {
     font-family: var(--h2-font-family);
     font-size: var(--h2-font-size);
+    text-shadow: var(--neon-text-glow);
+}
+
+.icon-button,
+.scroll-horizontally,
+footer .social-links a,
+#top .scroll {
+    text-shadow: var(--neon-icon-glow);
+}
+
+/* The logos glow as one shape: a glow on each half would also light the seam between them */
+.button,
+.logo {
+    box-shadow: var(--neon-box-glow);
+}
+
+.logo {
+    border-radius: var(--border-radius-large);
+}
+
+footer .logo {
+    border-radius: var(--border-radius-small);
+}
+
+/* The copy tooltip sits inside an icon button but is a label, not an icon */
+.copy-tooltip {
+    text-shadow: none;
 }
 
 h4 {
@@ -383,6 +420,7 @@ html[dir="rtl"] .navigation .links {
 
 /* Same motion as .reveal, driven by the menu opening/closing instead of scrolling */
 .navigation .links a {
+    text-shadow: var(--neon-text-glow);
     opacity: 0;
     transform: translateX(var(--reveal-offset));
     transition: opacity 0.4s ease-in, transform 0.4s ease-in;
@@ -443,8 +481,8 @@ html[dir="rtl"] .settings-item {
 .calendly-container .close,
 .settings-container .close {
     position: absolute;
-    top: 32px;
-    left: calc(50% + 32px);
+    top: 20px;
+    left: calc(50% + 20px);
     /* Above the panel's content, which is transformed and would otherwise paint over it */
     z-index: 1;
 }
@@ -454,20 +492,20 @@ html[dir="rtl"] .experience-details-container .close,
 html[dir="rtl"] .calendly-container .close,
 html[dir="rtl"] .settings-container .close {
     left: auto;
-    right: calc(50% + 32px);
+    right: calc(50% + 20px);
 }
 
 
 .settings {
     display: block;
     position: absolute;
-    left: calc(50% + 32px);
-    bottom: 32px;
+    left: calc(50% + 20px);
+    bottom: 20px;
 }
 
 html[dir="rtl"] .settings {
     left: auto;
-    right: calc(50% + 32px);
+    right: calc(50% + 20px);
 }
 
 /* The gear turns on hover, with the same motion as the privacy page's settings button */
@@ -482,8 +520,8 @@ html[dir="rtl"] .settings {
 .info {
     display: block;
     position: absolute;
-    bottom: 32px;
-    right: 32px;
+    bottom: 20px;
+    right: 20px;
     justify-items: end;
 }
 
@@ -511,7 +549,7 @@ html[dir="rtl"] .settings {
 
 html[dir="rtl"] .info {
     right: auto;
-    left: 32px;
+    left: 20px;
 }
 
 ul.indicator {
@@ -521,14 +559,14 @@ ul.indicator {
     gap: 12px;
     margin: auto;
     position: fixed;
-    right: 40px;
+    right: 20px;
     top: calc(50% - 40px);
     z-index: 7;
     align-items: center;
 }
 
 html[dir="rtl"] ul.indicator {
-    left: 40px;
+    left: 20px;
     right: auto;
 }
 
@@ -547,16 +585,16 @@ html[dir="rtl"] ul.indicator {
 
 .feedback-icon {
     position: fixed;
-    bottom: 26px;
+    bottom: 20px;
     z-index: 10;
-    transform: translateX(calc(100vw - 100px));
+    transform: translateX(calc(100vw - 80px));
     transition: transform 0.4s ease;
 
 }
 
 html[dir="rtl"] .feedback-icon {
     right: auto;
-    transform: translateX(48px);
+    transform: translateX(20px);
     left: 0;
 }
 
@@ -619,8 +657,22 @@ html[dir="rtl"] .feedback-icon {
     transition: bottom 0.4s ease-in-out;
 }
 
+/* The feedback panel grows with its content (the consent text runs several lines on a phone) instead
+   of overflowing a fixed height off the bottom of the screen. Past the screen's height it scrolls
+   inside itself, and its bottom padding clears the iPhone home indicator */
+.feedback {
+    height: auto;
+    min-height: 30dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: calc(32px + env(safe-area-inset-bottom));
+}
+
+/* Shown while sending: see OVERLAYS */
 .feedback .loading-overlay {
-    display: none !important;
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -629,7 +681,6 @@ html[dir="rtl"] .feedback-icon {
     background: rgba(0, 0, 0, 0.5);
     color: white;
     font-size: 24px;
-    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 999;
@@ -645,8 +696,8 @@ html[dir="rtl"] .feedback-icon {
 .feedback .close,
 .notification .close {
     position: absolute;
-    top: 32px;
-    left: 32px;
+    top: 20px;
+    left: 20px;
     font-size: 32px;
 }
 
@@ -763,9 +814,9 @@ html[dir="rtl"] .feedback-icon {
 
 .menu-icon {
     position: fixed;
-    top: calc(32px + var(--section-stack-top, 0px));
+    top: calc(20px + var(--section-stack-top, 0px));
     transition: top 0.4s ease-out;
-    left: 32px;
+    left: 20px;
     font-size: 32px;
     z-index: 7;
 }
@@ -782,12 +833,12 @@ html[dir="rtl"] .feedback-icon {
 
 html[dir="rtl"] .menu-icon {
     left: auto;
-    right: 32px;
+    right: 20px;
 }
 
 .scroll {
     position: absolute;
-    bottom: 2%;
+    bottom: 1%;
     right: calc(50% - 74px);
     font-size: 32px;
     text-align: center;
@@ -822,8 +873,7 @@ html[dir="rtl"] .menu-icon {
 -----------------------------------------*/
 
 /* Chips are small versions of .button.primary and flip with the theme like the buttons do.
-   Labels, icons, tooltips and motion ranges live in js/characteristics.js.
-   Declared on body (where data-theme sits) so the colors follow dark mode */
+   Labels, icons, tooltips and motion ranges live in js/characteristics.js */
 body {
     --trait-bg: var(--text-darkest-color);
     --trait-text: var(--text-lightest-color);
@@ -957,7 +1007,7 @@ body {
     }
 }
 
-/* Mobile: chips drift on bands above and below the logo (positioned by the script) */
+/* Mobile: chips orbit too, on rings that pass behind the logo's sides (positioned by the script) */
 @media (max-width: 767px) {
     /* Stretch the list to the full screen width around the logo and clip it there, so chips
        wrapping round off-screen never widen the page */
@@ -1389,6 +1439,12 @@ html[lang="ar"] .service h5 {
     z-index: 6;
 }
 
+/* Clipboard copy failed; dark red keeps white text readable in both themes */
+.copy-tooltip--error {
+    background-color: #b3261e;
+    color: #fff;
+}
+
 /*---------------------------------------
 FOOTER              
  -----------------------------------------*/
@@ -1802,6 +1858,16 @@ html[data-overlay] .content a,
 html[data-overlay] .content button,
 html[data-overlay] .experience-item img {
     pointer-events: none;
+}
+
+/* While feedback is sending, js/overlay.js marks the form <form data-busy> and makes it inert:
+   its loading overlay shows over the blurred form */
+form.feedback[data-busy] .loading-overlay {
+    display: flex;
+}
+
+form.feedback[data-busy] > :not(.loading-overlay) {
+    filter: blur(8px);
 }
 
 /*---------------------------------------

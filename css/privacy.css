@@ -1,11 +1,5 @@
 /* Privacy page. Builds on main.css for the theme colors, typography and footer */
 
-/* main.css keys the root background off body's theme; here the theme sits on html */
-html[data-theme="dark"] {
-    background-color: hsl(0, 0%, 20%);
-    color-scheme: dark;
-}
-
 /* Keep the footer at the bottom when the content is short */
 body {
     display: flex;

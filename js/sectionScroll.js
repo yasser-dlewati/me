@@ -1,7 +1,7 @@
 "use strict";
 import { isPageLocked } from "./overlay.js";
 
-export const SECTION_STACK_OFFSET = 8;
+export const SECTION_STACK_OFFSET = 4;
 const WHEEL_QUIET_MS = 200;
 const SWIPE_THRESHOLD = 50;
 const SCROLL_LOCK_FALLBACK_MS = 1000;

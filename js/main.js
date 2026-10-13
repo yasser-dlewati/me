@@ -6,6 +6,7 @@ import { feedbackIcon, initFeedback } from "./feedback.js";
 import { setSwipeMode, initClients, renderClients } from "./clients.js";
 import { initServices } from "./services.js";
 import { initTraits } from "./characteristics.js";
+import { initNeonFlicker } from "./neon.js";
 import { switchLanguage } from "./translation.js";
 import { t } from "./i18n.js";
 import { escapeHtml } from "./html.js";
@@ -204,18 +205,36 @@ function initPageControls() {
   });
 
   const copyButton = document.querySelector(".copy");
+  const copyTooltip = copyButton.querySelector(".copy-tooltip");
+  let copyTooltipTimer;
+  // Shows "Copied" or the failure message. The key goes on data-translate too, so a language
+  // switch while it is showing re-translates the same message rather than resetting it to "Copied"
+  function showCopyResult(succeeded) {
+    const key = succeeded ? "contact.copied" : "contact.copyFailed";
+    copyTooltip.setAttribute("data-translate", key);
+    copyTooltip.textContent = t(key);
+    copyTooltip.classList.toggle("copy-tooltip--error", !succeeded);
+    copyTooltip.style.display = "inline";
+
+    clearTimeout(copyTooltipTimer);
+    copyTooltipTimer = setTimeout(() => {
+      // Back to the stylesheet's display: none
+      copyTooltip.style.removeProperty("display");
+    }, succeeded ? 1500 : 4000); // longer for the error so it can be read
+  }
+
   copyButton.addEventListener("click", (e) => {
     e.preventDefault();
     const email = document.querySelector(".email h5").textContent.trim();
-    navigator.clipboard.writeText(email).then(() => {
-      const tooltip = copyButton.querySelector(".copy-tooltip");
-      tooltip.style.display = "inline";
-
-      setTimeout(() => {
-        // Back to the stylesheet's display: none
-        tooltip.style.removeProperty("display");
-      }, 1500);
-    });
+    // navigator.clipboard is undefined outside a secure context (plain http other than localhost)
+    if (!navigator.clipboard?.writeText) {
+      showCopyResult(false);
+      return;
+    }
+    navigator.clipboard.writeText(email).then(
+      () => showCopyResult(true),
+      () => showCopyResult(false)
+    );
   });
 
   topScrollDiv.addEventListener("click", function () {
@@ -233,7 +252,7 @@ function initPageControls() {
 
 // theme-color tints the browser bars on older iOS and Android; values mirror --bg-dark-color
 function applyTheme(theme) {
-  document.body.setAttribute("data-theme", theme);
+  document.documentElement.setAttribute("data-theme", theme);
   document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "dark" ? "#333333" : "#f2f2f2");
 }
 
@@ -297,6 +316,7 @@ function start() {
   trackCurrentSection();
 
   initPageControls();
+  initNeonFlicker();
 }
 
 start();

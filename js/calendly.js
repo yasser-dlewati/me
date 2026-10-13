@@ -7,10 +7,11 @@ const CALENDLY_URL = "https://calendly.com/yasdle/30min";
 let isCalendlyRendered = false;
 
 // Calendly only accepts 6-digit hex colors, so resolve the theme's CSS variables through the browser.
-// Always the light palette (read outside <body>, which carries data-theme); dark mode inverts the
+// Always the light palette (the probe is marked data-theme="light"); dark mode inverts the
 // iframe in CSS, so it works on any Calendly plan and follows theme toggles without a reload.
 function themeColorAsHex(variableName) {
   const probe = document.createElement("span");
+  probe.dataset.theme = "light";
   probe.style.color = `var(${variableName})`;
   document.documentElement.appendChild(probe);
   const [r, g, b] = getComputedStyle(probe).color.match(/\d+/g).map(Number);
