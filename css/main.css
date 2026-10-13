@@ -1523,6 +1523,64 @@ footer .social-links a {
     transform: translateX(var(--client-details-translate-x));
 }
 
+/* While loading (js/calendly.js), the frame and its own loaders stay hidden behind a copy of
+   Calendly's bouncing-dots spinner, centered in the visible half of the panel */
+.calendly-content {
+    position: relative;
+}
+
+.calendly-content .calendly-spinner,
+.calendly-loader {
+    display: none;
+}
+
+/* Not visibility: hidden, as Calendly then never finishes rendering or posts its "viewed" event */
+.calendly-content.loading iframe {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.calendly-content.loading .calendly-loader {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+.calendly-loader > div {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 0 2px;
+    border-radius: 50%;
+    background-color: var(--text-dark-color);
+    vertical-align: middle;
+    animation: calendly-loader-bounce 1.4s ease-in-out infinite both;
+}
+
+.calendly-loader > div:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.calendly-loader > div:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes calendly-loader-bounce {
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+}
+
 @media (max-width: 767px) {
     html[dir="rtl"] .settings-item {
         margin-right: auto;

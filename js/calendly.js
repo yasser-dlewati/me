@@ -49,13 +49,33 @@ export function openCalendly() {
   // Render once and keep it, so reopening doesn't reload the scheduler
   if (!isCalendlyRendered) {
     isCalendlyRendered = true;
+    const content = panel.querySelector(".calendly-content");
+    showSpinnerUntilLoaded(content);
     whenCalendlyReady(() => {
       Calendly.initInlineWidget({
         url: getCalendlyUrl(),
-        parentElement: panel.querySelector(".calendly-content"),
+        parentElement: content,
       });
     });
   }
+}
+
+// Calendly posts "calendly.event_type_viewed" once the scheduler is on screen; the timeout
+// reveals the frame anyway if that message never comes (e.g. Calendly shows an error page)
+function showSpinnerUntilLoaded(content) {
+  content.classList.add("loading");
+  const reveal = () => {
+    content.classList.remove("loading");
+    window.removeEventListener("message", onMessage);
+    clearTimeout(fallback);
+  };
+  const onMessage = (event) => {
+    if (event.origin === "https://calendly.com" && event.data?.event === "calendly.event_type_viewed") {
+      reveal();
+    }
+  };
+  const fallback = setTimeout(reveal, 15000);
+  window.addEventListener("message", onMessage);
 }
 
 export function closeCalendly() {
