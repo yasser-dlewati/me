@@ -21,7 +21,7 @@ export const characteristics = [
     icon: "fa-car",
   },
   {
-    id: "self-taught",
+    id: "diy",
     icon: "fa-book-open",
   },
   {
@@ -39,6 +39,18 @@ export const characteristics = [
   {
     id: "learner",
     icon: "fa-seedling",
+  },
+  {
+    id: "tech-enthusiast",
+    icon: "fa-microchip",
+  },
+  {
+    id: "marvel",
+    icon: "fa-mask",
+  },
+  {
+    id: "millennial",
+    icon: "fa-hourglass-half",
   },
 ];
 

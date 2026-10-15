@@ -190,35 +190,43 @@ export const translations = {
         traitList:{
             "engineer":{
                 label:"Software engineer",
-                tooltip:"Placeholder: what I build and how I like to work.",
+                tooltip:"I found myself passionate about building software and enjoying writing code, and learning new stuff along the way.",
             },
             "dad":{
-                label:"Dad",
-                tooltip:"Placeholder: a line about family life.",
+                label:"Loving Dad",
+                tooltip:"I am a blessed father who loves playing with my kids and nagging my wife.",
             },
             "cars":{
-                label:"Car enthusiast",
-                tooltip:"Placeholder: the cars I love and why.",
+                label:"Car lover",
+                tooltip:"Since my childhood, I have been fascinated by cars and their engineering.",
             },
-            "self-taught":{
-                label:"Self-taught",
-                tooltip:"Placeholder: how I taught myself to code.",
+            "diy":{
+                label:"DIYer",
+                tooltip:"I don't call a plumber for a leaking tap, I don't call a mechanic for a flat tire, I do it myself.",
             },
             "team-lead":{
-                label:"Team lead",
-                tooltip:"Placeholder: what leading a team taught me.",
-            },
-            "mentor":{
-                label:"Mentor",
-                tooltip:"Placeholder: who I mentor and how.",
+                label:"Mentor & lead",
+                tooltip:"Leadership and mentoring are among the most valuable skills I've developed in my career, and they're the most rewarding part of my day-to-day work.",
             },
             "problem-solver":{
                 label:"Problem solver",
-                tooltip:"Placeholder: the kind of problems I enjoy.",
+                tooltip:"whether it's a technical problem, a business problem, or a Sudoku puzzle, I enjoy finding solutions and making things work.",
             },
             "learner":{
-                label:"Lifelong learner",
-                tooltip:"Placeholder: what I'm learning right now.",
+                label:"Lifelong Self-taught Learner",
+                tooltip:"\"The day you stop learning is the day you die.\"",
+            },
+            "tech-enthusiast":{
+                label:"Tech enthusiast",
+                tooltip:"With the rapid pace of technological advancement, I am always eager to explore and learn about the latest tools, frameworks, and trends in the tech world.",
+            },
+            "marvel":{
+                label:"Marvel fan",
+                tooltip:"I... am... Iron Man!",
+            },
+            "millennial":{
+                label:"Millennial",
+                tooltip:"The best of both worlds: I grew up in the analog world and now I live in the digital one.",
             },
         },
     },
@@ -392,35 +400,43 @@ export const translations = {
         traitList:{
             "engineer":{
                 label:"مهندس برمجيات",
-                tooltip:"نص مؤقت: ما أبنيه وطريقتي في العمل.",
+                tooltip:"وجدت شغفي في بناء البرمجيات والاستمتاع بكتابة الأكواد، وتعلّم كل ما هو جديد على طول الطريق.",
             },
             "dad":{
-                label:"أب",
-                tooltip:"نص مؤقت: سطر عن الحياة العائلية.",
+                label:"أب محب",
+                tooltip:"أنا أب محظوظ، أحب اللعب مع أطفالي ومشاكسة زوجتي.",
             },
             "cars":{
                 label:"عاشق للسيارات",
-                tooltip:"نص مؤقت: السيارات التي أحبها ولماذا.",
+                tooltip:"منذ طفولتي وأنا مفتون بالسيارات وهندستها.",
             },
-            "self-taught":{
-                label:"تعلّم ذاتي",
-                tooltip:"نص مؤقت: كيف علّمت نفسي البرمجة.",
+            "diy":{
+                label:"أنجز اموري بنفسي",
+                tooltip:"لا أتصل بالسبّاك لإصلاح صنبور يسرّب، ولا بالميكانيكي لإصلاح إطار مثقوب، بل أقوم بذلك بنفسي.",
             },
             "team-lead":{
-                label:"قائد فريق",
-                tooltip:"نص مؤقت: ما تعلمته من قيادة الفريق.",
-            },
-            "mentor":{
-                label:"مرشد",
-                tooltip:"نص مؤقت: من أرشدهم وكيف.",
+                label:"قائد فريق ومرشد",
+                tooltip:"القيادة والإرشاد من أثمن المهارات التي اكتسبتها في مسيرتي المهنية، وهما الجزء الأكثر متعة في عملي اليومي.",
             },
             "problem-solver":{
                 label:"محب لحل المشكلات",
-                tooltip:"نص مؤقت: نوع المشكلات التي أستمتع بحلها.",
+                tooltip:"سواء كانت مشكلة تقنية، أو مشكلة في العمل، أو لغز سودوكو، أستمتع بإيجاد الحلول وجعل الأمور تعمل.",
             },
             "learner":{
-                label:"متعلم دائم",
-                tooltip:"نص مؤقت: ما أتعلمه حاليًا.",
+                label:"متعلم دائم بنفسه",
+                tooltip:"\"اليوم الذي تتوقف فيه عن التعلّم هو اليوم الذي تموت فيه.\"",
+            },
+            "tech-enthusiast":{
+                label:"شغوف بالتقنية",
+                tooltip:"مع التسارع الكبير في التطور التقني، أحرص دائمًا على استكشاف أحدث الأدوات وأطر العمل والتوجهات في عالم التقنية والتعرّف عليها.",
+            },
+            "marvel":{
+                label:"معجب بمارفل",
+                tooltip:"I... am... Iron Man!",
+            },
+            "millennial":{
+                label:"من جيل الألفية",
+                tooltip:"أفضل ما في العالمين: نشأت في العالم التناظري، وأعيش اليوم في العالم الرقمي.",
             },
         },
     },
