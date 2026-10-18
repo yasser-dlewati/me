@@ -4,8 +4,7 @@ import { t } from "./i18n.js";
 
 // Edit the chips here: icon (Font Awesome solid icon name) and order. Their label and tooltip text
 // live in js/i18n.js under traitList, keyed by id.
-// Order is priority: wide screens and phones show all, tablets the first five; the first chip
-// gets the innermost ring.
+// Which chips show, how many and where is random; tabbing through the list brings each one out in turn.
 // Colors and sizes live in css/main.css under CHARACTERISTICS; motion is tuned in MOTION below
 export const characteristics = [
   {
@@ -29,10 +28,6 @@ export const characteristics = [
     icon: "fa-people-group",
   },
   {
-    id: "mentor",
-    icon: "fa-chalkboard-user",
-  },
-  {
     id: "problem-solver",
     icon: "fa-puzzle-piece",
   },
@@ -54,42 +49,39 @@ export const characteristics = [
   },
 ];
 
-// Motion tuning. The chips orbit like planets: every chip has its own ring, all rings share
-// the logo's center and are nested from inner to outer, so routes never cross. Each ring has
-// its own speed (inner ones faster), plus a light random wander and speed drift on top
+// Motion tuning. The chips play peek-a-boo with the logo: every so often a chip peeks out from
+// behind a random point of one of its edges, stays out for a moment, then dives back in. They
+// come out on their own clocks, so several are out at once. Every chip gets a turn (in random
+// order) before any repeats.
+// Ranges are [min, max] and a fresh random value is picked each time
 const MOTION = {
-  period: [24, 60],           // seconds per lap, innermost ring to outermost
-  periodJitter: 0.08,         // random +/- share on each lap time, so speeds aren't a neat series
-  reverseChance: 0,           // share of chips orbiting counter-clockwise (0 = all the same way)
-  speedDrift: 0.15,           // how much each chip speeds up / slows down over time (0-1)
-  innerHeight: 0.6,           // innermost ring's height relative to the logo; lower rings pass behind it
-  wander: 10,                 // max px of random drift off the ring (kept under half the ring spacing)
-  narrowWidth: [0.8, 1],      // phones: ring widths, as a share of the widest that stays on screen
-  narrowSideBoost: 4,         // phones: extra speed while passing behind the logo's sides, so more
-                              // of each lap is spent in view above and below it (0 = even speed)
-  introDelay: 1.2,            // s before the first chip appears (after the photo fades in)
-  stagger: 0.1,               // s between chips appearing
+  hold: [2, 3],               // s a chip stays out (it also stays while hovered or focused)
+  pause: [0.4, 1.2],          // s between one chip peeking out and the next
+  maxOut: 4,                  // most chips out at once
+  peek: [6, 14],              // px gap between a chip and the logo's edge
+  emerge: [0.45, 0.7],        // s to travel out, scaled by how far the spot is from the logo
+  dive: 0.5,                  // s to travel back in
+  lingerAfterHover: 1,        // s a chip stays once the pointer or focus leaves it, if its time is up
+  tilt: [3, 8],               // degrees a chip is tilted at its spot, randomly left or right
+  introDelay: 1.2,            // s before the first round (after the photo fades in)
 };
 
-// Page chrome the chips fade away from, so they never sit on top of it
+// Page chrome the chips never land on
 const PROTECTED = [".menu-icon", "ul.screen.indicator", "#top .scroll", ".feedback-icon .circle"];
 const EDGE_MARGIN = 12;
-const CHROME_MARGIN = 40;
+const CHROME_MARGIN = 32;
+// Kept under MOTION.peek, so the closest spots still count as clear of the logo
+const LOGO_MARGIN = 4;
+const CHIP_GAP = 16;
+const SPOT_TRIES = 60;
 
 const rand = ([min, max]) => min + Math.random() * (max - min);
-const TAU = Math.PI * 2;
 
-// Orbit/wander parameters survive re-renders (language switch), so chips don't jump
-const motionById = new Map();
 let chips = [];
-let geometry = null;
-// Clicking the logo hides the chips; they fade back in one after another when shown again
+let roundTimer = 0;
+let rendered = false;
+// Clicking the logo hides the chips: those out dive back in and no new rounds start until shown again
 let traitsHidden = false;
-let showFrom = MOTION.introDelay;
-let lastElapsed = 0;
-let lastFrame = 0;
-let startTime = 0;
-let frameRequested = false;
 
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -97,9 +89,17 @@ export function renderCharacteristics() {
   const list = document.querySelector("#top .characteristics");
   if (!list) return;
 
+  // Re-rendering (language switch) starts over: drop the old chips' animations and timers
+  clearTimeout(roundTimer);
+  chips.forEach((chip) => {
+    clearTimeout(chip.timer);
+    chip.anim?.cancel();
+  });
+  queue = [];
+
   list.setAttribute("aria-label", t("traits.list"));
-  list.innerHTML = characteristics.map((trait, index) => `
-    <li class="trait" style="--i: ${index};" data-id="${escapeHtml(trait.id)}">
+  list.innerHTML = characteristics.map((trait) => `
+    <li class="trait" data-id="${escapeHtml(trait.id)}">
       <div class="trait-float">
         <button type="button" class="trait-chip" aria-describedby="trait-tip-${escapeHtml(trait.id)}">
           <i class="trait-icon fa-solid ${escapeHtml(trait.icon)}" aria-hidden="true"></i>
@@ -115,18 +115,31 @@ export function renderCharacteristics() {
       li,
       float: li.querySelector(".trait-float"),
       button: li.querySelector(".trait-chip"),
-      motion: motionById.get(li.dataset.id),
+      // "in" (hidden in the logo), "out" (travelling out or showing) or "diving" (travelling back in)
+      state: "in",
+      spot: null,
+      anim: null,
+      timer: 0,
+      timeUp: false,
       paused: false,
-      opacity: 0,
-      sepX: 0,
-      sepY: 0,
     };
 
     const button = chip.button;
-    const hold = () => { chip.paused = true; placeTooltip(chip); };
+    const hold = () => {
+      if (traitsHidden) return;
+      chip.paused = true;
+      // Tabbing to a chip still hidden in the logo brings it out
+      if (chip.state !== "out") emerge(chip, { force: true });
+      placeTooltip(chip);
+    };
     const release = () => {
       chip.paused = li.matches(":hover") || li.contains(document.activeElement);
-      if (!chip.paused) button.classList.remove("tooltip-dismissed");
+      if (chip.paused) return;
+      button.classList.remove("tooltip-dismissed");
+      if (chip.state === "out" && chip.timeUp) {
+        clearTimeout(chip.timer);
+        chip.timer = setTimeout(() => { if (!chip.paused) dive(chip); }, MOTION.lingerAfterHover * 1000);
+      }
     };
     li.addEventListener("mouseenter", hold);
     li.addEventListener("focusin", hold);
@@ -137,8 +150,8 @@ export function renderCharacteristics() {
 
   setupToggle();
   updateToggle();
-  measure();
-  requestFrame();
+  scheduleRound(rendered ? 0.5 : MOTION.introDelay);
+  rendered = true;
 }
 
 // The logo holds the page's h1, so it isn't turned into a button itself (that would hide the
@@ -169,12 +182,15 @@ function setupToggle() {
 function toggleTraits() {
   traitsHidden = !traitsHidden;
   if (traitsHidden) {
-    chips.forEach((chip) => { chip.paused = false; });
+    clearTimeout(roundTimer);
+    chips.forEach((chip) => {
+      chip.paused = false;
+      if (chip.state === "out") dive(chip);
+    });
   } else {
-    showFrom = lastElapsed;
+    scheduleRound(0.3);
   }
   updateToggle();
-  requestFrame();
 }
 
 function updateToggle() {
@@ -194,319 +210,189 @@ function updateToggle() {
 
 // Open the tooltip toward the middle of the screen, whichever side of it the chip is on
 function placeTooltip(chip) {
-  const rect = chip.float.getBoundingClientRect();
-  chip.li.classList.toggle("tip-up", rect.top + rect.height / 2 > window.innerHeight / 2);
-  chip.li.classList.toggle("tip-end", rect.left + rect.width / 2 > window.innerWidth / 2);
+  if (!chip.spot) return;
+  const { rect } = chip.spot;
+  chip.li.classList.toggle("tip-up", (rect.top + rect.bottom) / 2 > window.innerHeight / 2);
+  chip.li.classList.toggle("tip-end", (rect.left + rect.right) / 2 > window.innerWidth / 2);
 }
 
-function measure() {
-  const logo = document.querySelector("#top .logo");
-  if (!logo) return;
-  const box = logo.getBoundingClientRect();
-
-  geometry = {
-    cx: box.left + box.width / 2,
-    cy: box.top + box.height / 2,
-    halfW: logo.offsetWidth / 2,
-    halfH: logo.offsetHeight / 2,
-    vw: window.innerWidth,
-    vh: window.innerHeight,
-    protected: PROTECTED.map((selector) => document.querySelector(selector)?.getBoundingClientRect())
-      .filter((rect) => rect && rect.width > 0),
-  };
-
-  const visible = chips.filter((chip) => chip.li.offsetParent !== null);
-  visible.forEach((chip) => {
-    chip.w = chip.float.offsetWidth;
-    chip.h = chip.float.offsetHeight;
-  });
-  // Phones: no room for rings beside the logo (it spans nearly the whole width)
-  const widest = Math.max(0, ...visible.map((chip) => chip.w));
-  geometry.narrow = geometry.vw / 2 - widest / 2 - 56 < geometry.halfW + widest / 2 + 64;
-  visible.forEach((chip, index) => {
-    chip.motion ??= createMotion(index);
-    motionById.set(chip.li.dataset.id, chip.motion);
-    fitOrbit(chip, index, visible.length);
-  });
-  if (geometry.narrow) geometry.zones = freeZones(visible);
+function scheduleRound(delay) {
+  clearTimeout(roundTimer);
+  roundTimer = setTimeout(round, delay * 1000);
 }
 
-// The free space on a phone, for chips without motion (placeStill): the strip between the menu
-// button and the logo, and the strip between the logo and the scroll cue when the phone is tall
-// enough. Values are ranges for a chip's center
-function freeZones(visible) {
-  const { cy, halfH, vh } = geometry;
-  const rectOf = (selector) => {
-    const rect = document.querySelector(selector)?.getBoundingClientRect();
-    return rect && rect.height > 0 ? rect : null;
-  };
-  const half = Math.max(22, ...visible.map((chip) => chip.h / 2));
-  // Both only appear after the intro, so fall back to where they will be
-  const menuBottom = rectOf(".menu-icon")?.bottom ?? 72;
-  const cueTop = (rectOf("#top .scroll")?.top ?? vh * 0.98 - 96) - 25; // it bounces up ~25px
+// One round: the next chip in line peeks out, unless enough are out already. Rounds keep
+// coming whether or not the earlier chips are back in
+function round() {
+  if (traitsHidden) return;
+  scheduleRound(rand(MOTION.pause));
+  // Sections stack over the hero, so wait while it's covered or the tab is in the background
+  if (window.scrollY >= window.innerHeight || document.hidden) return;
+  if (chips.filter((chip) => chip.state !== "in").length >= MOTION.maxOut) return;
 
-  const topFrom = menuBottom + 8 + half;
-  // Very short phones: no clear room above, so the top row grazes the logo's top edge
-  const top = [topFrom, Math.max(topFrom, cy - halfH - 8 - half)];
-  const bottomFrom = cy + halfH + 8 + half;
-  const bottomTo = cueTop - 8 - half;
-  const bottom = bottomTo >= bottomFrom ? [bottomFrom, bottomTo] : null;
-  return { top, bottom };
-}
-
-function createMotion(index) {
-  const wave = () => ({ f: rand([0.15, 0.6]), p: rand([0, TAU]) });
-  return {
-    // Golden-angle start positions keep the chips spread out around the logo
-    angle: index * 2.39996 + rand([-0.2, 0.2]),
-    direction: Math.random() < MOTION.reverseChance ? -1 : 1,
-    periodJitter: 1 + rand([-1, 1]) * MOTION.periodJitter,
-    time: 0,
-    // Incommensurate sine waves read as random drift rather than a repeating swing
-    waves: [wave(), wave(), wave(), wave(), wave()],
-  };
-}
-
-// Ring sizes run evenly from just outside the logo to the edge of the screen, and lap times
-// from fast to slow, so every chip has its own track and its own speed
-function fitOrbit(chip, ring, rings) {
-  const { halfW, halfH, vw, vh } = geometry;
-  const m = chip.motion;
-  const t = rings > 1 ? ring / (rings - 1) : 0.5;
-  const lerp = (from, to) => from + (to - from) * t;
-
-  let innerRx, outerRx, innerRy;
-  if (geometry.narrow) {
-    // Phones: rings reach out to the screen's sides, where chips slip behind the logo, and fan out
-    // above and below it instead, from just clear of the logo to the screen's top and bottom
-    const widestRx = vw / 2 - chip.w / 2 - EDGE_MARGIN;
-    [innerRx, outerRx] = MOTION.narrowWidth.map((share) => widestRx * share);
-    // The innermost ring grazes the logo's top and bottom edges, chips half tucked behind it
-    innerRy = halfH + 8;
-  } else {
-    innerRx = halfW + chip.w / 2 + 24;
-    outerRx = Math.max(innerRx, vw / 2 - chip.w / 2 - 56);
-    innerRy = halfH * MOTION.innerHeight;
+  // Try the chips in line until one finds room; if none does, the next round tries again
+  for (let tries = chips.length; tries > 0; tries--) {
+    const chip = nextInLine();
+    if (chip && chip.state === "in" && chip.li.offsetParent !== null && emerge(chip)) return;
   }
-  // Extra room at the top and bottom: the menu button sits above and the next section peeks in below
-  const outerRy = Math.max(innerRy, vh / 2 - chip.h / 2 - 48);
-
-  m.rx = lerp(innerRx, outerRx);
-  m.ry = lerp(innerRy, outerRy);
-  m.speed = (m.direction * TAU) / (lerp(...MOTION.period) * m.periodJitter);
-  // On phones the rings are spread out vertically only
-  const spread = geometry.narrow ? outerRy - innerRy : Math.min(outerRx - innerRx, outerRy - innerRy + 40);
-  const spacing = rings > 1 ? spread / (rings - 1) : MOTION.wander * 2;
-  m.wander = Math.min(MOTION.wander, spacing / 2);
 }
 
-function requestFrame() {
-  if (frameRequested) return;
-  frameRequested = true;
-  requestAnimationFrame(frame);
+// A shuffled queue of the chips, refilled once everyone has had a turn
+let queue = [];
+function nextInLine() {
+  if (queue.length === 0) {
+    queue = [...chips];
+    shuffle(queue);
+  }
+  return queue.shift();
 }
 
-function frame(now) {
-  frameRequested = false;
-  if (!geometry) return;
-  startTime ||= now;
-  const dt = Math.min((now - (lastFrame || now)) / 1000, 0.05);
-  lastFrame = now;
-  const elapsed = (now - startTime) / 1000;
-  lastElapsed = elapsed;
+function shuffle(items) {
+  for (let i = items.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+}
+
+// A random spot on screen, clear of the logo, the page chrome and the other chips that are out.
+// Returns its offset from the logo's center (where the chips sit while hidden)
+function findSpot(chip, force) {
+  const logo = document.querySelector("#top .logo")?.getBoundingClientRect();
+  if (!logo) return null;
+  const cx = logo.left + logo.width / 2;
+  const cy = logo.top + logo.height / 2;
+  const w = chip.float.offsetWidth;
+  const h = chip.float.offsetHeight;
+  const vw = document.documentElement.clientWidth;
+  const vh = window.innerHeight;
+
+  const grow = (r, by, extraTop = 0) => ({
+    left: r.left - by, right: r.right + by, top: r.top - by - extraTop, bottom: r.bottom + by,
+  });
+  const logoArea = grow(logo, LOGO_MARGIN);
+  const chrome = PROTECTED.map((selector) => document.querySelector(selector)?.getBoundingClientRect())
+    .filter((r) => r && r.width > 0)
+    // The scroll cue bounces up, so everything gets a little extra room above
+    .map((r) => grow(r, CHROME_MARGIN, 24));
+  const outChips = chips.filter((other) => other !== chip && other.spot && other.state !== "in");
+  const others = outChips.map((other) => grow(other.spot.rect, CHIP_GAP));
+  const overlaps = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+  const spotAt = (left, top, side) => ({
+    side,
+    x: left + w / 2 - cx,
+    y: top + h / 2 - cy,
+    rotate: rand(MOTION.tilt) * (Math.random() < 0.5 ? -1 : 1),
+    rect: { left, top, right: left + w, bottom: top + h },
+  });
+
+  // Spots hug the logo: just past a random point of one of its edges. Each edge holds one chip
+  // at a time (until that chip is fully back in), so the most out at once is one per side
+  const taken = new Set(outChips.map((other) => other.spot.side));
+  const sides = ["top", "bottom", "left", "right"].filter((side) => !taken.has(side));
+  if (sides.length === 0 && !force) return null;
+  const candidate = () => {
+    const gap = rand(MOTION.peek);
+    const along = (from, to) => rand([from, to]);
+    switch (sides[Math.floor(Math.random() * sides.length)]) {
+      case "top": return spotAt(along(logo.left - w / 2, logo.right - w / 2), logo.top - gap - h, "top");
+      case "bottom": return spotAt(along(logo.left - w / 2, logo.right - w / 2), logo.bottom + gap, "bottom");
+      case "left": return spotAt(logo.left - gap - w, along(logo.top, logo.bottom - h), "left");
+      default: return spotAt(logo.right + gap, along(logo.top, logo.bottom - h), "right");
+    }
+  };
+
+  for (let i = 0; i < SPOT_TRIES && sides.length > 0; i++) {
+    const spot = candidate();
+    const { rect } = spot;
+    if (rect.left < EDGE_MARGIN || rect.top < EDGE_MARGIN || rect.right > vw - EDGE_MARGIN || rect.bottom > vh - EDGE_MARGIN) continue;
+    if ([logoArea, ...chrome, ...others].some((r) => overlaps(spot.rect, r))) continue;
+    return spot;
+  }
+  // A chip brought out by the keyboard has to show somewhere: just below the logo
+  return force ? spotAt(cx - w / 2, Math.min(logo.bottom + LOGO_MARGIN, vh - EDGE_MARGIN - h), "bottom") : null;
+}
+
+const hiddenKey = { transform: "translate(0px, 0px) translate(-50%, -50%) rotate(0deg) scale(0.3)", opacity: 0, filter: "blur(4px)" };
+const spotKey = (spot) => ({
+  transform: `translate(${spot.x.toFixed(1)}px, ${spot.y.toFixed(1)}px) translate(-50%, -50%) rotate(${spot.rotate.toFixed(2)}deg) scale(1)`,
+  opacity: 1,
+  filter: "blur(0px)",
+});
+// Where the chip is right now, so an animation can take over mid-flight without a jump
+function currentKey(chip) {
+  const style = getComputedStyle(chip.float);
+  return { transform: style.transform === "none" ? hiddenKey.transform : style.transform, opacity: style.opacity, filter: style.filter };
+}
+
+function emerge(chip, { force = false } = {}) {
+  const spot = chip.state === "diving" && chip.spot ? chip.spot : findSpot(chip, force);
+  if (!spot) return false;
+  const from = chip.state === "in" ? hiddenKey : currentKey(chip);
   const reduced = reducedMotionQuery.matches;
-  // Phones without motion: chips sit still in rows above and below the logo
-  const rows = reduced && geometry.narrow;
+  const to = spotKey(spot);
+  // Farther spots take a little longer to reach
+  const distance = Math.hypot(spot.x, spot.y);
+  const duration = reduced ? 200 : 1000 * Math.min(MOTION.emerge[1], MOTION.emerge[0] + distance / 1500);
 
-  // Sections stack over the hero, so skip the work while it's covered
-  if (window.scrollY < window.innerHeight) {
-    const visible = chips.filter((chip) => chip.li.offsetParent !== null && chip.motion);
-    visible.forEach((chip) => position(chip, dt, rows, reduced));
-    if (!reduced) separate(visible, dt);
-    visible.forEach((chip, index) => apply(chip, index, dt, elapsed, rows, reduced));
-  }
+  chip.spot = spot;
+  chip.state = "out";
+  chip.timeUp = false;
+  chip.li.classList.add("out");
+  chip.anim?.cancel();
+  chip.anim = chip.float.animate(
+    reduced
+      ? [{ ...to, opacity: from.opacity, filter: "blur(0px)" }, to]
+      // Fully visible a third of the way out, overshooting its spot a touch like it popped out
+      : [from, { opacity: 1, offset: 0.35 }, to],
+    { duration, easing: reduced ? "linear" : "cubic-bezier(0.34, 1.45, 0.64, 1)", fill: "forwards" },
+  );
 
-  // Once hidden chips have faded out there's nothing to animate until they're shown again
-  const settled = traitsHidden && chips.every((chip) => chip.opacity === 0);
-  if (!reduced && !settled) requestFrame();
+  clearTimeout(chip.timer);
+  chip.timer = setTimeout(() => {
+    chip.timeUp = true;
+    if (!chip.paused) dive(chip);
+  }, duration + rand(MOTION.hold) * 1000);
+  return true;
 }
 
-function position(chip, dt, rows, reduced) {
-  const m = chip.motion;
-  const [a, b, c, d, e] = m.waves;
-
-  // A chip being read stays exactly where it is
-  if (chip.paused && chip.x !== undefined) return;
-
-  if (rows) {
-    placeStill(chip);
-    return;
-  }
-
-  if (!chip.paused && !reduced) {
-    m.time += dt;
-    const sideBoost = geometry.narrow ? 1 + MOTION.narrowSideBoost * Math.cos(m.angle) ** 2 : 1;
-    m.angle += m.speed * (1 + MOTION.speedDrift * Math.sin(a.f * m.time + a.p)) * sideBoost * dt;
-  }
-
-  const t = m.time;
-  const amount = m.wander ?? MOTION.wander;
-  const wanderX = reduced ? 0 : amount * (Math.sin(b.f * t + b.p) + 0.5 * Math.sin(c.f * 1.7 * t + c.p)) / 1.5;
-  const wanderY = reduced ? 0 : amount * (Math.sin(d.f * t + d.p) + 0.5 * Math.sin(e.f * 1.9 * t + e.p)) / 1.5;
-  chip.rotate = reduced ? 0 : 2.5 * Math.sin(c.f * t + d.p);
-
-  if (reduced) {
-    // Without motion, settle into two loose columns beside the logo instead of orbit spots
-    const index = chips.indexOf(chip);
-    const side = index % 2 === 0 ? -1 : 1;
-    const row = Math.floor(index / 2);
-    const rows = Math.ceil(chips.filter((other) => other.li.offsetParent !== null).length / 2);
-    chip.x = side * (geometry.halfW + chip.w / 2 + 32 + (row % 2) * 28);
-    chip.y = -geometry.halfH * 0.75 + (row + 0.5) * ((geometry.halfH * 1.5) / rows);
-    chip.scale = 1;
-    chip.depth = 0;
-    return;
-  }
-
-  // Wander and nudges never push a chip past the screen edge (even faded out, it would widen the page)
-  const { cx, cy, vw, vh } = geometry;
-  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-  chip.x = clamp(m.rx * Math.cos(m.angle) + wanderX + chip.sepX, EDGE_MARGIN - cx + chip.w / 2, vw - EDGE_MARGIN - cx - chip.w / 2);
-  chip.y = clamp(m.ry * Math.sin(m.angle) + wanderY + chip.sepY, EDGE_MARGIN - cy + chip.h / 2, vh - EDGE_MARGIN - cy - chip.h / 2);
-  // The lower half of each ring reads as nearer, like a tilted solar system: a touch bigger,
-  // and stacked in front, so a chip overtaking a neighbor on the next ring passes cleanly
-  chip.depth = (Math.sin(m.angle) + 1) / 2;
-  chip.scale = 0.92 + 0.1 * chip.depth;
+function dive(chip) {
+  if (chip.state !== "out") return;
+  clearTimeout(chip.timer);
+  const reduced = reducedMotionQuery.matches;
+  const from = currentKey(chip);
+  chip.state = "diving";
+  chip.anim?.cancel();
+  const anim = chip.float.animate(
+    reduced
+      ? [from, { ...from, opacity: 0 }]
+      // Shrinks back toward the logo's center, fading out as it slips behind it
+      : [from, { opacity: 1, offset: 0.4 }, hiddenKey],
+    { duration: reduced ? 200 : MOTION.dive * 1000, easing: reduced ? "linear" : "cubic-bezier(0.55, 0, 0.75, 0.2)", fill: "forwards" },
+  );
+  chip.anim = anim;
+  anim.finished.then(() => {
+    chip.state = "in";
+    chip.spot = null;
+    chip.li.classList.remove("out", "tip-up", "tip-end");
+  // Cancelled: something else (hover, a re-render) took over the chip
+  }).catch(() => {});
 }
 
-// Phones without motion: chips sit in rows in the free areas, as many as fit
-function placeStill(chip) {
-  const { cx, cy, vw, zones } = geometry;
-  const visible = chips.filter((other) => other.li.offsetParent !== null);
-  const rows = [zones.top, zones.bottom].filter(Boolean).map((zone) => (zone[0] + zone[1]) / 2);
-  let row = 0;
-  let x = 16;
-  for (const other of visible) {
-    if (x + other.w > vw - 16) {
-      row++;
-      x = 16;
-    }
-    if (other === chip) break;
-    x += other.w + 12;
-  }
-  chip.x = x + chip.w / 2 - cx;
-  chip.y = (rows[row] ?? rows[0]) - cy;
-  chip.edgeFade = row < rows.length ? 1 : 0;
-  chip.rotate = 0;
-  chip.depth = 0.5;
-  chip.scale = 1;
-}
-
-// Chips on crossing orbits nudge each other aside instead of stacking up:
-// each overlapping pair is pushed apart along whichever axis they overlap least
-function separate(visible, dt) {
-  for (let i = 0; i < visible.length; i++) {
-    for (let j = i + 1; j < visible.length; j++) {
-      const p = visible[i];
-      const q = visible[j];
-      const dx = q.x - p.x;
-      const dy = q.y - p.y;
-      const overlapX = (p.w + q.w) / 2 + 16 - Math.abs(dx);
-      const overlapY = (p.h + q.h) / 2 + 16 - Math.abs(dy);
-      if (overlapX <= 0 || overlapY <= 0) continue;
-
-      // A held chip doesn't move, so the other one takes the whole push
-      const share = (chip, other) => (chip.paused ? 0 : other.paused ? 1 : 0.5);
-      const step = Math.min(dt * 10, 1);
-      if (overlapX < overlapY) {
-        const push = overlapX * step * (dx === 0 ? 1 : Math.sign(dx));
-        p.sepX -= push * share(p, q);
-        q.sepX += push * share(q, p);
-      } else {
-        const push = overlapY * step * (dy === 0 ? 1 : Math.sign(dy));
-        p.sepY -= push * share(p, q);
-        q.sepY += push * share(q, p);
-      }
-    }
-  }
-  // Ease back onto the orbit once the way is clear
-  visible.forEach((chip) => {
-    if (chip.paused) return;
-    const decay = Math.exp(-dt * 0.6);
-    chip.sepX = Math.max(-90, Math.min(90, chip.sepX * decay));
-    chip.sepY = Math.max(-90, Math.min(90, chip.sepY * decay));
-  });
-}
-
-function apply(chip, index, dt, elapsed, rows, reduced) {
-  const { cx, cy, vw, vh } = geometry;
-  let target = elapsed > showFrom + index * MOTION.stagger || reduced ? 1 : 0;
-
-  if (!chip.paused) {
-    const s = chip.scale;
-    const rect = {
-      left: cx + chip.x - (chip.w * s) / 2,
-      right: cx + chip.x + (chip.w * s) / 2,
-      top: cy + chip.y - (chip.h * s) / 2,
-      bottom: cy + chip.y + (chip.h * s) / 2,
-    };
-    // Rows of still chips fade at the screen edges by themselves (edgeFade)
-    const offScreen = !rows && (rect.left < EDGE_MARGIN || rect.right > vw - EDGE_MARGIN ||
-      rect.top < EDGE_MARGIN || rect.bottom > vh - EDGE_MARGIN);
-    // Orbits fade out well before reaching the chrome (the scroll cue bounces, so it gets extra room
-    // above). Phones have little room to spare, so there they fade closer to it; still rows are
-    // already laid out clear of it, so they only need a thin margin
-    const margin = rows ? 4 : geometry.narrow ? CHROME_MARGIN / 3 : CHROME_MARGIN;
-    const bounce = rows ? 0 : 24;
-    const onChrome = geometry.protected.some((r) =>
-      rect.left < r.right + margin && rect.right > r.left - margin &&
-      rect.top < r.bottom + margin && rect.bottom > r.top - margin - bounce);
-    if (offScreen || onChrome) target = 0;
-  }
-  if (rows) target *= chip.edgeFade ?? 1;
-  if (chip.paused) target = 1;
-  if (traitsHidden) target = 0;
-
-  chip.opacity = reduced ? target : chip.opacity + (target - chip.opacity) * Math.min(1, dt * 8);
-  // Finish fades exactly, so a hidden chip doesn't linger as a faint ghost once the loop stops
-  if (Math.abs(target - chip.opacity) < 0.01) chip.opacity = target;
-  chip.float.style.opacity = chip.opacity.toFixed(3);
-  // Hiding shrinks chips a little as they fade, so they read as tucking away rather than vanishing
-  const scale = chip.scale * (traitsHidden ? 0.8 + 0.2 * chip.opacity : 1);
-  chip.float.style.transform =
-    `translate(${chip.x.toFixed(1)}px, ${chip.y.toFixed(1)}px) translate(-50%, -50%) rotate(${chip.rotate.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
-  chip.button.style.pointerEvents = chip.opacity < 0.3 ? "none" : "";
-  // Every depth level stays below 0, i.e. behind the logo; a held chip uses the CSS hover level instead
-  chip.li.style.zIndex = !reduced && !chip.paused ? String(-10 + Math.round(chip.depth * 8)) : "";
-}
-
-let resizeTimer;
-
-// Keeps the chips' motion in step with the window, preferences and keyboard. Called once from
-// main.js at start-up; the chips themselves render when the language is applied
+// Called once from main.js at start-up; the chips themselves render when the language is applied
 export function initTraits() {
+  // Chips that are out stay where they landed on resize; those that would now sit off screen dive in
+  let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => { measure(); requestFrame(); }, 150);
+    resizeTimer = setTimeout(() => {
+      const vw = document.documentElement.clientWidth;
+      const vh = window.innerHeight;
+      chips.forEach((chip) => {
+        const r = chip.spot?.rect;
+        if (chip.state === "out" && r && (r.right > vw || r.bottom > vh)) dive(chip);
+      });
+    }, 150);
   });
-  reducedMotionQuery.addEventListener("change", () => { measure(); requestFrame(); });
-  // Re-measure when what the chips steer around changes, instead of on a timer:
-  // - the logo, and the page chrome, which appears after the intro and the first scroll (showing or
-  //   hiding an element changes its size, which is what a ResizeObserver reports)
-  const resized = new ResizeObserver(() => { if (geometry) measure(); });
-  ["#top .logo", ...PROTECTED].forEach((selector) => {
-    const element = document.querySelector(selector);
-    if (element) resized.observe(element);
-  });
-  // - the menu button, which shifts a little per section, once a scroll comes to rest
-  //   (a debounce rather than scrollend, which Safari lacks)
-  let scrollTimer;
-  window.addEventListener("scroll", () => {
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => { if (geometry) measure(); }, 150);
-  }, { passive: true });
-  // - the logo's and chips' sizes, once the web fonts have loaded
-  document.fonts?.ready.then(() => { if (geometry) measure(); });
 
   // Escape closes an open tooltip (hovered or focused) without moving focus;
   // it can show again once the pointer or focus leaves the chip

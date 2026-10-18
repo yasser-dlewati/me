@@ -913,7 +913,7 @@ body {
     position: relative;
     width: max-content;
     opacity: 0;
-    will-change: transform, opacity;
+    will-change: transform, opacity, filter;
 }
 
 .trait-chip {
@@ -993,40 +993,31 @@ body {
     right: 0;
 }
 
-/* Tablet and desktop: every chip flies its own orbit around the logo, passing behind it */
-@media (min-width: 768px) {
-    .trait {
-        z-index: -1;
-    }
-
-    /* Bring the chip being read (and its tooltip) in front of the logo */
-    .trait:hover,
-    .trait:focus-within {
-        z-index: 4;
-    }
+/* Chips hide behind the logo and slip out from under it (moved by the script); the one being
+   read (and its tooltip) comes in front */
+.trait {
+    z-index: -1;
 }
 
-/* Tablets have room for fewer orbits */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .trait:nth-child(n + 6) {
-        display: none;
-    }
+.trait:hover,
+.trait:focus-within {
+    z-index: 4;
 }
 
-/* Mobile: chips orbit too, on rings that pass behind the logo's sides (positioned by the script) */
+/* A chip hidden in the logo mustn't catch clicks meant for the logo */
+.trait:not(.out) .trait-chip {
+    pointer-events: none;
+}
+
+/* Mobile: stretch the list to the full screen width around the logo and clip it there, so a chip
+   travelling out never widens the page */
 @media (max-width: 767px) {
-    /* Stretch the list to the full screen width around the logo and clip it there, so chips
-       wrapping round off-screen never widen the page */
     .characteristics {
         left: calc(50% - 50vw);
         right: calc(50% - 50vw);
         top: -50vh;
         bottom: -50vh;
         overflow-x: clip;
-    }
-
-    .trait {
-        z-index: 3;
     }
 
     .trait-chip {
