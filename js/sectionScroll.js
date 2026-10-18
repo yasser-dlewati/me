@@ -3,6 +3,8 @@ import { isPageLocked } from "./overlay.js";
 
 export const SECTION_STACK_OFFSET = 4;
 const WHEEL_QUIET_MS = 200;
+// Wheel events per average when telling a fresh swipe from a coasting one
+const WHEEL_HISTORY = 8;
 const SWIPE_THRESHOLD = 50;
 const SCROLL_LOCK_FALLBACK_MS = 1000;
 const IGNORED_AREAS =
@@ -10,6 +12,8 @@ const IGNORED_AREAS =
 
 let isAnimating = false;
 let lastWheelTime = 0;
+let recentDeltas = [];
+let gestureStepped = false;
 let unlockTimeout;
 let touchStart = null;
 
@@ -83,12 +87,32 @@ function onWheel(e) {
   if (e.ctrlKey || shouldIgnore(e.target)) return;
   e.preventDefault();
 
-  // One gesture = one step: trackpad inertia keeps firing events, so wait for a pause
+  // One gesture = one step: trackpad inertia keeps firing events, so a new gesture is either one
+  // after a pause, or (once the page has settled) one that speeds up again, since inertia only
+  // ever slows down; a swipe made while the last one is still coasting never leaves a pause.
+  // A trackpad swipe starts with tiny deltas, so the step waits for the first real one
+  // rather than writing off the whole gesture
   const now = Date.now();
-  const isNewGesture = now - lastWheelTime > WHEEL_QUIET_MS;
+  const delta = Math.abs(e.deltaY);
+  if (now - lastWheelTime > WHEEL_QUIET_MS) {
+    gestureStepped = false;
+    recentDeltas = [];
+  }
   lastWheelTime = now;
-  if (!isNewGesture || Math.abs(e.deltaY) < 4) return;
+  // Speeding up is judged on averages, so the jitter in a coasting trackpad isn't mistaken for it
+  recentDeltas.push(delta);
+  if (recentDeltas.length > WHEEL_HISTORY * 2) recentDeltas.shift();
+  if (!isAnimating && delta >= 4 && recentDeltas.length === WHEEL_HISTORY * 2) {
+    const mean = (values) => values.reduce((sum, value) => sum + value, 0) / values.length;
+    const older = mean(recentDeltas.slice(0, WHEEL_HISTORY));
+    const newer = mean(recentDeltas.slice(WHEEL_HISTORY));
+    if (newer > older * 1.3) gestureStepped = false;
+  }
+  if (gestureStepped || delta < 4) return;
 
+  gestureStepped = true;
+  // Only what comes after the step counts toward the next one, not this swipe's own run-up
+  recentDeltas = [];
   step(Math.sign(e.deltaY));
 }
 
