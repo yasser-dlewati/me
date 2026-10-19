@@ -49,20 +49,24 @@ export const characteristics = [
   },
 ];
 
-// Motion tuning. The chips play peek-a-boo with the logo: every so often a chip peeks out from
-// behind a random point of one of its edges, stays out for a moment, then dives back in. They
-// come out on their own clocks, so several are out at once. Every chip gets a turn (in random
-// order) before any repeats.
+// Motion tuning. The chips play peek-a-boo with the logo: every so often a chip oozes out from
+// under a random point of one of its edges, stays stuck to it for a moment (wobbling like
+// jelly), then slurps back in. They come out on their own clocks, so several are out at once.
+// Every chip gets a turn (in random order) before any repeats.
 // Ranges are [min, max] and a fresh random value is picked each time
 const MOTION = {
   hold: [2, 3],               // s a chip stays out (it also stays while hovered or focused)
   pause: [0.4, 1.2],          // s between one chip peeking out and the next
   maxOut: 4,                  // most chips out at once
-  peek: [6, 14],              // px gap between a chip and the logo's edge
-  emerge: [0.45, 0.7],        // s to travel out, scaled by how far the spot is from the logo
-  dive: 0.5,                  // s to travel back in
+  emerge: 0.9,                // s to ooze out, including the jelly settle
+  dive: 0.55,                 // s to slurp back in
   lingerAfterHover: 1,        // s a chip stays once the pointer or focus leaves it, if its time is up
-  tilt: [3, 8],               // degrees a chip is tilted at its spot, randomly left or right
+  stretch: 0.16,              // how far a chip stretches away from the logo as it pops out (0.16 = 16%)
+  drops: [1, 5],              // liquid drops splashed off as a chip pops out or slurps in
+  dropSize: [3, 9],           // px across a drop
+  dropFling: [12, 38],        // px a drop flies before it falls
+  dropFall: [14, 40],         // px a drop falls by the end
+  dropLife: [0.45, 0.85],     // s a drop lasts
   introDelay: 1.2,            // s before the first round (after the photo fades in)
 };
 
@@ -70,8 +74,11 @@ const MOTION = {
 const PROTECTED = [".menu-icon", "ul.screen.indicator", "#top .scroll", ".feedback-icon .circle"];
 const EDGE_MARGIN = 12;
 const CHROME_MARGIN = 32;
-// Kept under MOTION.peek, so the closest spots still count as clear of the logo
-const LOGO_MARGIN = 4;
+// px a chip's stuck edge sits under the logo, so no seam shows; matches --trait-tuck in css/main.css
+const TUCK = 2;
+// Keeps chips off the logo's rounded corners: --border-radius-large plus room for a chip's liquid
+// feet (--trait-foot) in css/main.css
+const CORNER_CLEARANCE = 32 + 12;
 const CHIP_GAP = 16;
 const SPOT_TRIES = 60;
 
@@ -208,11 +215,12 @@ function updateToggle() {
   list.inert = traitsHidden;
 }
 
-// Open the tooltip toward the middle of the screen, whichever side of it the chip is on
+// Open the tooltip away from the logo (or toward the middle of the screen for chips on its sides)
 function placeTooltip(chip) {
   if (!chip.spot) return;
-  const { rect } = chip.spot;
-  chip.li.classList.toggle("tip-up", (rect.top + rect.bottom) / 2 > window.innerHeight / 2);
+  const { rect, side } = chip.spot;
+  const up = side === "top" || (side !== "bottom" && (rect.top + rect.bottom) / 2 > window.innerHeight / 2);
+  chip.li.classList.toggle("tip-up", up);
   chip.li.classList.toggle("tip-end", (rect.left + rect.right) / 2 > window.innerWidth / 2);
 }
 
@@ -269,7 +277,6 @@ function findSpot(chip, force) {
   const grow = (r, by, extraTop = 0) => ({
     left: r.left - by, right: r.right + by, top: r.top - by - extraTop, bottom: r.bottom + by,
   });
-  const logoArea = grow(logo, LOGO_MARGIN);
   const chrome = PROTECTED.map((selector) => document.querySelector(selector)?.getBoundingClientRect())
     .filter((r) => r && r.width > 0)
     // The scroll cue bounces up, so everything gets a little extra room above
@@ -281,23 +288,29 @@ function findSpot(chip, force) {
     side,
     x: left + w / 2 - cx,
     y: top + h / 2 - cy,
-    rotate: rand(MOTION.tilt) * (Math.random() < 0.5 ? -1 : 1),
+    // How far the chip has to sink to hide fully behind the logo
+    depth: (side === "top" || side === "bottom" ? h : w) + TUCK,
     rect: { left, top, right: left + w, bottom: top + h },
   });
 
-  // Spots hug the logo: just past a random point of one of its edges. Each edge holds one chip
-  // at a time (until that chip is fully back in), so the most out at once is one per side
+  // Spots stick to the logo: a random point of one of its straight edges, tucked just under it.
+  // Each edge holds one chip at a time (until that chip is fully back in), so the most out at
+  // once is one per side
   const taken = new Set(outChips.map((other) => other.spot.side));
   const sides = ["top", "bottom", "left", "right"].filter((side) => !taken.has(side));
   if (sides.length === 0 && !force) return null;
+  // A random start along an edge, clear of its rounded corners (centered if the chip is too long)
+  const along = (from, to, size) => {
+    const min = from + CORNER_CLEARANCE;
+    const max = to - CORNER_CLEARANCE - size;
+    return max > min ? rand([min, max]) : (from + to - size) / 2;
+  };
   const candidate = () => {
-    const gap = rand(MOTION.peek);
-    const along = (from, to) => rand([from, to]);
     switch (sides[Math.floor(Math.random() * sides.length)]) {
-      case "top": return spotAt(along(logo.left - w / 2, logo.right - w / 2), logo.top - gap - h, "top");
-      case "bottom": return spotAt(along(logo.left - w / 2, logo.right - w / 2), logo.bottom + gap, "bottom");
-      case "left": return spotAt(logo.left - gap - w, along(logo.top, logo.bottom - h), "left");
-      default: return spotAt(logo.right + gap, along(logo.top, logo.bottom - h), "right");
+      case "top": return spotAt(along(logo.left, logo.right, w), logo.top + TUCK - h, "top");
+      case "bottom": return spotAt(along(logo.left, logo.right, w), logo.bottom - TUCK, "bottom");
+      case "left": return spotAt(logo.left + TUCK - w, along(logo.top, logo.bottom, h), "left");
+      default: return spotAt(logo.right - TUCK, along(logo.top, logo.bottom, h), "right");
     }
   };
 
@@ -305,47 +318,67 @@ function findSpot(chip, force) {
     const spot = candidate();
     const { rect } = spot;
     if (rect.left < EDGE_MARGIN || rect.top < EDGE_MARGIN || rect.right > vw - EDGE_MARGIN || rect.bottom > vh - EDGE_MARGIN) continue;
-    if ([logoArea, ...chrome, ...others].some((r) => overlaps(spot.rect, r))) continue;
+    if ([...chrome, ...others].some((r) => overlaps(spot.rect, r))) continue;
     return spot;
   }
-  // A chip brought out by the keyboard has to show somewhere: just below the logo
-  return force ? spotAt(cx - w / 2, Math.min(logo.bottom + LOGO_MARGIN, vh - EDGE_MARGIN - h), "bottom") : null;
+  // A chip brought out by the keyboard has to show somewhere: stuck under the middle of the logo
+  return force ? spotAt(cx - w / 2, logo.bottom - TUCK, "bottom") : null;
 }
 
-const hiddenKey = { transform: "translate(0px, 0px) translate(-50%, -50%) rotate(0deg) scale(0.3)", opacity: 0, filter: "blur(4px)" };
-const spotKey = (spot) => ({
-  transform: `translate(${spot.x.toFixed(1)}px, ${spot.y.toFixed(1)}px) translate(-50%, -50%) rotate(${spot.rotate.toFixed(2)}deg) scale(1)`,
-  opacity: 1,
-  filter: "blur(0px)",
-});
+// A chip's pose relative to its spot: `out` runs from 0 (sunk behind the logo) to 1 (at its spot);
+// `along` scales it away from the logo and `across` parallel to the logo's edge. It scales from
+// the edge stuck to the logo (transform-origin in css/main.css), so that edge never comes loose
+const pose = (spot, { out = 1, along = 1, across = 1, opacity = 1 } = {}) => {
+  const sink = spot.depth * (1 - out);
+  const vertical = spot.side === "top" || spot.side === "bottom";
+  const dx = spot.side === "left" ? sink : spot.side === "right" ? -sink : 0;
+  const dy = spot.side === "top" ? sink : spot.side === "bottom" ? -sink : 0;
+  const [sx, sy] = vertical ? [across, along] : [along, across];
+  return {
+    transform: `translate(${(spot.x + dx).toFixed(1)}px, ${(spot.y + dy).toFixed(1)}px) translate(-50%, -50%) scale(${sx.toFixed(3)}, ${sy.toFixed(3)})`,
+    opacity,
+  };
+};
 // Where the chip is right now, so an animation can take over mid-flight without a jump
 function currentKey(chip) {
   const style = getComputedStyle(chip.float);
-  return { transform: style.transform === "none" ? hiddenKey.transform : style.transform, opacity: style.opacity, filter: style.filter };
+  return { transform: style.transform === "none" ? pose(chip.spot, { out: 0 }).transform : style.transform, opacity: style.opacity };
 }
 
 function emerge(chip, { force = false } = {}) {
   const spot = chip.state === "diving" && chip.spot ? chip.spot : findSpot(chip, force);
   if (!spot) return false;
-  const from = chip.state === "in" ? hiddenKey : currentKey(chip);
   const reduced = reducedMotionQuery.matches;
-  const to = spotKey(spot);
-  // Farther spots take a little longer to reach
-  const distance = Math.hypot(spot.x, spot.y);
-  const duration = reduced ? 200 : 1000 * Math.min(MOTION.emerge[1], MOTION.emerge[0] + distance / 1500);
+  const s = MOTION.stretch;
+  const fromIn = chip.state === "in";
 
   chip.spot = spot;
+  chip.li.dataset.side = spot.side;
+  const from = fromIn ? pose(spot, { out: 0, across: 0.75, opacity: 0 }) : currentKey(chip);
+  const duration = reduced ? 200 : MOTION.emerge * 1000;
   chip.state = "out";
   chip.timeUp = false;
   chip.li.classList.add("out");
+  // Its idle wobble starts at a random point, so the chips out together don't wobble in step
+  chip.button.style.animationDelay = `${(-Math.random() * 3).toFixed(2)}s`;
   chip.anim?.cancel();
   chip.anim = chip.float.animate(
     reduced
-      ? [{ ...to, opacity: from.opacity, filter: "blur(0px)" }, to]
-      // Fully visible a third of the way out, overshooting its spot a touch like it popped out
-      : [from, { opacity: 1, offset: 0.35 }, to],
-    { duration, easing: reduced ? "linear" : "cubic-bezier(0.34, 1.45, 0.64, 1)", fill: "forwards" },
+      ? [{ ...pose(spot), opacity: fromIn ? 0 : from.opacity }, pose(spot)]
+      // Oozes out from under the edge, overshoots into a long stretch, then settles like jelly
+      : [
+        { ...from, easing: "cubic-bezier(0.2, 0.7, 0.3, 1)" },
+        { opacity: 1, offset: 0.12 },
+        { ...pose(spot, { along: 1 + s, across: 1 - s * 0.6 }), offset: 0.42, easing: "ease-in-out" },
+        { ...pose(spot, { along: 1 - s * 0.6, across: 1 + s * 0.35 }), offset: 0.6, easing: "ease-in-out" },
+        { ...pose(spot, { along: 1 + s * 0.3, across: 1 - s * 0.15 }), offset: 0.76, easing: "ease-in-out" },
+        { ...pose(spot, { along: 1 - s * 0.1, across: 1 + s * 0.05 }), offset: 0.9, easing: "ease-in-out" },
+        pose(spot),
+      ],
+    { duration, fill: "forwards" },
   );
+  // Drops spray off its feet as it hits the full stretch
+  if (fromIn && !reduced) splash(spot, "emerge", duration * 0.38);
 
   clearTimeout(chip.timer);
   chip.timer = setTimeout(() => {
@@ -359,17 +392,27 @@ function dive(chip) {
   if (chip.state !== "out") return;
   clearTimeout(chip.timer);
   const reduced = reducedMotionQuery.matches;
+  const s = MOTION.stretch;
   const from = currentKey(chip);
+  const { spot } = chip;
   chip.state = "diving";
   chip.anim?.cancel();
   const anim = chip.float.animate(
     reduced
       ? [from, { ...from, opacity: 0 }]
-      // Shrinks back toward the logo's center, fading out as it slips behind it
-      : [from, { opacity: 1, offset: 0.4 }, hiddenKey],
-    { duration: reduced ? 200 : MOTION.dive * 1000, easing: reduced ? "linear" : "cubic-bezier(0.55, 0, 0.75, 0.2)", fill: "forwards" },
+      // Bunches up against the logo, then gets slurped back under its edge, thinning as it goes
+      : [
+        { ...from, easing: "ease-out" },
+        { ...pose(spot, { along: 1 - s, across: 1 + s * 0.5 }), offset: 0.25, easing: "cubic-bezier(0.5, 0, 0.8, 0.4)" },
+        { ...pose(spot, { out: 0.55, along: 1 + s * 0.6, across: 1 - s * 0.8 }), offset: 0.6 },
+        { opacity: 1, offset: 0.85 },
+        pose(spot, { out: 0, across: 0.7, opacity: 0 }),
+      ],
+    { duration: reduced ? 200 : MOTION.dive * 1000, fill: "forwards" },
   );
   chip.anim = anim;
+  // Drops pinch off its far end as it gets pulled in
+  if (!reduced) splash(spot, "dive", MOTION.dive * 1000 * 0.3);
   anim.finished.then(() => {
     chip.state = "in";
     chip.spot = null;
@@ -378,18 +421,69 @@ function dive(chip) {
   }).catch(() => {});
 }
 
+// A few liquid drops thrown off a chip: on "emerge" they spray out from where its feet meet the
+// logo's edge; on "dive" they pinch off its far end. Either way they arc out and fall, shrinking
+// away. They live in the chips' list, positioned from the logo's center like the chips
+function splash(spot, mode, delay) {
+  const list = document.querySelector("#top .characteristics");
+  if (!list) return;
+  const { rect, side } = spot;
+  // Viewport to logo-center coordinates (the spot's rect was measured in the viewport)
+  const ox = spot.x - (rect.left + rect.right) / 2;
+  const oy = spot.y - (rect.top + rect.bottom) / 2;
+  // Outward from the logo, and along its edge
+  const [nx, ny] = { top: [0, -1], bottom: [0, 1], left: [-1, 0], right: [1, 0] }[side];
+  const [tx, ty] = [Math.abs(ny), Math.abs(nx)];
+  const foot = 10;
+
+  const count = Math.round(rand(MOTION.drops));
+  for (let i = 0; i < count; i++) {
+    let x;
+    let y;
+    if (side === "top" || side === "bottom") {
+      x = rand([rect.left - foot, rect.right + foot]);
+      y = mode === "emerge" ? (side === "top" ? rect.bottom - TUCK : rect.top + TUCK) : (side === "top" ? rect.top : rect.bottom);
+    } else {
+      y = rand([rect.top - foot, rect.bottom + foot]);
+      x = mode === "emerge" ? (side === "left" ? rect.right - TUCK : rect.left + TUCK) : (side === "left" ? rect.left : rect.right);
+    }
+    x += ox;
+    y += oy;
+
+    // Emerging drops fly farther and fan out along the edge; pinched-off ones mostly drip
+    const fling = rand(MOTION.dropFling) * (mode === "emerge" ? 1 : 0.4);
+    const spread = rand([-1, 1]) * fling * (mode === "emerge" ? 0.9 : 0.5);
+    const vx = nx * fling + tx * spread;
+    const vy = ny * fling + ty * spread;
+    const fall = rand(MOTION.dropFall);
+    const size = rand(MOTION.dropSize);
+    const at = (dx, dy, scale) => `translate(${(x + dx).toFixed(1)}px, ${(y + dy).toFixed(1)}px) translate(-50%, -50%) scale(${scale})`;
+
+    const drop = document.createElement("li");
+    drop.className = "trait-drop";
+    drop.setAttribute("aria-hidden", "true");
+    drop.style.width = drop.style.height = `${size.toFixed(1)}px`;
+    list.append(drop);
+    drop.animate([
+      { transform: at(0, 0, 0), easing: "cubic-bezier(0.2, 0.8, 0.4, 1)" },
+      { transform: at(vx * 0.3, vy * 0.3, 1.15), offset: 0.15, easing: "cubic-bezier(0.2, 0.6, 0.4, 1)" },
+      { transform: at(vx * 0.85, vy * 0.85 + fall * 0.15, 1), offset: 0.5, easing: "cubic-bezier(0.5, 0, 0.9, 0.6)" },
+      { transform: at(vx, vy + fall, 0), opacity: 0.6 },
+    ], { duration: rand(MOTION.dropLife) * 1000, delay: delay + rand([0, 80]), fill: "both" })
+      .finished.then(() => drop.remove(), () => drop.remove());
+  }
+}
+
 // Called once from main.js at start-up; the chips themselves render when the language is applied
 export function initTraits() {
-  // Chips that are out stay where they landed on resize; those that would now sit off screen dive in
+  // The logo's size follows the screen, so a resize would leave chips that are out floating off its
+  // edges: they slurp back in and the next rounds bring them out against the new edges
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      const vw = document.documentElement.clientWidth;
-      const vh = window.innerHeight;
       chips.forEach((chip) => {
-        const r = chip.spot?.rect;
-        if (chip.state === "out" && r && (r.right > vw || r.bottom > vh)) dive(chip);
+        if (chip.state === "out") dive(chip);
       });
     }, 150);
   });

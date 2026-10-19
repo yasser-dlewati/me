@@ -842,35 +842,41 @@ html[dir="rtl"] .menu-icon {
     right: 20px;
 }
 
+/* Scales with the screen width between 1.25rem and 2rem, so no breakpoint is needed; the text,
+   chevron and bounce are all in em, so they shrink together */
 .scroll {
     position: absolute;
     bottom: 1%;
-    right: calc(50% - 74px);
-    font-size: 32px;
+    left: 0;
+    right: 0;
+    width: max-content;
+    margin-inline: auto;
+    font-size: clamp(1.25rem, 0.75rem + 2.5vw, 2rem);
     text-align: center;
 }
 
 .bouncy {
-    animation: bounce 1s infinite;
+    animation: scroll-bounce 1s infinite;
 }
 
-/* Bounce animation */
-@keyframes bounce {
+/* Its own name: the experience logos' "bounce" keyframes below would otherwise replace these.
+   In em, so the hop shrinks with the cue */
+@keyframes scroll-bounce {
 
     0%,
+    20%,
     50%,
+    80%,
     100% {
         transform: translateY(0);
     }
 
-    40%,
-    60% {
-        transform: translateY(-25px);
+    40% {
+        transform: translateY(-0.5em);
     }
 
-    20%,
-    80% {
-        transform: translateY(-10px);
+    60% {
+        transform: translateY(-0.25em);
     }
 }
 
@@ -883,9 +889,16 @@ html[dir="rtl"] .menu-icon {
 body {
     --trait-bg: var(--text-darkest-color);
     --trait-text: var(--text-lightest-color);
-    /* A ring in the page color, so a chip passing behind the logo stays distinct from it */
+    /* The outline chip's fill while being read */
     --trait-halo: var(--bg-dark-color);
     --trait-border-width: 3px;
+    /* How far a chip's stuck edge sits under the logo; matches TUCK in js/characteristics.js */
+    --trait-tuck: 2px;
+    /* Size of the curved "feet" that melt a chip into the logo's edge */
+    --trait-foot: 10px;
+    /* How far a chip leans while it wobbles (see the trait-jelly keyframes) */
+    --trait-sway-x: 9deg;
+    --trait-sway-y: 5deg;
 }
 
 /* No z-index here on purpose: chips stack against the box's own layers */
@@ -913,10 +926,11 @@ body {
     position: relative;
     width: max-content;
     opacity: 0;
-    will-change: transform, opacity, filter;
+    will-change: transform, opacity;
 }
 
 .trait-chip {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -929,8 +943,146 @@ body {
     white-space: nowrap;
     cursor: default;
     pointer-events: auto;
-    box-shadow: 0 0 0 3px var(--trait-halo), 0 8px 20px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
     transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+
+/* Liquid stuck to the logo: the chip's edge against the logo is flat, with a curved foot on
+   either side of it that spreads onto the logo's edge, like a drop clinging to a surface.
+   Chips stretch and wobble from that edge, so it never comes loose */
+.trait-chip::before,
+.trait-chip::after {
+    content: "";
+    position: absolute;
+    width: var(--trait-foot);
+    height: var(--trait-foot);
+    /* The feet sit on the logo's edge, just past the chip's border */
+    --foot-out: calc(-1 * (var(--trait-foot) + var(--trait-border-width)));
+    --foot-edge: calc(var(--trait-tuck) - var(--trait-border-width));
+    --foot-curve: transparent calc(var(--trait-foot) - 0.5px), var(--trait-bg) var(--trait-foot);
+}
+
+.trait[data-side="top"] .trait-float,
+.trait[data-side="top"] .trait-chip { transform-origin: 50% 100%; }
+.trait[data-side="bottom"] .trait-float,
+.trait[data-side="bottom"] .trait-chip { transform-origin: 50% 0; }
+.trait[data-side="left"] .trait-float,
+.trait[data-side="left"] .trait-chip { transform-origin: 100% 50%; }
+.trait[data-side="right"] .trait-float,
+.trait[data-side="right"] .trait-chip { transform-origin: 0 50%; }
+
+.trait[data-side="top"] .trait-chip {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.trait[data-side="top"] .trait-chip::before {
+    left: var(--foot-out);
+    bottom: var(--foot-edge);
+    background: radial-gradient(circle at 0 0, var(--foot-curve));
+}
+
+.trait[data-side="top"] .trait-chip::after {
+    right: var(--foot-out);
+    bottom: var(--foot-edge);
+    background: radial-gradient(circle at 100% 0, var(--foot-curve));
+}
+
+.trait[data-side="bottom"] .trait-chip {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.trait[data-side="bottom"] .trait-chip::before {
+    left: var(--foot-out);
+    top: var(--foot-edge);
+    background: radial-gradient(circle at 0 100%, var(--foot-curve));
+}
+
+.trait[data-side="bottom"] .trait-chip::after {
+    right: var(--foot-out);
+    top: var(--foot-edge);
+    background: radial-gradient(circle at 100% 100%, var(--foot-curve));
+}
+
+.trait[data-side="left"] .trait-chip {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.trait[data-side="left"] .trait-chip::before {
+    top: var(--foot-out);
+    right: var(--foot-edge);
+    background: radial-gradient(circle at 0 0, var(--foot-curve));
+}
+
+.trait[data-side="left"] .trait-chip::after {
+    bottom: var(--foot-out);
+    right: var(--foot-edge);
+    background: radial-gradient(circle at 0 100%, var(--foot-curve));
+}
+
+.trait[data-side="right"] .trait-chip {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.trait[data-side="right"] .trait-chip::before {
+    top: var(--foot-out);
+    left: var(--foot-edge);
+    background: radial-gradient(circle at 100% 0, var(--foot-curve));
+}
+
+.trait[data-side="right"] .trait-chip::after {
+    bottom: var(--foot-out);
+    left: var(--foot-edge);
+    background: radial-gradient(circle at 100% 100%, var(--foot-curve));
+}
+
+/* While out, a chip keeps wobbling like jelly from its stuck edge (the script staggers the
+   start); it holds still while being read */
+@media (prefers-reduced-motion: no-preference) {
+    .trait.out[data-side="top"] .trait-chip,
+    .trait.out[data-side="bottom"] .trait-chip {
+        animation: trait-jelly-vertical 3s ease-in-out infinite;
+    }
+
+    .trait.out[data-side="left"] .trait-chip,
+    .trait.out[data-side="right"] .trait-chip {
+        animation: trait-jelly-horizontal 3s ease-in-out infinite;
+    }
+
+    .trait:is(:hover, :focus-within) .trait-chip {
+        animation-play-state: paused;
+    }
+}
+
+/* Liquid drops splashed off the chips (see splash() in js/characteristics.js); they sit behind
+   the logo like the chips, so the ones that land on it soak in */
+.trait-drop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    border-radius: 50%;
+    background-color: var(--trait-bg);
+    pointer-events: none;
+}
+
+/* Chips on the top and bottom edges lean left and right by --trait-sway-x; those on the side
+   edges lean up and down by --trait-sway-y. Leaning skews the chip, so its stuck edge stays flat */
+@keyframes trait-jelly-vertical {
+    0%, 100% { transform: skewX(0deg) scale(1, 1); }
+    25% { transform: skewX(var(--trait-sway-x)) scale(0.98, 1.04); }
+    50% { transform: skewX(calc(var(--trait-sway-x) * 0.2)) scale(1.02, 0.97); }
+    75% { transform: skewX(calc(var(--trait-sway-x) * -1)) scale(0.99, 1.03); }
+}
+
+@keyframes trait-jelly-horizontal {
+    0%, 100% { transform: skewY(0deg) scale(1, 1); }
+    25% { transform: skewY(var(--trait-sway-y)) scale(1.04, 0.98); }
+    50% { transform: skewY(calc(var(--trait-sway-y) * 0.2)) scale(0.97, 1.02); }
+    75% { transform: skewY(calc(var(--trait-sway-y) * -1)) scale(1.03, 0.99); }
 }
 
 /* Same swap as the site's two button styles: primary at rest, outline while being read */
