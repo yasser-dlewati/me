@@ -1,6 +1,6 @@
 "use strict";
 
-// Shows the site's version in the navigation menu: the highest vX.Y.Z tag on the GitHub repo,
+// Shows the site's version (navigation menu, privacy page's "Last updated" line): the highest vX.Y.Z tag on the GitHub repo,
 // read at runtime so bumping the version only takes pushing a new tag.
 
 const REPO = "yasser-dlewati/me";
@@ -36,8 +36,8 @@ function writeCache(value) {
 }
 
 export async function initVersion() {
-  const container = document.querySelector(".site-version");
-  if (!container) return;
+  const containers = document.querySelectorAll(".site-version");
+  if (!containers.length) return;
 
   let tag = readCache();
   if (!tag) {
@@ -50,8 +50,10 @@ export async function initVersion() {
     writeCache(tag);
   }
 
-  const link = container.querySelector("a");
-  link.textContent = tag;
-  link.href = `https://github.com/${REPO}/tree/${encodeURIComponent(tag)}`;
-  container.hidden = false;
+  containers.forEach((container) => {
+    const link = container.querySelector("a");
+    link.textContent = tag;
+    link.href = `https://github.com/${REPO}/tree/${encodeURIComponent(tag)}`;
+    container.hidden = false;
+  });
 }

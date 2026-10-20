@@ -172,6 +172,10 @@ html[dir="rtl"] .privacy-home:hover .fa-chevron-left {
     color: var(--text-medium-color);
 }
 
+.privacy .updated a {
+    color: inherit;
+}
+
 /*---------------------------------------
        FOOTER
 -----------------------------------------*/

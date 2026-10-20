@@ -23,6 +23,6 @@ Opening `index.html` straight from disk won't work, because the scripts are ES m
 - The clients carousel is a custom one, built from the ground up.
 - English and Arabic (right to left) are supported, with optional settings saved in the browser.
 - Feedback is saved to a Google Form after the visitor agrees, with EmailJS as a fallback if sending fails. Screenshots go to Cloudinary.
-- The version in the navigation menu is the highest `vX.Y.Z` git tag, fetched from the GitHub API at runtime. To bump it: `git tag -a v1.1.0 -m "v1.1.0" && git push origin v1.1.0`.
+- The version in the navigation menu and on the privacy page is the highest `vX.Y.Z` git tag, fetched from the GitHub API at runtime. To bump it: `git tag -a v1.1.0 -m "v1.1.0" && git push origin v1.1.0`.
 - Sessions are booked through an embedded Google Calendar appointment schedule (with a Google Meet link).
 - The original template can be found at https://www.free-css.com/free-css-templates/page289/ben-resume

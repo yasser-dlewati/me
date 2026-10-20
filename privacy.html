@@ -63,7 +63,8 @@
     <main class="privacy">
         <article data-lang="en" lang="en">
             <h1>Privacy</h1>
-            <p class="updated">Last updated 12 October 2026</p>
+            <p class="updated">Last updated 12 October 2026
+                <span class="site-version" hidden> · <a rel="noopener" target="_blank"></a></span></p>
 
             <p>This is a personal portfolio. It has no analytics, no advertising and no tracking cookies.
                 Nothing about you is collected unless you choose to send feedback. Here is exactly what
@@ -118,7 +119,8 @@
 
         <article data-lang="ar" lang="ar" dir="rtl">
             <h1>الخصوصية</h1>
-            <p class="updated">آخر تحديث: 12 أكتوبر 2026</p>
+            <p class="updated">آخر تحديث: 12 أكتوبر 2026
+                <span class="site-version" hidden> · <a dir="ltr" rel="noopener" target="_blank"></a></span></p>
 
             <p>هذا موقع شخصي لعرض أعمالي. لا يستخدم أي أدوات تحليل أو إعلانات أو ملفات تعريف ارتباط للتتبع،
                 ولا يُجمع عنك أي شيء إلا إذا اخترت إرسال ملاحظاتك. إليك بالتحديد ما يحدث وإلى أين يذهب.</p>
@@ -179,5 +181,10 @@
             <a href="https://www.github.com/yasser-dlewati" rel="noopener" class="fa-brands fa-github-square"></a>
         </div>
     </footer>
+    <!-- Fills the version on each "Last updated" line from the repo's latest version tag -->
+    <script type="module">
+        import { initVersion } from "./js/version.js";
+        initVersion();
+    </script>
 </body>
 </html>
