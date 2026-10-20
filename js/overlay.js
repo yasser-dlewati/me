@@ -13,7 +13,7 @@
 //   to what opened it when it closes.
 const openPanels = new Map();
 
-const PANELS = [".navigation", ".settings-container", ".experience-details-container", ".calendly-container", "form.feedback", ".notification"];
+const PANELS = [".navigation", ".settings-container", ".experience-details-container", ".scheduler-container", "form.feedback", ".notification"];
 const PAGE_BEHIND = [".content", ".menu-icon", "ul.screen.indicator", "footer"];
 
 function sync() {

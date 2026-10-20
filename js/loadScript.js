@@ -1,6 +1,6 @@
 "use strict";
 
-// For third-party scripts most visitors never need (feedback, Calendly): loaded the first time
+// For third-party scripts most visitors never need (feedback): loaded the first time
 // they're used instead of on every visit
 const scriptLoads = new Map();
 
