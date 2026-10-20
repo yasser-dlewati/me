@@ -9,6 +9,8 @@
 // - marks a panel <... data-busy> while it works (sending feedback), so CSS can show its loading
 //   overlay and blur its contents, and makes it inert so it can't be used or closed by a click
 //   outside until the work ends.
+// - closes the top panel on Escape, moves focus to a panel's close button when it opens, and back
+//   to what opened it when it closes.
 const openPanels = new Map();
 
 const PANELS = [".navigation", ".settings-container", ".experience-details-container", ".calendly-container", "form.feedback", ".notification"];
@@ -50,17 +52,36 @@ export function hideBusy(panel) {
   updateInert(panel);
 }
 
-// elements: what counts as inside the panel; close: called with the click event on a click outside them
+// elements: what counts as inside the panel, the panel itself first; close: called with the click
+// event on a click outside them, and with no event on Escape
 export function lockPage(panelName, { elements = [], close = null } = {}) {
+  // Taken before the page behind goes inert, which would drop focus from the opener. A reopened
+  // panel keeps the opener it had
+  const returnFocus = openPanels.get(panelName)?.returnFocus ?? document.activeElement;
   // Reopening moves a panel back to the top
   openPanels.delete(panelName);
-  openPanels.set(panelName, { elements, close });
+  openPanels.set(panelName, { elements, close, returnFocus });
   sync();
+
+  const panel = elements[0];
+  if (panel) {
+    // The class observer only clears inert after this task, too late to focus inside the panel
+    updateInert(panel);
+    panel.querySelector(".close")?.focus({ preventScroll: true });
+  }
 }
 
 export function unlockPage(panelName) {
+  const entry = openPanels.get(panelName);
   openPanels.delete(panelName);
   sync();
+  // Back to the opener, unless it has since been re-rendered (a language change) or focus has already
+  // moved on (the page behind is no longer inert after sync)
+  const opener = entry?.returnFocus;
+  const focusIsInPanel = entry?.elements.some((element) => element?.contains(document.activeElement));
+  if (opener?.isConnected && opener !== document.body && (focusIsInPanel || document.activeElement === document.body)) {
+    opener.focus({ preventScroll: true });
+  }
 }
 
 export function isPageLocked() {
@@ -89,6 +110,16 @@ document.addEventListener("click", (event) => {
   // It stays open until its work ends
   if (top.elements.some((element) => element && "busy" in element.dataset)) return;
   top.close(event);
+});
+
+// Escape closes the top panel, as a click outside it would, unless it's busy
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  const top = topPanel();
+  if (!top || !top.close) return;
+  if (top.elements.some((element) => element && "busy" in element.dataset)) return;
+  event.preventDefault();
+  top.close();
 });
 
 // Keep the edge shadow while the panel slides out, then drop it so no line shows at the screen edge

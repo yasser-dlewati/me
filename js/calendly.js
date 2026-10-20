@@ -1,9 +1,12 @@
 "use strict";
 import { lockPage, unlockPage, removeShadowAfterClosing } from "./overlay.js";
+import { loadScript } from "./loadScript.js";
 
 // The "Schedule a session" panel, with Calendly's scheduler embedded in it
 
 const CALENDLY_URL = "https://calendly.com/yasdle/30min";
+// Loaded on the first open rather than with the page: most visitors never schedule a session
+const CALENDLY_SCRIPT_URL = "https://assets.calendly.com/assets/external/widget.js";
 let isCalendlyRendered = false;
 
 // Calendly only accepts 6-digit hex colors, so resolve the theme's CSS variables through the browser.
@@ -29,17 +32,6 @@ function getCalendlyUrl() {
   return `${CALENDLY_URL}?${params}`;
 }
 
-// Calendly's script loads async, so it may not be ready on the first click
-function whenCalendlyReady(callback) {
-  if (window.Calendly) {
-    callback();
-  } else {
-    document
-      .querySelector('script[src*="calendly.com"]')
-      .addEventListener("load", callback, { once: true });
-  }
-}
-
 export function openCalendly() {
   const panel = document.querySelector(".calendly-container");
   panel.classList.add("active");
@@ -50,13 +42,20 @@ export function openCalendly() {
   if (!isCalendlyRendered) {
     isCalendlyRendered = true;
     const content = panel.querySelector(".calendly-content");
-    showSpinnerUntilLoaded(content);
-    whenCalendlyReady(() => {
-      Calendly.initInlineWidget({
-        url: getCalendlyUrl(),
-        parentElement: content,
+    const revealContent = showSpinnerUntilLoaded(content);
+    loadScript(CALENDLY_SCRIPT_URL)
+      .then(() => {
+        Calendly.initInlineWidget({
+          url: getCalendlyUrl(),
+          parentElement: content,
+        });
+      })
+      .catch((error) => {
+        // Try again on the next open, rather than leaving the spinner up
+        console.log(error.message);
+        isCalendlyRendered = false;
+        revealContent();
       });
-    });
   }
 }
 
@@ -76,6 +75,7 @@ function showSpinnerUntilLoaded(content) {
   };
   const fallback = setTimeout(reveal, 15000);
   window.addEventListener("message", onMessage);
+  return reveal;
 }
 
 export function closeCalendly() {

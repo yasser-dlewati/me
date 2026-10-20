@@ -144,7 +144,7 @@ html[dir="rtl"] .privacy-home:hover .fa-chevron-left {
 .privacy h1 {
     font-family: var(--h2-font-family);
     font-size: var(--h2-font-size);
-    font-weight: normal;
+    font-weight: var(--h2-font-weight);
     margin-bottom: 8px;
 }
 

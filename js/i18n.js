@@ -15,8 +15,8 @@ export const translations = {
         about:{
             navigation:"About",
             title: "about me",
-            description: `My name is Yasser, but you can call me Yas, a self tought software engineer with <span class="experience-duration"></span> of experience, passionate about stretching my mind with solving complicated problems, writing code and learning new stuff.
-            I worked in multiple companies vary in size from startups, SMEs to big enterprises, stepping up and climping up the ladder from a junior to a mid level and end up with a senior role, I also served as a team leader from a small portion of time. I have hands on experience with web, mobile and desktop development.`, 
+            description: `My name is Yasser, but you can call me Yas. I'm a self-taught software engineer with <span class="experience-duration"></span> of experience, passionate about stretching my mind by solving complicated problems, writing code and learning new stuff.
+            I've worked at companies of every size, from startups and SMEs to big enterprises, climbing the ladder from junior to mid-level and ending up in a senior role. I also served as a team leader for a short time. I have hands-on experience with web, mobile and desktop development.`,
             services: "Check out my services",
             session: "Schedule a session",         
         },
@@ -35,7 +35,7 @@ export const translations = {
         contact:{
             navigation:"Contact",
             title: "Say Hey!",
-            description: "Feel free to reach out for collaborations or just a friendly hello by dropping a message via.",
+            description: "Feel free to reach out for collaborations or just a friendly hello by dropping a message at:",
             or: "Or simply",
             copied:"Copied to clipboard!",
             copyFailed:"Couldn't copy — please copy it manually",
@@ -123,37 +123,37 @@ export const translations = {
             "elaf":{
                 company:"Elaf Private School",
                 position:"Educational Counselor",
-                description:"I played the role of the link between the students, their families and the school. I was responsible for helping the students with resolving the diffeculties, guide them to the right path, in addition to organizing events and workshops to help the students to improve their skills.",
+                description:"I played the role of the link between the students, their families and the school. I was responsible for helping the students with resolving the difficulties, guiding them to the right path, in addition to organizing events and workshops to help the students to improve their skills.",
             },
             "robotat":{
                 company:"Robotat",
                 position:"Web developer",
-                description:"First attempt to enter the software development world by getting assigned to test some feature manually (black box method) then getting enrolled in the development cycle by delivering some simple models in both front end and back end",
+                description:"First attempt to enter the software development world by getting assigned to test some features manually (black box method) then getting enrolled in the development cycle by delivering some simple modules in both front end and back end.",
             },
             "menumiz":{
                 company:"Menumiz",
                 position:"Senior web developer",
-                description:"A place where I graded from a junior level to a senior. Learning a lot of the development cycle, collaporate with other departments to learn more, working hard to proof myself professionally and stepping up to be a team leader to keep the wheel rooling.",
+                description:"A place where I grew from a junior level to a senior. Learning a lot of the development cycle, collaborating with other departments to learn more, working hard to prove myself professionally and stepping up to be a team leader to keep the wheel rolling.",
             },
             "touchless":{
                 company:"Touchless",
                 position:"Senior software engineer",
-                description:"Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
+                description:"Being the principal software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
             },
             "boostorder":{
                 company:"Boostorder",
                 position:"Senior software engineer",
-                description:"Being the principle software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
+                description:"Being the principal software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
             },
             "monster":{
                 company:"Monster",
                 position:"Software engineer",
-                description:"First experiment working in such a big corporate which is the perfect time to engage and see how the collaporation should be done. In addition to feel proud as a working in a such a good reputation enterprises.",
+                description:"My first experience working at such a big corporation, which was the perfect time to engage and see how the collaboration should be done. In addition to feeling proud to work at an enterprise with such a good reputation.",
             },
             "timelog":{
                 company:"Timelog",
                 position:"Senior software engineer I",
-                description:"Woring in a team t delive a first class tier code. paricipating in mind storm sessions to detect the weakness points in the app and workin with task force team to present a solid plan to migrate to the legacy solutions to the latest technology.",
+                description:"Working in a team to deliver first-class code. Participating in brainstorming sessions to detect the weak points in the app and working with a task force team to present a solid plan to migrate the legacy solutions to the latest technology.",
             },
             "carsome":{
                 company:"Carsome",

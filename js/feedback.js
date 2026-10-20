@@ -1,4 +1,5 @@
 import { lockPage, unlockPage, showBusy, hideBusy } from "./overlay.js";
+import { loadScript } from "./loadScript.js";
 
 import { t } from "./i18n.js";
 import { isMobileDevice } from "./clients.js";
@@ -37,25 +38,6 @@ function showFeedbackStep() {
 const HTML2CANVAS_URL = "https://cdn.jsdelivr.net/npm/html2canvas-pro@2.4.5/dist/html2canvas-pro.min.js";
 const EMAILJS_URL = "https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js";
 const EMAILJS_PUBLIC_KEY = "ONBs1kJm-53DoguLS"; // from the EmailJS dashboard
-const scriptLoads = new Map();
-
-// Loads a script once; a failed load can be tried again later
-function loadScript(url) {
-  if (!scriptLoads.has(url)) {
-    scriptLoads.set(url, new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = url;
-      script.onload = resolve;
-      script.onerror = () => {
-        scriptLoads.delete(url);
-        script.remove();
-        reject(new Error(`Couldn't load ${url}`));
-      };
-      document.head.appendChild(script);
-    }));
-  }
-  return scriptLoads.get(url);
-}
 
 let emailjsReady = null;
 function loadEmailjs() {

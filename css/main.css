@@ -16,9 +16,12 @@
     --black-color: hsl(0, 0%, 0%);
     --white-color: hsl(0, 0%, 100%);
 
-    --base-font-family: Arial, -apple-system;
+    /* Barton is the logo; Outfit (same round geometric letters) for text and titles. Arabic swaps
+       both for Tajawal, below */
+    --base-font-family: "Outfit", Arial, sans-serif;
     --h1-font-family: "barton", sans-serif;
-    --h2-font-family: serif;
+    --h2-font-family: "Outfit", Arial, sans-serif;
+    --h2-font-weight: 600;
     --font-weight-bold: 600;
     --font-weight-normal: 400;
     --font-weight-light: 300;
@@ -27,10 +30,10 @@
     --h2-font-size: max(44px, 4.5vw);
     --h3-font-size: 4.5vw;
     --h4-font-size: max(28px, 3vw);
-    --h4-font-size: max(28px, 3vw);
     --h5-font-size: min(32px, 4.5vw);
     --h6-font-size: 24px;
-    --base-font-size: min(3vw, 16px);
+    /* 15px on phones up to 16px on desktop; never smaller, so body text stays readable */
+    --base-font-size: clamp(15px, 0.875rem + 0.25vw, 16px);
     --button-font-size: 20px;
     --small-font-size: 12px;
     --medium-font-size: 16px;
@@ -73,6 +76,12 @@
     --text-medium-color: hsl(0, 0%, 60%);
     --text-light-color: hsl(0, 0%, 20%);
     --text-lightest-color: hsl(0, 0%, 0%);
+}
+
+html[lang="ar"] {
+    --base-font-family: "Tajawal", Arial, sans-serif;
+    --h2-font-family: "Tajawal", Arial, sans-serif;
+    --h2-font-weight: 800;
 }
 
 html[dir="rtl"] {
@@ -163,6 +172,7 @@ h1 {
 
 h2 {
     font-family: var(--h2-font-family);
+    font-weight: var(--h2-font-weight);
     font-size: var(--h2-font-size);
     text-shadow: var(--neon-text-glow);
 }
@@ -195,6 +205,7 @@ footer .logo {
 
 h4 {
     font-family: var(--h2-font-family);
+    font-weight: var(--h2-font-weight);
     font-size: var(--h4-font-size);
     text-align: center;
 }
@@ -209,11 +220,11 @@ h6 {
 
 p {
     font-size: var(--base-font-size);
-    font-weight: var(--font-weight-light);
+    font-weight: var(--font-weight-normal);
     letter-spacing: 0.3px;
-    line-height: 2em;
-    text-align: justify;
-    text-justify: inter-word;
+    line-height: 1.65;
+    /* Start-aligned rather than justified: a narrow column justified opens wide gaps between words */
+    text-align: start;
 }
 
 div,
@@ -286,8 +297,52 @@ a:hover {
     align-content: center;
 }
 
-::-webkit-scrollbar {
-    width: 0;
+/* Scrollbars are hidden on desktop, where the section dots show where you are. Phones have no dots,
+   so they keep their own scrollbars, the thin kind that shows only while scrolling. Not overridden
+   there: any ::-webkit-scrollbar style switches WebKit to drawing the scrollbar itself */
+@media (min-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 0;
+    }
+}
+
+/* PAGE SCROLLBAR: phones only, drawn by js/scrollBar.js since a phone's own doesn't show for the
+   section jumps. On the screen's end edge like a native one, shown while the page moves */
+.page-scrollbar {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .page-scrollbar {
+        display: block;
+        position: fixed;
+        top: calc(8px + env(safe-area-inset-top));
+        bottom: calc(8px + env(safe-area-inset-bottom));
+        right: 2px;
+        width: 4px;
+        z-index: 11;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.4s ease-in;
+    }
+
+    html[dir="rtl"] .page-scrollbar {
+        right: auto;
+        left: 2px;
+    }
+
+    .page-scrollbar.visible {
+        opacity: 1;
+        transition: opacity 0.15s ease-out;
+    }
+
+    .page-scrollbar-thumb {
+        width: 100%;
+        border-radius: 2px;
+        background-color: color-mix(in srgb, var(--text-darkest-color) 45%, transparent);
+        /* Follows the page smoothly between its scroll events */
+        transition: transform 0.1s linear;
+    }
 }
 
 /* Fade in from the reading start side (left in English, right in Arabic),
@@ -407,15 +462,20 @@ input[type="checkbox"].form-check-input {
     transform: translateX(var(--navigation-active-translate-x));
 }
 
+/* Centered in the half of the panel that's on screen (the end half; the start half in Arabic), whatever
+   the links' width, font or language */
 .navigation .links {
     position: absolute;
-    top: calc(50% - 152px);
-    right: calc(25% - 80px);
+    top: 50%;
+    left: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    text-align: center;
 }
 
 html[dir="rtl"] .navigation .links {
-    left: calc(25% - 80px);
-    right: auto;
+    left: 0;
+    right: 50%;
 }
 
 /* Same motion as .reveal, driven by the menu opening/closing instead of scrolling */
@@ -556,7 +616,7 @@ ul.indicator {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 4px;
     margin: auto;
     position: fixed;
     right: 20px;
@@ -570,22 +630,50 @@ html[dir="rtl"] ul.indicator {
     right: auto;
 }
 
+/* Each dot is a 12px slot holding a 4px dot, so the dots never shift; the current one is a liquid
+   drop laid over its slot (js/liquidIndicator.js) */
 .indicator li {
-    background-color: var(--text-dark-color);
-    display: inline-block;
-    border-radius: var(--border-radius-circle);
-    height: 4px;
-    width: 4px;
-}
-
-.indicator li.active {
+    position: relative;
+    display: block;
     height: 12px;
     width: 12px;
 }
 
+.indicator li::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: var(--border-radius-circle);
+    background-color: var(--text-dark-color);
+}
+
+/* Until the drop is attached, the current dot is shown full size */
+.indicator:not(.has-drop) li.active::before {
+    inset: 0;
+}
+
+.indicator-drop {
+    position: absolute;
+    border-radius: 6px;
+    background-color: var(--text-dark-color);
+    pointer-events: none;
+}
+
+/* Across the vertical indicator's width, and centred on the horizontal one's dots */
+ul.indicator .indicator-drop {
+    left: 0;
+    right: 0;
+}
+
+.experience.indicator .indicator-drop {
+    top: 50%;
+    height: 12px;
+    margin-top: -6px;
+}
+
 .feedback-icon {
     position: fixed;
-    bottom: 16px;
+    bottom: 24px;
     z-index: 10;
     transform: translateX(calc(100vw - 80px));
     transition: transform 0.4s ease;
@@ -683,7 +771,7 @@ html[dir="rtl"] .feedback-icon {
 .feedback .form-control {
     width: 100%;
     border-radius: var(--border-radius-small);
-    border: 2px solid var(--text-lights-color);
+    border: 2px solid var(--text-light-color);
     padding: 16px;
     font-size: var(--base-font-size);
     resize: none;
@@ -1224,6 +1312,8 @@ section h2 {
 img.side {
     position: absolute;
     height: 70dvh;
+    /* Its width/height attributes only reserve the shape; the height above sets the size */
+    width: auto;
     display: block;
     margin: 0 auto;
     right: 0;
@@ -1247,6 +1337,22 @@ html[dir="rtl"] img.side {
     text-wrap: wrap;
     white-space: initial;
     margin: 0 auto;
+}
+
+/* Each logo is a button (so it works from the keyboard) with the browser's button look stripped */
+.client-button {
+    display: block;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    background: none;
+    border-radius: var(--border-radius-large);
+    cursor: pointer;
+}
+
+.client-button:focus-visible {
+    outline: 2px solid var(--text-darkest-color);
+    outline-offset: 4px;
 }
 
 /* A slight zoom on hover; the class is taken off while a client's details are open */
@@ -1294,6 +1400,9 @@ html[dir="rtl"] img.side {
 
 .experience-container {
     padding-top: 16px;
+    /* Room for a focused logo's ring, which overflow: hidden would clip; the margin keeps the layout as it was */
+    padding-bottom: 8px;
+    margin-bottom: -8px;
     white-space: nowrap;
     overflow: hidden;
     -ms-overflow-style: none;
@@ -1428,9 +1537,11 @@ div:has(.scroll-horizontally) {
 }
 
 .experience.indicator {
+    /* Holds the liquid drops; the wider gap keeps the three current clients' drops apart */
+    position: relative;
     display: flex;
     flex-direction: row;
-    gap: 12px;
+    gap: 8px;
     width: auto;
     margin: 16px auto;
     align-items: center;
@@ -1548,14 +1659,9 @@ html[dir="rtl"] .card a i {
 
 .card-body {
     background-color: var(--bg-light-color);
-    text-align: justify;
-    text-align-last: left;
+    text-align: start;
     hyphens: auto;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-html[dir="rtl"] .card-body {
-    text-align-last: right;
 }
 
 .service {
@@ -1751,8 +1857,18 @@ footer .social-links a {
         margin-right: auto;
     }
 
-    .screen.indicator li {
+    /* No section dots on phones, where they'd crowd the edge and the clients' arrows: the page's own
+       scrollbar shows the position instead (see the scrollbar rules at the top) */
+    ul.screen.indicator {
         display: none;
+    }
+
+    /* Buttons keep their 272px minimum only where it fits, and never run past the screen: a label too
+       long for the smallest phones (the Arabic "Schedule a session") wraps instead */
+    .button {
+        min-width: min(272px, 100%);
+        max-width: 100%;
+        white-space: normal;
     }
 
     section h2 {
@@ -1813,12 +1929,8 @@ footer .social-links a {
         transform: none;
     }
 
-    .navigation .links {
-        top: calc(50% - 104px);
-        left: calc(50% - 64px);
-        text-align: center;
-    }
-
+    /* The panel is full width here, so center across all of it */
+    .navigation .links,
     html[dir="rtl"] .navigation .links {
         left: 0;
         right: 0;
@@ -1896,11 +2008,6 @@ footer .social-links a {
         transition: transform 0.5s ease-in;
     }
 
-    .navigation .links {
-        left: calc(50% - 184px);
-        text-align: center;
-    }
-
     .settings-container.active {
         transform: translateX(calc(0% - 8px));
     }
@@ -1962,7 +2069,7 @@ footer .social-links a {
     }
 
     section p {
-        font-size: 13px;
+        font-size: 14px;
         line-height: 1.6em;
     }
 

@@ -3,6 +3,7 @@ import { lockPage, unlockPage, removeShadowAfterClosing } from "./overlay.js";
 import { getSetting } from "./settings.js";
 import { t, language } from "./i18n.js";
 import { observeReveal } from "./reveal.js";
+import { attachLiquidDrop } from "./liquidIndicator.js";
 import { experienceJson, experienceStartDate, setExperienceDuration } from "./experience.js";
 
 export const isMobileDevice = /android|iphone|kindle|ipad/i.test(navigator.userAgent);
@@ -54,6 +55,12 @@ function updateExperienceIndicator() {
     const count = document.querySelectorAll(".experience-item").length;
     counter.textContent = `${experienceIndicatorPosition[0] + 1} / ${count}`;
   }
+
+  // Only the clients in view can be tabbed to: focusing one out of view would scroll the carousel
+  // without the arrows, leaving the indicator behind
+  document.querySelectorAll(".experience-item .client-button").forEach((button, i) => {
+    button.tabIndex = experienceIndicatorPosition.includes(i) ? 0 : -1;
+  });
 
   setNavigationButtonsVisibility();
 }
@@ -285,6 +292,7 @@ export function initClients() {
   resetExperienceIndicatorPosition();
   // Also sets the About section's experience duration
   renderClients();
+  attachLiquidDrop(document.querySelector(".experience.indicator"), { vertical: false });
   setNavigationButtonsVisibility();
 }
 
@@ -302,8 +310,11 @@ export function renderClients() {
   let indicatorContent = "";
   let clientsContent = "";
   for (let i = 0; i < clients.length; i++) {
+    // A button so the logo opens its details from the keyboard too; the image's alt names it
     clientsContent += `<div class='experience-item'>
-      <img src="./images/${escapeHtml(clients[i].imageSrc)}" class="img-fluid bounce" alt="${escapeHtml(t(`clientList.${clients[i].key}.company`))}" data-key="${escapeHtml(clients[i].key)}" loading="lazy">
+      <button type="button" class="client-button" data-key="${escapeHtml(clients[i].key)}">
+        <img src="./images/${escapeHtml(clients[i].imageSrc)}" class="img-fluid bounce" alt="${escapeHtml(t(`clientList.${clients[i].key}.company`))}" loading="lazy">
+      </button>
       </div>`;
     indicatorContent +=
       (!isMobileDevice && i < 3) || (isMobileDevice && i === 0)
@@ -318,7 +329,7 @@ export function renderClients() {
 
   clientsContainer.innerHTML = clientsContent;
   document.querySelector(".experience.indicator").innerHTML = indicatorContent;
-  const experienceItems = document.querySelectorAll(".experience-item img");
+  const experienceItems = document.querySelectorAll(".experience-item .client-button");
   experienceItems.forEach((item) => {
     item.addEventListener("click", showClientDetails);
   });
@@ -370,7 +381,7 @@ function showClientDetails() {
     });
 
     document
-      .querySelectorAll(".experience-item img, .scroll-horizontally")
+      .querySelectorAll(".experience-item img, .experience-item .client-button, .scroll-horizontally")
       .forEach((img) => {
         img.classList.remove("bounce");
         img.style.pointerEvents = "none";
@@ -421,7 +432,7 @@ export function closeClientDetails() {
     .classList.remove("active");
   removeShadowAfterClosing(document.querySelector(".experience-details-container"));
   document
-    .querySelectorAll(".experience-item img, .scroll-horizontally")
+    .querySelectorAll(".experience-item img, .experience-item .client-button, .scroll-horizontally")
     .forEach((img) => {
       img.classList.add("bounce");
       // Removed rather than set to auto, so the overlay CSS can still disable it under other panels

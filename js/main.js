@@ -11,6 +11,8 @@ import { switchLanguage } from "./translation.js";
 import { t } from "./i18n.js";
 import { escapeHtml } from "./html.js";
 import { lockPage, unlockPage } from "./overlay.js";
+import { attachLiquidDrop } from "./liquidIndicator.js";
+import { initPageScrollBar } from "./scrollBar.js";
 import { getSetting, setSetting, onSettingChange } from "./settings.js";
 import { initSectionScroll, scrollToSection, SECTION_STACK_OFFSET } from "./sectionScroll.js";
 
@@ -184,10 +186,10 @@ function initPageControls() {
     document.querySelector(".settings-container").style.boxShadow = "var(--menu-box-shadow)";
     lockPage("settings", {
       elements: [document.querySelector(".settings-container")],
-      // A click on the menu goes back to it; a click on the page closes both
+      // A click on the menu, or Escape (no event), goes back to it; a click on the page closes both
       close: (event) => {
         closeSettingsMenu();
-        if (!document.querySelector(".navigation").contains(event.target)) closeNavigationMenu();
+        if (event && !document.querySelector(".navigation").contains(event.target)) closeNavigationMenu();
       },
     });
   });
@@ -308,11 +310,13 @@ function start() {
   // About's content column isn't animated directly since a transform would re-anchor its absolute side image
   document.querySelectorAll("section:not(#top)").forEach((section) => {
     observeReveal(section.querySelectorAll(
-      ".container > .row > .col-md-3, #about .col-md-8 > p, #about .buttons > a, #clients .col-md-8 .col-md-1, #clients .experience.indicator, #clients .hint, #clients .download, #contact .col-md-8"
+      ".container > .row > .col-md-3, #about .col-md-8 > p, #about .buttons > .button, #clients .col-md-8 .col-md-1, #clients .experience.indicator, #clients .hint, #clients .download, #contact .col-md-8"
     ), 0.15);
   });
 
   renderScreenIndicator();
+  attachLiquidDrop(screenIndicator, { vertical: true });
+  initPageScrollBar();
   renderNavigationLinks();
   trackCurrentSection();
 
