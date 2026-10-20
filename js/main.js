@@ -6,6 +6,7 @@ import { feedbackIcon, initFeedback } from "./feedback.js";
 import { setSwipeMode, initClients, renderClients } from "./clients.js";
 import { initServices } from "./services.js";
 import { initTraits } from "./characteristics.js";
+import { initVersion } from "./version.js";
 import { initNeonFlicker } from "./neon.js";
 import { switchLanguage } from "./translation.js";
 import { t } from "./i18n.js";
@@ -299,6 +300,7 @@ function start() {
   initFeedback();
   initServices();
   initTraits();
+  initVersion();
   // Applies the theme and swipe mode, and the language: that renders the translated page, including
   // the services and the trait chips
   initSettings();
