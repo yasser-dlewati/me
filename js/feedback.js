@@ -85,7 +85,6 @@ export function initFeedback() {
   feedbackIcon.addEventListener("click", function () {
     // Start fetching the screenshot library now, so it's usually ready by the time feedback is sent
     loadScript(HTML2CANVAS_URL).catch((error) => console.log(error.message));
-    this.children[0].classList.remove("pulse");
     showFeedbackStep();
     feedbackForm.classList.add("active");
     // The notification belongs to the form: clicking it doesn't count as outside

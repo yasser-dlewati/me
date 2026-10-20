@@ -143,7 +143,7 @@ function registerServiceWorker() {
   }
 }
 
-// Let the intro play without scrolling; the menu button and the scroll cue appear when it's over
+// Let the intro play without scrolling; the scroll cue appears when it's over
 function playIntro() {
   hideFor(topScrollDiv, INTRO_SECONDS);
   addBouncyAfter(aboutSection, INTRO_SECONDS);
@@ -151,7 +151,6 @@ function playIntro() {
   document.documentElement.style.overflow = "hidden";
   setTimeout(() => {
     document.documentElement.style.overflow = "";
-    menuIcon.style.removeProperty("display");
     initSectionScroll();
   }, INTRO_SECONDS * 1000);
 }
@@ -247,6 +246,8 @@ function initPageControls() {
     aboutSection.classList.remove("bouncy");
     screenIndicator.style.removeProperty("display");
     feedbackIcon.style.removeProperty("display");
+    // The menu button waits for the first real scroll; the intro's jump back to the top doesn't count
+    if (window.scrollY > 0) menuIcon.style.removeProperty("display");
   });
 }
 

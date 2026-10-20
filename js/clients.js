@@ -66,17 +66,15 @@ export function resetClientsView() {
 
 function setNavigationButtonsVisibility() {
   // Arrows are hidden in swipe mode
-  const lis = document.querySelectorAll(".experience.indicator li");
-  if (isSwipeMode || !lis.length) {
+  if (isSwipeMode) {
     return;
   }
 
-  prevButton.style.visibility = lis[0].classList.contains("active")
-    ? "hidden"
-    : "visible";
-  nextButton.style.visibility = lis[lis.length - 1].classList.contains("active")
-    ? "hidden"
-    : "visible";
+  // Worked out from the position, not the indicator dots: past 9 clients a phone shows a counter instead
+  const count = document.querySelectorAll(".experience-item").length;
+  const last = experienceIndicatorPosition[experienceIndicatorPosition.length - 1];
+  prevButton.style.visibility = experienceIndicatorPosition[0] <= 0 ? "hidden" : "visible";
+  nextButton.style.visibility = last >= count - 1 ? "hidden" : "visible";
 }
 
 

@@ -91,6 +91,8 @@ let rendered = false;
 let traitsHidden = false;
 
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+// Matches the mobile breakpoint in css/main.css
+const narrowQuery = window.matchMedia("(max-width: 767px)");
 
 export function renderCharacteristics() {
   const list = document.querySelector("#top .characteristics");
@@ -296,8 +298,10 @@ function findSpot(chip, force) {
   // Spots stick to the logo: a random point of one of its straight edges, tucked just under it.
   // Each edge holds one chip at a time (until that chip is fully back in), so the most out at
   // once is one per side
+  // On phones the logo nearly fills the width, so chips only come out of its top and bottom edges
   const taken = new Set(outChips.map((other) => other.spot.side));
-  const sides = ["top", "bottom", "left", "right"].filter((side) => !taken.has(side));
+  const edges = narrowQuery.matches ? ["top", "bottom"] : ["top", "bottom", "left", "right"];
+  const sides = edges.filter((side) => !taken.has(side));
   if (sides.length === 0 && !force) return null;
   // A random start along an edge, clear of its rounded corners (centered if the chip is too long)
   const along = (from, to, size) => {
