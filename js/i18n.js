@@ -274,7 +274,7 @@ export const translations = {
             feedback:"شارك رأيك",
         },
         navigation:{
-            designedBy: '<p dir="rtl">  صُمّم وطُوّر من قبل  <span dir="ltr">YasDle</span>',
+            designedBy: 'صُمّم وطُوّر من قبل <span dir="ltr">YasDle</span>',
             rights:`كل الحقوق محفوظة © ${CURRENT_YEAR}`,
             privacy:'<a href="privacy.html?lang=ar" class="info-link">الخصوصية</a>',
         },
