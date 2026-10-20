@@ -73,7 +73,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/main.css">
 </head>
 
@@ -90,10 +89,10 @@
         <div class="experience-details"></div>
     </div>
 
-    <div class="calendly-container">
+    <div class="scheduler-container">
         <button type="button" class="close icon-button" aria-label="Close" data-label-translate="a11y.close"><i class="fa fa-xmark" aria-hidden="true"></i></button>
-        <div class="calendly-content">
-            <div class="calendly-loader" aria-hidden="true"><div></div><div></div><div></div></div>
+        <div class="scheduler-content">
+            <div class="scheduler-loader" aria-hidden="true"><div></div><div></div><div></div></div>
         </div>
     </div>
 
@@ -102,16 +101,15 @@
 
         <div class="settings-item">
             <div class="setting-row">
-                <label for="language" class="form-check-label" data-translate="settings.language">Language</label>
+                <label for="language" class="form-check-label" data-translate="settings.language"></label>
                 <select class="form-select" id="language">
-                    <option value="en" data-translate="settings.en">English</option>
-                    <option value="ar" data-translate="settings.ar">Arabic</option>
+                    <option value="en" data-translate="settings.en"></option>
+                    <option value="ar" data-translate="settings.ar"></option>
                 </select>
             </div>
 
             <div class="setting-row">
-                <label for="darkModeSwitch" class="form-check-label" data-translate="settings.darkMode">Dark
-                    Mode</label>
+                <label for="darkModeSwitch" class="form-check-label" data-translate="settings.darkMode"></label>
                 <div class="form-check form-switch m-0">
                     <input class="form-check-input" type="checkbox" id="darkModeSwitch">
                 </div>
@@ -119,30 +117,25 @@
 
             <div class="setting-row">
                 <label for="showUnderGraduateExperience" class="form-check-label"
-                    data-translate="settings.undergraduate">Show under graduate
-                    experience</label>
+                    data-translate="settings.undergraduate"></label>
                 <div class="form-check form-switch m-0">
                     <input class="form-check-input" type="checkbox" id="showUnderGraduateExperience">
                 </div>
             </div>
 
             <div class="setting-row">
-                <label for="swipeClients" class="form-check-label" data-translate="settings.swipeClients">Swipe
-                    through clients</label>
+                <label for="swipeClients" class="form-check-label" data-translate="settings.swipeClients"></label>
                 <div class="form-check form-switch m-0">
                     <input class="form-check-input" type="checkbox" id="swipeClients">
                 </div>
             </div>
 
             <div class="setting-row">
-                <label for="saveSettingsLocally" class="form-check-label" data-translate="settings.save">Save settings
-                    locally</label>
+                <label for="saveSettingsLocally" class="form-check-label" data-translate="settings.save"></label>
                 <div class="form-check form-switch m-0">
                     <input class="form-check-input" type="checkbox" id="saveSettingsLocally">
                 </div>
-                <small data-translate="settings.hint">Your settings are saved in this browser as soon as you change
-                    one, so they're ready on your next visit. Turn this off to stop saving them and clear what's
-                    saved.</small>
+                <small data-translate="settings.hint"></small>
             </div>
         </div>
 
@@ -153,10 +146,10 @@
         <div class="links">
         </div>
         <div class="info">
-            <p data-translate="navigation.designedBy">Designed and Developed by Yas Dle</p>
+            <p data-translate="navigation.designedBy"></p>
             <p>
-                <span data-translate="navigation.rights">© All rights reserved</span> ·
-                <span data-translate="navigation.privacy"><a href="privacy.html" class="info-link">Privacy</a></span>
+                <span data-translate="navigation.rights"></span> ·
+                <span data-translate="navigation.privacy"></span>
             </p>
         </div>
         <div class="settings">
@@ -189,9 +182,7 @@
             </div>
             <div class="scroll bouncy">
                 <div>
-                    <small data-translate="top.scroll">
-                        Scroll down to know more...
-                    </small>
+                    <small data-translate="top.scroll"></small>
                 </div>
                 <i class="fa-solid fa-chevron-down"></i>
             </div>
@@ -202,28 +193,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 vertically-centered">
-                        <h2 data-translate="about.title"> about me </h2>
+                        <h2 data-translate="about.title"></h2>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-8">
-                        <p data-translate="about.description">
-                            My name is Yasser, but you can call me Yas. I'm a self-taught software engineer with <span
-                                class="experience-duration"></span> of experience, passionate about stretching my mind
-                            by solving complicated problems, writing code and learning new stuff.
-                            <br>
-                            I've worked at companies of every size, from startups and SMEs to big enterprises,
-                            climbing the ladder from junior to mid-level and ending up in a senior role. I also served
-                            as a team leader for a short time. I have hands-on experience with web, mobile and desktop
-                            development.
-                        </p>
+                        <p data-translate="about.description"></p>
                         <div class="buttons">
                             <button type="button" class="button primary schedule-session">
-                                <span data-translate="about.session">
-                                    Schedule a session
-                                </span>
+                                <span data-translate="about.session"></span>
                                 <i class="fa-regular fa-calendar" aria-hidden="true"></i>
                             </button>
-                            <a class="button" href="#services" data-translate="about.services">Check my services</a>
+                            <a class="button" href="#services" data-translate="about.services"></a>
                         </div>
                         <img class="side" src="./images/yasser-no-bg.avif" width="313" height="474" alt="">
                     </div>
@@ -236,7 +216,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 vertically-centered">
-                        <h2 class="title" data-translate="clients.title">where i left marks</h2>
+                        <h2 class="title" data-translate="clients.title"></h2>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-8">
@@ -263,16 +243,12 @@
                             </div>
                             <div class="col-3"></div>
                         </div>
-                        <div class="col-12 hint hint-buttons" data-translate="clients.hint">Use the navigation arrows to
-                            scroll through clients, and click on the client's logo to know more...</div>
-                        <div class="col-12 hint hint-swipe" data-translate="clients.hintSwipe">Swipe left or right to
-                            browse clients, and click on the client's logo to know more...</div>
+                        <div class="col-12 hint hint-buttons" data-translate="clients.hint"></div>
+                        <div class="col-12 hint hint-swipe" data-translate="clients.hintSwipe"></div>
                         <span class="download">
-                            <span data-translate="clients.download">
-                                Or simply download my resume from
-                            </span>
+                            <span data-translate="clients.download"></span>
                             <a href="./pdf/Yasser Dlewati-Senior software engineer resume.pdf" download
-                                data-translate="clients.here">here</a>
+                                data-translate="clients.here"></a>
                         </span>
                     </div>
                 </div>
@@ -283,7 +259,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 vertically-centered">
-                        <h2 data-translate="services.title">Things I can do </h2>
+                        <h2 data-translate="services.title"></h2>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-8">
@@ -300,13 +276,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 vertically-centered">
-                        <h2 data-translate="contact.title">say hey</h2>
+                        <h2 data-translate="contact.title"></h2>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-8 vertically-centered">
-                        <p data-translate="contact.description">
-                            You can drop me a message at:
-                        </p>
+                        <p data-translate="contact.description"></p>
                         <a href="mailto:yasdle@outlook.com" class="email" data-title-translate="contact.senEmail"
                             title="Send an email using preferred mail app">
                             <h5>
@@ -317,17 +291,13 @@
                             data-title-translate="contact.copy" data-label-translate="contact.copy">
                             <span>
                                 <i class="fa-regular fa-copy" aria-hidden="true"></i>
-                                <span class="copy-tooltip" data-translate="contact.copied" role="status">Copied!</span>
+                                <span class="copy-tooltip" data-translate="contact.copied" role="status"></span>
                             </span>
                         </button>
 
-                        <p data-translate="contact.or">
-                            or simply
-                        </p>
+                        <p data-translate="contact.or"></p>
                         <button type="button" class="button primary schedule-session">
-                            <span data-translate="about.session">
-                                Schedule a session
-                            </span>
+                            <span data-translate="about.session"></span>
                             <i class="fa-regular fa-calendar" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -346,26 +316,21 @@
 
     <form class="feedback vertically-centered" method="post">
         <div class="loading-overlay">
-            <span data-translate="feedback.inProgress">
-                Submitting your feedback...
-            </span>
+            <span data-translate="feedback.inProgress"></span>
         </div>
         <button type="button" class="close icon-button" aria-label="Close" data-label-translate="a11y.close"><i class="fa fa-xmark" aria-hidden="true"></i></button>
         <div class="container">
             <div class="row">
                 <div class="col-md-3 vertically-centered">
-                    <h4 data-translate="feedback.title">Your say</h4>
+                    <h4 data-translate="feedback.title"></h4>
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-8">
                     <!-- Shown until the visitor agrees; the choice is kept in localStorage -->
                     <div class="feedback-consent" hidden>
-                        <p data-translate="feedback.consent">Before you share your thoughts: your IP address and a
-                            screenshot of the section you're viewing are sent along with your feedback, to help me
-                            understand and fix issues. Your choice is saved in this browser.
-                            <a href="privacy.html">Learn more</a></p>
+                        <p data-translate="feedback.consent"></p>
                         <button type="button" id="btnAcceptFeedbackConsent" class="button primary"
-                            data-translate="feedback.accept">Agree and continue</button>
+                            data-translate="feedback.accept"></button>
                     </div>
                     <div class="feedback-entry" hidden>
                         <p data-translate="feedback.description"></p>
@@ -404,7 +369,9 @@
         </div>
     </footer>
 
-    <!-- The site's only entry point; it imports every other module -->
+    <!-- Fills the page's text first; it imports little, so it doesn't wait for the rest of the site -->
+    <script type="module" src="./js/pageText.js"></script>
+    <!-- The site's entry point; it imports every other module -->
     <script type="module" src="./js/main.js"></script>
 
 </body>

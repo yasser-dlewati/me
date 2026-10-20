@@ -1,7 +1,7 @@
 "use strict";
 import { closeNavigationMenu, closeSettingsMenu } from "./navigation.js";
 import { observeReveal } from "./reveal.js";
-import { openCalendly, closeCalendly } from "./calendly.js";
+import { openScheduler, closeScheduler } from "./scheduler.js";
 import { feedbackIcon, initFeedback } from "./feedback.js";
 import { setSwipeMode, initClients, renderClients } from "./clients.js";
 import { initServices } from "./services.js";
@@ -157,16 +157,16 @@ function playIntro() {
   }, INTRO_SECONDS * 1000);
 }
 
-// The menu, settings and Calendly buttons, the section links, the copy button and the scroll cue
+// The menu, settings and scheduler buttons, the section links, the copy button and the scroll cue
 function initPageControls() {
   document.querySelector(".navigation .close").addEventListener("click", closeNavigationMenu);
   document.querySelector(".settings-container .close").addEventListener("click", closeSettingsMenu);
-  document.querySelector(".calendly-container .close").addEventListener("click", closeCalendly);
+  document.querySelector(".scheduler-container .close").addEventListener("click", closeScheduler);
 
   document.querySelectorAll(".schedule-session").forEach((button) => {
     button.addEventListener("click", (e) => {
       e.preventDefault();
-      openCalendly();
+      openScheduler();
     });
   });
 

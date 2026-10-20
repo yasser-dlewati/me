@@ -8,7 +8,7 @@ const WHEEL_HISTORY = 8;
 const SWIPE_THRESHOLD = 50;
 const SCROLL_LOCK_FALLBACK_MS = 1000;
 const IGNORED_AREAS =
-  ".navigation, .settings-container, .experience-details-container, .feedback, .notification, .calendly-container";
+  ".navigation, .settings-container, .experience-details-container, .feedback, .notification, .scheduler-container";
 
 let isAnimating = false;
 let lastWheelTime = 0;

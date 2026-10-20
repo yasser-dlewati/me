@@ -23,5 +23,5 @@ Opening `index.html` straight from disk won't work, because the scripts are ES m
 - The clients carousel is a custom one, built from the ground up.
 - English and Arabic (right to left) are supported, with optional settings saved in the browser.
 - Feedback is saved to a Google Form after the visitor agrees, with EmailJS as a fallback if sending fails. Screenshots go to Cloudinary.
-- Sessions are booked through an embedded Calendly scheduler.
+- Sessions are booked through an embedded Google Calendar appointment schedule (with a Google Meet link).
 - The original template can be found at https://www.free-css.com/free-css-templates/page289/ben-resume

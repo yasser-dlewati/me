@@ -1,9 +1,7 @@
 /*---------------------------------------
        GLOBAL VARIABLES
 -----------------------------------------*/
-/* [data-theme="light"] lets an element opt back into the light palette inside dark mode (js/calendly.js) */
-:root,
-[data-theme="light"] {
+:root {
     --bg-dark-color: hsl(0, 0%, 95%);
     --bg-color: hsl(0, 0%, 85%);
     --bg-light-color: hsl(0, 0%, 75%);
@@ -402,7 +400,7 @@ section .col-md-3.reveal.visible {
 html.switching-direction .settings-container,
 html.switching-direction .navigation,
 html.switching-direction .experience-details-container,
-html.switching-direction .calendly-container,
+html.switching-direction .scheduler-container,
 html.switching-direction .feedback-icon {
     transition: none !important;
 }
@@ -446,7 +444,7 @@ input[type="checkbox"].form-check-input {
 
 .navigation,
 .experience-details-container,
-.calendly-container {
+.scheduler-container {
     transform: translateX(var(--navigation-translate-x));
     transition: transform 0.5s ease-in-out;
     background-color: var(--bg-dark-color);
@@ -458,7 +456,7 @@ input[type="checkbox"].form-check-input {
 
 .navigation.active,
 .experience-details-container.active,
-.calendly-container.active {
+.scheduler-container.active {
     transform: translateX(var(--navigation-active-translate-x));
 }
 
@@ -524,11 +522,11 @@ html[dir="rtl"] .settings-item {
 
 .navigation a,
 .experience-details-container a,
-.calendly-container a,
+.scheduler-container a,
 .settings-container a,
 .navigation .icon-button,
 .experience-details-container .icon-button,
-.calendly-container .icon-button,
+.scheduler-container .icon-button,
 .settings-container .icon-button {
     color: var(--text-dark-color);
     display: block;
@@ -538,7 +536,7 @@ html[dir="rtl"] .settings-item {
 
 .navigation .close,
 .experience-details-container .close,
-.calendly-container .close,
+.scheduler-container .close,
 .settings-container .close {
     position: absolute;
     top: 8px;
@@ -549,7 +547,7 @@ html[dir="rtl"] .settings-item {
 
 html[dir="rtl"] .navigation .close,
 html[dir="rtl"] .experience-details-container .close,
-html[dir="rtl"] .calendly-container .close,
+html[dir="rtl"] .scheduler-container .close,
 html[dir="rtl"] .settings-container .close {
     left: auto;
     right: calc(50% + 20px);
@@ -673,7 +671,7 @@ ul.indicator .indicator-drop {
 
 .feedback-icon {
     position: fixed;
-    bottom: 24px;
+    bottom: 16px;
     z-index: 10;
     transform: translateX(calc(100vw - 80px));
     transition: transform 0.4s ease;
@@ -682,7 +680,7 @@ ul.indicator .indicator-drop {
 
 html[dir="rtl"] .feedback-icon {
     right: auto;
-    transform: translateX(20px);
+    transform: translateX(12px);
     left: 0;
 }
 
@@ -1774,44 +1772,49 @@ footer .social-links a {
     margin: 0 10px;
 }
 
-/* Calendly's iframe can't be styled from here, so filters remap its colors to match .button.primary:
+/* Google's schedule iframe can't be styled from here, so filters remap its colors to match .button.primary:
    its (blue) accent becomes black in light mode and white in dark mode, while its white page
    background lands on the theme background (95% / 20% grey). Button text follows the background. */
-.calendly-content iframe {
+.scheduler-content iframe {
     filter: grayscale(100%) brightness(71%) contrast(212%);
 }
 
-/* Calendly has no dark mode, so the light frame is inverted first */
-[data-theme="dark"] .calendly-content iframe {
+/* The schedule has no dark mode, so the light frame is inverted first */
+[data-theme="dark"] .scheduler-content iframe {
     filter: grayscale(100%) invert(100%) contrast(76%) brightness(167%);
 }
 
-/* Calendly's inline widget fills the visible half of the panel, below the close button */
-.calendly-content {
+/* The schedule fills the visible half of the panel, below the close button */
+.scheduler-content {
     width: 50%;
     height: calc(100dvh - 96px);
     margin-top: 96px;
     transform: translateX(var(--client-details-translate-x));
 }
 
-/* While loading (js/calendly.js), the frame and its own loaders stay hidden behind a copy of
-   Calendly's bouncing-dots spinner, centered in the visible half of the panel */
-.calendly-content {
+.scheduler-content iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* While loading (js/scheduler.js), the frame stays hidden behind a bouncing-dots spinner,
+   centered in the visible half of the panel */
+.scheduler-content {
     position: relative;
 }
 
-.calendly-content .calendly-spinner,
-.calendly-loader {
+.scheduler-loader {
     display: none;
 }
 
-/* Not visibility: hidden, as Calendly then never finishes rendering or posts its "viewed" event */
-.calendly-content.loading iframe {
+.scheduler-content.loading iframe {
     opacity: 0;
     pointer-events: none;
 }
 
-.calendly-content.loading .calendly-loader {
+.scheduler-content.loading .scheduler-loader {
     display: block;
     position: absolute;
     top: 50%;
@@ -1821,7 +1824,7 @@ footer .social-links a {
     text-align: center;
 }
 
-.calendly-loader > div {
+.scheduler-loader > div {
     display: inline-block;
     width: 18px;
     height: 18px;
@@ -1829,18 +1832,18 @@ footer .social-links a {
     border-radius: 50%;
     background-color: var(--text-dark-color);
     vertical-align: middle;
-    animation: calendly-loader-bounce 1.4s ease-in-out infinite both;
+    animation: scheduler-loader-bounce 1.4s ease-in-out infinite both;
 }
 
-.calendly-loader > div:nth-child(1) {
+.scheduler-loader > div:nth-child(1) {
     animation-delay: -0.32s;
 }
 
-.calendly-loader > div:nth-child(2) {
+.scheduler-loader > div:nth-child(2) {
     animation-delay: -0.16s;
 }
 
-@keyframes calendly-loader-bounce {
+@keyframes scheduler-loader-bounce {
     0%,
     80%,
     100% {
@@ -1920,11 +1923,11 @@ footer .social-links a {
 
     .navigation.active,
     .experience-details-container.active,
-    .calendly-container.active {
+    .scheduler-container.active {
         transform: translateX(0%);
     }
 
-    .calendly-content {
+    .scheduler-content {
         width: 100%;
         transform: none;
     }
@@ -2003,7 +2006,7 @@ footer .social-links a {
 
     .navigation.active,
     .experience-details-container.active,
-    .calendly-container.active {
+    .scheduler-container.active {
         transform: translateX(0%);
         transition: transform 0.5s ease-in;
     }
@@ -2023,7 +2026,7 @@ footer .social-links a {
     .settings,
     .navigation .close,
     .experience-details-container .close,
-    .calendly-container .close,
+    .scheduler-container .close,
     .settings-container .close {
         left: 24px;
     }
@@ -2031,7 +2034,7 @@ footer .social-links a {
     html[dir="rtl"] .settings,
     html[dir="rtl"] .navigation .close,
     html[dir="rtl"] .experience-details-container .close,
-    html[dir="rtl"] .calendly-container .close,
+    html[dir="rtl"] .scheduler-container .close,
     html[dir="rtl"] .settings-container .close {
         left: auto;
         right: 24px !important;
@@ -2177,7 +2180,7 @@ html[data-overlay] .content button {
 html[data-overlay~="feedback"] .navigation,
 html[data-overlay~="feedback"] .settings-container,
 html[data-overlay~="feedback"] .experience-details-container,
-html[data-overlay~="feedback"] .calendly-container,
+html[data-overlay~="feedback"] .scheduler-container,
 html[data-overlay~="settings"] .navigation > * {
     filter: blur(8px);
 }
