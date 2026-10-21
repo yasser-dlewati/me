@@ -3,15 +3,16 @@ import { loadScript } from "./loadScript.js";
 
 import { t } from "./i18n.js";
 import { isMobileDevice } from "./clients.js";
+import { sections, feedbackIcon, feedbackForm, notificationBox } from "./dom.js";
 
 const txtFeedback = document.querySelector("#txtFeedback");
-const feedbackForm = document.querySelector("form.feedback");
-const notificationBox = document.querySelector(".notification");
-const message = document.querySelector(".notification .message");
-const submitButton = document.querySelector(".feedback button[type='submit']");
+const message = notificationBox.querySelector(".message");
+const submitButton = feedbackForm.querySelector("button[type='submit']");
+const closeFeedbackFormButton = feedbackForm.querySelector(".close");
+const closeNotificationButton = notificationBox.querySelector(".close");
+const acceptConsentButton = document.querySelector("#btnAcceptFeedbackConsent");
 const cloudinaryName = "dxvgozjup";
 const cloudinaryUploadPreset = "personalWebsite";
-export const feedbackIcon = document.querySelector(".feedback-icon");
 const consentStep = document.querySelector(".feedback-consent");
 const entryStep = document.querySelector(".feedback-entry");
 const FEEDBACK_CONSENT_KEY = "feedbackConsent";
@@ -56,8 +57,8 @@ const formUrl =
   "https://docs.google.com/forms/u/0/d/e/1FAIpQLScEsx_ueZVOLSeN7nT6LAF1aD7Uk7j-1CSOhZhZcHtAKFjI8w/formResponse";
 
 export function closeFeedbackForm() {
-  document.querySelector(".notification").classList.remove("active");
-  document.querySelector(".feedback").classList.remove("active");
+  notificationBox.classList.remove("active");
+  feedbackForm.classList.remove("active");
   // Stays locked if a side panel is still open under the feedback form
   unlockPage("feedback");
 }
@@ -76,24 +77,21 @@ export function initFeedback() {
     });
   });
 
-  document
-    .querySelector("#btnAcceptFeedbackConsent")
-    .addEventListener("click", () => {
-      consentGiven = true;
-      try {
-        localStorage.setItem(FEEDBACK_CONSENT_KEY, "true");
-      } catch (error) {
-        console.log("Couldn't save feedback consent:", error);
-      }
-      showFeedbackStep();
-      txtFeedback.focus();
-    });
+  acceptConsentButton.addEventListener("click", () => {
+    consentGiven = true;
+    try {
+      localStorage.setItem(FEEDBACK_CONSENT_KEY, "true");
+    } catch (error) {
+      console.log("Couldn't save feedback consent:", error);
+    }
+    showFeedbackStep();
+    txtFeedback.focus();
+  });
 
-  const closeFeedbackFormButton = document.querySelector(".feedback .close");
   closeFeedbackFormButton.addEventListener("click", () => {
     closeFeedbackForm();
   });
-  document.querySelector(".notification .close").addEventListener("click", closeFeedbackForm);
+  closeNotificationButton.addEventListener("click", closeFeedbackForm);
 
   // Disable submit button when the textarea is empty.
   txtFeedback.addEventListener("input", function () {
@@ -159,7 +157,7 @@ async function captureScreenshot() {
   // Find the section that is currently visible at the viewport center. By position, not
   // elementFromPoint: the page is inert behind the open feedback form, so hit-testing skips it
   const centerY = window.innerHeight / 2;
-  const topSection = [...document.querySelectorAll("section")].find((section) => {
+  const topSection = sections.find((section) => {
     const rect = section.getBoundingClientRect();
     return rect.top <= centerY && rect.bottom >= centerY;
   });

@@ -1,6 +1,12 @@
 "use strict"
 import { escapeHtml } from "./html.js";
 import { t } from "./i18n.js";
+import { menuIcon, screenIndicator, topScrollDiv, feedbackIcon } from "./dom.js";
+
+const logo = document.querySelector("#top .logo");
+const traitsList = logo?.querySelector(".characteristics");
+// Created by setupToggle
+let toggle = null;
 
 // Edit the chips here: icon (Font Awesome solid icon name) and order. Their label and tooltip text
 // live in js/i18n.js under traitList, keyed by id.
@@ -71,7 +77,7 @@ const MOTION = {
 };
 
 // Page chrome the chips never land on
-const PROTECTED = [".menu-icon", "ul.screen.indicator", "#top .scroll", ".feedback-icon .circle"];
+const PROTECTED = [menuIcon, screenIndicator, topScrollDiv, feedbackIcon?.querySelector(".circle")];
 const EDGE_MARGIN = 12;
 const CHROME_MARGIN = 32;
 // px a chip's stuck edge sits under the logo, so no seam shows; matches --trait-tuck in css/main.css
@@ -95,8 +101,7 @@ const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
 const narrowQuery = window.matchMedia("(max-width: 767px)");
 
 export function renderCharacteristics() {
-  const list = document.querySelector("#top .characteristics");
-  if (!list) return;
+  if (!traitsList) return;
 
   // Re-rendering (language switch) starts over: drop the old chips' animations and timers
   clearTimeout(roundTimer);
@@ -106,8 +111,8 @@ export function renderCharacteristics() {
   });
   queue = [];
 
-  list.setAttribute("aria-label", t("traits.list"));
-  list.innerHTML = characteristics.map((trait) => `
+  traitsList.setAttribute("aria-label", t("traits.list"));
+  traitsList.innerHTML = characteristics.map((trait) => `
     <li class="trait" data-id="${escapeHtml(trait.id)}">
       <div class="trait-float">
         <button type="button" class="trait-chip" aria-describedby="trait-tip-${escapeHtml(trait.id)}">
@@ -119,7 +124,7 @@ export function renderCharacteristics() {
     </li>
   `).join("");
 
-  chips = [...list.querySelectorAll(".trait")].map((li) => {
+  chips = [...traitsList.querySelectorAll(".trait")].map((li) => {
     const chip = {
       li,
       float: li.querySelector(".trait-float"),
@@ -167,14 +172,13 @@ export function renderCharacteristics() {
 // heading from screen readers). Pointer users click the logo; keyboard users get a toggle
 // button that only appears when tabbed to
 function setupToggle() {
-  const logo = document.querySelector("#top .logo");
-  if (!logo || logo.querySelector(".traits-toggle")) return;
+  if (!logo || toggle) return;
 
-  const toggle = document.createElement("button");
+  toggle = document.createElement("button");
   toggle.type = "button";
   toggle.className = "traits-toggle visually-hidden-focusable";
   toggle.setAttribute("aria-controls", "traits-list");
-  logo.insertBefore(toggle, logo.querySelector(".characteristics"));
+  logo.insertBefore(toggle, traitsList);
   toggle.addEventListener("click", toggleTraits);
   // Section scrolling takes Space for "next section"; keep it for pressing the button
   toggle.addEventListener("keydown", (e) => {
@@ -203,18 +207,15 @@ function toggleTraits() {
 }
 
 function updateToggle() {
-  const logo = document.querySelector("#top .logo");
-  const list = document.querySelector("#top .characteristics");
-  const toggle = logo?.querySelector(".traits-toggle");
-  if (!toggle || !list) return;
+  if (!toggle || !traitsList) return;
 
   const label = t(traitsHidden ? "traits.show" : "traits.hide");
   toggle.textContent = label;
   toggle.setAttribute("aria-expanded", String(!traitsHidden));
   logo.title = label;
-  list.id = "traits-list";
+  traitsList.id = "traits-list";
   // Hidden chips can't be tabbed to, hovered or read out
-  list.inert = traitsHidden;
+  traitsList.inert = traitsHidden;
 }
 
 // Open the tooltip away from the logo (or toward the middle of the screen for chips on its sides)
@@ -267,10 +268,10 @@ function shuffle(items) {
 // A random spot on screen, clear of the logo, the page chrome and the other chips that are out.
 // Returns its offset from the logo's center (where the chips sit while hidden)
 function findSpot(chip, force) {
-  const logo = document.querySelector("#top .logo")?.getBoundingClientRect();
-  if (!logo) return null;
-  const cx = logo.left + logo.width / 2;
-  const cy = logo.top + logo.height / 2;
+  const logoRect = logo?.getBoundingClientRect();
+  if (!logoRect) return null;
+  const cx = logoRect.left + logoRect.width / 2;
+  const cy = logoRect.top + logoRect.height / 2;
   const w = chip.float.offsetWidth;
   const h = chip.float.offsetHeight;
   const vw = document.documentElement.clientWidth;
@@ -279,7 +280,7 @@ function findSpot(chip, force) {
   const grow = (r, by, extraTop = 0) => ({
     left: r.left - by, right: r.right + by, top: r.top - by - extraTop, bottom: r.bottom + by,
   });
-  const chrome = PROTECTED.map((selector) => document.querySelector(selector)?.getBoundingClientRect())
+  const chrome = PROTECTED.map((element) => element?.getBoundingClientRect())
     .filter((r) => r && r.width > 0)
     // The scroll cue bounces up, so everything gets a little extra room above
     .map((r) => grow(r, CHROME_MARGIN, 24));
@@ -311,10 +312,10 @@ function findSpot(chip, force) {
   };
   const candidate = () => {
     switch (sides[Math.floor(Math.random() * sides.length)]) {
-      case "top": return spotAt(along(logo.left, logo.right, w), logo.top + TUCK - h, "top");
-      case "bottom": return spotAt(along(logo.left, logo.right, w), logo.bottom - TUCK, "bottom");
-      case "left": return spotAt(logo.left + TUCK - w, along(logo.top, logo.bottom, h), "left");
-      default: return spotAt(logo.right - TUCK, along(logo.top, logo.bottom, h), "right");
+      case "top": return spotAt(along(logoRect.left, logoRect.right, w), logoRect.top + TUCK - h, "top");
+      case "bottom": return spotAt(along(logoRect.left, logoRect.right, w), logoRect.bottom - TUCK, "bottom");
+      case "left": return spotAt(logoRect.left + TUCK - w, along(logoRect.top, logoRect.bottom, h), "left");
+      default: return spotAt(logoRect.right - TUCK, along(logoRect.top, logoRect.bottom, h), "right");
     }
   };
 
@@ -326,7 +327,7 @@ function findSpot(chip, force) {
     return spot;
   }
   // A chip brought out by the keyboard has to show somewhere: stuck under the middle of the logo
-  return force ? spotAt(cx - w / 2, logo.bottom - TUCK, "bottom") : null;
+  return force ? spotAt(cx - w / 2, logoRect.bottom - TUCK, "bottom") : null;
 }
 
 // A chip's pose relative to its spot: `out` runs from 0 (sunk behind the logo) to 1 (at its spot);
@@ -429,8 +430,7 @@ function dive(chip) {
 // logo's edge; on "dive" they pinch off its far end. Either way they arc out and fall, shrinking
 // away. They live in the chips' list, positioned from the logo's center like the chips
 function splash(spot, mode, delay) {
-  const list = document.querySelector("#top .characteristics");
-  if (!list) return;
+  if (!traitsList) return;
   const { rect, side } = spot;
   // Viewport to logo-center coordinates (the spot's rect was measured in the viewport)
   const ox = spot.x - (rect.left + rect.right) / 2;
@@ -467,7 +467,7 @@ function splash(spot, mode, delay) {
     drop.className = "trait-drop";
     drop.setAttribute("aria-hidden", "true");
     drop.style.width = drop.style.height = `${size.toFixed(1)}px`;
-    list.append(drop);
+    traitsList.append(drop);
     drop.animate([
       { transform: at(0, 0, 0), easing: "cubic-bezier(0.2, 0.8, 0.4, 1)" },
       { transform: at(vx * 0.3, vy * 0.3, 1.15), offset: 0.15, easing: "cubic-bezier(0.2, 0.6, 0.4, 1)" },
@@ -496,7 +496,7 @@ export function initTraits() {
   // it can show again once the pointer or focus leaves the chip
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
-    document.querySelectorAll("#top .trait-chip:hover, #top .trait-chip:focus").forEach((chip) => {
+    traitsList?.querySelectorAll(".trait-chip:hover, .trait-chip:focus").forEach((chip) => {
       chip.classList.add("tooltip-dismissed");
     });
   });

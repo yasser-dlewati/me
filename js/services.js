@@ -3,6 +3,8 @@ import { observeReveal } from "./reveal.js";
 import { escapeHtml } from "./html.js";
 import { t } from "./i18n.js";
 
+const accordion = document.querySelector("#accordion");
+
 // Each service's title and description live in js/i18n.js under serviceList, keyed by key
 const servicesJson = [
   {
@@ -32,7 +34,6 @@ const servicesJson = [
 ];
   
 export function renderServices(){
-    let servicesContainer = document.querySelector('#accordion');
     let servicesContent = '';
     servicesJson.forEach( service => {
         let title = escapeHtml(t(`serviceList.${service.key}.title`));
@@ -57,8 +58,8 @@ export function renderServices(){
         `;
     });
 
-    servicesContainer.innerHTML = servicesContent;
-    observeReveal(servicesContainer.querySelectorAll('.card'), 0.15);
+    accordion.innerHTML = servicesContent;
+    observeReveal(accordion.querySelectorAll('.card'), 0.15);
 }
 
 // The accordion: one service open at a time, with the same height animation Bootstrap's script
@@ -103,7 +104,7 @@ async function showPanel(header, panel) {
 
   header.querySelector("i").classList.replace("fa-square-plus", "fa-square-minus");
   header.style.borderBottom = "none";
-  document.querySelectorAll("#accordion .service").forEach((other) => {
+  accordion.querySelectorAll(".service").forEach((other) => {
     if (other !== header) other.style.borderBottom = "1px solid rgba(0, 0, 0, 0.2)";
   });
 }
@@ -128,7 +129,7 @@ async function toggleService(header) {
   const panel = document.getElementById(header.getAttribute("aria-controls"));
   const opening = !panel.classList.contains("show");
   const othersOpen = opening
-    ? [...document.querySelectorAll("#accordion .collapse.show")].filter((other) => other !== panel)
+    ? [...accordion.querySelectorAll(".collapse.show")].filter((other) => other !== panel)
     : [];
 
   isAnimating = true;
@@ -142,7 +143,6 @@ async function toggleService(header) {
 // Called once from main.js at start-up; the services themselves render when the language is applied.
 // The headers are re-rendered on a language switch, so clicks are handled on the accordion itself
 export function initServices() {
-  const accordion = document.querySelector("#accordion");
   accordion.addEventListener("click", (event) => {
     const header = event.target.closest(".service");
     if (!header) return;

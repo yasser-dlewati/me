@@ -1,5 +1,6 @@
 "use strict";
 import { isPageLocked } from "./overlay.js";
+import { sections, panels } from "./dom.js";
 
 export const SECTION_STACK_OFFSET = 4;
 const WHEEL_QUIET_MS = 200;
@@ -7,8 +8,6 @@ const WHEEL_QUIET_MS = 200;
 const WHEEL_HISTORY = 8;
 const SWIPE_THRESHOLD = 50;
 const SCROLL_LOCK_FALLBACK_MS = 1000;
-const IGNORED_AREAS =
-  ".navigation, .settings-container, .experience-details-container, .feedback, .notification, .scheduler-container";
 
 let isAnimating = false;
 let lastWheelTime = 0;
@@ -19,10 +18,9 @@ let touchStart = null;
 
 // Scroll positions where each stacked section has just slid fully into place, plus the footer
 function getSnapPoints() {
-  const sections = document.querySelectorAll("section");
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
   let flowTop = 0;
-  const points = [...sections].map((section, index) => {
+  const points = sections.map((section, index) => {
     const point = flowTop - index * SECTION_STACK_OFFSET;
     flowTop += section.offsetHeight;
     return Math.min(Math.max(point, 0), maxScroll);
@@ -42,7 +40,7 @@ function unlock() {
 
 // Sections stay in the viewport while stacked, so reverse their reveal as soon as we head back up
 function hideRevealsBelow(index) {
-  document.querySelectorAll("section").forEach((section, sectionIndex) => {
+  sections.forEach((section, sectionIndex) => {
     if (sectionIndex > index) {
       section.querySelectorAll(".reveal.visible").forEach((el) => el.classList.remove("visible"));
     }
@@ -79,7 +77,7 @@ function step(direction) {
 function shouldIgnore(target) {
   return (
     isPageLocked() ||
-    (target instanceof Element && target.closest(IGNORED_AREAS) !== null)
+    (target instanceof Node && panels.some((panel) => panel?.contains(target)))
   );
 }
 

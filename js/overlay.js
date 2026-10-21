@@ -11,10 +11,11 @@
 //   outside until the work ends.
 // - closes the top panel on Escape, moves focus to a panel's close button when it opens, and back
 //   to what opened it when it closes.
+import { panels, menuIcon, screenIndicator, footer } from "./dom.js";
+
 const openPanels = new Map();
 
-const PANELS = [".navigation", ".settings-container", ".experience-details-container", ".scheduler-container", "form.feedback", ".notification"];
-const PAGE_BEHIND = [".content", ".menu-icon", "ul.screen.indicator", "footer"];
+const pageBehind = [document.querySelector(".content"), menuIcon, screenIndicator, footer];
 
 function sync() {
   const root = document.documentElement;
@@ -24,8 +25,7 @@ function sync() {
   } else {
     delete root.dataset.overlay;
   }
-  PAGE_BEHIND.forEach((selector) => {
-    const element = document.querySelector(selector);
+  pageBehind.forEach((element) => {
     if (element) element.inert = locked;
   });
 }
@@ -35,8 +35,7 @@ function updateInert(panel) {
 }
 
 // Panels open and close by their "active" class, so follow that rather than every open/close function
-PANELS.forEach((selector) => {
-  const panel = document.querySelector(selector);
+panels.forEach((panel) => {
   if (!panel) return;
   updateInert(panel);
   new MutationObserver(() => updateInert(panel)).observe(panel, { attributes: true, attributeFilter: ["class"] });

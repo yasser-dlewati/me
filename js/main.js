@@ -2,7 +2,7 @@
 import { closeNavigationMenu, closeSettingsMenu } from "./navigation.js";
 import { observeReveal } from "./reveal.js";
 import { openScheduler, closeScheduler } from "./scheduler.js";
-import { feedbackIcon, initFeedback } from "./feedback.js";
+import { initFeedback } from "./feedback.js";
 import { setSwipeMode, initClients, renderClients } from "./clients.js";
 import { initServices } from "./services.js";
 import { initTraits } from "./characteristics.js";
@@ -16,9 +16,27 @@ import { attachLiquidDrop } from "./liquidIndicator.js";
 import { initPageScrollBar } from "./scrollBar.js";
 import { getSetting, setSetting, onSettingChange } from "./settings.js";
 import { initSectionScroll, scrollToSection, SECTION_STACK_OFFSET } from "./sectionScroll.js";
+import {
+  sections, topScrollDiv, menuIcon, screenIndicator, footer, feedbackIcon,
+  navigation, settingsContainer, schedulerContainer,
+} from "./dom.js";
+
+const aboutSection = sections.find((section) => section.id === "about");
+const navigationLinks = navigation.querySelector(".links");
+const swipeClientsToggle = document.querySelector("#swipeClients");
+const settingsIcon = document.querySelector(".settings");
+const copyButton = document.querySelector(".copy");
+const copyTooltip = copyButton.querySelector(".copy-tooltip");
+const emailText = document.querySelector(".email h5");
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+const darkModeToggle = document.querySelector("#darkModeSwitch");
+const languageSelect = document.querySelector("#language");
+const showUndergraduateToggle = document.querySelector("#showUnderGraduateExperience");
+const saveSettingsCheckbox = document.querySelector("#saveSettingsLocally");
+const INTRO_SECONDS = 1.5;
 
 const setSectionsStylesForScrolling = () => {
-  document.querySelectorAll("section").forEach((section, index) => {
+  sections.forEach((section, index) => {
     section.style.zIndex = index + 1;
     section.style.top = `${index * SECTION_STACK_OFFSET}px`;
     section.style.height = `calc(100dvh - ${index * SECTION_STACK_OFFSET}px)`;
@@ -27,7 +45,6 @@ const setSectionsStylesForScrolling = () => {
 
 // The footer overlaps the last section by exactly its own height, so the page ends with that section
 const syncFooterHeight = () => {
-  const footer = document.querySelector("footer");
   new ResizeObserver(() => {
     document.documentElement.style.setProperty("--footer-height", `${footer.offsetHeight}px`);
   }).observe(footer);
@@ -35,9 +52,9 @@ const syncFooterHeight = () => {
 
 const renderNavigationLinks = () => {
   var content = getSectionsCount(true);
-  document.querySelector(".links").innerHTML = content;
+  navigationLinks.innerHTML = content;
 
-  const links = document.querySelectorAll(".links a");
+  const links = navigationLinks.querySelectorAll("a");
   links.forEach((link, index) => {
     link.style.setProperty("--reveal-delay", `${0.2 + index * 0.1}s`);
     link.style.setProperty("--reveal-hide-delay", `${(links.length - 1 - index) * 0.05}s`);
@@ -46,12 +63,11 @@ const renderNavigationLinks = () => {
 
 const renderScreenIndicator = () => {
   var content = getSectionsCount();
-  document.querySelector(".screen.indicator").style.display = "none";
-  document.querySelector(".screen.indicator").innerHTML = content;
+  screenIndicator.style.display = "none";
+  screenIndicator.innerHTML = content;
 };
 
 function getSectionsCount(withNames) {
-  var sections = document.querySelectorAll("section")
   var content = "";
   for (let i = 0; i < sections.length; i++) {
     if (withNames) {
@@ -68,7 +84,7 @@ function getSectionsCount(withNames) {
 }
 
 function setScreenIndicator(index) {
-  document.querySelectorAll(".screen.indicator li").forEach((li, i) => {
+  screenIndicator.querySelectorAll("li").forEach((li, i) => {
     li.classList.toggle("active", i === index);
   });
 
@@ -83,7 +99,7 @@ let currentSection = -1;
 
 function measureSectionStarts() {
   let top = 0;
-  sectionStarts = [...document.querySelectorAll("section")].map((section) => {
+  sectionStarts = sections.map((section) => {
     const start = top;
     top += section.offsetHeight;
     return start;
@@ -110,7 +126,7 @@ function trackCurrentSection() {
     measureSectionStarts();
     setScreenIndicatorAccordingToScroll();
   });
-  document.querySelectorAll("section").forEach((section) => resized.observe(section));
+  sections.forEach((section) => resized.observe(section));
   window.addEventListener("scroll", setScreenIndicatorAccordingToScroll, { passive: true });
   measureSectionStarts();
   setScreenIndicatorAccordingToScroll();
@@ -129,14 +145,6 @@ function addBouncyAfter(element, seconds) {
     element.classList.add("bouncy");
   }, seconds * 1000);
 }
-
-const topScrollDiv = document.querySelector("#top .scroll");
-const aboutSection = document.querySelector("section#about");
-const menuIcon = document.querySelector(".menu-icon");
-const swipeClientsToggle = document.querySelector("#swipeClients");
-const settingsIcon = document.querySelector(".settings");
-const screenIndicator = document.querySelector("ul.screen.indicator");
-const INTRO_SECONDS = 1.5;
 
 function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
@@ -160,9 +168,9 @@ function playIntro() {
 
 // The menu, settings and scheduler buttons, the section links, the copy button and the scroll cue
 function initPageControls() {
-  document.querySelector(".navigation .close").addEventListener("click", closeNavigationMenu);
-  document.querySelector(".settings-container .close").addEventListener("click", closeSettingsMenu);
-  document.querySelector(".scheduler-container .close").addEventListener("click", closeScheduler);
+  navigation.querySelector(".close").addEventListener("click", closeNavigationMenu);
+  settingsContainer.querySelector(".close").addEventListener("click", closeSettingsMenu);
+  schedulerContainer.querySelector(".close").addEventListener("click", closeScheduler);
 
   document.querySelectorAll(".schedule-session").forEach((button) => {
     button.addEventListener("click", (e) => {
@@ -172,42 +180,40 @@ function initPageControls() {
   });
 
   menuIcon.addEventListener("click", function () {
-    if (!document.querySelector(".navigation").classList.contains("active")) {
-      document.querySelector(".navigation").classList.add("active");
+    if (!navigation.classList.contains("active")) {
+      navigation.classList.add("active");
       lockPage("navigation", {
-        elements: [document.querySelector(".navigation")],
+        elements: [navigation],
         close: closeNavigationMenu,
       });
-      document.querySelector(".navigation").style.boxShadow = "var(--menu-box-shadow)";
+      navigation.style.boxShadow = "var(--menu-box-shadow)";
     }
   });
 
   settingsIcon.addEventListener("click", function () {
-    document.querySelector(".settings-container").classList.add("active");
-    document.querySelector(".settings-container").style.boxShadow = "var(--menu-box-shadow)";
+    settingsContainer.classList.add("active");
+    settingsContainer.style.boxShadow = "var(--menu-box-shadow)";
     lockPage("settings", {
-      elements: [document.querySelector(".settings-container")],
+      elements: [settingsContainer],
       // A click on the menu, or Escape (no event), goes back to it; a click on the page closes both
       close: (event) => {
         closeSettingsMenu();
-        if (event && !document.querySelector(".navigation").contains(event.target)) closeNavigationMenu();
+        if (event && !navigation.contains(event.target)) closeNavigationMenu();
       },
     });
   });
 
-  document.querySelectorAll(".links a").forEach((link) => {
+  navigationLinks.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      const target = document.querySelector(link.getAttribute("href"));
+      const index = sections.findIndex((section) => `#${section.id}` === link.getAttribute("href"));
       // Unlock the page before scrolling: toggling overflow mid-scroll cancels a smooth scroll
       unlockPage("navigation");
-      scrollToSection([...document.querySelectorAll("section")].indexOf(target));
+      scrollToSection(index);
       closeNavigationMenu();
     });
   });
 
-  const copyButton = document.querySelector(".copy");
-  const copyTooltip = copyButton.querySelector(".copy-tooltip");
   let copyTooltipTimer;
   // Shows "Copied" or the failure message. The key goes on data-translate too, so a language
   // switch while it is showing re-translates the same message rather than resetting it to "Copied"
@@ -227,7 +233,7 @@ function initPageControls() {
 
   copyButton.addEventListener("click", (e) => {
     e.preventDefault();
-    const email = document.querySelector(".email h5").textContent.trim();
+    const email = emailText.textContent.trim();
     // navigator.clipboard is undefined outside a secure context (plain http other than localhost)
     if (!navigator.clipboard?.writeText) {
       showCopyResult(false);
@@ -257,13 +263,8 @@ function initPageControls() {
 // theme-color tints the browser bars on older iOS and Android; values mirror --bg-dark-color
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
-  document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "dark" ? "#333333" : "#f2f2f2");
+  themeColorMeta.setAttribute("content", theme === "dark" ? "#333333" : "#f2f2f2");
 }
-
-const darkModeToggle = document.querySelector("#darkModeSwitch");
-const languageSelect = document.querySelector("#language");
-const showUndergraduateToggle = document.querySelector("#showUnderGraduateExperience");
-const saveSettingsCheckbox = document.querySelector("#saveSettingsLocally");
 
 function initSettings() {
   // The settings panel starts from the stored settings and writes changes back
@@ -310,7 +311,7 @@ function start() {
   playIntro();
 
   // About's content column isn't animated directly since a transform would re-anchor its absolute side image
-  document.querySelectorAll("section:not(#top)").forEach((section) => {
+  sections.slice(1).forEach((section) => {
     observeReveal(section.querySelectorAll(
       ".container > .row > .col-md-3, #about .col-md-8 > p, #about .buttons > .button, #clients .col-md-8 .col-md-1, #clients .experience.indicator, #clients .hint, #clients .download, #contact .col-md-8"
     ), 0.15);

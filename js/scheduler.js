@@ -1,16 +1,17 @@
 "use strict";
 import { lockPage, unlockPage, removeShadowAfterClosing } from "./overlay.js";
 import { t } from "./i18n.js";
+import { schedulerContainer as panel } from "./dom.js";
 
 // The "Schedule a session" panel, with a Google Calendar appointment schedule embedded in it.
 // Google books the slot, adds a Meet link and emails the invite to both sides.
 
 const SCHEDULE_URL =
   "https://calendar.google.com/calendar/appointments/schedules/AcZssZ389ko-jngYFkqNBZZpGf1UjAgEe6bJ6Qp4wWtGr00YD3-gLuWEOxibMXjdpFhrBRNchAHYPYAB?gv=true";
+const content = panel.querySelector(".scheduler-content");
 let isScheduleRendered = false;
 
 export function openScheduler() {
-  const panel = document.querySelector(".scheduler-container");
   panel.classList.add("active");
   panel.style.boxShadow = "var(--menu-box-shadow)";
   lockPage("scheduler", { elements: [panel], close: closeScheduler });
@@ -19,7 +20,6 @@ export function openScheduler() {
   // then kept, so reopening doesn't reload the schedule
   if (!isScheduleRendered) {
     isScheduleRendered = true;
-    const content = panel.querySelector(".scheduler-content");
     const frame = document.createElement("iframe");
     frame.src = SCHEDULE_URL;
     frame.title = t("about.session");
@@ -40,7 +40,6 @@ function showSpinnerUntilLoaded(content, frame) {
 }
 
 export function closeScheduler() {
-  const panel = document.querySelector(".scheduler-container");
   panel.classList.remove("active");
   removeShadowAfterClosing(panel);
   unlockPage("scheduler");
