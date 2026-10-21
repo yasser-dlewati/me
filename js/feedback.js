@@ -1,5 +1,6 @@
 import { lockPage, unlockPage, showBusy, hideBusy } from "./overlay.js";
 import { loadScript } from "./loadScript.js";
+import { isEnabled } from "./features.js";
 
 import { t } from "./i18n.js";
 import { isMobileDevice } from "./clients.js";
@@ -64,7 +65,15 @@ export function closeFeedbackForm() {
 }
 
 // The feedback button, consent step and form. Called once from main.js at start-up
-export function initFeedback() {
+export async function initFeedback() {
+  if (!(await isEnabled("feedback"))) {
+    // Off: removed rather than only hidden, so nothing of feedback can be reached or sent
+    feedbackIcon.remove();
+    feedbackForm.remove();
+    notificationBox.remove();
+    return;
+  }
+
   feedbackIcon.addEventListener("click", function () {
     // Start fetching the screenshot library now, so it's usually ready by the time feedback is sent
     loadScript(HTML2CANVAS_URL).catch((error) => console.log(error.message));

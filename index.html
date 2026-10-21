@@ -311,14 +311,14 @@
         </section>
     </div>
 
-    <button type="button" class="feedback-icon icon-button" style="display: none;" aria-label="Share your feedback"
+    <button type="button" class="feedback-icon icon-button" data-feature="feedback" style="display: none;" aria-label="Share your feedback"
         data-label-translate="a11y.feedback">
         <span class="circle">
             <i class="fa-solid fa-comment" aria-hidden="true"></i>
         </span>
     </button>
 
-    <form class="feedback vertically-centered" method="post">
+    <form class="feedback vertically-centered" method="post" data-feature="feedback">
         <div class="loading-overlay">
             <span data-translate="feedback.inProgress"></span>
         </div>
@@ -356,7 +356,7 @@
         </div>
     </form>
 
-    <div class="notification vertically-centered">
+    <div class="notification vertically-centered" data-feature="feedback">
         <button type="button" class="close icon-button" aria-label="Close" data-label-translate="a11y.close"><i class="fa fa-xmark" aria-hidden="true"></i></button>
         <span class="message"></span>
     </div>

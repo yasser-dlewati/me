@@ -67,9 +67,12 @@
                 <span class="site-version" hidden> · <a rel="noopener" target="_blank"></a></span></p>
 
             <p>This is a personal portfolio. It has no analytics, no advertising and no tracking cookies.
-                Nothing about you is collected unless you choose to send feedback. Here is exactly what
-                happens and where it goes.</p>
+                <span data-feature="feedback">Nothing about you is collected unless you choose to send
+                    feedback. Here is exactly what happens and where it goes.</span>
+                <span data-feature-off="feedback">Nothing about you is collected.</span></p>
 
+            <!-- Shown while the feedback feature is on (features.json) -->
+            <div data-feature="feedback">
             <h3>Feedback</h3>
             <p>Before the feedback form appears, you're asked to agree to the following. If you don't, nothing
                 is sent. When you send feedback, these go with it:</p>
@@ -87,6 +90,7 @@
                     policy</a>). If sending fails, your message is emailed to me through
                 <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank" rel="noopener">EmailJS</a>
                 so it isn't lost. I use it only to improve this website.</p>
+            </div>
 
             <h3>Booking a session</h3>
             <p>The scheduler is a Google Calendar appointment schedule, loaded only when you open it. Anything
@@ -99,7 +103,7 @@
                     "swipe through clients" choices, saved as soon as you change one. Turning off "Save settings
                     locally" removes them, and only a note that you turned it off is kept, so they aren't saved
                     again.</li>
-                <li><strong>Feedback consent</strong>: that you agreed to the terms above, so you're not asked
+                <li data-feature="feedback"><strong>Feedback consent</strong>: that you agreed to the terms above, so you're not asked
                     again.</li>
                 <li><strong>Images</strong>: the site's own images are cached so repeat visits load faster.
                     No personal data is involved.</li>
@@ -112,9 +116,11 @@
                 and the scheduler from Google Calendar. Like any request on the web, these providers see your
                 IP address when your browser fetches the files.</p>
 
+            <div data-feature="feedback">
             <h3>Your data</h3>
             <p>To see or delete feedback you've sent, email me at
                 <a href="mailto:yasdle@outlook.com">yasdle@outlook.com</a>.</p>
+            </div>
         </article>
 
         <article data-lang="ar" lang="ar" dir="rtl">
@@ -123,8 +129,11 @@
                 <span class="site-version" hidden> · <a dir="ltr" rel="noopener" target="_blank"></a></span></p>
 
             <p>هذا موقع شخصي لعرض أعمالي. لا يستخدم أي أدوات تحليل أو إعلانات أو ملفات تعريف ارتباط للتتبع،
-                ولا يُجمع عنك أي شيء إلا إذا اخترت إرسال ملاحظاتك. إليك بالتحديد ما يحدث وإلى أين يذهب.</p>
+                <span data-feature="feedback">ولا يُجمع عنك أي شيء إلا إذا اخترت إرسال ملاحظاتك. إليك بالتحديد ما
+                    يحدث وإلى أين يذهب.</span>
+                <span data-feature-off="feedback">ولا يُجمع عنك أي شيء.</span></p>
 
+            <div data-feature="feedback">
             <h3>الملاحظات</h3>
             <p>قبل ظهور نموذج الملاحظات، يُطلب منك الموافقة على ما يلي. إن لم توافق، لا يُرسَل أي شيء.
                 عند إرسال ملاحظاتك، يُرسَل معها:</p>
@@ -141,6 +150,7 @@
                     Google</a>). وإذا فشل الإرسال، تصلني رسالتك بالبريد الإلكتروني عبر
                 <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank" rel="noopener">EmailJS</a>
                 حتى لا تضيع. أستخدمها فقط لتحسين هذا الموقع.</p>
+            </div>
 
             <h3>حجز جلسة</h3>
             <p>أداة الحجز هي جدول مواعيد من تقويم Google، ولا تُحمَّل إلا عند فتحها. وأي بيانات تُدخلها هناك
@@ -153,7 +163,7 @@
                 <li><strong>الإعدادات</strong>: الوضع واللغة وخيارا "عرض خبرات المرحلة الجامعية" و"التمرير بالسحب
                     بين العملاء"، وتُحفَظ بمجرد أن تغيّر أيًّا منها. وإيقاف "حفظ الإعدادات محليًا" يحذفها، ولا يُحتفَظ إلا
                     بملاحظة أنك أوقفته، حتى لا تُحفَظ مجددًا.</li>
-                <li><strong>الموافقة على الملاحظات</strong>: أنك وافقت على ما سبق، حتى لا يُطلب منك ذلك مجددًا.</li>
+                <li data-feature="feedback"><strong>الموافقة على الملاحظات</strong>: أنك وافقت على ما سبق، حتى لا يُطلب منك ذلك مجددًا.</li>
                 <li><strong>الصور</strong>: تُخزَّن صور الموقع مؤقتًا لتسريع الزيارات التالية، دون أي بيانات
                     شخصية.</li>
             </ul>
@@ -164,9 +174,11 @@
                 وأداة الحجز من تقويم Google. وكما في أي طلب على الإنترنت، يرى هؤلاء المزوّدون عنوان IP
                 الخاص بك عند تحميل متصفحك لهذه الملفات.</p>
 
+            <div data-feature="feedback">
             <h3>بياناتك</h3>
             <p>للاطلاع على ملاحظات أرسلتها أو حذفها، راسلني على
                 <a href="mailto:yasdle@outlook.com" dir="ltr">yasdle@outlook.com</a>.</p>
+            </div>
         </article>
     </main>
 
@@ -181,10 +193,13 @@
             <a href="https://www.github.com/yasser-dlewati" rel="noopener" class="fa-brands fa-github-square"></a>
         </div>
     </footer>
-    <!-- Fills the version on each "Last updated" line from the repo's latest version tag -->
+    <!-- Fills the version on each "Last updated" line from the repo's latest version tag, and shows
+         or hides the parts about flagged features (features.json) -->
     <script type="module">
         import { initVersion } from "./js/version.js";
+        import { applyFeatures } from "./js/features.js";
         initVersion();
+        applyFeatures();
     </script>
 </body>
 </html>

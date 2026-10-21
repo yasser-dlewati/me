@@ -669,6 +669,13 @@ ul.indicator .indicator-drop {
     margin-top: -6px;
 }
 
+/* Feature flags (js/features.js): marked content shows only while its flag is on, and
+   data-feature-off content only while it's off. Until the flags load, everything flagged is off */
+html:not([data-features~="feedback"]) [data-feature="feedback"],
+html[data-features~="feedback"] [data-feature-off="feedback"] {
+    display: none !important;
+}
+
 .feedback-icon {
     position: fixed;
     bottom: 16px;

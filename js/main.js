@@ -7,6 +7,7 @@ import { setSwipeMode, initClients, renderClients } from "./clients.js";
 import { initServices } from "./services.js";
 import { initTraits } from "./characteristics.js";
 import { initVersion } from "./version.js";
+import { applyFeatures } from "./features.js";
 import { initNeonFlicker } from "./neon.js";
 import { switchLanguage } from "./translation.js";
 import { t } from "./i18n.js";
@@ -296,6 +297,8 @@ function initSettings() {
 
 // Start-up, in order. Module scripts run once the page's HTML is parsed, so the DOM is ready here
 function start() {
+  // Not awaited: what a flag hides stays hidden until the flags load (css/main.css)
+  applyFeatures();
   registerServiceWorker();
   initClients();
   initFeedback();
