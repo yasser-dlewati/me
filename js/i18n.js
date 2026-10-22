@@ -194,7 +194,7 @@ export const translations = {
             },
             "dad":{
                 label:"Loving Dad",
-                tooltip:"I am a blessed father who loves playing with my kids and nagging my wife.",
+                tooltip:"I am a blessed father for two, and a little roughhousing never hurt anyone.",
             },
             "cars":{
                 label:"Car lover",
@@ -232,6 +232,18 @@ export const translations = {
                 label:"Visionary",
                 tooltip:"I have an idea and work hard to see it becoming real.",
             },
+            "talktive":{
+                label:"Talkative person",
+                tooltip:"I can't keep quiet about things I care about.",
+            }, 
+            "social":{
+                label:"Social person",
+                tooltip:"I love to connect with others and build meaningful relationships.",
+            },
+            "presenter":{
+                label:"confident speaker",
+                tooltip:"I enjoy presenting ideas and sharing knowledge with others.",
+            }
         },
     },
     ar: {
@@ -408,7 +420,7 @@ export const translations = {
             },
             "dad":{
                 label:"أب محب",
-                tooltip:"أنا أب محظوظ، أحب اللعب مع أطفالي ومشاكسة زوجتي.",
+                tooltip:"أنا أب محظوظ لطفلين، وقليل من اللعب الخشن لا يضر",
             },
             "cars":{
                 label:"عاشق للسيارات",
@@ -438,13 +450,30 @@ export const translations = {
                 label:"معجب بمارفل",
                 tooltip:"I... am... Iron Man!",
             },
+            "millennial":{
+                label:"من جيل الألفية",
+                tooltip:"أفضل الأجيال على الإطلاق: نشأت في بداية توجه العالم للرقمنة، وأنا الآن أشهد آخر التطورات.",
+            },
             "visionary":{
                 label:"لدي رؤية مستقبلية",
-                tooltip:"لدي فكرة وأعمل بجد لجعلها حقيقة.",
+                tooltip:"لدي فكرة في رأسي وأعمل بجد لجعلها حقيقة.",
             },
+            "talktive":{
+                label:"شخص يتحدث كثيرًا",
+                tooltip:"لا أستطيح كبح لساني عن الحديث مع الآخرين.",
+            },
+            "social":{
+                label:"شخص اجتماعي",
+                tooltip:"أحب التواصل وبناء علاقات ذات معنى مع الآخرين.",
+            },
+            "presenter":{
+                label:"متحدث واثق",
+                tooltip:"أستمتع بعرض الأفكار ومشاركة المعرفة مع الآخرين.",
         },
+    
     },
-};
+    },
+}
 
 // Looks up a dotted key, e.g. "settings.darkMode"
 export function getNestedValue(obj, key) {
