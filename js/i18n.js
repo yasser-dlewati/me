@@ -16,7 +16,7 @@ export const translations = {
             navigation:"About",
             title: "about me",
             description: `My name is Yasser, but you can call me Yas. I'm a self-taught software engineer with <span class="experience-duration"></span> of experience, passionate about stretching my mind by solving complicated problems, writing code and learning new stuff.<br>
-            I've worked at companies of every size, from startups and SMEs to big enterprises, climbing the ladder from junior to senior and ending up in a staff role. I also served as a team leader for a short time. I have hands-on experience with web, mobile and desktop development.<br>I am a visionary engineer with adiction for creating innovative solutions that push the boundaries of technology. My dream is to publish my project soon and make a difference in this world.`,
+            I've worked at companies of every size, from startups and SMEs to big enterprises, climbing the ladder from junior to mid-level and ending up in a senior role. I also served as a team leader for a short time. I have hands-on experience with web, mobile and desktop development.<br>I am a visionary engineer with adiction for creating innovative solutions that push the boundaries of technology. My dream is to publish my project soon and make a difference in this world.`,
             services: "Check out my services",
             session: "Schedule a session",         
         },
@@ -137,7 +137,7 @@ export const translations = {
             },
             "touchless":{
                 company:"Touchless",
-                position:"Staff software engineer",
+                position:"Senior software engineer",
                 description:"Being the principal software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
             },
             "boostorder":{
@@ -157,7 +157,7 @@ export const translations = {
             },
             "carsome":{
                 company:"Carsome",
-                position:"Staff software engineer",
+                position:"Senior software engineer",
                 description:"Working in a fast paced environment to deliver high quality code that meets the business requirements. Collaborating with cross-functional teams to design, develop, and implement new features and functionalities.",
             },
         },
@@ -254,7 +254,7 @@ export const translations = {
         about:{
             navigation:"مــن أنــا",
             title: "مــن أنــا",
-            description:'اسمي ياسر، أنا مهندس برمجيات حيث أني علمت نفسي بنفسي، أمتلك <span class="experience-duration"></span> من الخبرة، وشغوف بتحدّي عقلي من خلال حلّ المشكلات المعقّدة، وكتابة الأكواد، وتعلّم كل ما هو جديد. عملت في شركات متعددة الأحجام، بدءًا من الشركات الناشئة مرورًا بالمؤسسات المتوسطة وصولًا إلى الشركات الكبرى، حيث تنقلت في مسيرتي المهنية من مطوّر مبتدئ إلى مطوّر خبير، ثم إلى دورٍ مهندس رئيسي، كما تولّيت قيادة فريق لفترة قصيرة. أمتلك خبرة عملية في تطوير تطبيقات الويب والهواتف المحمولة وسطح المكتب.',
+            description:'اسمي ياسر، أنا مهندس برمجيات حيث أني علمت نفسي بنفسي، أمتلك <span class="experience-duration"></span> من الخبرة، وشغوف بتحدّي عقلي من خلال حلّ المشكلات المعقّدة، وكتابة الأكواد، وتعلّم كل ما هو جديد. عملت في شركات متعددة الأحجام، بدءًا من الشركات الناشئة مرورًا بالمؤسسات المتوسطة وصولًا إلى الشركات الكبرى، حيث تنقلت في مسيرتي المهنية من مطوّر مبتدئ إلى مطوّر متوسط، ثم إلى دورٍ مهندس خبير ، كما تولّيت قيادة فريق لفترة قصيرة. أمتلك خبرة عملية في تطوير تطبيقات الويب والهواتف المحمولة وسطح المكتب.',
             services: "اطلع على خدماتي",
             session: "احجز جلسة استشارية معي",
         },
@@ -367,7 +367,7 @@ export const translations = {
                 description:"المكان الذي انتقلت فيه من مستوى مبتدئ إلى مستوى أول، وتعلمت الكثير عن دورة التطوير الكاملة، وتعاونت مع أقسام مختلفة لاكتساب معرفة أوسع. عملت بجد لإثبات نفسي مهنيًا، وتدرجت حتى أصبحت قائد فريق للحفاظ على عجلة العمل مستمرة.",
             },
             "touchless":{
-                position:"مهندس برمجيات رئيسي",
+                position:"مهندس برمجيات خبير",
                 description:"كوني المهندس الرئيسي في الفريق كانت مسؤولية صعبة لكنها مجزية جدًا في الوقت نفسه. خلال هذه الفترة سنحت لي الفرصة للتعرف على بعض من ألمع العقول، والعمل معهم والتعلم منهم كذلك.",
             },
             "boostorder":{
@@ -383,7 +383,7 @@ export const translations = {
                 description:"أعمل ضمن فريق متميز لتقديم كود برمجي على أعلى مستوى. أشارك في جلسات العصف الذهني لتحديد نقاط الضعف في النظام، وأعمل مع فريق المهام الخاصة لوضع خطة قوية لنقل الأنظمة القديمة إلى أحدث التقنيات.",
             },
             "carsome":{
-                position:"مهندس برمجيات رئيسي",
+                position:"مهندس برمجيات خبير",
                 description:"أعمل في بيئة سريعة الإيقاع لتقديم كود عالي الجودة يلبّي متطلبات العمل. أتعاون مع فرق متعددة التخصصات لتصميم وتطوير وتنفيذ ميزات ووظائف جديدة.",
             },
         },
