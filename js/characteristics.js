@@ -53,6 +53,22 @@ export const characteristics = [
     id: "millennial",
     icon: "fa-hourglass-half",
   },
+  {
+    id: "visionary",
+    icon: "fa-lightbulb",
+  },
+  {
+    id: "talktive",
+    icon: "fa-comments",
+  },
+  {
+    id: "social",
+    icon: "fa-users",
+  },
+  {
+    id: "presenter",
+    icon: "fa-chalkboard-user",
+  }
 ];
 
 // Motion tuning. The chips play peek-a-boo with the logo: every so often a chip oozes out from

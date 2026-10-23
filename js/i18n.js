@@ -15,8 +15,8 @@ export const translations = {
         about:{
             navigation:"About",
             title: "about me",
-            description: `My name is Yasser, but you can call me Yas. I'm a self-taught software engineer with <span class="experience-duration"></span> of experience, passionate about stretching my mind by solving complicated problems, writing code and learning new stuff.
-            I've worked at companies of every size, from startups and SMEs to big enterprises, climbing the ladder from junior to mid-level and ending up in a senior role. I also served as a team leader for a short time. I have hands-on experience with web, mobile and desktop development.`,
+            description: `My name is Yasser, but you can call me Yas. I'm a self-taught software engineer with <span class="experience-duration"></span> of experience, passionate about stretching my mind by solving complicated problems, writing code and learning new stuff.<br>
+            I've worked at companies of every size, from startups and SMEs to big enterprises, climbing the ladder from junior to senior and ending up in a staff role. I also served as a team leader for a short time. I have hands-on experience with web, mobile and desktop development.<br>I am a visionary engineer with adiction for creating innovative solutions that push the boundaries of technology. My dream is to publish my project soon and make a difference in this world.`,
             services: "Check out my services",
             session: "Schedule a session",         
         },
@@ -137,7 +137,7 @@ export const translations = {
             },
             "touchless":{
                 company:"Touchless",
-                position:"Senior software engineer",
+                position:"Staff software engineer",
                 description:"Being the principal software engineer is something very hard but very rewarding at the same time. During this period of time, I got the chance to meet the brightest minds and not only work with, but learn from as well.",
             },
             "boostorder":{
@@ -147,17 +147,17 @@ export const translations = {
             },
             "monster":{
                 company:"Monster",
-                position:"Software engineer",
+                position:"Senior Software engineer",
                 description:"My first experience working at such a big corporation, which was the perfect time to engage and see how the collaboration should be done. In addition to feeling proud to work at an enterprise with such a good reputation.",
             },
             "timelog":{
                 company:"Timelog",
-                position:"Senior software engineer I",
+                position:"Senior software engineer",
                 description:"Working in a team to deliver first-class code. Participating in brainstorming sessions to detect the weak points in the app and working with a task force team to present a solid plan to migrate the legacy solutions to the latest technology.",
             },
             "carsome":{
                 company:"Carsome",
-                position:"Senior software engineer II",
+                position:"Staff software engineer",
                 description:"Working in a fast paced environment to deliver high quality code that meets the business requirements. Collaborating with cross-functional teams to design, develop, and implement new features and functionalities.",
             },
         },
@@ -194,7 +194,7 @@ export const translations = {
             },
             "dad":{
                 label:"Loving Dad",
-                tooltip:"I am a blessed father who loves playing with my kids and nagging my wife.",
+                tooltip:"I am a blessed father for two, and a little roughhousing never hurt anyone.",
             },
             "cars":{
                 label:"Car lover",
@@ -228,6 +228,22 @@ export const translations = {
                 label:"Millennial",
                 tooltip:"The best of both worlds: I grew up in the analog world and now I live in the digital one.",
             },
+            "visionary":{
+                label:"Visionary",
+                tooltip:"I have an idea and work hard to see it becoming real.",
+            },
+            "talktive":{
+                label:"Talkative person",
+                tooltip:"I can't keep quiet about things I care about.",
+            }, 
+            "social":{
+                label:"Social person",
+                tooltip:"I love to connect with others and build meaningful relationships.",
+            },
+            "presenter":{
+                label:"confident speaker",
+                tooltip:"I enjoy presenting ideas and sharing knowledge with others.",
+            }
         },
     },
     ar: {
@@ -238,7 +254,7 @@ export const translations = {
         about:{
             navigation:"مــن أنــا",
             title: "مــن أنــا",
-            description:'اسمي ياسر، أنا مهندس برمجيات حيث أني علمت نفسي بنفسي، أمتلك <span class="experience-duration"></span> من الخبرة، وشغوف بتحدّي عقلي من خلال حلّ المشكلات المعقّدة، وكتابة الأكواد، وتعلّم كل ما هو جديد. عملت في شركات متعددة الأحجام، بدءًا من الشركات الناشئة مرورًا بالمؤسسات المتوسطة وصولًا إلى الشركات الكبرى، حيث تنقلت في مسيرتي المهنية من مطوّر مبتدئ إلى مطوّر متوسط، ثم إلى دورٍ كبير المهندسين (Senior)، كما تولّيت قيادة فريق لفترة قصيرة. أمتلك خبرة عملية في تطوير تطبيقات الويب والهواتف المحمولة وسطح المكتب.',
+            description:'اسمي ياسر، أنا مهندس برمجيات حيث أني علمت نفسي بنفسي، أمتلك <span class="experience-duration"></span> من الخبرة، وشغوف بتحدّي عقلي من خلال حلّ المشكلات المعقّدة، وكتابة الأكواد، وتعلّم كل ما هو جديد. عملت في شركات متعددة الأحجام، بدءًا من الشركات الناشئة مرورًا بالمؤسسات المتوسطة وصولًا إلى الشركات الكبرى، حيث تنقلت في مسيرتي المهنية من مطوّر مبتدئ إلى مطوّر خبير، ثم إلى دورٍ مهندس رئيسي، كما تولّيت قيادة فريق لفترة قصيرة. أمتلك خبرة عملية في تطوير تطبيقات الويب والهواتف المحمولة وسطح المكتب.',
             services: "اطلع على خدماتي",
             session: "احجز جلسة استشارية معي",
         },
@@ -347,11 +363,11 @@ export const translations = {
                 description:"كانت أول محاولة لدخولي عالم تطوير البرمجيات، حيث بدأت باختبار بعض الخصائص يدويًا (طريقة الصندوق الأسود)، ثم شاركت في دورة التطوير بتسليم نماذج بسيطة في الواجهة الأمامية والخلفية.",
             },
             "menumiz":{
-                position:"مطور ويب خبير",
+                position:"مطور ويب خبير وقائد فريق",
                 description:"المكان الذي انتقلت فيه من مستوى مبتدئ إلى مستوى أول، وتعلمت الكثير عن دورة التطوير الكاملة، وتعاونت مع أقسام مختلفة لاكتساب معرفة أوسع. عملت بجد لإثبات نفسي مهنيًا، وتدرجت حتى أصبحت قائد فريق للحفاظ على عجلة العمل مستمرة.",
             },
             "touchless":{
-                position:"مهندس برمجيات خبير",
+                position:"مهندس برمجيات رئيسي",
                 description:"كوني المهندس الرئيسي في الفريق كانت مسؤولية صعبة لكنها مجزية جدًا في الوقت نفسه. خلال هذه الفترة سنحت لي الفرصة للتعرف على بعض من ألمع العقول، والعمل معهم والتعلم منهم كذلك.",
             },
             "boostorder":{
@@ -359,15 +375,15 @@ export const translations = {
                 description:"العمل كمهندس برمجيات رئيسي كان تحديًا كبيرًا وتجربة غنية جدًا. خلال هذه المدة، التقيت وتعاونت مع نخبة من الموهوبين، وتعلمت الكثير من الخبرات العملية والفكرية.",
             },
             "monster":{
-                position:"مهندس برمجيات",
+                position:"مهندس برمجيات خبير",
                 description:"كانت أول تجربة لي في شركة ضخمة، أتيحت لي فيها فرصة التعرف على بيئة عمل مؤسساتية متكاملة، وكيف يتم التعاون بين الفرق بشكل احترافي. كما شعرت بالفخر لكوني جزءًا من مؤسسة ذات سمعة متميزة.",
             },
             "timelog":{
-                position:"مهندس برمجيات خبير (مستوى 1)",
+                position:"مهندس برمجيات خبير",
                 description:"أعمل ضمن فريق متميز لتقديم كود برمجي على أعلى مستوى. أشارك في جلسات العصف الذهني لتحديد نقاط الضعف في النظام، وأعمل مع فريق المهام الخاصة لوضع خطة قوية لنقل الأنظمة القديمة إلى أحدث التقنيات.",
             },
             "carsome":{
-                position:"مهندس برمجيات خبير (مستوى 2)",
+                position:"مهندس برمجيات رئيسي",
                 description:"أعمل في بيئة سريعة الإيقاع لتقديم كود عالي الجودة يلبّي متطلبات العمل. أتعاون مع فرق متعددة التخصصات لتصميم وتطوير وتنفيذ ميزات ووظائف جديدة.",
             },
         },
@@ -404,7 +420,7 @@ export const translations = {
             },
             "dad":{
                 label:"أب محب",
-                tooltip:"أنا أب محظوظ، أحب اللعب مع أطفالي ومشاكسة زوجتي.",
+                tooltip:"أنا أب محظوظ لطفلين، وقليل من اللعب الخشن لا يضر",
             },
             "cars":{
                 label:"عاشق للسيارات",
@@ -436,11 +452,28 @@ export const translations = {
             },
             "millennial":{
                 label:"من جيل الألفية",
-                tooltip:"أفضل ما في العالمين: نشأت في العالم التناظري، وأعيش اليوم في العالم الرقمي.",
+                tooltip:"أفضل الأجيال على الإطلاق: نشأت في بداية توجه العالم للرقمنة، وأنا الآن أشهد آخر التطورات.",
             },
+            "visionary":{
+                label:"لدي رؤية مستقبلية",
+                tooltip:"لدي فكرة في رأسي وأعمل بجد لجعلها حقيقة.",
+            },
+            "talktive":{
+                label:"شخص يتحدث كثيرًا",
+                tooltip:"لا أستطيح كبح لساني عن الحديث مع الآخرين.",
+            },
+            "social":{
+                label:"شخص اجتماعي",
+                tooltip:"أحب التواصل وبناء علاقات ذات معنى مع الآخرين.",
+            },
+            "presenter":{
+                label:"متحدث واثق",
+                tooltip:"أستمتع بعرض الأفكار ومشاركة المعرفة مع الآخرين.",
         },
+    
     },
-};
+    },
+}
 
 // Looks up a dotted key, e.g. "settings.darkMode"
 export function getNestedValue(obj, key) {

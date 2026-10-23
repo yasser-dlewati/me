@@ -90,8 +90,8 @@ export const experienceJson = [
   {
     id: 6,
     key: "carsome",
-    joinedDate: "2025-07-14",
-    isCurrentCompany: true,
+    duration: 12,
+    isCurrentCompany: false,
     websiteUrl: "https://www.carsome.my",
     imageSrc: "carsome.avif",
     embededMapLink: "pb=!1m18!1m12!1m3!1d3983.745919023914!2d101.614575!3d3.161523399999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4f6ce7472157%3A0x740a20f1d4ecdee!2sCARSOME%20Malaysia%20HQ!5e0!3m2!1sen!2smy!4v1761457307647!5m2!1sen!2smy",
